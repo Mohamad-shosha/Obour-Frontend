@@ -1,0 +1,116 @@
+<header class="main-header shadow-sm sticky-top bg-white animate-header">
+  <div class="container py-3 d-flex align-items-center justify-content-between">
+    <!-- Logo -->
+    <div class="d-flex align-items-center gap-3 logo-area">
+      <div class="logo-circle">
+        <i class="fa-solid fa-graduation-cap text-white fs-4"></i>
+      </div>
+      <div>
+        <h1 class="h5 fw-bold text-primary mb-0">عبور</h1>
+        <p class="small text-muted mb-0">
+          منصة تقييم الجاهزية للتدريب الميداني
+        </p>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="d-none d-md-flex align-items-center gap-3 fade-in">
+      <button
+        *ngFor="let item of menuItems"
+        (click)="onNavigate(item.id)"
+        class="header-link"
+        [class.active]="currentPage === item.id"
+      >
+        <i [class]="item.icon"></i>
+        <span>{{ item.label }}</span>
+      </button>
+
+      <div class="vr"></div>
+
+      <!-- User Area -->
+      <ng-container *ngIf="user; else guestButtons">
+        <div class="d-flex align-items-center gap-3 user-info">
+          <div class="text-end">
+            <div class="fw-semibold">{{ user.name }}</div>
+            <small class="text-muted">{{
+              user.role === "TEACHER" ? "معلم" : "طالب"
+            }}</small>
+          </div>
+          <button (click)="onLogout()" class="logout-btn">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>تسجيل الخروج</span>
+          </button>
+        </div>
+      </ng-container>
+
+      <ng-template #guestButtons>
+        <button
+          type="button"
+          (click)="onNavigate('auth', 'login')"
+          class="d-flex align-items-center gap-2 px-3 py-2 rounded-3 text-dark header-link"
+        >
+          <i class="fa-solid fa-arrow-right-to-bracket"></i>
+          <span>تسجيل الدخول</span>
+        </button>
+        <button
+          type="button"
+          (click)="onNavigate('auth', 'register')"
+          class="d-flex align-items-center gap-2 px-3 py-2 rounded-3 bg-primary text-white header-link primary"
+        >
+          <i class="fa-solid fa-user-plus"></i>
+          <span>إنشاء حساب</span>
+        </button>
+      </ng-template>
+    </nav>
+
+    <!-- Mobile menu toggle -->
+    <button class="btn d-md-none text-dark" (click)="isMenuOpen = !isMenuOpen">
+      <i
+        class="fa-solid"
+        [class.fa-bars]="!isMenuOpen"
+        [class.fa-xmark]="isMenuOpen"
+      ></i>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div *ngIf="isMenuOpen" class="mobile-menu mt-3 p-3 border-top slide-down">
+    <button
+      *ngFor="let item of menuItems"
+      (click)="onNavigate(item.id); isMenuOpen = false"
+      class="mobile-link"
+      [class.active]="currentPage === item.id"
+    >
+      <i [class]="item.icon"></i> {{ item.label }}
+    </button>
+
+    <hr />
+
+    <ng-container *ngIf="user; else mobileGuest">
+      <div class="text-end mb-3 fade-in">
+        <div class="fw-semibold">{{ user.name }}</div>
+        <small class="text-muted">{{
+          user.role === "TEACHER" ? "معلم" : "طالب"
+        }}</small>
+      </div>
+      <button (click)="onLogout(); isMenuOpen = false" class="logout-btn w-100">
+        <i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج
+      </button>
+    </ng-container>
+
+    <ng-template #mobileGuest>
+      <button
+        (click)="onNavigate('auth'); isMenuOpen = false"
+        class="login-btn w-100 mb-2"
+      >
+        <i class="fa-solid fa-arrow-right-to-bracket"></i> تسجيل الدخول
+      </button>
+      <button
+        (click)="onNavigate('auth'); isMenuOpen = false"
+        class="register-btn w-100"
+      >
+        <i class="fa-solid fa-user-plus"></i> إنشاء حساب
+      </button>
+    </ng-template>
+  </div>
+</header>

@@ -1,0 +1,29 @@
+// src/app/app-routing.module.ts
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+// استيراد جميع مكونات الصفحات
+import { HomeComponent } from './pages/home/home.component';
+import { EvaluationComponent } from './pages/evaluation/evaluation.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { ReportsComponent } from './pages/reports/reports.component';
+import { AboutComponent } from './pages/about/about.component';
+import { AuthComponent } from './pages/auth/auth.component';
+
+// تعريف المسارات
+const routes: Routes = [
+  { path: '', redirectTo: '/home', pathMatch: 'full' }, // الصفحة الافتراضية
+  { path: 'home', component: HomeComponent },
+  { path: 'evaluation', component: EvaluationComponent },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'reports', component: ReportsComponent },
+  { path: 'about', component: AboutComponent },
+  { path: 'auth', component: AuthComponent, data: { mode: 'login' } },
+  { path: '**', redirectTo: '/home' }, // صفحة خطأ 404
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
+})
+export class AppRoutingModule {}

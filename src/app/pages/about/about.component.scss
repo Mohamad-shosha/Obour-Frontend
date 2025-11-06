@@ -1,0 +1,24 @@
+/* src/app/pages/about/about.component.css */
+/* التدرجات الخاصة */
+.bg-gradient-to-br.from-primary.to-primary-dark {
+  background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+}
+.bg-gradient-to-br.from-success.to-success-dark {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+}
+.bg-gradient-to-br.from-dark.to-primary {
+  background: linear-gradient(135deg, #1e293b 0%, #1e40af 100%);
+}
+
+/* ألوان فرعية */
+.text-primary-light {
+  color: #93c5fd;
+}
+
+/* تأثير الزجاج */
+.bg-white.bg-opacity-10 {
+  backdrop-filter: blur(10px);
+}
+
+/* استيراد الأنماط المشتركة */
+@import "../home/home.component.scss";

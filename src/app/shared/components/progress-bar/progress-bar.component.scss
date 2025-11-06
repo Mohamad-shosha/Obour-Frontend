@@ -1,0 +1,22 @@
+/* src/app/shared/components/progress-bar/progress-bar.component.css */
+/* تخصيص ألوان Bootstrap الافتراضية لتكون أقرب للأصل */
+.progress-bar.bg-success {
+  background-color: #10b981 !important; /* أخضر Tailwind */
+}
+
+.progress-bar.bg-primary {
+  background-color: #3b82f6 !important; /* أزرق Tailwind */
+}
+
+.progress-bar.bg-warning {
+  background-color: #f59e0b !important; /* برتقالي Tailwind */
+}
+
+.progress-bar.bg-danger {
+  background-color: #ef4444 !important; /* أحمر Tailwind */
+}
+
+/* إضافة تأثير الانتقال (Transition) */
+.progress-bar {
+  transition: width 1s ease-out;
+}

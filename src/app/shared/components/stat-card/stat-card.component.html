@@ -1,0 +1,29 @@
+<!-- src/app/shared/components/stat-card/stat-card.component.html -->
+<div
+  class="bg-white rounded-3 p-4 card-shadow card-hover animate-slide-up h-100"
+>
+  <div class="d-flex align-items-start justify-content-between mb-3">
+    <div
+      class="rounded-3 d-flex align-items-center justify-content-center shadow"
+      [ngClass]="getGradientClass()"
+      style="width: 56px; height: 56px"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        width="28"
+        height="28"
+        class="text-white"
+      >
+        <path [attr.d]="iconPath"></path>
+      </svg>
+    </div>
+  </div>
+  <h3 class="text-muted small fw-medium mb-2">{{ title }}</h3>
+  <p class="fs-2 fw-bold text-dark mb-1">{{ value }}</p>
+  <p *ngIf="description" class="small text-muted mb-0">{{ description }}</p>
+</div>

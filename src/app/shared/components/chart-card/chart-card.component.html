@@ -1,0 +1,28 @@
+<!-- src/app/shared/components/chart-card/chart-card.component.html -->
+<div
+  class="bg-white rounded-3 p-4 p-md-5 card-shadow card-hover animate-slide-up h-100"
+>
+  <div class="d-flex align-items-center gap-3 mb-4">
+    <div
+      class="rounded-2 gradient-primary d-flex align-items-center justify-content-center"
+      style="width: 40px; height: 40px"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        width="20"
+        height="20"
+        class="text-white"
+      >
+        <path [attr.d]="iconPath"></path>
+      </svg>
+    </div>
+    <h3 class="h5 fw-bold text-dark mb-0">{{ title }}</h3>
+  </div>
+  <ng-content></ng-content>
+  <!-- سيحتوي على المحتوى الداخلي -->
+</div>

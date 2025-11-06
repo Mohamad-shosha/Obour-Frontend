@@ -1,0 +1,38 @@
+/* src/app/shared/components/footer/footer.component.css */
+.bg-slate-900 {
+  background-color: #0f172a;
+}
+
+.text-slate-400 {
+  color: #94a3b8;
+}
+
+.text-slate-500 {
+  color: #64748b;
+}
+
+.text-slate-600 {
+  color: #475569;
+}
+
+.text-slate-800 {
+  color: #1e293b;
+}
+
+.border-slate-800 {
+  border-color: #1e293b !important;
+}
+
+/* التدرج الأساسي */
+.gradient-primary {
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
+}
+
+/* لون الربط التفاعلي */
+.text-primary {
+  color: #3b82f6;
+}
+
+.text-primary:hover {
+  color: #60a5fa;
+}

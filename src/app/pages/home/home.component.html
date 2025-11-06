@@ -1,0 +1,125 @@
+<!-- src/app/pages/home/home.component.html -->
+<!-- البانر الرئيسي -->
+<section class="gradient-primary text-white py-5 py-md-6">
+  <div class="container text-center">
+    <div class="d-inline-block mb-3 px-4 py-2 rounded-pill support-badge">
+      <span class="small fw-bold">بدعم من هيئة تقويم التعليم والتدريب</span>
+    </div>
+    <h1 class="display-4 display-md-3 fw-bold mb-4">منصة عبور</h1>
+    <p class="fs-5 fs-md-4 mb-3 text-white-50">
+      نظام ذكي متكامل لقياس جاهزية طلبة الجامعات للتدريب الميداني
+    </p>
+    <p class="fs-6 text-white-75 mb-4">
+      تحليل شامل يجمع بين التقييم الأكاديمي والنفسي والسلوكي باستخدام تقنيات
+      الذكاء الاصطناعي
+    </p>
+    <div class="d-flex flex-wrap gap-3 justify-content-center">
+      <button
+        class="btn btn-light text-primary fw-bold px-4 py-2 rounded-3 shadow"
+      >
+        ابدأ التقييم الآن
+      </button>
+      <button class="btn btn-outline-light fw-bold px-4 py-2 rounded-3">
+        تعرف على المنصة
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- قسم الإحصائيات -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="display-6 fw-bold text-dark mb-3">إحصائيات المنصة</h2>
+      <p class="text-muted fs-5">
+        أرقام تعكس نجاح المنصة في تحسين جودة التعليم والتدريب
+      </p>
+    </div>
+    <div class="row g-4">
+      <div
+        class="col-12 col-md-6 col-lg-3 animate-slide-up"
+        *ngFor="let stat of stats; let i = index"
+        [attr.style]="'animation-delay: ' + i * 0.1 + 's'"
+      >
+        <app-stat-card
+          [title]="stat.title"
+          [value]="stat.value"
+          [iconPath]="stat.iconPath"
+          [color]="stat.color"
+          [description]="stat.description"
+        >
+        </app-stat-card>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- قسم المزايا -->
+<section class="py-5 bg-white">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="display-6 fw-bold text-dark mb-3">المزايا الرئيسية</h2>
+      <p class="text-muted fs-5 max-w-2xl mx-auto">
+        منصة متكاملة تجمع بين التكنولوجيا المتقدمة والمعايير الأكاديمية الرصينة
+      </p>
+    </div>
+    <div class="row g-4">
+      <div
+        class="col-12 col-md-6 animate-slide-up"
+        *ngFor="let feature of features; let i = index"
+        [attr.style]="'animation-delay: ' + i * 0.15 + 's'"
+      >
+        <div class="bg-light rounded-3 p-4 h-100 card-shadow card-hover">
+          <div
+            class="rounded-3 gradient-primary d-flex align-items-center justify-content-center mb-4 shadow"
+            style="width: 64px; height: 64px"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              width="32"
+              height="32"
+              class="text-white"
+            >
+              <path [attr.d]="feature.iconPath"></path>
+            </svg>
+          </div>
+          <h3 class="h5 fw-bold text-dark mb-3">{{ feature.title }}</h3>
+          <p class="text-muted">{{ feature.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- قسم رؤية 2030 -->
+<section class="py-5 bg-gradient-to-br from-primary to-secondary text-white">
+  <div class="container text-center">
+    <h2 class="display-6 fw-bold mb-4">دعم رؤية المملكة 2030</h2>
+    <p class="fs-5 text-white-75 mb-5 max-w-3xl mx-auto">
+      نساهم في بناء جسر متين بين التعليم الأكاديمي وسوق العمل، لضمان تخريج كوادر
+      وطنية مؤهلة وجاهزة للمساهمة الفعّالة في التنمية الوطنية
+    </p>
+    <div class="d-flex flex-wrap gap-3 justify-content-center">
+      <div
+        class="bg-white bg-opacity-10 px-4 py-2 rounded-pill border border-white border-opacity-30"
+      >
+        <span class="fw-bold">تحقيق التميز الأكاديمي</span>
+      </div>
+      <div
+        class="bg-white bg-opacity-10 px-4 py-2 rounded-pill border border-white border-opacity-30"
+      >
+        <span class="fw-bold">رفع جودة التدريب</span>
+      </div>
+      <div
+        class="bg-white bg-opacity-10 px-4 py-2 rounded-pill border border-white border-opacity-30"
+      >
+        <span class="fw-bold">التوافق مع سوق العمل</span>
+      </div>
+    </div>
+  </div>
+</section>

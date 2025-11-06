@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+/* استيراد أنماط Bootstrap */
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+/* تعيين الخط الافتراضي */
+* {
+  font-family: "Cairo", sans-serif;
+}
+
+/* دعم الاتجاه من اليمين لليسار */
+body {
+  direction: rtl;
+  text-align: right;
+}

@@ -1,0 +1,14 @@
+/* src/app/pages/evaluation/evaluation.component.css */
+/* التدرجات الخاصة بالأقسام */
+.section-bg-blue {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+}
+.section-bg-purple {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+}
+.section-bg-green {
+  background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+}
+
+/* الأنماط المشتركة */
+@import "../home/home.component.scss";

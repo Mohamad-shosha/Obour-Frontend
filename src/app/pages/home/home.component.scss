@@ -1,0 +1,54 @@
+/* src/app/pages/home/home.component.css */
+/* التدرج الأساسي للبانر */
+
+.backdrop-blur-sm {
+  backdrop-filter: blur(4px);
+}
+
+.support-badge {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+.support-badge span {
+  background: linear-gradient(135deg, #60a5fa, #93c5fd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* تأكد من أن الحدود شبه شفافة */
+.border-white.border-opacity-30 {
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+.gradient-primary {
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
+}
+
+/* تدرج لقسم رؤية 2030 */
+.bg-gradient-to-br.from-primary.to-secondary {
+  background: linear-gradient(135deg, #1e40af 0%, #475569 100%);
+}
+
+/* تأثيرات مخصصة */
+.animate-slide-up {
+  animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* تأثير الزجاج (Glassmorphism) */
+.bg-white.bg-opacity-10 {
+  backdrop-filter: blur(10px);
+}

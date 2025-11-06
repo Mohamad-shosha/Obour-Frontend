@@ -1,0 +1,151 @@
+<div class="auth-container">
+  <div class="auth-bg"></div>
+  <div class="auth-bg-radial-1"></div>
+  <div class="auth-bg-radial-2"></div>
+
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-10 col-lg-8 animate-slide-in">
+        <div class="text-center mb-5">
+          <h1 class="display-5 fw-bold text-primary">
+            <i
+              class="fa-solid"
+              [ngClass]="isLogin ? 'fa-right-to-bracket' : 'fa-user-plus'"
+            ></i>
+            {{ isLogin ? "مرحباً بعودتك" : "انضم إلينا" }}
+          </h1>
+          <p class="text-muted fs-5 mt-2">
+            {{
+              isLogin
+                ? "سجّل الدخول لمتابعة رحلتك التعليمية"
+                : "أنشئ حسابًا وابدأ رحلتك اليوم"
+            }}
+          </p>
+          <div class="d-flex justify-content-center gap-2 mt-3">
+            <div class="auth-indicator" [class.active]="isLogin"></div>
+            <div class="auth-indicator" [class.active]="!isLogin"></div>
+          </div>
+        </div>
+
+        <div class="card auth-card shadow-lg">
+          <div class="card-body p-4 p-md-5">
+            <div class="text-center mb-4">
+              <h2 class="h4 fw-bold text-primary">
+                {{ isLogin ? "تسجيل الدخول" : "إنشاء حساب جديد" }}
+              </h2>
+              <p class="text-muted small">
+                {{
+                  isLogin
+                    ? "مرحباً بعودتك! أدخل بياناتك للمتابعة"
+                    : "املأ الحقول أدناه لإنشاء حساب جديد"
+                }}
+              </p>
+            </div>
+
+            <form
+              [formGroup]="isLogin ? loginForm : registerForm"
+              (ngSubmit)="onSubmit()"
+              novalidate
+            >
+              <!-- الاسم -->
+              <div *ngIf="!isLogin" class="mb-3">
+                <label class="form-label">الاسم الكامل</label>
+                <div class="input-group glow-border">
+                  <i class="fa-solid fa-user icon-input"></i>
+                  <input
+                    formControlName="name"
+                    type="text"
+                    class="form-control form-control-lg auth-input"
+                    placeholder="أحمد محمد"
+                    (focus)="onFocus($event)"
+                    (blur)="onBlur($event)"
+                    [ngClass]="{ 'is-invalid': isFieldInvalid('name') }"
+                  />
+                </div>
+                <div *ngIf="isFieldInvalid('name')" class="error-text">
+                  <i class="fa-solid fa-circle-exclamation me-2"></i>
+                  {{ getErrorMessage("name") }}
+                </div>
+              </div>
+
+              <!-- البريد -->
+              <div class="mb-3">
+                <label class="form-label">البريد الإلكتروني</label>
+                <div class="input-group glow-border">
+                  <i class="fa-solid fa-envelope icon-input"></i>
+                  <input
+                    formControlName="email"
+                    type="email"
+                    class="form-control form-control-lg auth-input"
+                    placeholder="example@email.com"
+                    (focus)="onFocus($event)"
+                    (blur)="onBlur($event)"
+                    [ngClass]="{ 'is-invalid': isFieldInvalid('email') }"
+                  />
+                </div>
+                <div *ngIf="isFieldInvalid('email')" class="error-text">
+                  <i class="fa-solid fa-circle-exclamation me-2"></i>
+                  {{ getErrorMessage("email") }}
+                </div>
+              </div>
+
+              <!-- كلمة المرور -->
+              <div class="mb-4">
+                <label class="form-label">كلمة المرور</label>
+                <div class="input-group glow-border">
+                  <i class="fa-solid fa-lock icon-input"></i>
+                  <input
+                    formControlName="password"
+                    type="password"
+                    class="form-control form-control-lg auth-input"
+                    placeholder="••••••••"
+                    (focus)="onFocus($event)"
+                    (blur)="onBlur($event)"
+                    [ngClass]="{ 'is-invalid': isFieldInvalid('password') }"
+                  />
+                </div>
+                <div *ngIf="isFieldInvalid('password')" class="error-text">
+                  <i class="fa-solid fa-circle-exclamation me-2"></i>
+                  {{ getErrorMessage("password") }}
+                </div>
+              </div>
+
+              <!-- زر الإرسال -->
+              <button
+                type="submit"
+                class="btn btn-primary w-100 py-3 fw-bold submit-btn"
+              >
+                <i
+                  class="fa-solid"
+                  [ngClass]="isLogin ? 'fa-right-to-bracket' : 'fa-user-plus'"
+                ></i>
+                <span class="ms-2">
+                  {{ isLogin ? "تسجيل الدخول" : "إنشاء حساب" }}
+                </span>
+              </button>
+
+              <div class="divider my-4">
+                <span class="divider-text">أو</span>
+              </div>
+
+              <div class="text-center">
+                <button
+                  type="button"
+                  class="btn btn-link text-primary fw-semibold switch-btn"
+                  (click)="toggleMode()"
+                >
+                  {{
+                    isLogin
+                      ? "ليس لديك حساب؟ أنشئ حساب الآن"
+                      : "لديك حساب؟ سجّل الدخول"
+                  }}
+                  <i class="fa-solid fa-arrow-left ms-1"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

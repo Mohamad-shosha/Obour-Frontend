@@ -1,0 +1,10 @@
+/* src/app/shared/components/progress-circle/progress-circle.component.css */
+/* تدوير الدائرة لتصبح في الاتجاه الصحيح */
+.transform-rotate-minus-90 {
+  transform: rotate(-90deg);
+}
+
+/* تأثير الانتقال */
+circle {
+  transition: stroke-dashoffset 1s ease-out;
+}
