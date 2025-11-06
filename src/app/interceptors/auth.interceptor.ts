@@ -13,22 +13,20 @@ import { AuthService } from '../services/auth.service';
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {}
 
-  intercept(
-    req: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
-    // الحصول على الـ Token من localStorage
-    const token = localStorage.getItem('token');
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  const token = localStorage.getItem('token');
 
-    // إذا وجد Token، أضفه إلى رؤوس الطلب
-    if (token) {
-      const authReq = req.clone({
-        headers: req.headers.set('Authorization', `Bearer ${token}`),
-      });
-      return next.handle(authReq);
-    }
-
-    // إذا لم يوجد Token، أرسل الطلب كما هو
+  if (req.url.includes('/login') || req.url.includes('/register')) {
     return next.handle(req);
   }
+
+  if (token) {
+    const authReq = req.clone({
+      headers: req.headers.set('Authorization', `Bearer ${token}`),
+    });
+    return next.handle(authReq);
+  }
+
+  return next.handle(req);
+}
 }
