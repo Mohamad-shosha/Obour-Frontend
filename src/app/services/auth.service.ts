@@ -30,20 +30,23 @@ export class AuthService {
     });
   }
 
-  login(email: string, password: string): Observable<any> {
-    return this.http
-      .post<any>(`${this.apiUrl}/login`, { email, password })
-      .pipe(
-        map((response) => {
-          if (response && response.token) {
-            localStorage.setItem('token', response.token);
-            localStorage.setItem('user', JSON.stringify(response.user));
-            this.currentUserSubject.next(response.user);
-          }
-          return response;
-        })
-      );
-  }
+login(email: string, password: string): Observable<any> {
+  return this.http
+    .post<any>(`${this.apiUrl}/login`, { email, password })
+    .pipe(
+      map((response) => {
+        if (response && response.token) {
+          localStorage.setItem('token', response.token);
+          localStorage.setItem(
+            'user',
+            JSON.stringify({ name: response.name, role: response.role })
+          );
+          this.currentUserSubject.next({ name: response.name, role: response.role });
+        }
+        return response;
+      })
+    );
+}
 
   logout(): void {
     localStorage.removeItem('token');
