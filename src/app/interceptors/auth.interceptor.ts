@@ -1,4 +1,3 @@
-// src/app/interceptors/auth.interceptor.ts
 import { Injectable } from '@angular/core';
 import {
   HttpInterceptor,
@@ -7,26 +6,34 @@ import {
   HttpEvent,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthService) {}
+  // ⚠️ لا حاجة لـ AuthService هنا لأننا نستخدم localStorage مباشرةً
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-  const token = localStorage.getItem('token');
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
+    console.log('URL:', req.url);
+    console.log('Is auth URL?', req.url.includes('/auth'));
 
-  if (req.url.includes('/login') || req.url.includes('/register')) {
+    if (req.url.includes('/auth')) {
+      return next.handle(req);
+    }
+
+    const token = localStorage.getItem('token');
+    console.log('Token found:', !!token); // سيطبع true/false
+
+    if (token) {
+      const authReq = req.clone({
+        headers: req.headers.set('Authorization', `Bearer ${token}`),
+      });
+      console.log('Authorization header added');
+      return next.handle(authReq);
+    }
+
+    console.log('No token, sending without auth');
     return next.handle(req);
   }
-
-  if (token) {
-    const authReq = req.clone({
-      headers: req.headers.set('Authorization', `Bearer ${token}`),
-    });
-    return next.handle(authReq);
-  }
-
-  return next.handle(req);
-}
 }

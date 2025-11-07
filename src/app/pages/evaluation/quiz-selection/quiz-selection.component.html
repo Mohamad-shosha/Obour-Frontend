@@ -1,0 +1,78 @@
+<div class="min-vh-100 bg-light" dir="rtl">
+  <div class="container px-4 py-5">
+    <!-- زر الرجوع -->
+    <div class="mb-4">
+      <button class="btn btn-link text-decoration-none px-0" (click)="goBack()">
+        <i class="fas fa-arrow-right me-2"></i> العودة إلى الفئات
+      </button>
+    </div>
+
+    <!-- رأس القسم الرئيسي -->
+    <div class="d-flex align-items-center gap-4 mb-5" *ngIf="parentSection">
+      <div
+        class="icon-box rounded-3 d-inline-flex align-items-center justify-content-center"
+        [ngClass]="{
+          'bg-primary': parentSection.type === 'academic',
+          'bg-success': parentSection.type === 'psychological'
+        }"
+        style="width: 72px; height: 72px"
+      >
+        <i
+          [class]="getIconClass(parentSection.type)"
+          class="text-white fa-2x"
+        ></i>
+      </div>
+      <div>
+        <h1 class="display-5 fw-bold">{{ parentSection.name }}</h1>
+        <p class="text-muted fs-5">اختر الاختبار الذي تريد إجراءه</p>
+      </div>
+    </div>
+
+    <!-- مؤشر التحميل -->
+    <div *ngIf="loading" class="text-center my-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">جارٍ التحميل...</span>
+      </div>
+    </div>
+
+    <!-- رسالة خطأ -->
+    <div *ngIf="error" class="alert alert-danger text-center" role="alert">
+      {{ error }}
+    </div>
+
+    <!-- شبكة الاختبارات الفرعية -->
+    <div class="row g-4" *ngIf="!loading && !error">
+      <div
+        *ngFor="let section of subSections"
+        class="col-md-6 col-lg-4"
+        (click)="startQuiz(section.id)"
+        style="cursor: pointer"
+      >
+        <div
+          class="card h-100 shadow-sm border-2 border-light rounded-3 hover-card"
+          [ngClass]="{
+            'border-primary': section.type === 'academic',
+            'border-success': section.type === 'psychological'
+          }"
+        >
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title fs-5 mb-3">{{ section.name }}</h5>
+            <div class="mt-auto">
+              <button
+                [ngClass]="getButtonClass(section.type)"
+                class="btn w-100"
+              >
+                ابدأ الاختبار
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- لا توجد اختبارات -->
+      <div *ngIf="subSections.length === 0" class="col-12 text-center py-5">
+        <p class="text-muted fs-4">لا توجد اختبارات متاحة لهذا القسم حاليًا</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -19,6 +19,9 @@ import { AuthComponent } from './pages/auth/auth.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { CategoriesComponent } from './pages/evaluation/categories/categories.component';
+import { QuizSelectionComponent } from './pages/evaluation/quiz-selection/quiz-selection.component';
+import { QuizTestComponent } from './pages/evaluation/quiz-test/quiz-test.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +38,9 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     ProgressCircleComponent,
     ChartCardComponent,
     AuthComponent,
+    CategoriesComponent,
+    QuizSelectionComponent,
+    QuizTestComponent,
   ],
   imports: [
     BrowserModule,
