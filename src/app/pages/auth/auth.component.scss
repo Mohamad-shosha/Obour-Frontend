@@ -77,6 +77,7 @@
 }
 
 /* Role cards */
+/* Role Cards */
 .role-card {
   border: 2px solid #e2e8f0;
   background: #fff;
@@ -85,15 +86,46 @@
   text-align: center;
   border-radius: 12px;
   padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
+
 .role-card:hover {
   border-color: #3b82f6;
-  transform: scale(1.05);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.15);
 }
+
 .role-card.active {
   border-color: #3b82f6;
   background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-  box-shadow: 0 4px 10px rgba(59, 130, 246, 0.25);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.25);
+}
+
+.role-card i {
+  transition: all 0.3s ease;
+}
+
+.role-card.active i {
+  color: #3b82f6;
+  transform: scale(1.1);
+}
+
+.role-card h5 {
+  color: #334155;
+  margin: 0.5rem 0;
+}
+
+.role-card p {
+  color: #64748b;
+  margin: 0;
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .role-card {
+    flex: 1 1 45%;
+    min-width: 140px;
+  }
 }
 
 /* Input Icons */

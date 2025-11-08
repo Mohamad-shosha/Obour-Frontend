@@ -56,7 +56,6 @@ export class EvaluationComponent {
     },
   };
 
-  // حساب الجاهزية الإجمالية
   get overallReadiness(): number {
     const academic = this.evaluationData.academic.overall;
     const psychological = this.evaluationData.psychological.overall;
@@ -64,7 +63,6 @@ export class EvaluationComponent {
     return Math.round((academic + psychological + behavioral) / 3);
   }
 
-  // تحديد رسالة التقييم
   get readinessMessage(): string {
     const score = this.overallReadiness;
     if (score >= 80) return 'جاهز بشكل ممتاز';
@@ -72,7 +70,6 @@ export class EvaluationComponent {
     return 'يحتاج إلى تطوير';
   }
 
-  // تحديد لون الرسالة
   get readinessColor(): string {
     const score = this.overallReadiness;
     if (score >= 80) return 'text-success';
@@ -80,17 +77,14 @@ export class EvaluationComponent {
     return 'text-danger';
   }
 
-  // دالة لتحويل كائن البيانات إلى مصفوفة للـ *ngFor
   getSections() {
     return Object.values(this.evaluationData);
   }
 
-  // دالة للحصول على فئة الخلفية حسب اللون
   getSectionBgClass(color: string): string {
     return `section-bg-${color}`;
   }
 
-  // دالة للحصول على نص المستوى
   getLevelText(overall: number): string {
     if (overall >= 80) return 'ممتاز';
     if (overall >= 70) return 'جيد جداً';
