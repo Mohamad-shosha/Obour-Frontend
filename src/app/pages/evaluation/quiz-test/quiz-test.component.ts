@@ -129,7 +129,6 @@ export class QuizTestComponent implements OnInit {
     this.router.navigate(['/evaluation/sections', this.parentId]);
   }
 
-  // ===== Section type =====
   getSectionType(): 'academic' | 'psychological' {
     return this.questions[0]?.answerType?.includes('academic') ? 'academic' : 'psychological';
   }
@@ -146,7 +145,6 @@ export class QuizTestComponent implements OnInit {
     return this.isAcademic ? 'left' : 'right';
   }
 
-  // ===== SweetAlert2 helpers =====
   private showWarning(message: string): void {
     Swal.fire({ icon: 'warning', title: 'تنبيه', text: message, confirmButtonText: 'حسنًا', customClass: { confirmButton: 'btn btn-warning' } });
   }

@@ -13,41 +13,38 @@ export class EvaluationService {
 
   constructor(private http: HttpClient) {}
 
-  // أقسام
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token'); // تأكد إن التوكن موجود بعد تسجيل الدخول
+    return new HttpHeaders({
+      Authorization: token ? `Bearer ${token}` : '',
+    });
+  }
+
   getSections(): Observable<Section[]> {
-    return this.http.get<Section[]>(`${this.baseUrl}/sections`);
+    return this.http.get<Section[]>(`${this.baseUrl}/sections`, { headers: this.getAuthHeaders() });
   }
 
   getSection(id: number): Observable<Section> {
-    return this.http.get<Section>(`${this.baseUrl}/sections/${id}`);
+    return this.http.get<Section>(`${this.baseUrl}/sections/${id}`, { headers: this.getAuthHeaders() });
   }
 
   getRootSections(): Observable<Section[]> {
-    return this.http.get<Section[]>(`${this.baseUrl}/sections/root`);
+    return this.http.get<Section[]>(`${this.baseUrl}/sections/root`, { headers: this.getAuthHeaders() });
   }
 
   getSubSections(parentId: number): Observable<Section[]> {
-    return this.http.get<Section[]>(`${this.baseUrl}/sections/parent/${parentId}`);
+    return this.http.get<Section[]>(`${this.baseUrl}/sections/parent/${parentId}`, { headers: this.getAuthHeaders() });
   }
 
-  // أسئلة
   getQuestionsBySection(sectionId: number): Observable<Question[]> {
-    return this.http.get<Question[]>(`${this.baseUrl}/questions/section/${sectionId}`);
+    return this.http.get<Question[]>(`${this.baseUrl}/questions/section/${sectionId}`, { headers: this.getAuthHeaders() });
   }
 
-  // إرسال إجابات
   submitAnswers(request: SubmitAnswersRequest): Observable<any> {
-    return this.http.post(`${this.baseUrl}/student-answers/submit`, request);
+    return this.http.post(`${this.baseUrl}/student-answers/submit`, request, { headers: this.getAuthHeaders() });
   }
 
-  getCurrentUser(): Observable<{ id: number; name: string; email: string; role: string }> {
-    const token = localStorage.getItem('token'); 
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-    return this.http.get<{ id: number; name: string; email: string; role: string }>(
-      `${this.baseUrl}/auth/me`,
-      { headers }
-    );
-  }
+getCurrentUser(): Observable<any> {
+  return this.http.get<any>(`${this.baseUrl}/auth/me`, { headers: this.getAuthHeaders() });
+}
 }
