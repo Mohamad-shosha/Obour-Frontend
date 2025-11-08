@@ -66,12 +66,7 @@
               [style.text-align]="textAlign"
               (click)="selectChoice(choice.id)"
             >
-              <div class="d-flex justify-content-between align-items-center">
-                <span>
-                  {{ choice.text }}
-                  <small *ngIf="choice.score">({{ choice.score }} نقطة)</small>
-                </span>
-              </div>
+              {{ choice.text }}
             </button>
           </div>
 

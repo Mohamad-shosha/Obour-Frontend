@@ -21,6 +21,10 @@ export class QuizTestComponent implements OnInit {
   error: string | null = null;
   studentId!: number;
 
+  // اتجاه النص ومحاذاته
+  textDirection: 'ltr' | 'rtl' = 'rtl';
+  textAlign: 'left' | 'right' = 'right';
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -30,7 +34,7 @@ export class QuizTestComponent implements OnInit {
   ngOnInit(): void {
     this.sectionId = Number(this.route.snapshot.paramMap.get('sectionId'));
     this.loadStudentId();
-    this.loadSectionName();
+    this.loadSectionAndDirection();
     this.loadQuestions();
   }
 
@@ -44,11 +48,27 @@ export class QuizTestComponent implements OnInit {
     });
   }
 
-  loadSectionName(): void {
+  // ✅ تحميل القسم الحالي وتحديد اتجاه الأسئلة حسب القسم الأب
+  loadSectionAndDirection(): void {
     this.evaluationService.getSection(this.sectionId).subscribe({
       next: (section) => {
         this.sectionName = section.name;
         this.parentId = section.parentId!;
+
+        // جلب القسم الأب لتحديد نوعه
+        this.evaluationService.getSection(this.parentId).subscribe({
+          next: (parentSection) => {
+            const type = parentSection.name.toLowerCase(); // أو parentSection.type إذا موجود
+            if (type.includes('academic')) {
+              this.textDirection = 'ltr';
+              this.textAlign = 'left';
+            } else {
+              this.textDirection = 'rtl';
+              this.textAlign = 'right';
+            }
+          },
+          error: (err) => console.error('فشل جلب بيانات القسم الأب', err),
+        });
       },
       error: (err) => {
         console.error('فشل تحميل اسم الاختبار', err);
@@ -129,20 +149,8 @@ export class QuizTestComponent implements OnInit {
     this.router.navigate(['/evaluation/sections', this.parentId]);
   }
 
-  getSectionType(): 'academic' | 'psychological' {
-    return this.questions[0]?.answerType?.includes('academic') ? 'academic' : 'psychological';
-  }
-
   get isAcademic(): boolean {
-    return this.getSectionType() === 'academic';
-  }
-
-  get textDirection(): 'ltr' | 'rtl' {
-    return this.isAcademic ? 'ltr' : 'rtl';
-  }
-
-  get textAlign(): 'left' | 'right' {
-    return this.isAcademic ? 'left' : 'right';
+    return this.textDirection === 'ltr';
   }
 
   private showWarning(message: string): void {
