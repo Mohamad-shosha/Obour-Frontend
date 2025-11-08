@@ -30,23 +30,31 @@ export class AuthService {
     });
   }
 
-login(email: string, password: string): Observable<any> {
-  return this.http
-    .post<any>(`${this.apiUrl}/login`, { email, password })
-    .pipe(
-      map((response) => {
-        if (response && response.token) {
-          localStorage.setItem('token', response.token);
-          localStorage.setItem(
-            'user',
-            JSON.stringify({ name: response.name, role: response.role })
-          );
-          this.currentUserSubject.next({ name: response.name, role: response.role });
-        }
-        return response;
-      })
-    );
-}
+  login(email: string, password: string): Observable<any> {
+    return this.http
+      .post<any>(`${this.apiUrl}/login`, { email, password })
+      .pipe(
+        map((response) => {
+          if (response && response.token) {
+            localStorage.setItem('token', response.token);
+            localStorage.setItem(
+              'user',
+              JSON.stringify({
+                id: response.id,
+                name: response.name,
+                role: response.role,
+              })
+            );
+            this.currentUserSubject.next({
+              id: response.id,
+              name: response.name,
+              role: response.role,
+            });
+          }
+          return response;
+        })
+      );
+  }
 
   logout(): void {
     localStorage.removeItem('token');
@@ -60,6 +68,11 @@ login(email: string, password: string): Observable<any> {
 
   getToken(): string | null {
     return localStorage.getItem('token');
+  }
+
+  getCurrentUserId(): number | null {
+    const user = this.getUserFromStorage();
+    return user?.id ? Number(user.id) : null;
   }
 
   // --- هذا السطر تم تغييره من private إلى public ---
@@ -79,6 +92,4 @@ login(email: string, password: string): Observable<any> {
       return null;
     }
   }
-
-  // --------------------------------------------------
 }

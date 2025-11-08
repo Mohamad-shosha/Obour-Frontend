@@ -1,4 +1,3 @@
-// src/app/shared/components/header/header.component.ts
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
@@ -14,26 +13,7 @@ export class HeaderComponent implements OnInit {
   currentPage: string = 'home';
   isMenuOpen = false;
   user: any = null;
-
-  menuItems = [
-    { id: 'home', label: 'الرئيسية', icon: 'fa-solid fa-house' },
-    {
-      id: 'evaluation',
-      label: 'تقييم الجاهزية',
-      icon: 'fa-solid fa-graduation-cap',
-    },
-    {
-      id: 'dashboard',
-      label: 'لوحة المعلومات',
-      icon: 'fa-solid fa-chart-line',
-    },
-    {
-      id: 'reports',
-      label: 'التقارير والتحليلات',
-      icon: 'fa-solid fa-file-lines',
-    },
-    { id: 'about', label: 'عن المنصة', icon: 'fa-solid fa-circle-info' },
-  ];
+  menuItems: { id: string; label: string; icon: string }[] = [];
 
   constructor(private router: Router, private authService: AuthService) {}
 
@@ -63,17 +43,62 @@ export class HeaderComponent implements OnInit {
       console.log('ℹ️ لا يوجد مستخدم مسجل حاليًا');
     }
     // ----------------------------------
+
+    // تكوين القائمة ديناميكيًا حسب الدور
+    this.buildMenu();
+  }
+
+  private buildMenu(): void {
+    const baseItems = [
+      { id: 'home', label: 'الرئيسية', icon: 'fa-solid fa-house' },
+      { id: 'about', label: 'عن المنصة', icon: 'fa-solid fa-circle-info' },
+      {
+        id: 'evaluation',
+        label: 'تقييم الجاهزية',
+        icon: 'fa-solid fa-graduation-cap',
+      },
+    ];
+
+    if (this.user && this.user.role === 'TEACHER') {
+      // قائمة المعلم
+      this.menuItems = [
+        ...baseItems,
+        {
+          id: 'admin-dashboard',
+          label: 'لوحة التحكم الإدارية',
+          icon: 'fa-solid fa-gear',
+        },
+      ];
+    } else {
+      // قائمة الطالب (أو الزائر)
+      this.menuItems = [
+        ...baseItems,
+        {
+          id: 'dashboard',
+          label: 'لوحة المعلومات',
+          icon: 'fa-solid fa-chart-line',
+        },
+        {
+          id: 'start-evaluation',
+          label: 'ابدأ التقييم الآن',
+          icon: 'fa-solid fa-play',
+        },
+      ];
+    }
   }
 
   onNavigate(pageId: string, mode?: 'login' | 'register'): void {
     if (pageId === 'auth') {
-      // حفظ الحالة في sessionStorage مؤقتًا
       if (mode) {
         sessionStorage.setItem('authMode', mode);
       }
       this.router.navigate(['/auth']);
+    } else if (pageId === 'start-evaluation') {
+      this.router.navigate(['/evaluation']);
+    } else if (pageId === 'admin-dashboard') {
+      this.router.navigate(['/admin/dashboard']);
     } else {
-      this.router.navigate([pageId]);
+      this.router.navigate([`/${pageId}`]);
     }
     this.isMenuOpen = false;
   }

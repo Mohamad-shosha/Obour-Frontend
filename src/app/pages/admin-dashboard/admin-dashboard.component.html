@@ -1,0 +1,90 @@
+<!-- src/app/pages/admin-dashboard/admin-dashboard.component.html -->
+<div class="admin-dashboard p-6 space-y-10">
+  <!-- عرض المستخدمين -->
+  <div class="bg-white rounded-2xl shadow-md p-6 border border-gray-100">
+    <h2 class="section-title flex items-center gap-2">🧑‍🎓 إدارة الطلاب</h2>
+    <div class="table-container overflow-auto rounded-md">
+      <table
+        class="users-table min-w-full text-sm text-left border border-gray-200"
+      >
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>الاسم</th>
+            <th>البريد الإلكتروني</th>
+            <th>الدور</th>
+            <th>الدرجة</th>
+            <th>الإجراءات</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              <span [ngClass]="getRoleClass(user.role)">{{
+                getRoleLabel(user.role)
+              }}</span>
+            </td>
+            <td>
+              <span class="badge" [ngClass]="getScoreClass(user.score)">
+                {{ user.score !== null ? user.score + " %" : "غير متوفر" }}
+              </span>
+            </td>
+            <td>
+              <button
+                (click)="viewStudentAnswers(user.id)"
+                class="btn btn-primary"
+              >
+                عرض الإجابات
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- تفاصيل إجابات الطالب -->
+  <div
+    *ngIf="selectedStudent"
+    class="bg-white rounded-2xl shadow-md p-6 border border-gray-100"
+  >
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="section-title text-green-800 flex items-center gap-2">
+        📝 إجابات الطالب: {{ selectedStudent.name }}
+      </h2>
+      <button (click)="closeStudentDetails()" class="btn btn-outline">
+        إغلاق
+      </button>
+    </div>
+
+    <div class="table-container overflow-auto rounded-md">
+      <table
+        class="reservations-table min-w-full text-sm text-left border border-gray-200"
+      >
+        <thead>
+          <tr>
+            <th>القسم</th>
+            <th>نص السؤال</th>
+            <th>الإجابة المختارة</th>
+            <th>الدرجة</th>
+            <th>التاريخ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let answer of studentAnswers">
+            <td>
+              {{ getSectionName(getQuestionSectionId(answer.questionId)) }}
+            </td>
+            <td>{{ getQuestionText(answer.questionId) }}</td>
+            <td>{{ getChoiceText(answer.choiceId) }}</td>
+            <td>{{ getChoiceScore(answer.choiceId) }} نقطة</td>
+            <td>{{ answer.createdAt | date : "yyyy-MM-dd HH:mm" }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
