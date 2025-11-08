@@ -9,16 +9,22 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ReportsComponent } from './pages/reports/reports.component';
 import { AboutComponent } from './pages/about/about.component';
 import { AuthComponent } from './pages/auth/auth.component';
+import { CategoriesComponent } from './pages/evaluation/categories/categories.component';
+import { QuizSelectionComponent } from './pages/evaluation/quiz-selection/quiz-selection.component';
+import { QuizTestComponent } from './pages/evaluation/quiz-test/quiz-test.component';
 
 // تعريف المسارات
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' }, // الصفحة الافتراضية
   { path: 'home', component: HomeComponent },
-  { path: 'evaluation', component: EvaluationComponent },
+  // { path: 'evaluation', component: EvaluationComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'reports', component: ReportsComponent },
   { path: 'about', component: AboutComponent },
   { path: 'auth', component: AuthComponent, data: { mode: 'login' } },
+  { path: 'evaluation', component: CategoriesComponent },
+  { path: 'evaluation/sections/:sectionId', component: QuizSelectionComponent },
+  { path: 'evaluation/test/:sectionId', component: QuizTestComponent },
   { path: '**', redirectTo: '/home' }, // صفحة خطأ 404
 ];
 

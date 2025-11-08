@@ -1,5 +1,5 @@
-// src/app/pages/home/home.component.ts
 import { Component } from '@angular/core';
+import { Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-home',
@@ -7,7 +7,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  // بيانات الإحصائيات
+  constructor(private router: Router) {} 
+
+  startEvaluation(): void {
+    this.router.navigate(['/evaluation']);
+  }
+
   stats = [
     {
       title: 'الجامعات المشاركة',
@@ -39,7 +44,7 @@ export class HomeComponent {
     },
   ];
 
-  // بيانات المزايا
+  // بيانات المزايا (كما هي)
   features = [
     {
       title: 'تقييم أكاديمي شامل',

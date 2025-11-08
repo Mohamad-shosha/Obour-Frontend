@@ -1,0 +1,108 @@
+<div class="min-vh-100 bg-light">
+  <div class="container px-4 py-4">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <button class="btn btn-link px-0" (click)="goBack()">
+        <i class="fas fa-arrow-right me-2"></i> العودة
+      </button>
+      <h2 class="h5 mb-0 text-muted d-none d-md-block">
+        {{ sectionName }}
+      </h2>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="text-center my-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">جارٍ التحميل...</span>
+      </div>
+    </div>
+
+    <!-- Error -->
+    <div *ngIf="error" class="alert alert-danger text-center" role="alert">
+      {{ error }}
+    </div>
+
+    <!-- Question Card -->
+    <div *ngIf="!loading && !error && questions.length > 0" class="max-w-3xl mx-auto">
+      <!-- Progress Bar -->
+      <div class="mb-5">
+        <div class="d-flex justify-content-between mb-2">
+          <small class="text-muted">
+            السؤال {{ currentQuestionIndex + 1 }} من {{ questions.length }}
+          </small>
+          <small class="text-muted">{{ getProgress() | number: '1.0-0' }}%</small>
+        </div>
+        <div class="progress" style="height: 8px">
+          <div
+            class="progress-bar"
+            [ngClass]="{
+              'bg-primary': isAcademic,
+              'bg-success': !isAcademic
+            }"
+            [style.width.%]="getProgress()"
+          ></div>
+        </div>
+      </div>
+
+      <!-- Question Card -->
+      <div class="card border-2">
+        <div class="card-body" [attr.dir]="textDirection">
+          <h2 class="h4 mb-4" [style.text-align]="textAlign">
+            {{ getCurrentQuestion().text }}
+          </h2>
+
+          <!-- Choices -->
+          <div class="d-grid gap-3">
+            <button
+              *ngFor="let choice of getCurrentQuestion().choices"
+              type="button"
+              class="btn p-3 rounded-3"
+              [ngClass]="{
+                'btn-primary text-white': isChoiceSelected(choice.id) && isAcademic,
+                'btn-success text-white': isChoiceSelected(choice.id) && !isAcademic,
+                'btn-outline-secondary': !isChoiceSelected(choice.id)
+              }"
+              [attr.dir]="textDirection"
+              [style.text-align]="textAlign"
+              (click)="selectChoice(choice.id)"
+            >
+              <div class="d-flex justify-content-between align-items-center">
+                <span>
+                  {{ choice.text }}
+                  <small *ngIf="choice.score">({{ choice.score }} نقطة)</small>
+                </span>
+              </div>
+            </button>
+          </div>
+
+          <!-- Navigation -->
+          <div class="d-flex gap-3 mt-4">
+            <button
+              class="btn btn-outline-secondary flex-fill"
+              [disabled]="currentQuestionIndex === 0"
+              (click)="goToPrevious()"
+            >
+              <i class="fas fa-chevron-right ms-2"></i> السابق
+            </button>
+            <button
+              class="btn flex-fill"
+              [ngClass]="{
+                'btn-primary': isAcademic,
+                'btn-success': !isAcademic
+              }"
+              (click)="goToNext()"
+            >
+              {{ currentQuestionIndex === questions.length - 1 ? 'إنهاء' : 'التالي' }}
+              <i class="fas fa-chevron-left me-2"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- No questions -->
+    <div *ngIf="!loading && !error && questions.length === 0" class="text-center py-5">
+      <p class="text-muted fs-4">لا توجد أسئلة لهذا الاختبار</p>
+    </div>
+  </div>
+</div>

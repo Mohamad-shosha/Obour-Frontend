@@ -1,0 +1,57 @@
+.quiz-section {
+  background: linear-gradient(135deg, #f8fafc, #eef2ff);
+  .icon-box {
+    width: 90px;
+    height: 90px;
+    background: linear-gradient(135deg, #2563eb, #60a5fa);
+    color: #fff;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  .quiz-card {
+    transition: all 0.3s ease;
+    border-radius: 1.5rem;
+    background-color: #ffffff;
+    position: relative;
+    overflow: hidden;
+
+    &.academic-card {
+      border-top: 4px solid #2563eb;
+    }
+
+    &.psych-card {
+      border-top: 4px solid #22c55e;
+    }
+
+    &:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+    }
+
+    .btn {
+      font-weight: 600;
+      transition: all 0.3s ease;
+
+      &.btn-primary {
+        background: linear-gradient(135deg, #2563eb, #3b82f6);
+        border: none;
+        color: #fff;
+      }
+
+      &.btn-success {
+        background: linear-gradient(135deg, #16a34a, #22c55e);
+        border: none;
+        color: #fff;
+      }
+
+      &:hover {
+        transform: scale(1.05);
+        opacity: 0.9;
+      }
+    }
+  }
+}
+
+.hover-card {
+  transition: all 0.3s ease;
+}

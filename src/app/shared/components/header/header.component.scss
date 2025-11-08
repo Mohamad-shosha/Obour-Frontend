@@ -68,29 +68,17 @@
     background: linear-gradient(135deg, #1e40af, #3b82f6);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    transition: all 0.3s ease;
   }
 
   &:hover {
     background-color: #f1f5f9;
     color: #1e40af;
-
-    i {
-      -webkit-text-fill-color: #1e40af; // الأيقونة تتحول للون hover
-    }
-
     transform: translateY(-2px);
   }
 
   &.active {
     background: linear-gradient(135deg, #1e40af, #3b82f6);
     color: #fff;
-
-    i {
-      -webkit-text-fill-color: #fff; // الأيقونة تصبح بيضاء عند التفعيل
-      background: none;
-    }
-
     box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
   }
 }
@@ -116,7 +104,6 @@
     background: linear-gradient(135deg, #1e40af, #3b82f6);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    transition: all 0.3s ease;
   }
 
   &.login-btn {
@@ -125,12 +112,6 @@
 
     &:hover {
       background-color: #e0ebff;
-
-      i {
-        -webkit-text-fill-color: #1e40af;
-        background: none;
-      }
-
       transform: translateY(-2px);
     }
   }
@@ -141,12 +122,6 @@
 
     &:hover {
       background: linear-gradient(135deg, #1d4ed8, #2563eb);
-
-      i {
-        -webkit-text-fill-color: #fff;
-        background: none;
-      }
-
       transform: translateY(-2px);
     }
   }
@@ -157,12 +132,6 @@
 
     &:hover {
       background-color: #fecaca;
-
-      i {
-        -webkit-text-fill-color: #dc2626;
-        background: none;
-      }
-
       transform: translateY(-2px);
     }
   }
@@ -192,26 +161,15 @@
       background: linear-gradient(135deg, #1e40af, #3b82f6);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      transition: all 0.3s ease;
     }
 
     &.active {
       background: linear-gradient(135deg, #1e40af, #3b82f6);
       color: #fff;
-
-      i {
-        -webkit-text-fill-color: #fff;
-        background: none;
-      }
     }
 
     &:hover {
       background-color: #f1f5f9;
-
-      i {
-        -webkit-text-fill-color: #1e40af;
-        background: none;
-      }
     }
   }
 }

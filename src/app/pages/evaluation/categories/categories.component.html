@@ -1,0 +1,83 @@
+<div class="min-vh-100 bg-light" dir="rtl">
+  <div class="container px-4 py-5">
+    <!-- Hero -->
+    <div class="text-center mb-5">
+      <h1 class="display-4 fw-bold mb-3 text-primary">
+        منصة الاختبارات التفاعلية
+      </h1>
+      <p class="lead text-muted col-md-8 mx-auto">
+        اختر القسم المناسب لك لبدء رحلة التقييم والتطوير الذاتي
+      </p>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="text-center my-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">جارٍ التحميل...</span>
+      </div>
+    </div>
+
+    <!-- Error -->
+    <div *ngIf="error" class="alert alert-danger text-center" role="alert">
+      {{ error }}
+    </div>
+
+    <!-- Sections Grid -->
+    <div class="row g-4 justify-content-center" *ngIf="!loading && !error">
+      <div
+        *ngFor="let section of sections"
+        class="col-md-6 col-lg-5"
+        (click)="goToSection(section.id)"
+        style="cursor: pointer"
+      >
+        <div
+          class="card h-100 shadow-sm border-2 border-light rounded-3 hover-card"
+          [ngClass]="{
+            'border-primary': section.type === 'academic',
+            'border-success': section.type === 'psychological'
+          }"
+        >
+          <div class="card-body d-flex flex-column">
+            <div class="mb-4">
+              <div
+                class="icon-box rounded-3 d-inline-flex align-items-center justify-content-center mb-3"
+                [ngClass]="{
+                  'bg-primary': section.type === 'academic',
+                  'bg-success': section.type === 'psychological'
+                }"
+              >
+                <i
+                  [class]="getIconClass(section.type)"
+                  class="text-white fa-2x"
+                ></i>
+              </div>
+              <h5 class="card-title fs-4">{{ section.name }}</h5>
+              <!-- وصف ديناميكي بناءً على النوع (لأن الـ API لا يُرجع description) -->
+              <p class="card-text text-muted">
+                {{
+                  section.type === 'academic'
+                    ? 'اختبارات تقييم المهارات الأكاديمية'
+                    : 'اختبارات تقييم الجوانب النفسية'
+                }}
+              </p>
+            </div>
+
+            <div class="mt-auto">
+              <ul class="list-unstyled small text-muted mb-3">
+                <li *ngFor="let item of getItemsForSection(section.type)">
+                  • {{ item }}
+                </li>
+              </ul>
+              <button
+                [ngClass]="getButtonClass(section.type)"
+                class="btn w-100"
+              >
+                ابدأ الاختبار
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
