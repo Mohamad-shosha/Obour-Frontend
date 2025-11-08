@@ -14,7 +14,7 @@ export class EvaluationService {
   constructor(private http: HttpClient) {}
 
   private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token'); // تأكد إن التوكن موجود بعد تسجيل الدخول
+    const token = localStorage.getItem('token');
     return new HttpHeaders({
       Authorization: token ? `Bearer ${token}` : '',
     });
