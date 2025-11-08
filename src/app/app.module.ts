@@ -8,7 +8,6 @@ import { HeaderComponent } from './shared/components/header/header.component';
 import { HomeComponent } from './pages/home/home.component';
 import { EvaluationComponent } from './pages/evaluation/evaluation.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { ReportsComponent } from './pages/reports/reports.component';
 import { AboutComponent } from './pages/about/about.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { StatCardComponent } from './shared/components/stat-card/stat-card.component';
@@ -22,6 +21,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { CategoriesComponent } from './pages/evaluation/categories/categories.component';
 import { QuizSelectionComponent } from './pages/evaluation/quiz-selection/quiz-selection.component';
 import { QuizTestComponent } from './pages/evaluation/quiz-test/quiz-test.component';
+import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +30,6 @@ import { QuizTestComponent } from './pages/evaluation/quiz-test/quiz-test.compon
     HomeComponent,
     EvaluationComponent,
     DashboardComponent,
-    ReportsComponent,
     AboutComponent,
     FooterComponent,
     StatCardComponent,
@@ -41,6 +40,7 @@ import { QuizTestComponent } from './pages/evaluation/quiz-test/quiz-test.compon
     CategoriesComponent,
     QuizSelectionComponent,
     QuizTestComponent,
+    AdminDashboardComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,152 @@
+// src/app/pages/admin-dashboard/admin-dashboard.component.scss
+.admin-dashboard {
+  font-family: "Poppins", sans-serif;
+  padding: 30px 40px;
+  background-color: #f7f9fc;
+  border-radius: 15px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  max-width: 1200px;
+  margin: 40px auto;
+  color: #1e293b;
+  user-select: none;
+}
+
+.section-title {
+  font-size: 2.2rem;
+  color: #2563eb;
+  font-weight: 900;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 1px 1px 3px rgba(37, 99, 235, 0.6);
+  text-align: center;
+}
+
+.table-container {
+  overflow-x: auto;
+  margin-bottom: 45px;
+}
+
+.users-table,
+.reservations-table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 10px 40px rgba(59, 130, 246, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  background: white;
+  transition: transform 0.3s ease;
+}
+
+.users-table:hover,
+.reservations-table:hover {
+  box-shadow: 0 14px 60px rgba(59, 130, 246, 0.2);
+}
+
+.users-table th,
+.users-table td,
+.reservations-table th,
+.reservations-table td {
+  padding: 16px 20px;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 1.1rem;
+  color: #334155;
+  transition: background-color 0.25s ease;
+}
+
+.users-table th,
+.reservations-table th {
+  background-color: #3b82f6;
+  color: white;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.users-table tbody tr:hover,
+.reservations-table tbody tr:hover {
+  background-color: #dbeafe;
+  cursor: pointer;
+}
+
+.btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  user-select: none;
+}
+
+.btn-primary {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 1px solid #3b82f6;
+  color: #3b82f6;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25em 0.4em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+}
+
+.badge.bg-success {
+  background-color: #10b981;
+  color: white;
+}
+.badge.bg-warning {
+  background-color: #f59e0b;
+  color: white;
+}
+.badge.bg-danger {
+  background-color: #ef4444;
+  color: white;
+}
+.badge.bg-secondary {
+  background-color: #64748b;
+  color: white;
+}
+.badge.bg-primary {
+  background-color: #3b82f6;
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-dashboard {
+    padding: 20px;
+    margin: 20px;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .users-table th,
+  .users-table td,
+  .reservations-table th,
+  .reservations-table td {
+    font-size: 0.9rem;
+    padding: 10px 12px;
+  }
+
+  .btn {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+  }
+}
