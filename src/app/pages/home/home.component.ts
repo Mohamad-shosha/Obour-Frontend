@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router'; // 👈 أضف هذا الاستيراد
+import { Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-home',
@@ -7,14 +7,12 @@ import { Router } from '@angular/router'; // 👈 أضف هذا الاستيرا
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  constructor(private router: Router) {} // 👈 أضف Router في الـ constructor
+  constructor(private router: Router) {} 
 
-  // دالة للانتقال إلى صفحة الاختبارات
   startEvaluation(): void {
     this.router.navigate(['/evaluation']);
   }
 
-  // بيانات الإحصائيات (كما هي)
   stats = [
     {
       title: 'الجامعات المشاركة',

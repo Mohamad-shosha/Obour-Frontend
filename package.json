@@ -23,6 +23,7 @@
     "aos": "^2.3.4",
     "bootstrap": "5.3",
     "bootstrap-icons": "^1.13.1",
+    "countup.js": "^2.9.0",
     "lucide": "^0.552.0",
     "rxjs": "~7.5.0",
     "sweetalert2": "^11.26.3",

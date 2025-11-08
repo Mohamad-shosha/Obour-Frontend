@@ -2,11 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EvaluationService } from '../../../services/evaluation.service';
 import { Question } from '../../../models/question.model';
-import {
-  SubmitAnswersRequest,
-  AnswerItem,
-} from '../../../models/student-answer.model';
-import Swal from 'sweetalert2'; // ← استيراد SweetAlert2
+import { SubmitAnswersRequest, AnswerItem } from '../../../models/student-answer.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-quiz-test',
@@ -22,6 +19,7 @@ export class QuizTestComponent implements OnInit {
   selectedChoices: { [questionId: number]: number } = {};
   loading = true;
   error: string | null = null;
+  studentId!: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -31,8 +29,19 @@ export class QuizTestComponent implements OnInit {
 
   ngOnInit(): void {
     this.sectionId = Number(this.route.snapshot.paramMap.get('sectionId'));
+    this.loadStudentId();
     this.loadSectionName();
     this.loadQuestions();
+  }
+
+  loadStudentId(): void {
+    this.evaluationService.getCurrentUser().subscribe({
+      next: (user) => (this.studentId = user.id),
+      error: (err) => {
+        console.error('فشل جلب بيانات الطالب', err);
+        this.showError('فشل جلب بيانات الطالب.');
+      },
+    });
   }
 
   loadSectionName(): void {
@@ -79,9 +88,7 @@ export class QuizTestComponent implements OnInit {
   }
 
   goToPrevious(): void {
-    if (this.currentQuestionIndex > 0) {
-      this.currentQuestionIndex--;
-    }
+    if (this.currentQuestionIndex > 0) this.currentQuestionIndex--;
   }
 
   goToNext(): void {
@@ -99,14 +106,12 @@ export class QuizTestComponent implements OnInit {
   }
 
   submitAnswers(): void {
-    const studentId = 1; // ⚠️ استبدل لاحقًا
-
     const answers: AnswerItem[] = this.questions.map((q) => ({
       questionId: q.id,
       choiceId: this.selectedChoices[q.id]!,
     }));
 
-    const request: SubmitAnswersRequest = { studentId, answers };
+    const request: SubmitAnswersRequest = { studentId: this.studentId, answers };
 
     this.evaluationService.submitAnswers(request).subscribe({
       next: () => {
@@ -124,46 +129,33 @@ export class QuizTestComponent implements OnInit {
     this.router.navigate(['/evaluation/sections', this.parentId]);
   }
 
-  getSectionType(): string {
-    return this.questions[0]?.answerType === 'academic'
-      ? 'academic'
-      : 'psychological';
+  // ===== Section type =====
+  getSectionType(): 'academic' | 'psychological' {
+    return this.questions[0]?.answerType?.includes('academic') ? 'academic' : 'psychological';
   }
 
-  // دوال SweetAlert2
+  get isAcademic(): boolean {
+    return this.getSectionType() === 'academic';
+  }
+
+  get textDirection(): 'ltr' | 'rtl' {
+    return this.isAcademic ? 'ltr' : 'rtl';
+  }
+
+  get textAlign(): 'left' | 'right' {
+    return this.isAcademic ? 'left' : 'right';
+  }
+
+  // ===== SweetAlert2 helpers =====
   private showWarning(message: string): void {
-    Swal.fire({
-      icon: 'warning',
-      title: 'تنبيه',
-      text: message,
-      confirmButtonText: 'حسنًا',
-      customClass: {
-        confirmButton: 'btn btn-warning',
-      },
-    });
+    Swal.fire({ icon: 'warning', title: 'تنبيه', text: message, confirmButtonText: 'حسنًا', customClass: { confirmButton: 'btn btn-warning' } });
   }
 
   private showError(message: string): void {
-    Swal.fire({
-      icon: 'error',
-      title: 'خطأ',
-      text: message,
-      confirmButtonText: 'إغلاق',
-      customClass: {
-        confirmButton: 'btn btn-danger',
-      },
-    });
+    Swal.fire({ icon: 'error', title: 'خطأ', text: message, confirmButtonText: 'إغلاق', customClass: { confirmButton: 'btn btn-danger' } });
   }
 
   private showSuccess(message: string): void {
-    Swal.fire({
-      icon: 'success',
-      title: 'نجاح',
-      text: message,
-      confirmButtonText: 'موافق',
-      customClass: {
-        confirmButton: 'btn btn-success',
-      },
-    });
+    Swal.fire({ icon: 'success', title: 'نجاح', text: message, confirmButtonText: 'موافق', customClass: { confirmButton: 'btn btn-success' } });
   }
 }

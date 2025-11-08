@@ -1,4 +1,4 @@
-<div class="min-vh-100 bg-light" dir="rtl">
+<div class="min-vh-100 bg-light">
   <div class="container px-4 py-4">
     <!-- Header -->
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -23,26 +23,21 @@
     </div>
 
     <!-- Question Card -->
-    <div
-      *ngIf="!loading && !error && questions.length > 0"
-      class="max-w-3xl mx-auto"
-    >
+    <div *ngIf="!loading && !error && questions.length > 0" class="max-w-3xl mx-auto">
       <!-- Progress Bar -->
       <div class="mb-5">
         <div class="d-flex justify-content-between mb-2">
           <small class="text-muted">
             السؤال {{ currentQuestionIndex + 1 }} من {{ questions.length }}
           </small>
-          <small class="text-muted"
-            >{{ getProgress() | number : "1.0-0" }}%</small
-          >
+          <small class="text-muted">{{ getProgress() | number: '1.0-0' }}%</small>
         </div>
         <div class="progress" style="height: 8px">
           <div
             class="progress-bar"
             [ngClass]="{
-              'bg-primary': getSectionType() === 'academic',
-              'bg-success': getSectionType() === 'psychological'
+              'bg-primary': isAcademic,
+              'bg-success': !isAcademic
             }"
             [style.width.%]="getProgress()"
           ></div>
@@ -51,28 +46,31 @@
 
       <!-- Question Card -->
       <div class="card border-2">
-        <div class="card-body">
-          <h2 class="h4 mb-4">{{ getCurrentQuestion().text }}</h2>
+        <div class="card-body" [attr.dir]="textDirection">
+          <h2 class="h4 mb-4" [style.text-align]="textAlign">
+            {{ getCurrentQuestion().text }}
+          </h2>
 
           <!-- Choices -->
           <div class="d-grid gap-3">
             <button
               *ngFor="let choice of getCurrentQuestion().choices"
               type="button"
-              class="btn text-end p-3 rounded-3"
+              class="btn p-3 rounded-3"
               [ngClass]="{
-                'btn-primary text-white':
-                  isChoiceSelected(choice.id) &&
-                  getSectionType() === 'academic',
-                'btn-success text-white':
-                  isChoiceSelected(choice.id) &&
-                  getSectionType() === 'psychological',
+                'btn-primary text-white': isChoiceSelected(choice.id) && isAcademic,
+                'btn-success text-white': isChoiceSelected(choice.id) && !isAcademic,
                 'btn-outline-secondary': !isChoiceSelected(choice.id)
               }"
+              [attr.dir]="textDirection"
+              [style.text-align]="textAlign"
               (click)="selectChoice(choice.id)"
             >
               <div class="d-flex justify-content-between align-items-center">
-                <span>{{ choice.text }}</span>
+                <span>
+                  {{ choice.text }}
+                  <small *ngIf="choice.score">({{ choice.score }} نقطة)</small>
+                </span>
               </div>
             </button>
           </div>
@@ -89,16 +87,12 @@
             <button
               class="btn flex-fill"
               [ngClass]="{
-                'btn-primary': getSectionType() === 'academic',
-                'btn-success': getSectionType() === 'psychological'
+                'btn-primary': isAcademic,
+                'btn-success': !isAcademic
               }"
               (click)="goToNext()"
             >
-              {{
-                currentQuestionIndex === questions.length - 1
-                  ? "إنهاء"
-                  : "التالي"
-              }}
+              {{ currentQuestionIndex === questions.length - 1 ? 'إنهاء' : 'التالي' }}
               <i class="fas fa-chevron-left me-2"></i>
             </button>
           </div>
@@ -107,10 +101,7 @@
     </div>
 
     <!-- No questions -->
-    <div
-      *ngIf="!loading && !error && questions.length === 0"
-      class="text-center py-5"
-    >
+    <div *ngIf="!loading && !error && questions.length === 0" class="text-center py-5">
       <p class="text-muted fs-4">لا توجد أسئلة لهذا الاختبار</p>
     </div>
   </div>
