@@ -3,6 +3,21 @@ import { AdminDashboardService } from '../../services/admin-dashboard.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+
+// واجهة لبيانات الإجابة الموسعة
+interface EnrichedAnswer {
+  questionId: number;
+  questionText: string;
+  choiceId: number;
+  choiceText: string;
+  score: number;
+  sectionId: number;
+  sectionName: string;
+  sectionFinalScore: number;
+  createdAt: string;
+}
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -10,12 +25,23 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./admin-dashboard.component.scss'],
 })
 export class AdminDashboardComponent implements OnInit {
+  // --- خصائص الـ sidebar والـ sections ---
+  sidebarOpen: boolean = true;
+  viewSection: string = 'allUsers'; // 'allUsers' | 'teachers' | 'students'
+  currentUser: any = null;
+  teachers: any[] = [];
+  students: any[] = [];
   users: any[] = [];
+  studentScores: { [key: number]: number } = {};
+  studentSectionScores: { [key: number]: any[] } = {};
+
+  // --- خصائص عرض الإجابات ---
   selectedStudent: any = null;
-  studentAnswers: any[] = [];
+  studentAnswers: EnrichedAnswer[] = [];
   sections: any[] = [];
   questionsMap: { [key: number]: any } = {};
-  choicesMap: { [key: number]: any } = {};
+  choicesMap: { [key: number]: any } = [];
+  sectionFinalScores: { [key: string]: number } = {}; // مخزن مؤقت للدرجات
 
   constructor(
     private adminService: AdminDashboardService,
@@ -24,45 +50,99 @@ export class AdminDashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // التحقق من أن المستخدم معلم
     const currentUser = this.authService.getUserFromStorage();
     if (!currentUser || currentUser.role !== 'TEACHER') {
       Swal.fire('غير مصرح', 'هذه الصفحة مخصصة للمعلمين فقط', 'error');
       this.router.navigate(['/evaluation']);
       return;
     }
-
-    this.fetchUsers();
+    this.currentUser = currentUser;
+    this.loadAllUsers();
     this.loadSectionsAndQuestions();
   }
 
-  fetchUsers(): void {
-    this.adminService.getStudents().subscribe({
-      next: (students) => {
-        const studentsWithScores = students.map((student) => ({
-          ...student,
-          score: null,
-        }));
+  // --- دوال الـ sidebar ---
+  toggleSidebar(): void {
+    this.sidebarOpen = !this.sidebarOpen;
+  }
 
-        studentsWithScores.forEach((student) => {
-          this.adminService.getStudentScore(student.id).subscribe((score) => {
-            student.score = score;
-          });
-        });
-
-        this.users = studentsWithScores;
+  loadAllUsers(): void {
+    this.adminService.getAllUsers().subscribe({
+      next: (users) => {
+        this.teachers = users.filter((u) => u.role === 'TEACHER');
+        this.students = users.filter((u) => u.role === 'STUDENT');
+        this.users = users;
+        this.loadAllScores();
       },
       error: (err) => {
-        console.error('فشل تحميل الطلاب', err);
-        Swal.fire('خطأ', 'فشل تحميل قائمة الطلاب', 'error');
+        console.error('فشل تحميل المستخدمين', err);
+        Swal.fire('خطأ', 'فشل تحميل قائمة المستخدمين', 'error');
       },
     });
   }
 
+  loadAllScores(): void {
+    this.students.forEach((student) => {
+      this.adminService.getStudentScore(student.id).subscribe((score) => {
+        this.studentScores[student.id] = score;
+      });
+
+      this.adminService.getAllSections().subscribe((sections) => {
+        const sectionScores = sections.map((section) => ({
+          sectionId: section.id,
+          sectionName: section.name,
+          score: 0,
+        }));
+
+        sectionScores.forEach((ss) => {
+          this.adminService
+            .getStudentScoreBySection(student.id, ss.sectionId)
+            .subscribe((score) => {
+              ss.score = score;
+            });
+        });
+
+        this.studentSectionScores[student.id] = sectionScores;
+      });
+    });
+  }
+
+  // --- دوال العرض ---
+  getUserScore(userId: number): number | null {
+    return this.studentScores[userId] || null;
+  }
+
+  getScoreClass(score: number | null): string {
+    if (score === null) return 'bg-secondary';
+    if (score >= 80) return 'bg-success';
+    if (score >= 70) return 'bg-warning';
+    return 'bg-danger';
+  }
+
+  viewStudentSections(studentId: number): void {
+    const scores = this.studentSectionScores[studentId] || [];
+    let html = '<div dir="rtl" class="text-right">';
+    scores.forEach((ss) => {
+      html += `<div class="mb-2">
+          <strong>${ss.sectionName}:</strong> 
+          <span class="badge ${this.getScoreClass(ss.score)}">${
+        ss.score || '0'
+      }</span>
+        </div>`;
+    });
+    html += '</div>';
+
+    Swal.fire({
+      title: 'درجات الأقسام',
+      html: html,
+      confirmButtonText: 'إغلاق',
+    });
+  }
+
+  // --- دوال عرض الإجابات ---
   loadSectionsAndQuestions(): void {
     this.adminService.getAllSections().subscribe((sections) => {
       this.sections = sections;
-
       sections.forEach((section) => {
         this.adminService
           .getQuestionsBySection(section.id)
@@ -79,39 +159,126 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   viewStudentAnswers(studentId: number): void {
-    const student = this.users.find((u) => u.id === studentId);
-    this.selectedStudent = student;
+    const student = this.students.find((u) => u.id === studentId);
+    if (student) {
+      this.selectedStudent = student;
+      this.studentAnswers = []; // إعادة تعيين
+      this.sectionFinalScores = {};
 
-    this.adminService.getStudentAnswers(studentId).subscribe({
-      next: (answers) => {
-        this.studentAnswers = answers;
-      },
-      error: (err) => {
-        console.error('فشل تحميل الإجابات', err);
-        Swal.fire('خطأ', 'فشل تحميل إجابات الطالب', 'error');
-      },
-    });
+      // جلب الإجابات الأساسية
+      this.adminService.getStudentAnswers(studentId).subscribe({
+        next: (answers) => {
+          if (answers.length === 0) {
+            Swal.fire(
+              'لا توجد إجابات',
+              'لم يقم هذا الطالب بأي تقييمات بعد',
+              'info'
+            );
+            return;
+          }
+
+          // جلب تفاصيل كل إجابة بالتوازي
+          const enrichedAnswers = answers.map((answer) =>
+            this.enrichAnswer(answer, studentId)
+          );
+
+          // الانتظار حتى يتم جلب جميع البيانات
+          Promise.all(enrichedAnswers).then((resolvedAnswers) => {
+            this.studentAnswers = resolvedAnswers.filter(
+              (a) => a !== null
+            ) as EnrichedAnswer[];
+          });
+        },
+        error: (err) => {
+          console.error('فشل تحميل الإجابات', err);
+          Swal.fire('خطأ', 'فشل تحميل إجابات الطالب', 'error');
+        },
+      });
+    }
+  }
+  private async enrichAnswer(
+    answer: any,
+    studentId: number
+  ): Promise<EnrichedAnswer | null> {
+    try {
+      // 1. جلب تفاصيل السؤال
+      const question = await this.getQuestionById(
+        answer.questionId
+      ).toPromise();
+      if (!question || !question.sectionId) return null; // تحقق من وجود sectionId
+
+      // 2. جلب تفاصيل القسم
+      const section = await this.getSectionById(question.sectionId).toPromise();
+      if (!section) return null;
+
+      // 3. جلب درجة القسم
+      const sectionKey = `${studentId}-${question.sectionId}`;
+      if (this.sectionFinalScores[sectionKey] === undefined) {
+        const score = await this.getSectionScore(
+          studentId,
+          question.sectionId
+        ).toPromise();
+        this.sectionFinalScores[sectionKey] = score ?? 0; // التعامل مع null
+      }
+
+      // 4. العثور على نص الخيار ودرجته
+      const choice = question.choices.find(
+        (c: any) => c.id === answer.choiceId
+      );
+
+      return {
+        questionId: answer.questionId,
+        questionText: question.text,
+        choiceId: answer.choiceId,
+        choiceText: choice?.text || 'غير معروف',
+        score: choice?.score || 0,
+        sectionId: question.sectionId,
+        sectionName: section.name,
+        sectionFinalScore: this.sectionFinalScores[sectionKey] ?? 0,
+        createdAt: answer.createdAt,
+      };
+    } catch (error) {
+      console.error('خطأ في تعزيز الإجابة:', error);
+      return null;
+    }
+  }
+
+  // دوال مساعدة لجلب البيانات
+  private getQuestionById(questionId: number): Observable<any> {
+    return this.adminService.getQuestionById(questionId).pipe(
+      catchError(() => {
+        console.error('فشل جلب تفاصيل السؤال:', questionId);
+        return of(null);
+      })
+    );
+  }
+
+  private getSectionById(sectionId: number): Observable<any> {
+    return this.adminService.getSection(sectionId).pipe(
+      catchError(() => {
+        console.error('فشل جلب تفاصيل القسم:', sectionId);
+        return of(null);
+      })
+    );
+  }
+
+  private getSectionScore(
+    studentId: number,
+    sectionId: number
+  ): Observable<number> {
+    return this.adminService
+      .getStudentScoreBySection(studentId, sectionId)
+      .pipe(
+        catchError(() => {
+          console.error('فشل جلب درجة القسم:', { studentId, sectionId });
+          return of(0);
+        })
+      );
   }
 
   closeStudentDetails(): void {
     this.selectedStudent = null;
     this.studentAnswers = [];
-  }
-
-  // دوال العرض
-  getRoleLabel(role: string): string {
-    return role === 'TEACHER' ? 'معلم' : 'طالب';
-  }
-
-  getRoleClass(role: string): string {
-    return role === 'TEACHER' ? 'badge bg-primary' : 'badge bg-success';
-  }
-
-  getScoreClass(score: number): string {
-    if (score === null) return 'badge bg-secondary';
-    if (score >= 80) return 'badge bg-success';
-    if (score >= 70) return 'badge bg-warning';
-    return 'badge bg-danger';
   }
 
   getQuestionSectionId(questionId: number): number {

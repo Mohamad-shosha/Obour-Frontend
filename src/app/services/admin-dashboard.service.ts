@@ -1,4 +1,3 @@
-// src/app/services/admin-dashboard.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -51,6 +50,24 @@ export class AdminDashboardService {
   getStudentScore(studentId: number): Observable<number> {
     return this.http.get<number>(
       `${this.baseUrl}/student-answers/score/${studentId}`,
+      {
+        headers: this.getAuthHeaders(),
+      }
+    );
+  }
+
+  getSection(sectionId: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/sections/${sectionId}`, {
+      headers: this.getAuthHeaders(),
+    });
+  }
+
+  getStudentScoreBySection(
+    studentId: number,
+    sectionId: number
+  ): Observable<number> {
+    return this.http.get<number>(
+      `${this.baseUrl}/student-answers/score/${studentId}/section/${sectionId}`,
       {
         headers: this.getAuthHeaders(),
       }

@@ -1,13 +1,12 @@
-<!-- src/app/app.component.html -->
 <div class="min-vh-100 d-flex flex-column bg-light">
-  <!-- Header بدون أي إدخالات أو إخراجات -->
-  <app-header></app-header>
+  <!-- نعرض Header فقط إذا hideHeaderFooter = false -->
+  <app-header *ngIf="!hideHeaderFooter"></app-header>
 
-  <!-- محتوى الصفحة الديناميكي سيُعرض هنا -->
+  <!-- محتوى الصفحة الديناميكي -->
   <main class="flex-grow-1">
     <router-outlet></router-outlet>
   </main>
 
-  <!-- Footer -->
-  <app-footer></app-footer>
+  <!-- نعرض Footer فقط إذا hideHeaderFooter = false -->
+  <app-footer *ngIf="!hideHeaderFooter"></app-footer>
 </div>
