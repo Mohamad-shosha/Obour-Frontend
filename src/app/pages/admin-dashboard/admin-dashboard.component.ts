@@ -54,7 +54,7 @@ export class AdminDashboardComponent implements OnInit {
     const currentUser = this.authService.getUserFromStorage();
     if (!currentUser || currentUser.role !== 'TEACHER') {
       Swal.fire('غير مصرح', 'هذه الصفحة مخصصة للمعلمين فقط', 'error');
-      this.router.navigate(['/evaluation']);
+      this.router.navigate(['/home']);
       return;
     }
     this.currentUser = currentUser;

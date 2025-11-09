@@ -12,7 +12,7 @@
 .hamburger .hamburger-inner,
 .hamburger .hamburger-inner::before,
 .hamburger .hamburger-inner::after {
-  background-color: #0d6efd; /* اللون الافتراضي */
+  background-color: #f1f5f9;
   transition: all 0.4s ease;
 }
 
@@ -20,7 +20,7 @@
 .hamburger.is-active .hamburger-inner,
 .hamburger.is-active .hamburger-inner::before,
 .hamburger.is-active .hamburger-inner::after {
-  background-color: #0b5ed7; /* اللون الجديد عند الفتح */
+  background-color: #f1f5f9;
 }
 
 .hamburger:hover {
@@ -30,6 +30,8 @@
 /* أنماط الـ Sidebar */
 .sidebar {
   box-shadow: 3px 0 15px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(180deg, #1e40af 0%, #1e3a8a 100%);
+  color: #f1f5f9;
 }
 
 /* أنماط رابط الصفحة الرئيسية */

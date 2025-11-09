@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EvaluationService } from '../../../services/evaluation.service';
 import { Section } from '../../../models/section.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-categories',
@@ -30,8 +31,15 @@ export class CategoriesComponent implements OnInit {
       },
       error: (err) => {
         console.error('فشل تحميل الأقسام', err);
-        this.error = 'فشل تحميل الأقسام. تأكد من تشغيل الخادم.';
         this.loading = false;
+        Swal.fire({
+          icon: 'error',
+          title: 'غير مسموح',
+          text: 'برجاء تسجيل الدخول أولاً',
+          confirmButtonText: 'حسناً',
+        }).then(() => {
+          this.router.navigate(['/auth']);
+        });
       },
     });
   }
