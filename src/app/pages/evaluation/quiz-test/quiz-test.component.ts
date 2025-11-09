@@ -38,15 +38,18 @@ export class QuizTestComponent implements OnInit {
     this.sectionId = Number(this.route.snapshot.paramMap.get('sectionId'));
     this.loadStudentId();
     this.loadSectionAndDirection();
-    this.loadQuestions();
+    // ملاحظة: loadQuestions() سيتم استدعاؤها من checkIfAlreadyAttempted أو بعد التحقق
   }
 
   loadStudentId(): void {
     this.evaluationService.getCurrentUser().subscribe({
-      next: (user) => (this.studentId = user.id),
+      next: (user) => {
+        this.studentId = user.id;
+        // سيتم تحميل القسم والاتجاه ثم التحقق من المحاولة السابقة
+      },
       error: (err) => {
         console.error('فشل جلب بيانات الطالب', err);
-        this.showError('فشل جلب بيانات الطالب.  ');
+        this.showError('فشل جلب بيانات الطالب.');
       },
     });
   }
@@ -67,15 +70,81 @@ export class QuizTestComponent implements OnInit {
               this.textDirection = 'rtl';
               this.textAlign = 'right';
             }
+            // بعد تحميل الاتجاه، نبدأ التحقق من المحاولة السابقة
+            this.checkIfAlreadyAttempted();
           },
-          error: (err) => console.error('فشل جلب بيانات القسم الأب', err),
+          error: (err) => {
+            console.error('فشل جلب بيانات القسم الأب', err);
+            this.checkIfAlreadyAttempted(); // تحقق حتى لو فشل جلب الأب
+          },
         });
       },
       error: (err) => {
         console.error('فشل تحميل اسم الاختبار', err);
         this.showError('فشل تحميل بيانات الاختبار');
+        // لا نستدعي checkIf... هنا لأننا بحاجة لـ sectionId و studentId
       },
     });
+  }
+
+  checkIfAlreadyAttempted(): void {
+    this.evaluationService
+      .getStudentScoreBySection(this.studentId, this.sectionId)
+      .subscribe({
+        next: (score: number) => {
+          // جلب الأسئلة لحساب الدرجة القصوى
+          this.evaluationService
+            .getQuestionsBySection(this.sectionId)
+            .subscribe({
+              next: (questions) => {
+                const totalQuestions = questions.length;
+                const maxScore = this.isAcademic
+                  ? totalQuestions
+                  : totalQuestions * 5;
+                const isPassed = score >= maxScore / 2;
+
+                if (isPassed) {
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'تم اجتياز الاختبار مسبقًا',
+                    html: `لقد اجتزت اختبار <strong>${this.sectionName}</strong> سابقًا بدرجة ${score} من ${maxScore}.`,
+                    confirmButtonText: 'العودة',
+                    customClass: { confirmButton: 'btn btn-success' },
+                  }).then(() => {
+                    this.router.navigate(['/evaluation']);
+                  });
+                } else {
+                  Swal.fire({
+                    icon: 'info',
+                    title: 'لقد حاولت هذا الاختبار مسبقًا',
+                    html: `درجتك كانت ${score} من ${maxScore}.<br>نوصيك بمراجعة المحتوى وتطوير مستواك.`,
+                    confirmButtonText: 'العودة',
+                    customClass: { confirmButton: 'btn btn-primary' },
+                  }).then(() => {
+                    this.router.navigate(['/evaluation']);
+                  });
+                }
+              },
+              error: (err) => {
+                console.error('فشل تحميل الأسئلة لحساب الدرجة القصوى', err);
+                // حتى لو فشل، نعرض رسالة عامة
+                Swal.fire({
+                  icon: 'info',
+                  title: 'تم إكمال هذا الاختبار من قبل',
+                  text: 'لا يمكن إعادة الاختبار مرة أخرى.',
+                  confirmButtonText: 'العودة',
+                  customClass: { confirmButton: 'btn btn-primary' },
+                }).then(() => {
+                  this.router.navigate(['/evaluation']);
+                });
+              },
+            });
+        },
+        error: () => {
+          // لا توجد درجة سابقة → يُسمح بالدخول
+          this.loadQuestions();
+        },
+      });
   }
 
   loadQuestions(): void {
@@ -145,14 +214,11 @@ export class QuizTestComponent implements OnInit {
       answers,
     };
 
-    // أولاً: إرسال الإجابات
     this.evaluationService.submitAnswers(request).subscribe({
       next: () => {
-        // ثانيًا: حساب الدرجة القصوى حسب نوع القسم
         const totalQuestions = this.questions.length;
         const maxScore = this.isAcademic ? totalQuestions : totalQuestions * 5;
 
-        // ثالثًا: جلب الدرجة الفعلية من السيرفر (مثلما تفعل في لوحة التحكم)
         this.evaluationService
           .getStudentScoreBySection(this.studentId, this.sectionId)
           .subscribe({
