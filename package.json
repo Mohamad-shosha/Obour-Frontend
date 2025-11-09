@@ -26,7 +26,7 @@
     "countup.js": "^2.9.0",
     "hamburgers": "^1.2.1",
     "lucide": "^0.552.0",
-    "rxjs": "~7.5.0",
+    "rxjs": "^7.8.2",
     "sweetalert2": "^11.26.3",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

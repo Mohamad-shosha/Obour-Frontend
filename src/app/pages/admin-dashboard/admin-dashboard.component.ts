@@ -3,8 +3,9 @@ import { AdminDashboardService } from '../../services/admin-dashboard.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
+import { catchError, switchMap, map } from 'rxjs/operators';
 
 // واجهة لبيانات الإجابة الموسعة
 interface EnrichedAnswer {
@@ -40,7 +41,7 @@ export class AdminDashboardComponent implements OnInit {
   studentAnswers: EnrichedAnswer[] = [];
   sections: any[] = [];
   questionsMap: { [key: number]: any } = {};
-  choicesMap: { [key: number]: any } = [];
+  choicesMap: { [key: number]: any } = {};
   sectionFinalScores: { [key: string]: number } = {}; // مخزن مؤقت للدرجات
 
   constructor(
@@ -120,23 +121,127 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   viewStudentSections(studentId: number): void {
-    const scores = this.studentSectionScores[studentId] || [];
-    let html = '<div dir="rtl" class="text-right">';
-    scores.forEach((ss) => {
-      html += `<div class="mb-2">
-          <strong>${ss.sectionName}:</strong> 
-          <span class="badge ${this.getScoreClass(ss.score)}">${
-        ss.score || '0'
-      }</span>
-        </div>`;
-    });
-    html += '</div>';
+    this.adminService.getRootSections().subscribe((rootSections) => {
+      let html =
+        '<div dir="rtl" class="text-right" style="max-height: 600px; overflow-y: auto; padding: 10px;">';
 
-    Swal.fire({
-      title: 'درجات الأقسام',
-      html: html,
-      confirmButtonText: 'إغلاق',
+      if (rootSections.length === 0) {
+        html += '<div class="text-center py-4">لا توجد أقسام متاحة</div></div>';
+        Swal.fire({
+          title: 'درجات الأقسام',
+          html: html,
+          confirmButtonText: 'إغلاق',
+          customClass: { popup: 'swal2-wide' },
+        });
+        return;
+      }
+
+      // معالجة كل قسم رئيسي
+      const rootSectionsObs = rootSections.map((rootSection) =>
+        this.adminService.getSubSections(rootSection.id).pipe(
+          catchError(() => of([])), // إذا لم توجد أقسام فرعية
+          // بعد الحصول على كل SubSections، نجمع الدرجات
+          switchMap((subSections) => {
+            if (subSections.length > 0) {
+              // جلب درجات كل SubSection
+              const scoresObs = subSections.map((sub) =>
+                this.adminService
+                  .getStudentScoreBySection(studentId, sub.id)
+                  .pipe(catchError(() => of(0)))
+              );
+              return forkJoin(scoresObs).pipe(
+                map((scores) => ({ rootSection, subSections, scores }))
+              );
+            } else {
+              // لا يوجد SubSections، فقط الدرجة العامة للقسم
+              return this.adminService
+                .getStudentScoreBySection(studentId, rootSection.id)
+                .pipe(
+                  map((score) => ({
+                    rootSection,
+                    subSections: [],
+                    scores: [score],
+                  }))
+                );
+            }
+          })
+        )
+      );
+
+      forkJoin(rootSectionsObs).subscribe((results) => {
+        results.forEach(({ rootSection, subSections, scores }) => {
+          const isAcademic = rootSection.type === 'academic';
+          const bgColor = isAcademic ? 'bg-primary' : 'bg-success';
+          const textColor = 'text-white';
+          const icon = isAcademic ? 'bi-mortarboard-fill' : 'bi-brain';
+
+          html += `<div class="card mb-4 shadow-sm border-0">
+          <div class="card-header ${bgColor} ${textColor}">
+            <h5 class="mb-0">
+              <i class="bi ${icon} me-2"></i>${rootSection.name}
+            </h5>
+          </div>
+          <div class="card-body">`;
+
+          let totalScore = 0;
+
+          if (subSections.length > 0) {
+            subSections.forEach((sub, idx) => {
+              const score = scores[idx];
+              totalScore += score;
+              html += `<div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+              <span class="fw-medium">${sub.name}</span>
+              <span class="badge ${this.getScoreClass(
+                score
+              )} px-3 py-2">${score}</span>
+            </div>`;
+            });
+          } else {
+            totalScore = scores[0];
+            html += `<div class="d-flex justify-content-between align-items-center py-2"">
+            <span class="fw-medium">الدرجة العامة</span>
+            <span class="badge ${this.getScoreClass(
+              totalScore
+            )} px-3 py-2">${totalScore}</span>
+          </div>`;
+          }
+
+          // المجموع الكلي أسفل الكارد
+          html += `<div class="d-flex justify-content-between align-items-center mt-3 border-top border-2 ${bgColor}">
+          <span class="fw-bold ${textColor}">المجموع الكلي</span>
+          <span class="badge ${bgColor} ${textColor} px-3 py-2">${totalScore}</span>
+        </div>`;
+
+          html += '</div></div>'; // إغلاق card-body و card
+        });
+
+        html += '</div>'; // إغلاق div الرئيسي
+        Swal.fire({
+          title: 'درجات الأقسام',
+          html: html,
+          confirmButtonText: 'إغلاق',
+          customClass: { popup: 'swal2-wide' },
+          width: '600px',
+        });
+      });
     });
+  }
+
+  // دالة مساعدة للتحديث وعرض النتيجة
+  private cardCount = 0;
+  private updateAndShowSwal(html: string, totalCards: number): void {
+    this.cardCount++;
+    if (this.cardCount === totalCards) {
+      html += '</div>';
+      Swal.fire({
+        title: 'درجات الأقسام',
+        html: html,
+        confirmButtonText: 'إغلاق',
+        customClass: { popup: 'swal2-wide' },
+        width: '500px',
+      });
+      this.cardCount = 0; // إعادة التعيين للمرة القادمة
+    }
   }
 
   // --- دوال عرض الإجابات ---
@@ -196,6 +301,7 @@ export class AdminDashboardComponent implements OnInit {
       });
     }
   }
+
   private async enrichAnswer(
     answer: any,
     studentId: number
@@ -205,7 +311,7 @@ export class AdminDashboardComponent implements OnInit {
       const question = await this.getQuestionById(
         answer.questionId
       ).toPromise();
-      if (!question || !question.sectionId) return null; // تحقق من وجود sectionId
+      if (!question || !question.sectionId) return null;
 
       // 2. جلب تفاصيل القسم
       const section = await this.getSectionById(question.sectionId).toPromise();
@@ -218,10 +324,9 @@ export class AdminDashboardComponent implements OnInit {
           studentId,
           question.sectionId
         ).toPromise();
-        this.sectionFinalScores[sectionKey] = score ?? 0; // التعامل مع null
+        this.sectionFinalScores[sectionKey] = score ?? 0;
       }
 
-      // 4. العثور على نص الخيار ودرجته
       const choice = question.choices.find(
         (c: any) => c.id === answer.choiceId
       );
@@ -269,9 +374,11 @@ export class AdminDashboardComponent implements OnInit {
     return this.adminService
       .getStudentScoreBySection(studentId, sectionId)
       .pipe(
-        catchError(() => {
-          console.error('فشل جلب درجة القسم:', { studentId, sectionId });
-          return of(0);
+        catchError((err) => {
+          console.warn(
+            `لا توجد إجابات للطالب ${studentId} في القسم ${sectionId}, سيتم اعتبار الدرجة 0.`
+          );
+          return of(0); // اعتبر الدرجة 0 بدل الخطأ
         })
       );
   }

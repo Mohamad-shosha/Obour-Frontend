@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+
 @Injectable({
   providedIn: 'root',
 })
@@ -40,9 +41,7 @@ export class AdminDashboardService {
   getStudentAnswers(studentId: number): Observable<any[]> {
     return this.http.get<any[]>(
       `${this.baseUrl}/student-answers/student/${studentId}`,
-      {
-        headers: this.getAuthHeaders(),
-      }
+      { headers: this.getAuthHeaders() }
     );
   }
 
@@ -50,16 +49,8 @@ export class AdminDashboardService {
   getStudentScore(studentId: number): Observable<number> {
     return this.http.get<number>(
       `${this.baseUrl}/student-answers/score/${studentId}`,
-      {
-        headers: this.getAuthHeaders(),
-      }
+      { headers: this.getAuthHeaders() }
     );
-  }
-
-  getSection(sectionId: number): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/sections/${sectionId}`, {
-      headers: this.getAuthHeaders(),
-    });
   }
 
   getStudentScoreBySection(
@@ -68,15 +59,34 @@ export class AdminDashboardService {
   ): Observable<number> {
     return this.http.get<number>(
       `${this.baseUrl}/student-answers/score/${studentId}/section/${sectionId}`,
-      {
-        headers: this.getAuthHeaders(),
-      }
+      { headers: this.getAuthHeaders() }
     );
   }
 
-  // --- دعم عرض البيانات ---
-  getAllSections(): Observable<any[]> {
+  // --- إدارة الأقسام ---
+  getSection(sectionId: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/sections/${sectionId}`, {
+      headers: this.getAuthHeaders(),
+    });
+  }
+
+  // ✅ جلب الأقسام الجذرية
+  getRootSections(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/sections/root`, {
+      headers: this.getAuthHeaders(),
+    });
+  }
+
+  // ✅ جلب الأقسام الفرعية لقسم رئيسي
+  getSubSections(parentId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/sections/parent/${parentId}`, {
+      headers: this.getAuthHeaders(),
+    });
+  }
+
+  // --- الأسئلة ---
+  getAllSections(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/sections`, {
       headers: this.getAuthHeaders(),
     });
   }
@@ -84,9 +94,7 @@ export class AdminDashboardService {
   getQuestionsBySection(sectionId: number): Observable<any[]> {
     return this.http.get<any[]>(
       `${this.baseUrl}/questions/section/${sectionId}`,
-      {
-        headers: this.getAuthHeaders(),
-      }
+      { headers: this.getAuthHeaders() }
     );
   }
 
