@@ -21,30 +21,55 @@ export class EvaluationService {
   }
 
   getSections(): Observable<Section[]> {
-    return this.http.get<Section[]>(`${this.baseUrl}/sections`, { headers: this.getAuthHeaders() });
+    return this.http.get<Section[]>(`${this.baseUrl}/sections`, {
+      headers: this.getAuthHeaders(),
+    });
   }
 
   getSection(id: number): Observable<Section> {
-    return this.http.get<Section>(`${this.baseUrl}/sections/${id}`, { headers: this.getAuthHeaders() });
+    return this.http.get<Section>(`${this.baseUrl}/sections/${id}`, {
+      headers: this.getAuthHeaders(),
+    });
   }
 
   getRootSections(): Observable<Section[]> {
-    return this.http.get<Section[]>(`${this.baseUrl}/sections/root`, { headers: this.getAuthHeaders() });
+    return this.http.get<Section[]>(`${this.baseUrl}/sections/root`, {
+      headers: this.getAuthHeaders(),
+    });
   }
 
   getSubSections(parentId: number): Observable<Section[]> {
-    return this.http.get<Section[]>(`${this.baseUrl}/sections/parent/${parentId}`, { headers: this.getAuthHeaders() });
+    return this.http.get<Section[]>(
+      `${this.baseUrl}/sections/parent/${parentId}`,
+      { headers: this.getAuthHeaders() }
+    );
   }
 
   getQuestionsBySection(sectionId: number): Observable<Question[]> {
-    return this.http.get<Question[]>(`${this.baseUrl}/questions/section/${sectionId}`, { headers: this.getAuthHeaders() });
+    return this.http.get<Question[]>(
+      `${this.baseUrl}/questions/section/${sectionId}`,
+      { headers: this.getAuthHeaders() }
+    );
   }
 
   submitAnswers(request: SubmitAnswersRequest): Observable<any> {
-    return this.http.post(`${this.baseUrl}/student-answers/submit`, request, { headers: this.getAuthHeaders() });
+    return this.http.post(`${this.baseUrl}/student-answers/submit`, request, {
+      headers: this.getAuthHeaders(),
+    });
+  }
+  getStudentScoreBySection(
+    studentId: number,
+    sectionId: number
+  ): Observable<number> {
+    return this.http.get<number>(
+      `${this.baseUrl}/student-answers/score/${studentId}/section/${sectionId}`,
+      { headers: this.getAuthHeaders() }
+    );
   }
 
-getCurrentUser(): Observable<any> {
-  return this.http.get<any>(`${this.baseUrl}/auth/me`, { headers: this.getAuthHeaders() });
-}
+  getCurrentUser(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/auth/me`, {
+      headers: this.getAuthHeaders(),
+    });
+  }
 }

@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EvaluationService } from '../../../services/evaluation.service';
 import { Question } from '../../../models/question.model';
-import { SubmitAnswersRequest, AnswerItem } from '../../../models/student-answer.model';
+import {
+  SubmitAnswersRequest,
+  AnswerItem,
+} from '../../../models/student-answer.model';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -43,22 +46,20 @@ export class QuizTestComponent implements OnInit {
       next: (user) => (this.studentId = user.id),
       error: (err) => {
         console.error('فشل جلب بيانات الطالب', err);
-        this.showError('فشل جلب بيانات الطالب.');
+        this.showError('فشل جلب بيانات الطالب.  ');
       },
     });
   }
 
-  // ✅ تحميل القسم الحالي وتحديد اتجاه الأسئلة حسب القسم الأب
   loadSectionAndDirection(): void {
     this.evaluationService.getSection(this.sectionId).subscribe({
       next: (section) => {
         this.sectionName = section.name;
         this.parentId = section.parentId!;
 
-        // جلب القسم الأب لتحديد نوعه
         this.evaluationService.getSection(this.parentId).subscribe({
           next: (parentSection) => {
-            const type = parentSection.name.toLowerCase(); // أو parentSection.type إذا موجود
+            const type = parentSection.name.toLowerCase();
             if (type.includes('academic')) {
               this.textDirection = 'ltr';
               this.textAlign = 'left';
@@ -126,17 +127,92 @@ export class QuizTestComponent implements OnInit {
   }
 
   submitAnswers(): void {
+    const hasUnanswered = this.questions.some(
+      (q) => this.selectedChoices[q.id] == null
+    );
+    if (hasUnanswered) {
+      this.showWarning('يرجى الإجابة على جميع الأسئلة قبل الإرسال.');
+      return;
+    }
+
     const answers: AnswerItem[] = this.questions.map((q) => ({
       questionId: q.id,
       choiceId: this.selectedChoices[q.id]!,
     }));
 
-    const request: SubmitAnswersRequest = { studentId: this.studentId, answers };
+    const request: SubmitAnswersRequest = {
+      studentId: this.studentId,
+      answers,
+    };
 
+    // أولاً: إرسال الإجابات
     this.evaluationService.submitAnswers(request).subscribe({
       next: () => {
-        this.showSuccess('تم إرسال الإجابات بنجاح!');
-        this.router.navigate(['/evaluation']);
+        // ثانيًا: حساب الدرجة القصوى حسب نوع القسم
+        const totalQuestions = this.questions.length;
+        const maxScore = this.isAcademic ? totalQuestions : totalQuestions * 5;
+
+        // ثالثًا: جلب الدرجة الفعلية من السيرفر (مثلما تفعل في لوحة التحكم)
+        this.evaluationService
+          .getStudentScoreBySection(this.studentId, this.sectionId)
+          .subscribe({
+            next: (actualScore: number) => {
+              const isPassed = actualScore >= maxScore / 2;
+
+              if (isPassed) {
+                Swal.fire({
+                  icon: 'success',
+                  title: 'تم اجتياز الاختبار بنجاح!',
+                  html: `<strong>${this.sectionName}</strong><br><br>درجتك: ${actualScore} من ${maxScore}`,
+                  showCancelButton: true,
+                  confirmButtonText: 'اختبارات أخرى',
+                  cancelButtonText: 'الرئيسية',
+                  reverseButtons: true,
+                  customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-outline-secondary',
+                  },
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    this.router.navigate([
+                      '/evaluation/sections',
+                      this.parentId,
+                    ]);
+                  } else {
+                    this.router.navigate(['/evaluation']);
+                  }
+                });
+              } else {
+                Swal.fire({
+                  icon: 'info',
+                  title: 'ننصحك بالمراجعة والتطوير',
+                  html: `في اختبار <strong>${this.sectionName}</strong>، درجتك: ${actualScore} من ${maxScore}.<br><br>نوصيك بمراجعة المحتوى وتحسين الأداء.`,
+                  showCancelButton: true,
+                  confirmButtonText: 'اختبارات أخرى',
+                  cancelButtonText: 'الرئيسية',
+                  reverseButtons: true,
+                  customClass: {
+                    confirmButton: 'btn btn-primary',
+                    cancelButton: 'btn btn-outline-secondary',
+                  },
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    this.router.navigate([
+                      '/evaluation/sections',
+                      this.parentId,
+                    ]);
+                  } else {
+                    this.router.navigate(['/evaluation']);
+                  }
+                });
+              }
+            },
+            error: (err) => {
+              console.error('فشل جلب درجة القسم بعد الإرسال', err);
+              this.showError('فشل جلب الدرجة بعد الإرسال');
+              this.router.navigate(['/evaluation']);
+            },
+          });
       },
       error: (err) => {
         console.error('فشل إرسال الإجابات', err);
@@ -154,14 +230,22 @@ export class QuizTestComponent implements OnInit {
   }
 
   private showWarning(message: string): void {
-    Swal.fire({ icon: 'warning', title: 'تنبيه', text: message, confirmButtonText: 'حسنًا', customClass: { confirmButton: 'btn btn-warning' } });
+    Swal.fire({
+      icon: 'warning',
+      title: 'تنبيه',
+      text: message,
+      confirmButtonText: 'حسنًا',
+      customClass: { confirmButton: 'btn btn-warning' },
+    });
   }
 
   private showError(message: string): void {
-    Swal.fire({ icon: 'error', title: 'خطأ', text: message, confirmButtonText: 'إغلاق', customClass: { confirmButton: 'btn btn-danger' } });
-  }
-
-  private showSuccess(message: string): void {
-    Swal.fire({ icon: 'success', title: 'نجاح', text: message, confirmButtonText: 'موافق', customClass: { confirmButton: 'btn btn-success' } });
+    Swal.fire({
+      icon: 'error',
+      title: 'خطأ',
+      text: message,
+      confirmButtonText: 'إغلاق',
+      customClass: { confirmButton: 'btn btn-danger' },
+    });
   }
 }
