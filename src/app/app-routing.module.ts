@@ -12,6 +12,7 @@ import { CategoriesComponent } from './pages/evaluation/categories/categories.co
 import { QuizSelectionComponent } from './pages/evaluation/quiz-selection/quiz-selection.component';
 import { QuizTestComponent } from './pages/evaluation/quiz-test/quiz-test.component';
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
+import { EvaluationAboutComponent } from './pages/evaluation/evaluation-about/evaluation-about.component';
 
 // تعريف المسارات
 const routes: Routes = [
@@ -25,6 +26,10 @@ const routes: Routes = [
   { path: 'evaluation/sections/:sectionId', component: QuizSelectionComponent },
   { path: 'evaluation/test/:sectionId', component: QuizTestComponent },
   { path: 'admin/dashboard', component: AdminDashboardComponent },
+  {
+    path: 'evaluation/about',
+    component: EvaluationAboutComponent,
+  },
   { path: '**', redirectTo: '/home' }, // صفحة خطأ 404
 ];
 
