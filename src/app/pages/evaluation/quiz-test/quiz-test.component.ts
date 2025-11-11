@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EvaluationService } from '../../../services/evaluation.service';
 import { Question } from '../../../models/question.model';
-import { SubmitAnswersRequest, AnswerItem } from '../../../models/student-answer.model';
+import {
+  SubmitAnswersRequest,
+  AnswerItem,
+} from '../../../models/student-answer.model';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -35,12 +38,15 @@ export class QuizTestComponent implements OnInit {
     this.sectionId = Number(this.route.snapshot.paramMap.get('sectionId'));
     this.loadStudentId();
     this.loadSectionAndDirection();
-    this.loadQuestions();
+    // ملاحظة: loadQuestions() سيتم استدعاؤها من checkIfAlreadyAttempted أو بعد التحقق
   }
 
   loadStudentId(): void {
     this.evaluationService.getCurrentUser().subscribe({
-      next: (user) => (this.studentId = user.id),
+      next: (user) => {
+        this.studentId = user.id;
+        // سيتم تحميل القسم والاتجاه ثم التحقق من المحاولة السابقة
+      },
       error: (err) => {
         console.error('فشل جلب بيانات الطالب', err);
         this.showError('فشل جلب بيانات الطالب.');
@@ -48,17 +54,15 @@ export class QuizTestComponent implements OnInit {
     });
   }
 
-  // ✅ تحميل القسم الحالي وتحديد اتجاه الأسئلة حسب القسم الأب
   loadSectionAndDirection(): void {
     this.evaluationService.getSection(this.sectionId).subscribe({
       next: (section) => {
         this.sectionName = section.name;
         this.parentId = section.parentId!;
 
-        // جلب القسم الأب لتحديد نوعه
         this.evaluationService.getSection(this.parentId).subscribe({
           next: (parentSection) => {
-            const type = parentSection.name.toLowerCase(); // أو parentSection.type إذا موجود
+            const type = parentSection.name.toLowerCase();
             if (type.includes('academic')) {
               this.textDirection = 'ltr';
               this.textAlign = 'left';
@@ -66,15 +70,81 @@ export class QuizTestComponent implements OnInit {
               this.textDirection = 'rtl';
               this.textAlign = 'right';
             }
+            // بعد تحميل الاتجاه، نبدأ التحقق من المحاولة السابقة
+            this.checkIfAlreadyAttempted();
           },
-          error: (err) => console.error('فشل جلب بيانات القسم الأب', err),
+          error: (err) => {
+            console.error('فشل جلب بيانات القسم الأب', err);
+            this.checkIfAlreadyAttempted(); // تحقق حتى لو فشل جلب الأب
+          },
         });
       },
       error: (err) => {
         console.error('فشل تحميل اسم الاختبار', err);
         this.showError('فشل تحميل بيانات الاختبار');
+        // لا نستدعي checkIf... هنا لأننا بحاجة لـ sectionId و studentId
       },
     });
+  }
+
+  checkIfAlreadyAttempted(): void {
+    this.evaluationService
+      .getStudentScoreBySection(this.studentId, this.sectionId)
+      .subscribe({
+        next: (score: number) => {
+          // جلب الأسئلة لحساب الدرجة القصوى
+          this.evaluationService
+            .getQuestionsBySection(this.sectionId)
+            .subscribe({
+              next: (questions) => {
+                const totalQuestions = questions.length;
+                const maxScore = this.isAcademic
+                  ? totalQuestions
+                  : totalQuestions * 5;
+                const isPassed = score >= maxScore / 2;
+
+                if (isPassed) {
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'تم اجتياز الاختبار مسبقًا',
+                    html: `لقد اجتزت اختبار <strong>${this.sectionName}</strong> سابقًا بدرجة ${score} من ${maxScore}.`,
+                    confirmButtonText: 'العودة',
+                    customClass: { confirmButton: 'btn btn-success' },
+                  }).then(() => {
+                    this.router.navigate(['/evaluation']);
+                  });
+                } else {
+                  Swal.fire({
+                    icon: 'info',
+                    title: 'لقد حاولت هذا الاختبار مسبقًا',
+                    html: `درجتك كانت ${score} من ${maxScore}.<br>نوصيك بمراجعة المحتوى وتطوير مستواك.`,
+                    confirmButtonText: 'العودة',
+                    customClass: { confirmButton: 'btn btn-primary' },
+                  }).then(() => {
+                    this.router.navigate(['/evaluation']);
+                  });
+                }
+              },
+              error: (err) => {
+                console.error('فشل تحميل الأسئلة لحساب الدرجة القصوى', err);
+                // حتى لو فشل، نعرض رسالة عامة
+                Swal.fire({
+                  icon: 'info',
+                  title: 'تم إكمال هذا الاختبار من قبل',
+                  text: 'لا يمكن إعادة الاختبار مرة أخرى.',
+                  confirmButtonText: 'العودة',
+                  customClass: { confirmButton: 'btn btn-primary' },
+                }).then(() => {
+                  this.router.navigate(['/evaluation']);
+                });
+              },
+            });
+        },
+        error: () => {
+          // لا توجد درجة سابقة → يُسمح بالدخول
+          this.loadQuestions();
+        },
+      });
   }
 
   loadQuestions(): void {
@@ -126,17 +196,89 @@ export class QuizTestComponent implements OnInit {
   }
 
   submitAnswers(): void {
+    const hasUnanswered = this.questions.some(
+      (q) => this.selectedChoices[q.id] == null
+    );
+    if (hasUnanswered) {
+      this.showWarning('يرجى الإجابة على جميع الأسئلة قبل الإرسال.');
+      return;
+    }
+
     const answers: AnswerItem[] = this.questions.map((q) => ({
       questionId: q.id,
       choiceId: this.selectedChoices[q.id]!,
     }));
 
-    const request: SubmitAnswersRequest = { studentId: this.studentId, answers };
+    const request: SubmitAnswersRequest = {
+      studentId: this.studentId,
+      answers,
+    };
 
     this.evaluationService.submitAnswers(request).subscribe({
       next: () => {
-        this.showSuccess('تم إرسال الإجابات بنجاح!');
-        this.router.navigate(['/evaluation']);
+        const totalQuestions = this.questions.length;
+        const maxScore = this.isAcademic ? totalQuestions : totalQuestions * 5;
+
+        this.evaluationService
+          .getStudentScoreBySection(this.studentId, this.sectionId)
+          .subscribe({
+            next: (actualScore: number) => {
+              const isPassed = actualScore >= maxScore / 2;
+
+              if (isPassed) {
+                Swal.fire({
+                  icon: 'success',
+                  title: 'تم اجتياز الاختبار بنجاح!',
+                  html: `<strong>${this.sectionName}</strong><br><br>درجتك: ${actualScore} من ${maxScore}`,
+                  showCancelButton: true,
+                  confirmButtonText: 'اختبارات أخرى',
+                  cancelButtonText: 'الرئيسية',
+                  reverseButtons: true,
+                  customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-outline-secondary',
+                  },
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    this.router.navigate([
+                      '/evaluation/sections',
+                      this.parentId,
+                    ]);
+                  } else {
+                    this.router.navigate(['/evaluation']);
+                  }
+                });
+              } else {
+                Swal.fire({
+                  icon: 'info',
+                  title: 'ننصحك بالمراجعة والتطوير',
+                  html: `في اختبار <strong>${this.sectionName}</strong>، درجتك: ${actualScore} من ${maxScore}.<br><br>نوصيك بمراجعة المحتوى وتحسين الأداء.`,
+                  showCancelButton: true,
+                  confirmButtonText: 'اختبارات أخرى',
+                  cancelButtonText: 'الرئيسية',
+                  reverseButtons: true,
+                  customClass: {
+                    confirmButton: 'btn btn-primary',
+                    cancelButton: 'btn btn-outline-secondary',
+                  },
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    this.router.navigate([
+                      '/evaluation/sections',
+                      this.parentId,
+                    ]);
+                  } else {
+                    this.router.navigate(['/evaluation']);
+                  }
+                });
+              }
+            },
+            error: (err) => {
+              console.error('فشل جلب درجة القسم بعد الإرسال', err);
+              this.showError('فشل جلب الدرجة بعد الإرسال');
+              this.router.navigate(['/evaluation']);
+            },
+          });
       },
       error: (err) => {
         console.error('فشل إرسال الإجابات', err);
@@ -154,14 +296,22 @@ export class QuizTestComponent implements OnInit {
   }
 
   private showWarning(message: string): void {
-    Swal.fire({ icon: 'warning', title: 'تنبيه', text: message, confirmButtonText: 'حسنًا', customClass: { confirmButton: 'btn btn-warning' } });
+    Swal.fire({
+      icon: 'warning',
+      title: 'تنبيه',
+      text: message,
+      confirmButtonText: 'حسنًا',
+      customClass: { confirmButton: 'btn btn-warning' },
+    });
   }
 
   private showError(message: string): void {
-    Swal.fire({ icon: 'error', title: 'خطأ', text: message, confirmButtonText: 'إغلاق', customClass: { confirmButton: 'btn btn-danger' } });
-  }
-
-  private showSuccess(message: string): void {
-    Swal.fire({ icon: 'success', title: 'نجاح', text: message, confirmButtonText: 'موافق', customClass: { confirmButton: 'btn btn-success' } });
+    Swal.fire({
+      icon: 'error',
+      title: 'خطأ',
+      text: message,
+      confirmButtonText: 'إغلاق',
+      customClass: { confirmButton: 'btn btn-danger' },
+    });
   }
 }

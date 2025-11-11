@@ -1,24 +1,192 @@
-/* src/app/pages/about/about.component.css */
-/* التدرجات الخاصة */
-.bg-gradient-to-br.from-primary.to-primary-dark {
-  background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
-}
-.bg-gradient-to-br.from-success.to-success-dark {
-  background: linear-gradient(135deg, #059669 0%, #047857 100%);
-}
-.bg-gradient-to-br.from-dark.to-primary {
-  background: linear-gradient(135deg, #1e293b 0%, #1e40af 100%);
-}
+/* src/app/pages/about/about.component.scss */
 
-/* ألوان فرعية */
-.text-primary-light {
-  color: #93c5fd;
-}
-
-/* تأثير الزجاج */
-.bg-white.bg-opacity-10 {
-  backdrop-filter: blur(10px);
-}
-
-/* استيراد الأنماط المشتركة */
 @import "../home/home.component.scss";
+
+// --- ألوان مخصصة ---
+$vision: #4f46e5;
+$mission: #0d9488;
+$success: #059669;
+$vision2030: #7e22ce; // ✅ تم تغيير الاسم (لا يُسمح ببدء المتغير برقم)
+$vision2030-light: #c084fc; // ✅
+$primary-dark: #1e40af;
+$secondary-dark: #374151;
+
+// --- Support Badge ---
+.badge-support {
+  background: rgba(30, 64, 175, 0.1);
+  border-radius: 50px;
+  span {
+    background: linear-gradient(135deg, #60a5fa, #93c5fd);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+// --- Vision & Mission Section ---
+.vision-mission-section {
+  background: linear-gradient(135deg, $vision 0%, $mission 100%);
+  box-shadow: 0 10px 30px rgba(13, 148, 136, 0.2);
+}
+
+// --- Icon Circle ---
+.icon-circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &.bg-vision {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  &.bg-mission {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  &.bg-success {
+    background: rgba($success, 0.2);
+  }
+  &.bg-2030 {
+    background: rgba($vision2030, 0.3); // ✅ استخدام الاسم الجديد
+  }
+  &.bg-hierarchy {
+    background: rgba(255, 255, 255, 0.15);
+  }
+}
+
+// --- أهداف المنصة ---
+.goal-card {
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  }
+
+  .icon-badge {
+    width: 72px;
+    height: 72px;
+    border-radius: 20px;
+    background: $primary-dark;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+  }
+}
+
+// --- Cards Animation ---
+.animate-cards {
+  > div {
+    opacity: 0;
+    animation: slideInUp 0.6s forwards;
+    @for $i from 0 through 3 {
+      &:nth-child(#{$i + 1}) {
+        animation-delay: #{$i * 0.12}s;
+      }
+    }
+  }
+}
+
+// --- المزايا ورؤية 2030 ---
+.features-list,
+.vision-list {
+  list-style: none;
+  padding: 0;
+  li {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    padding: 0.5rem 0;
+    gap: 0.5rem;
+    span {
+      flex: 1;
+      color: #334155;
+    }
+  }
+}
+.vision-list {
+  li span {
+    color: rgba(255, 255, 255, 0.9);
+  }
+  li i {
+    color: $vision2030-light; // ✅ استخدام الاسم الجديد
+  }
+}
+
+.vision2030-card {
+  background: linear-gradient(
+    135deg,
+    $vision2030 0%,
+    darken($vision2030, 10%) 100%
+  ); // ✅
+  box-shadow: 0 8px 24px rgba(126, 34, 206, 0.25);
+}
+
+// --- خطوات العمل ---
+.step-item {
+  transition: all 0.3s ease;
+  padding: 1.5rem;
+  border-radius: 16px;
+
+  &:hover {
+    background: rgba(30, 64, 175, 0.05);
+  }
+
+  .step-number {
+    width: 64px;
+    height: 64px;
+    background: $primary-dark;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+}
+
+// --- دعم الهيئة ---
+.hierarchy-card {
+  background: linear-gradient(135deg, $secondary-dark 0%, $primary-dark 100%);
+  box-shadow: 0 10px 30px rgba(30, 64, 175, 0.3);
+}
+
+.stat-badge {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1rem 1.5rem;
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  min-width: 120px;
+  div:last-child {
+    font-size: 0.95rem;
+    opacity: 0.9;
+  }
+}
+
+// --- Responsive ---
+@media (max-width: 768px) {
+  .vision-mission-section,
+  .hierarchy-card {
+    padding: 1.5rem;
+  }
+  .step-number {
+    width: 56px;
+    height: 56px;
+    font-size: 1.3rem;
+  }
+}
+
+// --- Reuse Animation ---
+@keyframes slideInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

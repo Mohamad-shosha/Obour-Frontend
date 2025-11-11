@@ -1,54 +1,298 @@
-/* src/app/pages/home/home.component.css */
-/* التدرج الأساسي للبانر */
+/* ===============================
+   الألوان الأساسية والتدرجات الهادئة
+=============================== */
+$color-primary-dark: #1e3a8a;
+$color-primary: #3b82f6;
+$color-primary-light: #60a5fa;
+$color-secondary-gray: #475569;
+$color-white: #ffffff;
 
-.backdrop-blur-sm {
-  backdrop-filter: blur(4px);
+$gradient-primary: linear-gradient(135deg, $color-primary-dark 0%, $color-primary 50%, $color-primary-light 100%);
+$gradient-secondary: linear-gradient(135deg, $color-primary-dark 0%, $color-secondary-gray 100%);
+
+/* ===============================
+   الهيرو الهادئ مع دوائر لطيفة
+=============================== */
+.hero-section {
+  background: $gradient-primary;
+  color: $color-white;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  padding: 6rem 0;
+  font-family: 'Cairo', sans-serif;
+
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+
+  .animated-circles {
+    position: absolute;
+    inset: 0;
+    overflow: visible;
+    z-index: 0;
+
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      animation: float 30s ease-in-out infinite;
+      opacity: 0.5;
+      filter: blur(4px);
+
+      &:nth-child(1) { width: 140px; height: 140px; top: 10%; left: 15%; animation-duration: 26s; }
+      &:nth-child(2) { width: 100px; height: 100px; top: 50%; left: 70%; animation-duration: 32s; }
+      &:nth-child(3) { width: 120px; height: 120px; top: 80%; left: 40%; animation-duration: 28s; }
+      &:nth-child(4) { width: 80px; height: 80px; top: 30%; left: 50%; animation-duration: 24s; }
+    }
+  }
+
+  .container {
+    position: relative;
+    z-index: 2;
+  }
+
+  h1, p, .btn {
+    opacity: 0;
+    transform: translateY(15px);
+    animation: fadeUp 1s forwards;
+  }
+  h1 { animation-delay: 0.3s; font-size: 3.8rem; font-weight: 800; }
+  p:first-of-type { animation-delay: 0.6s; font-size: 1.5rem; color: rgba(255,255,255,0.85); }
+  p:last-of-type { animation-delay: 0.9s; font-size: 1.2rem; color: rgba(255,255,255,0.7); }
+  .btn { animation-delay: 1.2s; font-size: 1.05rem; }
+
+  .support-badge {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    display: inline-block;
+    padding: 0.6rem 1.8rem;
+    border-radius: 50px;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+
+    span {
+      background: linear-gradient(135deg, $color-primary-light, $color-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 1.1rem;
+    }
+  }
+
+  .btn {
+    font-weight: 700;
+    border-radius: 1.2rem;
+    padding: 0.75rem 2rem;
+    transition: all 0.35s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+    letter-spacing: 0.3px;
+
+    &:hover {
+      transform: scale(1.06);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+    }
+
+    &.btn-light {
+      background: $color-white;
+      color: $color-primary-dark;
+    }
+
+    &.btn-outline-light {
+      border: 2px solid $color-white;
+      color: $color-white;
+      &:hover {
+        background: rgba(255,255,255,0.15);
+      }
+    }
+  }
 }
 
-.support-badge {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+/* دوائر تتحرك برفق */
+@keyframes float {
+  0% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-20px) translateX(15px); }
+  100% { transform: translateY(0) translateX(0); }
+}
+
+/* fade up للنصوص */
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+/* ===============================
+   قسم المزايا بخلفية دوائر هادئة
+=============================== */
+.features-section {
+  position: relative;
+  overflow: hidden;
+  background: $color-white;
+  z-index: 1;
+
+  /* دوائر الخلفية */
+  .animated-circles {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: visible;
+
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba($color-primary, 0.08);
+      filter: blur(8px);
+      opacity: 0.5;
+      animation: float 40s ease-in-out infinite;
+
+      &:nth-child(1) { width: 160px; height: 160px; top: 10%; left: 20%; animation-duration: 32s; }
+      &:nth-child(2) { width: 120px; height: 120px; top: 70%; left: 10%; animation-duration: 38s; }
+      &:nth-child(3) { width: 200px; height: 200px; top: 40%; left: 75%; animation-duration: 35s; }
+      &:nth-child(4) { width: 100px; height: 100px; top: 85%; left: 60%; animation-duration: 28s; }
+      &:nth-child(5) { width: 80px; height: 80px; top: 25%; left: 50%; animation-duration: 30s; }
+    }
+  }
+
+  .container {
+    position: relative;
+    z-index: 2;
+  }
+
+  h2 {
+    font-weight: 800;
+    color: $color-primary-dark;
+  }
+
+  p {
+    color: $color-secondary-gray;
+  }
+}
+
+/* حركة خفيفة للدوائر */
+@keyframes float {
+  0% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-25px) translateX(20px); }
+  100% { transform: translateY(0) translateX(0); }
+}
+
+/* ===============================
+   الكروت والإحصائيات هادئة وفخمة
+=============================== */
+.stat-card, .feature-card {
+  background: rgba(255,255,255,0.95);
+  border-radius: 1.4rem;
+  padding: 2.2rem 1.8rem;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+  transition: all 0.35s ease;
+  text-align: center;
+  border: none;
+  backdrop-filter: blur(6px);
+
+  &:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 18px 38px rgba(0,0,0,0.18);
+  }
+}
+
+.icon-wrapper, .gradient-icon {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.2rem auto;
+  background: $gradient-primary;
   color: white;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  transition: all 0.35s ease;
+
+  &:hover {
+    transform: scale(1.15) rotate(12deg);
+  }
+
+  svg {
+    width: 38px;
+    height: 38px;
+    color: white;
+  }
 }
 
-.support-badge span {
-  background: linear-gradient(135deg, #60a5fa, #93c5fd);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* ===============================
+   رؤية 2030 هادئة وفخمة
+=============================== */
+.vision-section {
+  background: $gradient-secondary;
+  position: relative;
+  color: $color-white;
+  text-align: center;
+  padding: 6rem 0;
+
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.25);
+    z-index: 1;
+  }
+
+  .tag-pill {
+    display: inline-block;
+    margin: 0.35rem;
+    padding: 0.8rem 1.6rem;
+    border-radius: 50px;
+    font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(8px);
+    transition: all 0.35s ease;
+
+    &:hover {
+      background: rgba(255,255,255,0.22);
+      transform: scale(1.06);
+    }
+  }
 }
 
-/* تأكد من أن الحدود شبه شفافة */
-.border-white.border-opacity-30 {
-  border-color: rgba(255, 255, 255, 0.3) !important;
+/* Spacing */
+.py-6 { padding-top: 5rem !important; padding-bottom: 5rem !important; }
+
+.text-white-75 { color: rgba(255, 255, 255, 0.75); }
+.text-white-50 { color: rgba(255, 255, 255, 0.55); }
+/* src/app/pages/about/about.component.css */
+/* التدرجات الخاصة */
+.bg-gradient-to-br.from-primary.to-primary-dark {
+  background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
 }
-.gradient-primary {
-  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
+.bg-gradient-to-br.from-success.to-success-dark {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+}
+.bg-gradient-to-br.from-dark.to-primary {
+  background: linear-gradient(135deg, #1e293b 0%, #1e40af 100%);
 }
 
-/* تدرج لقسم رؤية 2030 */
-.bg-gradient-to-br.from-primary.to-secondary {
-  background: linear-gradient(135deg, #1e40af 0%, #475569 100%);
+/* ألوان فرعية */
+.text-primary-light {
+  color: #93c5fd;
 }
 
-/* تأثيرات مخصصة */
+/* تأثير الزجاج */
+.bg-white.bg-opacity-10 {
+  backdrop-filter: blur(10px);
+}
 .animate-slide-up {
-  animation: slideUp 0.6s ease-out;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: slideUp 0.7s forwards;
 }
 
 @keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
   to {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-/* تأثير الزجاج (Glassmorphism) */
-.bg-white.bg-opacity-10 {
-  backdrop-filter: blur(10px);
 }

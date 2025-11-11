@@ -1,0 +1,183 @@
+/* src/app/pages/evaluation/evaluation-about/evaluation-about.component.scss */
+
+@import "../../home/home.component.scss";
+
+// --- الألوان الأساسية ---
+$primary: #1e40af;
+$success: #059669;
+$info: #3b82f6;
+$purple: #7e22ce;
+$purple-light: #c084fc;
+$green-bg: #f0fdf4;
+$green-border: #bbf7d0;
+
+// --- البانر التمهيدي (تدرج أزرق) ---
+.hero-section {
+  background: linear-gradient(135deg, $primary 0%, #3b82f6 100%);
+  padding: 3rem 1.5rem;
+  border-radius: 24px;
+  margin-bottom: 3.5rem;
+  box-shadow: 0 10px 30px rgba(30, 64, 175, 0.25);
+}
+
+// --- Support Badge (في البانر) ---
+.support-badge {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  span {
+    background: linear-gradient(135deg, #93c5fd, #dbeafe);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+.feature-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 2rem;
+  height: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  transition: all 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .icon-box {
+    width: 72px;
+    height: 72px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    background: rgba($primary, 0.1);
+    color: $primary;
+
+    &.bg-success {
+      background: rgba($success, 0.1);
+      color: $success;
+    }
+    &.bg-info {
+      background: rgba($info, 0.1);
+      color: $info;
+    }
+
+    i {
+      font-size: 1.8rem;
+    }
+  }
+
+  h3 {
+    transition: color 0.3s ease;
+  }
+  &:hover h3 {
+    color: $primary;
+  }
+}
+
+// --- قسم الفوائد (خلفية خضراء فاتحة) ---
+.benefits-section {
+  background: $green-bg;
+  border: 2px solid $green-border;
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 6px 20px rgba(5, 150, 105, 0.1);
+}
+
+.benefits-list {
+  list-style: none;
+  padding: 0;
+  li {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1.2rem;
+    padding: 0.6rem 0;
+    transition: transform 0.2s ease;
+    &:hover {
+      transform: translateX(5px);
+    }
+    i {
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      margin-top: 0.2rem;
+    }
+    span {
+      font-weight: 500;
+      color: #065f46;
+    }
+  }
+}
+
+// --- قسم الحث على البدء (تدرج بنفسجي) ---
+.cta-section {
+  margin-top: 2rem;
+}
+
+.call-to-action {
+  background: linear-gradient(135deg, $purple 0%, #a855f7 100%);
+  max-width: 800px;
+  margin: 0 auto;
+  box-shadow: 0 10px 30px rgba(126, 34, 206, 0.35);
+}
+
+.start-btn {
+  transition: all 0.3s ease;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  background: white;
+  color: $purple;
+
+  &:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.95);
+    color: $purple;
+  }
+}
+
+// --- Cards Animation ---
+.animate-cards {
+  > div {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideInUp 0.6s forwards;
+    @for $i from 0 through 2 {
+      &:nth-child(#{$i + 1}) {
+        animation-delay: #{$i * 0.15}s;
+      }
+    }
+  }
+}
+
+// --- Responsive ---
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 2rem 1rem;
+  }
+  .feature-card {
+    padding: 1.5rem;
+  }
+  .benefits-section {
+    padding: 1.8rem;
+  }
+  .call-to-action {
+    padding: 2rem;
+  }
+  .start-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@keyframes slideInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

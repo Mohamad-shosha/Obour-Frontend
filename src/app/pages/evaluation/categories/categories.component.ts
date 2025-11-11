@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EvaluationService } from '../../../services/evaluation.service';
 import { Section } from '../../../models/section.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-categories',
@@ -30,8 +31,42 @@ export class CategoriesComponent implements OnInit {
       },
       error: (err) => {
         console.error('فشل تحميل الأقسام', err);
-        this.error = 'فشل تحميل الأقسام. تأكد من تشغيل الخادم.';
         this.loading = false;
+
+        const status = err.status || err.error?.status || 0;
+
+        if (status === 401) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+
+          Swal.fire({
+            icon: 'warning',
+            title: 'الجلسة منتهية',
+            text: 'يجب تسجيل الدخول لمتابعة استخدام المنصة.',
+            confirmButtonText: 'الذهاب إلى تسجيل الدخول',
+            customClass: {
+              confirmButton: 'btn btn-warning',
+            },
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.router.navigate(['/auth']);
+            }
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'فشل التحميل',
+            text: 'تعذر تحميل الأقسام. تأكد من اتصالك بالإنترنت وحاول مرة أخرى.',
+            confirmButtonText: 'حسنًا',
+            customClass: {
+              confirmButton: 'btn btn-danger',
+            },
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.router.navigate(['/auth']);
+            }
+          });
+        }
       },
     });
   }
@@ -41,14 +76,15 @@ export class CategoriesComponent implements OnInit {
   }
 
   getIconClass(type: string): string {
-    return type === 'academic' ? 'fas fa-book-open' : 'fas fa-brain';
+    return type === 'academic'
+      ? 'fas fa-book-open fa-xl'
+      : 'fas fa-brain fa-xl';
   }
 
   getButtonClass(type: string): string {
     return type === 'academic' ? 'btn-primary' : 'btn-success';
   }
 
-  // القوائم الثابتة (كما في التصميم)
   getItemsForSection(type: string): string[] {
     if (type === 'academic') {
       return [

@@ -3,10 +3,8 @@
   <div class="container">
     <!-- المقدمة -->
     <div class="text-center mb-5 animate-slide-up">
-      <div
-        class="d-inline-block mb-3 px-4 py-2 bg-primary bg-opacity-10 rounded-pill"
-      >
-        <span class="small fw-bold text-primary">منصة عبور</span>
+      <div class="d-inline-block mb-3 px-4 py-2 badge-support">
+        <span class="small fw-bold">منصة عبور</span>
       </div>
       <h1 class="display-4 fw-bold text-dark mb-3">
         نظام ذكي لقياس الجاهزية للتدريب الميداني
@@ -19,28 +17,17 @@
 
     <!-- الرؤية والرسالة -->
     <div
-      class="bg-gradient-to-br from-primary to-primary-dark rounded-3 p-5 p-md-6 text-white mb-5 card-shadow animate-slide-up"
+      class="vision-mission-section rounded-4 p-5 p-md-6 text-white mb-5 animate-slide-up"
     >
       <div class="row align-items-center g-5">
         <div class="col-12 col-md-6">
           <div class="d-flex align-items-center gap-3 mb-4">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              width="40"
-              height="40"
-              class="text-primary-light"
-            >
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-              <circle cx="12" cy="12" r="3"></circle>
-            </svg>
+            <div class="icon-circle bg-vision">
+              <i class="fa-solid fa-eye fa-xl"></i>
+            </div>
             <h2 class="display-6 fw-bold">رؤيتنا</h2>
           </div>
-          <p class="fs-5 text-white-75">
+          <p class="fs-5">
             أن نكون المنصة الرائدة إقليمياً في قياس وتطوير جاهزية الطلبة للتدريب
             الميداني، ونساهم في بناء جيل متميز من الكفاءات الوطنية المؤهلة لسوق
             العمل.
@@ -48,22 +35,12 @@
         </div>
         <div class="col-12 col-md-6">
           <div class="d-flex align-items-center gap-3 mb-4">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              width="40"
-              height="40"
-              class="text-primary-light"
-            >
-              <path d="M12 5v10M8 9l4-4 4 4M3 12h18M12 19V5"></path>
-            </svg>
+            <div class="icon-circle bg-mission">
+              <i class="fa-solid fa-bullseye fa-xl"></i>
+            </div>
             <h2 class="display-6 fw-bold">رسالتنا</h2>
           </div>
-          <p class="fs-5 text-white-75">
+          <p class="fs-5">
             توفير نظام تقييم ذكي وشامل يساعد الطلبة والجامعات والجهات التدريبية
             على قياس الجاهزية بدقة، وتقديم توصيات مبنية على البيانات لتطوير
             المهارات وتحقيق التميز.
@@ -77,32 +54,14 @@
       <h2 class="display-6 fw-bold text-dark text-center mb-5 animate-slide-up">
         أهداف المنصة
       </h2>
-      <div class="row g-4">
+      <div class="row g-4 animate-cards">
         <div
-          class="col-12 col-md-6 col-lg-3 animate-slide-up"
+          class="col-12 col-md-6 col-lg-3"
           *ngFor="let goal of goals; let i = index"
-          [attr.style]="'animation-delay: ' + i * 0.1 + 's'"
         >
-          <div
-            class="bg-white rounded-3 p-4 card-shadow card-hover text-center h-100"
-          >
-            <div
-              class="rounded-3 gradient-primary d-flex align-items-center justify-content-center mx-auto mb-4 shadow"
-              style="width: 64px; height: 64px"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                width="32"
-                height="32"
-                class="text-white"
-              >
-                <path [attr.d]="goal.iconPath"></path>
-              </svg>
+          <div class="goal-card h-100 rounded-4 p-4 text-center">
+            <div class="icon-badge mx-auto mb-4">
+              <i [class]="goal.icon" class="text-white"></i>
             </div>
             <h3 class="h5 fw-bold text-dark mb-2">{{ goal.title }}</h3>
             <p class="text-muted">{{ goal.description }}</p>
@@ -115,134 +74,54 @@
     <div class="row g-5 mb-5">
       <!-- المزايا الرئيسية -->
       <div class="col-12 col-lg-6 animate-slide-up">
-        <div class="bg-white rounded-3 p-5 card-shadow h-100">
+        <div class="bg-white rounded-4 p-5 h-100 card-shadow">
           <div class="d-flex align-items-center gap-3 mb-4">
-            <div
-              class="rounded-2 bg-success d-flex align-items-center justify-content-center"
-              style="width: 48px; height: 48px"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                width="24"
-                height="24"
-                class="text-white"
-              >
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-              </svg>
+            <div class="icon-circle bg-success">
+              <i class="fa-solid fa-star fa-lg text-white"></i>
             </div>
             <h2 class="h4 fw-bold text-dark">المزايا الرئيسية</h2>
           </div>
-          <div class="space-y-3">
-            <div
-              class="d-flex align-items-start gap-3"
-              *ngFor="let feature of features"
-            >
-              <div
-                class="rounded-2 bg-success bg-opacity-20 d-flex align-items-center justify-content-center flex-shrink-0 mt-1"
-                style="width: 24px; height: 24px"
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  width="16"
-                  height="16"
-                  class="text-success"
-                >
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
-              </div>
-              <p class="text-muted mb-0">{{ feature }}</p>
-            </div>
-          </div>
+          <ul class="features-list">
+            <li *ngFor="let feature of features">
+              <i class="fa-solid fa-check text-success me-2"></i>
+              <span>{{ feature }}</span>
+            </li>
+          </ul>
         </div>
       </div>
 
       <!-- دعم رؤية 2030 -->
       <div class="col-12 col-lg-6 animate-slide-up">
-        <div
-          class="bg-gradient-to-br from-success to-success-dark rounded-3 p-5 text-white card-shadow h-100"
-        >
+        <div class="vision2030-card rounded-4 p-5 text-white h-100">
           <div class="d-flex align-items-center gap-3 mb-4">
-            <div
-              class="rounded-2 bg-white bg-opacity-20 d-flex align-items-center justify-content-center"
-              style="width: 48px; height: 48px"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                width="24"
-                height="24"
-                class="text-white"
-              >
-                <path d="M12 3v18M3 12h18"></path>
-              </svg>
+            <div class="icon-circle bg-2030">
+              <i class="fa-solid fa-flag fa-lg text-white"></i>
             </div>
             <h2 class="h4 fw-bold">دعم رؤية 2030</h2>
           </div>
-          <p class="text-white-75 mb-4">
+          <p class="mb-4">
             تساهم منصة عبور في تحقيق أهداف رؤية المملكة 2030 من خلال:
           </p>
-          <div class="space-y-3">
-            <div
-              class="d-flex align-items-start gap-3"
-              *ngFor="let item of vision2030"
-            >
-              <div
-                class="rounded-2 bg-white bg-opacity-20 d-flex align-items-center justify-content-center flex-shrink-0 mt-1"
-                style="width: 24px; height: 24px"
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  width="16"
-                  height="16"
-                  class="text-white"
-                >
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
-              </div>
-              <p class="text-white-75 mb-0">{{ item }}</p>
-            </div>
-          </div>
+          <ul class="vision-list">
+            <li *ngFor="let item of vision2030">
+              <i class="fa-solid fa-circle me-2"></i>
+              <span>{{ item }}</span>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
 
     <!-- كيف تعمل المنصة؟ -->
-    <div class="bg-white rounded-3 p-5 card-shadow mb-5 animate-slide-up">
+    <div class="bg-white rounded-4 p-5 card-shadow mb-5 animate-slide-up">
       <h2 class="display-6 fw-bold text-dark text-center mb-5">
         كيف تعمل المنصة؟
       </h2>
       <div class="row text-center g-5">
         <div class="col-12 col-md-4" *ngFor="let step of steps; let i = index">
-          <div class="d-flex flex-column align-items-center text-center">
-            <div
-              class="rounded-circle bg-primary d-flex align-items-center justify-content-center mb-4 text-white fw-bold"
-              style="width: 80px; height: 80px; font-size: 2rem"
-            >
-              {{ step.number }}
-            </div>
-            <h3 class="h5 fw-bold text-dark mb-3">{{ step.title }}</h3>
+          <div class="step-item">
+            <div class="step-number">{{ step.number }}</div>
+            <h3 class="h5 fw-bold text-dark mt-3 mb-2">{{ step.title }}</h3>
             <p class="text-muted">{{ step.description }}</p>
           </div>
         </div>
@@ -251,49 +130,31 @@
 
     <!-- دعم الهيئة -->
     <div
-      class="bg-gradient-to-br from-dark to-primary rounded-3 p-5 p-md-6 text-white text-center card-shadow animate-slide-up"
+      class="hierarchy-card rounded-4 p-5 p-md-6 text-white text-center animate-slide-up"
     >
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        width="64"
-        height="64"
-        class="mx-auto mb-4 text-primary-light"
-      >
-        <path
-          d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2 M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z M23 21v-2a4 4 0 0 0-3-3.87 M16 3.13a4 4 0 0 1 0 7.75"
-        ></path>
-      </svg>
+      <div class="icon-circle bg-hierarchy mx-auto mb-4">
+        <i class="fa-solid fa-building-columns fa-2xl text-white"></i>
+      </div>
       <h2 class="display-6 fw-bold mb-3">
         بدعم من هيئة تقويم التعليم والتدريب
       </h2>
-      <p class="fs-5 text-white-75 max-w-3xl mx-auto mb-5">
+      <p class="fs-5 max-w-3xl mx-auto mb-5">
         تعمل منصة عبور تحت إشراف ودعم هيئة تقويم التعليم والتدريب، وبالتعاون مع
         أكثر من 45 جامعة حكومية وخاصة في المملكة، لضمان أعلى معايير الجودة
         والمصداقية في التقييم.
       </p>
       <div class="d-flex flex-wrap gap-4 justify-content-center">
-        <div
-          class="bg-white bg-opacity-10 px-5 py-3 rounded-3 border border-white border-opacity-30"
-        >
+        <div class="stat-badge">
           <div class="display-6 fw-bold mb-1">45+</div>
-          <div class="text-primary-light">جامعة</div>
+          <div>جامعة</div>
         </div>
-        <div
-          class="bg-white bg-opacity-10 px-5 py-3 rounded-3 border border-white border-opacity-30"
-        >
+        <div class="stat-badge">
           <div class="display-6 fw-bold mb-1">120+</div>
-          <div class="text-primary-light">تخصص</div>
+          <div>تخصص</div>
         </div>
-        <div
-          class="bg-white bg-opacity-10 px-5 py-3 rounded-3 border border-white border-opacity-30"
-        >
+        <div class="stat-badge">
           <div class="display-6 fw-bold mb-1">25k+</div>
-          <div class="text-primary-light">طالب</div>
+          <div>طالب</div>
         </div>
       </div>
     </div>

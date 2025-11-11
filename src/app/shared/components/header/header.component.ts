@@ -53,7 +53,7 @@ export class HeaderComponent implements OnInit {
       { id: 'home', label: 'الرئيسية', icon: 'fa-solid fa-house' },
       { id: 'about', label: 'عن المنصة', icon: 'fa-solid fa-circle-info' },
       {
-        id: 'evaluation',
+        id: 'about-evaluation',
         label: 'تقييم الجاهزية',
         icon: 'fa-solid fa-graduation-cap',
       },
@@ -95,6 +95,8 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(['/auth']);
     } else if (pageId === 'start-evaluation') {
       this.router.navigate(['/evaluation']);
+    } else if (pageId === 'about-evaluation') {
+      this.router.navigate(['/evaluation/about']);
     } else if (pageId === 'admin-dashboard') {
       this.router.navigate(['/admin/dashboard']);
     } else {
