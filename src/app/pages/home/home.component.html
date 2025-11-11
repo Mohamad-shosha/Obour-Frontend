@@ -1,80 +1,147 @@
-<!-- src/app/pages/home/home.component.html -->
-<!-- البانر الرئيسي -->
-<section class="gradient-primary text-white py-5 py-md-6">
-  <div class="container text-center">
-    <div class="d-inline-block mb-3 px-4 py-2 rounded-pill support-badge">
-      <span class="small fw-bold">بدعم من هيئة تقويم التعليم والتدريب</span>
-    </div>
-    <h1 class="display-4 display-md-3 fw-bold mb-4">منصة عبور</h1>
-    <p class="fs-5 fs-md-4 mb-3 text-white-50">
-      نظام ذكي متكامل لقياس جاهزية طلبة الجامعات للتدريب الميداني
-    </p>
-    <p class="fs-6 text-white-75 mb-4">
-      تحليل شامل يجمع بين التقييم الأكاديمي والنفسي والسلوكي باستخدام تقنيات
-      الذكاء الاصطناعي
-    </p>
-    <div class="d-flex flex-wrap gap-3 justify-content-center">
-      <button
-        class="btn btn-light text-primary fw-bold px-4 py-2 rounded-3 shadow"
-        (click)="startEvaluation()"
-      >
-        ابدأ التقييم الآن
-      </button>
-      <button class="btn btn-outline-light fw-bold px-4 py-2 rounded-3">
-        تعرف على المنصة
-      </button>
-    </div>
-  </div>
-</section>
+<body dir="rtl">
 
-<!-- قسم الإحصائيات -->
-<section class="py-5 bg-light">
-  <div class="container">
-    <div class="text-center mb-5">
-      <h2 class="display-6 fw-bold text-dark mb-3">إحصائيات المنصة</h2>
-      <p class="text-muted fs-5">
-        أرقام تعكس نجاح المنصة في تحسين جودة التعليم والتدريب
-      </p>
+  <!-- ================= Hero Section ================= -->
+  <section class="hero-section text-white text-center position-relative py-6">
+    <div class="animated-circles">
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
     </div>
-    <div class="row g-4">
+    <div class="overlay"></div>
+    <div class="container position-relative">
+      <div class="support-badge mb-4">
+        <span>بدعم من هيئة تقويم التعليم والتدريب</span>
+      </div>
+      <h1 class="display-3 fw-bold mb-3">منصة عبور</h1>
+      <p class="lead text-white-75 mb-3">
+        نظام ذكي متكامل لقياس جاهزية طلبة الجامعات للتدريب الميداني
+      </p>
+      <p class="fs-5 text-white-50 mb-5">
+        تحليل شامل يجمع بين التقييم الأكاديمي والنفسي والسلوكي باستخدام تقنيات الذكاء الاصطناعي
+      </p>
+      <div class="d-flex flex-wrap gap-3 justify-content-center">
+        <button class="btn btn-light text-primary fw-bold px-5 py-3 rounded-4 shadow-lg"
+          (click)="startEvaluation()">ابدأ التقييم الآن</button>
+        <button class="btn btn-outline-light fw-bold px-5 py-3 rounded-4">تعرف على المنصة</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= Stats Section ================= -->
+  <section class="stats-section py-6 bg-light text-center">
+    <div class="container">
+      <h2 class="display-6 fw-bold text-dark mb-3">إحصائيات المنصة</h2>
+      <p class="text-muted fs-5 mb-5">أرقام تعكس نجاح المنصة في تحسين جودة التعليم والتدريب</p>
+      <div class="row g-4 justify-content-center">
+        <div class="col-12 col-sm-6 col-lg-3" *ngFor="let stat of stats">
+          <div class="stat-card shadow-sm p-4 rounded-4 hover-lift h-100">
+            <div class="icon-wrapper mb-3">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path [attr.d]="stat.iconPath"></path>
+              </svg>
+            </div>
+            <h3 class="fw-bold fs-2 text-primary mb-2">{{ stat.value }}</h3>
+            <p class="fw-semibold text-dark mb-1">{{ stat.title }}</p>
+            <small class="text-muted">{{ stat.description }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<section class="features-section py-6 text-center bg-white">
+  <!-- خلفية دوائر متوهجة متحركة -->
+  <div class="animated-circles">
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+  </div>
+
+  <div class="container">
+    <h2 class="display-6 fw-bold mb-3 section-title">المزايا الرئيسية</h2>
+    <p class="text-muted fs-5 mb-5 subtitle">
+      منصة تجمع بين التكنولوجيا الحديثة والمعايير الأكاديمية العالية
+    </p>
+
+    <div class="row g-4 justify-content-center">
       <div
-        class="col-12 col-md-6 col-lg-3 animate-slide-up"
-        *ngFor="let stat of stats; let i = index"
-        [attr.style]="'animation-delay: ' + i * 0.1 + 's'"
+        class="col-12 col-md-6 col-lg-4"
+        *ngFor="let feature of features; let i = index"
+        [style.animation-delay]="i * 0.15 + 's'"
       >
-        <app-stat-card
-          [title]="stat.title"
-          [value]="stat.value"
-          [iconPath]="stat.iconPath"
-          [color]="stat.color"
-          [description]="stat.description"
-        >
-        </app-stat-card>
+        <div class="feature-card rounded-4 p-4 shadow-sm h-100">
+          <div class="gradient-icon mx-auto mb-4">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path [attr.d]="feature.iconPath"></path>
+            </svg>
+          </div>
+          <h4 class="fw-bold text-dark mb-2">{{ feature.title }}</h4>
+          <p class="text-muted mb-0">{{ feature.description }}</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- قسم المزايا -->
-<section class="py-5 bg-white">
+
+  <!-- ================= Vision 2030 Section ================= -->
+  <section class="hero-section text-white text-center position-relative py-6">
+    <div class="animated-circles">
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+    </div>
+    <div class="overlay"></div>
+    <div class="container position-relative">
+      <h2 class="display-3 fw-bold mb-4">دعم رؤية المملكة 2030</h2>
+      <p class="fs-5 text-white-75 mb-5 mx-auto" style="max-width: 800px;">
+        تساهم منصة عبور في تحقيق أهداف رؤية المملكة 2030 من خلال:
+      </p>
+      <div class="d-flex flex-column flex-md-row flex-wrap gap-3 justify-content-center">
+        <div class="tag-pill">بناء جيل مؤهل من الكوادر الوطنية</div>
+        <div class="tag-pill">تحقيق التميز في التعليم والتدريب</div>
+        <div class="tag-pill">تعزيز التعاون بين المؤسسات التعليمية وسوق العمل</div>
+        <div class="tag-pill">رفع نسبة توظيف الخريجين في القطاع الخاص</div>
+        <div class="tag-pill">تطوير المهارات المطلوبة للوظائف المستقبلية</div>
+        <div class="tag-pill">دعم الاقتصاد الوطني بكفاءات مؤهلة</div>
+      </div>
+    </div>
+  </section>
+  <!-- src/app/pages/about/about.component.html -->
+<div class="py-5 bg-light min-vh-100">
   <div class="container">
-    <div class="text-center mb-5">
-      <h2 class="display-6 fw-bold text-dark mb-3">المزايا الرئيسية</h2>
-      <p class="text-muted fs-5 max-w-2xl mx-auto">
-        منصة متكاملة تجمع بين التكنولوجيا المتقدمة والمعايير الأكاديمية الرصينة
+    <!-- المقدمة -->
+    <div class="text-center mb-5 animate-slide-up">
+      <div
+        class="d-inline-block mb-3 px-4 py-2 bg-primary bg-opacity-10 rounded-pill"
+      >
+        <span class="small fw-bold text-primary">منصة عبور</span>
+      </div>
+      <h1 class="display-4 fw-bold text-dark mb-3">
+        نظام ذكي لقياس الجاهزية للتدريب الميداني
+      </h1>
+      <p class="fs-5 text-muted max-w-3xl mx-auto">
+        بدعم من هيئة تقويم التعليم والتدريب، نقدم منصة متكاملة تجمع بين التقييم
+        الأكاديمي والنفسي والسلوكي
       </p>
     </div>
-    <div class="row g-4">
-      <div
-        class="col-12 col-md-6 animate-slide-up"
-        *ngFor="let feature of features; let i = index"
-        [attr.style]="'animation-delay: ' + i * 0.15 + 's'"
-      >
-        <div class="bg-light rounded-3 p-4 h-100 card-shadow card-hover">
-          <div
-            class="rounded-3 gradient-primary d-flex align-items-center justify-content-center mb-4 shadow"
-            style="width: 64px; height: 64px"
-          >
+
+    <!-- الرؤية والرسالة -->
+    <div
+      class="bg-gradient-to-br from-primary to-primary-dark rounded-3 p-5 p-md-6 text-white mb-5 card-shadow animate-slide-up"
+    >
+      <div class="row align-items-center g-5">
+        <div class="col-12 col-md-6">
+          <div class="d-flex align-items-center gap-3 mb-4">
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -82,45 +149,273 @@
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              width="32"
-              height="32"
-              class="text-white"
+              width="40"
+              height="40"
+              class="text-primary-light"
             >
-              <path [attr.d]="feature.iconPath"></path>
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
             </svg>
+            <h2 class="display-6 fw-bold">رؤيتنا</h2>
           </div>
-          <h3 class="h5 fw-bold text-dark mb-3">{{ feature.title }}</h3>
-          <p class="text-muted">{{ feature.description }}</p>
+          <p class="fs-5 text-white-75">
+            أن نكون المنصة الرائدة إقليمياً في قياس وتطوير جاهزية الطلبة للتدريب
+            الميداني، ونساهم في بناء جيل متميز من الكفاءات الوطنية المؤهلة لسوق
+            العمل.
+          </p>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="d-flex align-items-center gap-3 mb-4">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              width="40"
+              height="40"
+              class="text-primary-light"
+            >
+              <path d="M12 5v10M8 9l4-4 4 4M3 12h18M12 19V5"></path>
+            </svg>
+            <h2 class="display-6 fw-bold">رسالتنا</h2>
+          </div>
+          <p class="fs-5 text-white-75">
+            توفير نظام تقييم ذكي وشامل يساعد الطلبة والجامعات والجهات التدريبية
+            على قياس الجاهزية بدقة، وتقديم توصيات مبنية على البيانات لتطوير
+            المهارات وتحقيق التميز.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- أهداف المنصة -->
+    <div class="mb-5">
+      <h2 class="display-6 fw-bold text-dark text-center mb-5 animate-slide-up">
+        أهداف المنصة
+      </h2>
+      <div class="row g-4">
+        <div
+          class="col-12 col-md-6 col-lg-3 animate-slide-up"
+          *ngFor="let goal of goals; let i = index"
+          [attr.style]="'animation-delay: ' + i * 0.1 + 's'"
+        >
+          <div
+            class="bg-white rounded-3 p-4 card-shadow card-hover text-center h-100"
+          >
+            <div
+              class="rounded-3 gradient-primary d-flex align-items-center justify-content-center mx-auto mb-4 shadow"
+              style="width: 64px; height: 64px"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                width="32"
+                height="32"
+                class="text-white"
+              >
+                <path [attr.d]="goal.iconPath"></path>
+              </svg>
+            </div>
+            <h3 class="h5 fw-bold text-dark mb-2">{{ goal.title }}</h3>
+            <p class="text-muted">{{ goal.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- المزايا ورؤية 2030 -->
+    <div class="row g-5 mb-5">
+      <!-- المزايا الرئيسية -->
+      <div class="col-12 col-lg-6 animate-slide-up">
+        <div class="bg-white rounded-3 p-5 card-shadow h-100">
+          <div class="d-flex align-items-center gap-3 mb-4">
+            <div
+              class="rounded-2 bg-success d-flex align-items-center justify-content-center"
+              style="width: 48px; height: 48px"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                width="24"
+                height="24"
+                class="text-white"
+              >
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            </div>
+            <h2 class="h4 fw-bold text-dark">المزايا الرئيسية</h2>
+          </div>
+          <div class="space-y-3">
+            <div
+              class="d-flex align-items-start gap-3"
+              *ngFor="let feature of features"
+            >
+              <div
+                class="rounded-2 bg-success bg-opacity-20 d-flex align-items-center justify-content-center flex-shrink-0 mt-1"
+                style="width: 24px; height: 24px"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  width="16"
+                  height="16"
+                  class="text-success"
+                >
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+              </div>
+              <p class="text-muted mb-0">{{ feature }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- دعم رؤية 2030 -->
+      <div class="col-12 col-lg-6 animate-slide-up">
+        <div
+          class="bg-gradient-to-br from-success to-success-dark rounded-3 p-5 text-white card-shadow h-100"
+        >
+          <div class="d-flex align-items-center gap-3 mb-4">
+            <div
+              class="rounded-2 bg-white bg-opacity-20 d-flex align-items-center justify-content-center"
+              style="width: 48px; height: 48px"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                width="24"
+                height="24"
+                class="text-white"
+              >
+                <path d="M12 3v18M3 12h18"></path>
+              </svg>
+            </div>
+            <h2 class="h4 fw-bold">دعم رؤية 2030</h2>
+          </div>
+          <p class="text-white-75 mb-4">
+            تساهم منصة عبور في تحقيق أهداف رؤية المملكة 2030 من خلال:
+          </p>
+          <div class="space-y-3">
+            <div
+              class="d-flex align-items-start gap-3"
+              *ngFor="let item of vision2030"
+            >
+              <div
+                class="rounded-2 bg-white bg-opacity-20 d-flex align-items-center justify-content-center flex-shrink-0 mt-1"
+                style="width: 24px; height: 24px"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  width="16"
+                  height="16"
+                  class="text-white"
+                >
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+              </div>
+              <p class="text-white-75 mb-0">{{ item }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- كيف تعمل المنصة؟ -->
+    <div class="bg-white rounded-3 p-5 card-shadow mb-5 animate-slide-up">
+      <h2 class="display-6 fw-bold text-dark text-center mb-5">
+        كيف تعمل المنصة؟
+      </h2>
+      <div class="row text-center g-5">
+        <div class="col-12 col-md-4" *ngFor="let step of steps; let i = index">
+          <div class="d-flex flex-column align-items-center text-center">
+            <div
+              class="rounded-circle bg-primary d-flex align-items-center justify-content-center mb-4 text-white fw-bold"
+              style="width: 80px; height: 80px; font-size: 2rem"
+            >
+              {{ step.number }}
+            </div>
+            <h3 class="h5 fw-bold text-dark mb-3">{{ step.title }}</h3>
+            <p class="text-muted">{{ step.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- دعم الهيئة -->
+    <div
+      class="bg-gradient-to-br from-dark to-primary rounded-3 p-5 p-md-6 text-white text-center card-shadow animate-slide-up"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        width="64"
+        height="64"
+        class="mx-auto mb-4 text-primary-light"
+      >
+        <path
+          d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2 M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z M23 21v-2a4 4 0 0 0-3-3.87 M16 3.13a4 4 0 0 1 0 7.75"
+        ></path>
+      </svg>
+      <h2 class="display-6 fw-bold mb-3">
+        بدعم من هيئة تقويم التعليم والتدريب
+      </h2>
+      <p class="fs-5 text-white-75 max-w-3xl mx-auto mb-5">
+        تعمل منصة عبور تحت إشراف ودعم هيئة تقويم التعليم والتدريب، وبالتعاون مع
+        أكثر من 45 جامعة حكومية وخاصة في المملكة، لضمان أعلى معايير الجودة
+        والمصداقية في التقييم.
+      </p>
+      <div class="d-flex flex-wrap gap-4 justify-content-center">
+        <div
+          class="bg-white bg-opacity-10 px-5 py-3 rounded-3 border border-white border-opacity-30"
+        >
+          <div class="display-6 fw-bold mb-1">45+</div>
+          <div class="text-primary-light">جامعة</div>
+        </div>
+        <div
+          class="bg-white bg-opacity-10 px-5 py-3 rounded-3 border border-white border-opacity-30"
+        >
+          <div class="display-6 fw-bold mb-1">120+</div>
+          <div class="text-primary-light">تخصص</div>
+        </div>
+        <div
+          class="bg-white bg-opacity-10 px-5 py-3 rounded-3 border border-white border-opacity-30"
+        >
+          <div class="display-6 fw-bold mb-1">25k+</div>
+          <div class="text-primary-light">طالب</div>
         </div>
       </div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- قسم رؤية 2030 -->
-<section class="py-5 bg-gradient-to-br from-primary to-secondary text-white">
-  <div class="container text-center">
-    <h2 class="display-6 fw-bold mb-4">دعم رؤية المملكة 2030</h2>
-    <p class="fs-5 text-white-75 mb-5 max-w-3xl mx-auto">
-      نساهم في بناء جسر متين بين التعليم الأكاديمي وسوق العمل، لضمان تخريج كوادر
-      وطنية مؤهلة وجاهزة للمساهمة الفعّالة في التنمية الوطنية
-    </p>
-    <div class="d-flex flex-wrap gap-3 justify-content-center">
-      <div
-        class="bg-white bg-opacity-10 px-4 py-2 rounded-pill border border-white border-opacity-30"
-      >
-        <span class="fw-bold">تحقيق التميز الأكاديمي</span>
-      </div>
-      <div
-        class="bg-white bg-opacity-10 px-4 py-2 rounded-pill border border-white border-opacity-30"
-      >
-        <span class="fw-bold">رفع جودة التدريب</span>
-      </div>
-      <div
-        class="bg-white bg-opacity-10 px-4 py-2 rounded-pill border border-white border-opacity-30"
-      >
-        <span class="fw-bold">التوافق مع سوق العمل</span>
-      </div>
-    </div>
-  </div>
-</section>
+</body>
