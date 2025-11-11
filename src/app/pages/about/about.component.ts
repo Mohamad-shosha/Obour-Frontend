@@ -7,32 +7,29 @@ import { Component } from '@angular/core';
   styleUrls: ['./about.component.scss'],
 })
 export class AboutComponent {
-  // أهداف المنصة
   goals = [
     {
-      iconPath: 'M12 5v10M8 9l4-4 4 4M3 12h18M12 19V5',
+      icon: 'fa-solid fa-chart-line',
       title: 'قياس الجاهزية',
       description: 'تقييم دقيق وشامل لمدى استعداد الطلبة للتدريب الميداني',
     },
     {
-      iconPath: 'M12 5l7 7-7 7M5 12h14',
+      icon: 'fa-solid fa-arrow-trend-up',
       title: 'رفع الجودة',
       description: 'تحسين مستوى التأهيل الأكاديمي والمهني للطلبة',
     },
     {
-      iconPath:
-        'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2 M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z M23 21v-2a4 4 0 0 0-3-3.87 M16 3.13a4 4 0 0 1 0 7.75',
+      icon: 'fa-solid fa-robot',
       title: 'التطوير المستمر',
       description: 'توفير توصيات ذكية لتطوير المهارات والقدرات',
     },
     {
-      iconPath: 'M12 5v10M8 9l4-4 4 4M3 12h18M12 19V5',
+      icon: 'fa-solid fa-handshake',
       title: 'التوافق مع السوق',
       description: 'ضمان توافق مخرجات التعليم مع احتياجات سوق العمل',
     },
   ];
 
-  // دعم رؤية 2030
   vision2030 = [
     'بناء جيل مؤهل من الكوادر الوطنية',
     'تحقيق التميز في التعليم والتدريب',
@@ -42,7 +39,6 @@ export class AboutComponent {
     'دعم الاقتصاد الوطني بكفاءات مؤهلة',
   ];
 
-  // المزايا الرئيسية
   features = [
     'تقييم أكاديمي شامل يغطي جميع جوانب التخصص',
     'تحليل نفسي متعمق للقدرات والمهارات الشخصية',
@@ -52,7 +48,6 @@ export class AboutComponent {
     'مقارنات معيارية مع الأقران والمعايير الوطنية',
   ];
 
-  // كيف تعمل المنصة
   steps = [
     {
       number: '1',
