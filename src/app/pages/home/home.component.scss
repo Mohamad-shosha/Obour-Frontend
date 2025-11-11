@@ -126,6 +126,59 @@ $gradient-secondary: linear-gradient(135deg, $color-primary-dark 0%, $color-seco
 @keyframes fadeUp {
   to { opacity: 1; transform: translateY(0); }
 }
+/* ===============================
+   قسم المزايا بخلفية دوائر هادئة
+=============================== */
+.features-section {
+  position: relative;
+  overflow: hidden;
+  background: $color-white;
+  z-index: 1;
+
+  /* دوائر الخلفية */
+  .animated-circles {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: visible;
+
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba($color-primary, 0.08);
+      filter: blur(8px);
+      opacity: 0.5;
+      animation: float 40s ease-in-out infinite;
+
+      &:nth-child(1) { width: 160px; height: 160px; top: 10%; left: 20%; animation-duration: 32s; }
+      &:nth-child(2) { width: 120px; height: 120px; top: 70%; left: 10%; animation-duration: 38s; }
+      &:nth-child(3) { width: 200px; height: 200px; top: 40%; left: 75%; animation-duration: 35s; }
+      &:nth-child(4) { width: 100px; height: 100px; top: 85%; left: 60%; animation-duration: 28s; }
+      &:nth-child(5) { width: 80px; height: 80px; top: 25%; left: 50%; animation-duration: 30s; }
+    }
+  }
+
+  .container {
+    position: relative;
+    z-index: 2;
+  }
+
+  h2 {
+    font-weight: 800;
+    color: $color-primary-dark;
+  }
+
+  p {
+    color: $color-secondary-gray;
+  }
+}
+
+/* حركة خفيفة للدوائر */
+@keyframes float {
+  0% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-25px) translateX(20px); }
+  100% { transform: translateY(0) translateX(0); }
+}
 
 /* ===============================
    الكروت والإحصائيات هادئة وفخمة

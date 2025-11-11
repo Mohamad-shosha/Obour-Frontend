@@ -51,27 +51,46 @@
     </div>
   </section>
 
-  <!-- ================= Features Section ================= -->
-  <section class="features-section py-6 text-center bg-white">
-    <div class="container">
-      <h2 class="display-6 fw-bold text-dark mb-3">المزايا الرئيسية</h2>
-      <p class="text-muted fs-5 mb-5">منصة تجمع بين التكنولوجيا الحديثة والمعايير الأكاديمية العالية</p>
-      <div class="row g-4 justify-content-center">
-        <div class="col-12 col-md-6 col-lg-4" *ngFor="let feature of features">
-          <div class="feature-card bg-light rounded-4 p-4 shadow-sm hover-lift h-100">
-            <div class="gradient-icon mx-auto mb-4">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path [attr.d]="feature.iconPath"></path>
-              </svg>
-            </div>
-            <h4 class="fw-bold text-dark mb-2">{{ feature.title }}</h4>
-            <p class="text-muted mb-0">{{ feature.description }}</p>
+<section class="features-section py-6 text-center bg-white">
+  <!-- خلفية دوائر متوهجة متحركة -->
+  <div class="animated-circles">
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+  </div>
+
+  <div class="container">
+    <h2 class="display-6 fw-bold mb-3 section-title">المزايا الرئيسية</h2>
+    <p class="text-muted fs-5 mb-5 subtitle">
+      منصة تجمع بين التكنولوجيا الحديثة والمعايير الأكاديمية العالية
+    </p>
+
+    <div class="row g-4 justify-content-center">
+      <div
+        class="col-12 col-md-6 col-lg-4"
+        *ngFor="let feature of features; let i = index"
+        [style.animation-delay]="i * 0.15 + 's'"
+      >
+        <div class="feature-card rounded-4 p-4 shadow-sm h-100">
+          <div class="gradient-icon mx-auto mb-4">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path [attr.d]="feature.iconPath"></path>
+            </svg>
           </div>
+          <h4 class="fw-bold text-dark mb-2">{{ feature.title }}</h4>
+          <p class="text-muted mb-0">{{ feature.description }}</p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+
 
   <!-- ================= Vision 2030 Section ================= -->
   <section class="hero-section text-white text-center position-relative py-6">
