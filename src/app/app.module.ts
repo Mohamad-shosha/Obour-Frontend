@@ -22,7 +22,6 @@ import { CategoriesComponent } from './pages/evaluation/categories/categories.co
 import { QuizSelectionComponent } from './pages/evaluation/quiz-selection/quiz-selection.component';
 import { QuizTestComponent } from './pages/evaluation/quiz-test/quiz-test.component';
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
-import { EvaluationAboutComponent } from './pages/evaluation/evaluation-about/evaluation-about.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +41,6 @@ import { EvaluationAboutComponent } from './pages/evaluation/evaluation-about/ev
     QuizSelectionComponent,
     QuizTestComponent,
     AdminDashboardComponent,
-    EvaluationAboutComponent,
   ],
   imports: [
     BrowserModule,
