@@ -23,53 +23,42 @@ export class CategoriesComponent implements OnInit {
     this.loadSections();
   }
 
-  loadSections(): void {
-    this.evaluationService.getRootSections().subscribe({
-      next: (data) => {
-        this.sections = data;
-        this.loading = false;
-      },
-      error: (err) => {
-        console.error('فشل تحميل الأقسام', err);
-        this.loading = false;
+loadSections(): void {
+  this.evaluationService.getRootSections().subscribe({
+    next: (data) => {
+      this.sections = data;
+      this.loading = false;
+    },
+    error: (err) => {
+      console.error('خطأ أثناء تحميل الأقسام:', err);
+      this.loading = false;
 
-        const status = err.status || err.error?.status || 0;
+      const status = err?.status || err?.error?.status || 0;
 
-        if (status === 401) {
-          localStorage.removeItem('token');
-          localStorage.removeItem('user');
+      // نحذف التوكن في حالة انتهاء الجلسة
+      if (status === 401) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+      }
 
-          Swal.fire({
-            icon: 'warning',
-            title: 'فشل التحميل',
-            text: 'يجب تسجيل الدخول لمتابعة استخدام المنصة.',
-            confirmButtonText: 'الذهاب إلى تسجيل الدخول',
-            customClass: {
-              confirmButton: 'btn btn-warning',
-            },
-          }).then((result) => {
-            if (result.isConfirmed) {
-              this.router.navigate(['/auth']);
-            }
-          });
-        } else {
-          Swal.fire({
-            icon: 'error',
-            title: 'فشل التحميل',
-            text: 'يجب تسجيل الدخول لمتابعة استخدام المنصة.',
-            confirmButtonText: 'الذهاب إلى تسجيل الدخول',
-            customClass: {
-              confirmButton: 'btn btn-danger',
-            },
-          }).then((result) => {
-            if (result.isConfirmed) {
-              this.router.navigate(['/auth']);
-            }
-          });
+      // تنبيه لطيف بدون شكل خطأ
+      Swal.fire({
+        icon: 'info', // أو 'warning' لو تحب اللون الأصفر
+        title: 'تسجيل الدخول مطلوب',
+        text: 'يُرجى تسجيل الدخول لمتابعة استخدام المنصة.',
+        confirmButtonText: 'الذهاب إلى تسجيل الدخول',
+        customClass: {
+          confirmButton: 'btn btn-primary',
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/auth']);
         }
-      },
-    });
-  }
+      });
+    },
+  });
+}
+
 
   goToSection(sectionId: number): void {
     this.router.navigate(['/evaluation/sections', sectionId]);
