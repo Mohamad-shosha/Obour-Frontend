@@ -1,22 +1,29 @@
 <!-- src/app/pages/evaluation/evaluation-about/evaluation-about.component.html -->
-<div class="py-5 bg-gray-50 min-vh-100">
+<div class="py-5 bg-light min-vh-100">
   <div class="container">
     <!-- البانر التمهيدي -->
-    <section class="text-center mb-6 animate-slide-up hero-section">
-      <div class="d-inline-block mb-3 px-4 py-2 rounded-pill support-badge">
-        <span class="small fw-bold">بدعم من هيئة تقويم التعليم والتدريب</span>
+    <section
+      class="hero-section text-white text-center position-relative py-5 scroll-animate"
+    >
+      <div class="overlay"></div>
+      <div class="container position-relative">
+        <div
+          class="d-inline-block mb-3 px-4 py-2 badge-support rounded-pill scroll-animate"
+        >
+          <span class="small fw-bold">بدعم من هيئة تقويم التعليم والتدريب</span>
+        </div>
+        <h1 class="display-4 fw-bold mb-3 scroll-animate">
+          تقييم الجاهزية للتدريب الميداني
+        </h1>
+        <p class="fs-5 text-white-75 max-w-3xl mx-auto scroll-animate">
+          خطوتك الأولى نحو التميز المهني وبناء مستقبل وظيفي ناجح
+        </p>
       </div>
-      <h1 class="display-4 fw-bold text-white mb-3">
-        تقييم الجاهزية للتدريب الميداني
-      </h1>
-      <p class="fs-5 text-blue-100 max-w-3xl mx-auto">
-        خطوتك الأولى نحو التميز المهني وبناء مستقبل وظيفي ناجح
-      </p>
     </section>
 
     <!-- قسم: لماذا هذا التقييم؟ -->
-    <section class="mb-6 features-section">
-      <div class="text-center mb-5">
+    <section class="py-6 scroll-animate">
+      <div class="text-center mb-5 scroll-animate">
         <h2 class="display-6 fw-bold text-dark mb-3">
           <i class="fa-solid fa-circle-question text-primary me-2"></i>
           لماذا يجب أن تبدأ التقييم الآن؟
@@ -25,49 +32,24 @@
           هذا التقييم ليس مجرد اختبار — بل خريطة طريق لمستقبلك المهني
         </p>
       </div>
-      <div class="row g-4 animate-cards mb-4">
-        <!-- البطاقات كما هي -->
-        <div class="col-12 col-md-6 col-lg-4">
-          <div class="feature-card">
-            <div class="icon-box bg-primary">
-              <i class="fa-solid fa-brain fa-xl text-white"></i>
+      <div class="row g-4">
+        <div
+          class="col-12 col-md-6 col-lg-4 scroll-animate"
+          *ngFor="let feature of whyEvaluate; let i = index"
+          [style.transition-delay]="i * 0.1 + 's'"
+        >
+          <div class="feature-card h-100">
+            <div [class]="'icon-box ' + feature.bgClass">
+              <i class="fa-solid {{ feature.icon }} text-white"></i>
             </div>
-            <h3 class="h5 fw-bold text-dark mb-2">تحليل نفسي دقيق</h3>
-            <p class="text-muted">
-              نقيس مهاراتك السلوكية، قدرتك على تحمل الضغط، ومهارات التواصل — وهي
-              عوامل حاسمة في نجاحك الميداني.
-            </p>
-          </div>
-        </div>
-        <div class="col-12 col-md-6 col-lg-4">
-          <div class="feature-card">
-            <div class="icon-box bg-success">
-              <i class="fa-solid fa-graduation-cap fa-xl text-white"></i>
-            </div>
-            <h3 class="h5 fw-bold text-dark mb-2">تقييم أكاديمي شامل</h3>
-            <p class="text-muted">
-              نقيس مدى تطبيقك للمعارف الأكاديمية في سياقات واقعية، ونحدد الفجوات
-              التي تحتاج لسدها.
-            </p>
-          </div>
-        </div>
-        <div class="col-12 col-md-6 col-lg-4 mx-auto mx-lg-0">
-          <div class="feature-card">
-            <div class="icon-box bg-info">
-              <i class="fa-solid fa-lightbulb fa-xl text-white"></i>
-            </div>
-            <h3 class="h5 fw-bold text-dark mb-2">توصيات ذكية</h3>
-            <p class="text-muted">
-              ستحصل على خطة تطوير مخصصة، ومقترحات لتخصصات تدريبية تناسب مهاراتك
-              وقدراتك.
-            </p>
+            <h3 class="h5 fw-bold text-dark mb-2">{{ feature.title }}</h3>
+            <p class="text-muted">{{ feature.description }}</p>
           </div>
         </div>
       </div>
     </section>
-
     <!-- قسم: فوائد التقييم -->
-    <section class="mb-6 benefits-section">
+    <section class="mb-6 benefits-section scroll-animate">
       <div class="text-center mb-5">
         <h2 class="display-6 fw-bold text-success mb-3">
           <i class="fa-solid fa-gift text-success me-2"></i>
@@ -77,7 +59,7 @@
       <div class="row g-4">
         <!-- القوائم كما هي -->
         <div class="col-12 col-md-6">
-          <ul class="benefits-list">
+          <ul class="benefits-list scroll-animate">
             <li>
               <i class="fa-solid fa-circle-check text-success me-2"></i>
               <span>كشف نقاط القوة والضعف بدقة عالية</span>
@@ -93,7 +75,7 @@
           </ul>
         </div>
         <div class="col-12 col-md-6">
-          <ul class="benefits-list">
+          <ul class="benefits-list scroll-animate">
             <li>
               <i class="fa-solid fa-circle-check text-success me-2"></i>
               <span>تقرير شامل يُعتمد في قبول التدريب الميداني</span>
@@ -112,15 +94,20 @@
     </section>
 
     <!-- قسم الحث على البدء -->
-    <section class="text-center animate-slide-up cta-section">
-      <div class="call-to-action rounded-4 p-5">
-        <h2 class="display-6 fw-bold mb-3">هل أنت مستعد لخطوتك التالية؟</h2>
-        <p class="fs-5 text-purple-100 mb-4 max-w-2xl mx-auto">
+    <section class="text-center cta-section py-6 scroll-animate">
+      <div
+        class="call-to-action rounded-4 p-5 mx-auto"
+        style="max-width: 800px"
+      >
+        <h2 class="display-6 fw-bold mb-3 scroll-animate">
+          هل أنت مستعد لخطوتك التالية؟
+        </h2>
+        <p class="fs-5 text-white-75 mb-4 max-w-2xl mx-auto scroll-animate">
           لا تؤجل مستقبلك. خذ 20 دقيقة الآن لتقييم جاهزيتك، وابدأ رحلتك نحو
           التميز المهني.
         </p>
         <button
-          class="btn btn-light btn-lg fw-bold px-5 py-3 rounded-pill shadow-lg start-btn"
+          class="btn btn-light btn-lg fw-bold px-5 py-3 rounded-pill shadow-lg start-btn scroll-animate"
           (click)="startEvaluation()"
         >
           <i class="fa-solid fa-play me-2"></i>

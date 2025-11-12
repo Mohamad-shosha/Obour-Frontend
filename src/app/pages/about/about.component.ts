@@ -1,12 +1,52 @@
 // src/app/pages/about/about.component.ts
-import { Component } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-about',
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.scss'],
 })
-export class AboutComponent {
+export class AboutComponent implements AfterViewInit, OnDestroy {
+  private observer!: IntersectionObserver;
+  constructor(private router: Router) {}
+
+  ngAfterViewInit() {
+    this.initScrollAnimations();
+  }
+
+  ngOnDestroy() {
+    if (this.observer) {
+      this.observer.disconnect();
+    }
+  }
+
+  initScrollAnimations() {
+    const animatedElements = document.querySelectorAll(
+      '.scroll-animate:not(.visible)'
+    );
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px',
+      }
+    );
+
+    animatedElements.forEach((el) => this.observer.observe(el));
+  }
+
+  startEvaluation(): void {
+    this.router.navigate(['/evaluation']);
+  }
+
+  // أهداف المنصة
   goals = [
     {
       icon: 'fa-solid fa-chart-line',
@@ -30,6 +70,7 @@ export class AboutComponent {
     },
   ];
 
+  // رؤية 2030
   vision2030 = [
     'بناء جيل مؤهل من الكوادر الوطنية',
     'تحقيق التميز في التعليم والتدريب',
@@ -39,6 +80,7 @@ export class AboutComponent {
     'دعم الاقتصاد الوطني بكفاءات مؤهلة',
   ];
 
+  // المزايا الرئيسية
   features = [
     'تقييم أكاديمي شامل يغطي جميع جوانب التخصص',
     'تحليل نفسي متعمق للقدرات والمهارات الشخصية',
@@ -48,6 +90,7 @@ export class AboutComponent {
     'مقارنات معيارية مع الأقران والمعايير الوطنية',
   ];
 
+  // خطوات العمل
   steps = [
     {
       number: '1',
@@ -67,5 +110,12 @@ export class AboutComponent {
       description:
         'تقدم المنصة تقارير تفصيلية وتوصيات مخصصة لتطوير المهارات وتحسين الجاهزية',
     },
+  ];
+
+  impactStats = [
+    { value: '45+', label: 'جامعة شريكة' },
+    { value: '120+', label: 'تخصص مدعوم' },
+    { value: '25K+', label: 'طالب استفاد' },
+    { value: '87%', label: 'نسبة تحسن في الجاهزية' },
   ];
 }

@@ -1,38 +1,137 @@
-/* src/app/shared/components/footer/footer.component.css */
-.bg-slate-900 {
-  background-color: #0f172a;
+/* src/app/shared/components/footer/footer.component.scss */
+
+// --- ألوان ---
+$primary: #3b82f6;
+$primary-dark: #1e40af;
+$primary-light: #60a5fa;
+$slate-900: #0f172a;
+$slate-800: #1e293b;
+$slate-700: #334155;
+$slate-600: #475569;
+$slate-500: #64748b;
+$slate-400: #94a3b8;
+
+// --- Scroll Animation (يجب أن يكون مطابقًا لـ home) ---
+.scroll-animate {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.scroll-animate.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
+// --- Footer Section ---
+.footer-section {
+  background-color: $slate-900;
+  color: white;
+  position: relative;
+  overflow: hidden;
+
+  // زخرفة خفيفة (اختياري)
+  &::before {
+    content: "";
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba($primary, 0.1) 0%,
+      transparent 70%
+    );
+    z-index: 0;
+  }
+}
+
+// --- العناصر الداخلية ---
+.container {
+  position: relative;
+  z-index: 1;
+}
+
+.footer-title {
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+// --- أيقونة الشعار ---
+.footer-icon-badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, $primary-dark, $primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba($primary, 0.2);
+  i {
+    font-size: 1.2rem;
+    color: white;
+  }
+}
+
+// --- الروابط ---
+.footer-link {
+  color: $slate-400;
+  text-decoration: none;
+  transition: color 0.3s ease, padding-right 0.3s ease;
+  display: inline-block;
+  padding-right: 0;
+
+  &:hover {
+    color: $primary-light;
+    padding-right: 8px;
+  }
+}
+
+// --- أيقونات التواصل ---
+.contact-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $primary;
+  i {
+    font-size: 1rem;
+  }
+}
+
+// --- أيقونات السوشيال ميديا ---
+.footer-social-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba($slate-400, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $slate-400;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+
+  &:hover {
+    background: $primary;
+    color: white;
+    transform: translateY(-3px);
+  }
+}
+
+// --- الحدود والألوان ---
 .text-slate-400 {
-  color: #94a3b8;
+  color: $slate-400;
 }
-
 .text-slate-500 {
-  color: #64748b;
+  color: $slate-500;
 }
-
 .text-slate-600 {
-  color: #475569;
+  color: $slate-600;
 }
-
-.text-slate-800 {
-  color: #1e293b;
-}
-
 .border-slate-800 {
-  border-color: #1e293b !important;
-}
-
-/* التدرج الأساسي */
-.gradient-primary {
-  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
-}
-
-/* لون الربط التفاعلي */
-.text-primary {
-  color: #3b82f6;
-}
-
-.text-primary:hover {
-  color: #60a5fa;
+  border-color: $slate-800 !important;
 }

@@ -41,7 +41,7 @@ export class CategoriesComponent implements OnInit {
 
           Swal.fire({
             icon: 'warning',
-            title: 'الجلسة منتهية',
+            title: 'فشل التحميل',
             text: 'يجب تسجيل الدخول لمتابعة استخدام المنصة.',
             confirmButtonText: 'الذهاب إلى تسجيل الدخول',
             customClass: {
@@ -56,8 +56,8 @@ export class CategoriesComponent implements OnInit {
           Swal.fire({
             icon: 'error',
             title: 'فشل التحميل',
-            text: 'تعذر تحميل الأقسام. تأكد من اتصالك بالإنترنت وحاول مرة أخرى.',
-            confirmButtonText: 'حسنًا',
+            text: 'يجب تسجيل الدخول لمتابعة استخدام المنصة.',
+            confirmButtonText: 'الذهاب إلى تسجيل الدخول',
             customClass: {
               confirmButton: 'btn btn-danger',
             },
