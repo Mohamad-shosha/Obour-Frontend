@@ -47,6 +47,10 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     this.router.navigate(['/evaluation']);
   }
 
+  startAbout(): void {
+    this.router.navigate(['/about']);
+  }
+
   // --- البيانات ---
   stats = [
     {
