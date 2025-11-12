@@ -1,198 +1,324 @@
-@import "~hamburgers/dist/hamburgers.min.css";
-/* ===== Hamburger & Sidebar ===== */
-/* ===== Hamburger & Sidebar ===== */
-.hamburger {
-  display: inline-block;
-  cursor: pointer;
-  padding: 0.5rem;
-  transition: opacity 0.2s ease;
+/* src/app/pages/admin-dashboard/admin-dashboard.component.scss */
+
+// --- المتغيرات ---
+$primary: #1e40af;
+$primary-light: #3b82f6;
+$success: #059669;
+$success-light: #10b981;
+$sidebar-bg: #ffffff;
+$sidebar-width-open: 300px;
+$sidebar-width-closed: 72px;
+
+// --- خلفية التعتيم ---
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1040;
+  display: block;
 }
 
-/* Hamburger (Hamburgers CSS already included) */
-.hamburger .hamburger-inner,
-.hamburger .hamburger-inner::before,
-.hamburger .hamburger-inner::after {
-  background-color: #f1f5f9;
-  transition: all 0.4s ease;
-}
-
-/* اللون عند التحويل لـ × */
-.hamburger.is-active .hamburger-inner,
-.hamburger.is-active .hamburger-inner::before,
-.hamburger.is-active .hamburger-inner::after {
-  background-color: #f1f5f9;
-}
-
-.hamburger:hover {
-  opacity: 0.8;
-}
-
-/* أنماط الـ Sidebar */
-.sidebar {
-  box-shadow: 3px 0 15px rgba(0, 0, 0, 0.2);
-  background: linear-gradient(180deg, #1e40af 0%, #1e3a8a 100%);
-  color: #f1f5f9;
-}
-
-/* أنماط رابط الصفحة الرئيسية */
-.home-link {
+// --- الهيكل العام ---
+.admin-layout {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #10b981; /* لون success */
-  text-decoration: none;
-  padding: 12px;
+  min-height: 100vh;
+  background-color: #f8fafc;
+  position: relative;
+}
+
+// --- المحتوى الرئيسي ---
+.main-content {
+  flex: 1;
+  transition: all 0.3s ease;
+  min-height: 100vh;
+  width: calc(100% - #{$sidebar-width-closed});
+  margin-right: $sidebar-width-closed;
+
+  .sidebar-open ~ & {
+    width: calc(100% - #{$sidebar-width-open});
+    margin-right: $sidebar-width-open;
+  }
+}
+
+// --- كارت الشريط الجانبي (على اليمين) ---
+.sidebar-card {
+  background: $sidebar-bg;
+  border-left: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1050;
+  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1);
+  width: $sidebar-width-closed;
+
+  &.sidebar-open {
+    width: $sidebar-width-open;
+  }
+  &.sidebar-closed {
+    .logo-text,
+    .nav-text,
+    .user-profile,
+    .border-top {
+      opacity: 0;
+      width: 0;
+      padding: 0 !important;
+      margin: 0 !important;
+      overflow: hidden;
+    }
+    .nav-link {
+      justify-content: center;
+      padding: 12px !important;
+    }
+  }
+}
+
+// --- رأس الكارت ---
+.sidebar-header {
+  background: linear-gradient(135deg, $primary 0%, #1e3a8a 100%);
+  color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  height: 60px;
+  flex-direction: row-reverse;
+  display: flex;
+  justify-content: space-between; // التوزيع بين hamburger و logo
+  align-items: center; // عموديًا في المنتصف
+  padding: 0 12px; // مسافة جانبية
+
+  .hamburger {
+    display: flex;
+    align-items: center; // محاذاة منتصف البوكس
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    padding: 6px;
+    .hamburger-inner,
+    .hamburger-inner::before,
+    .hamburger-inner::after {
+      background-color: white;
+      width: 18px;
+      height: 2px;
+    }
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+    }
+    .hamburger-box {
+      text-align: center;
+    }
+  }
+
+  .logo-section {
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+    .logo-text {
+      font-size: 1.1rem;
+    }
+  }
+}
+
+// --- محتوى الشريط الجانبي ---
+.sidebar-content {
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+  padding-bottom: 2rem;
+
+  .user-profile {
+    transition: all 0.3s ease;
+  }
+
+  .nav-link {
+    color: #475569;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+
+    &:hover {
+      background: rgba(30, 64, 175, 0.08);
+      color: $primary;
+      transform: translateX(-4px);
+    }
+
+    &.active {
+      background: rgba(30, 64, 175, 0.12);
+      color: $primary;
+      font-weight: 600;
+      box-shadow: inset -4px 0 0 $primary;
+    }
+
+    i {
+      width: 24px;
+      text-align: center;
+      color: #64748b;
+    }
+
+    &:hover i,
+    &.active i {
+      color: $primary;
+    }
+  }
+}
+
+// --- الجداول ---
+.table-container {
+  background: white;
   border-radius: 12px;
-  transition: all 0.3s ease;
-  font-weight: 600;
+  padding: 1.2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  max-height: 600px; // ارتفاع الجدول
+  overflow: auto; // يسمح بالتمرير أفقي ورأسي
 }
 
-.home-link:hover {
-  color: #059669; /* لون success داكن */
-  transform: translateY(-2px);
-  background: rgba(16, 185, 129, 0.1);
+.table {
+  width: 100%;
+  min-width: 800px;
+
+  thead th {
+    background: $primary;
+    color: white;
+    font-weight: 600;
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+  }
+
+  tbody td {
+    padding: 1rem;
+    white-space: normal; // السماح بالكسور
+    word-break: break-word; // تقطيع الكلمات الطويلة
+    max-width: 250px; // الحد الأقصى للعرض لتجنب خروج النص من الجدول
+
+    // تطبيق على آخر عمودين إذا حبيت تتحكم فيهم بشكل مختلف
+    &:nth-last-child(-n + 2) {
+      white-space: normal;
+      word-break: break-word;
+    }
+
+    &:not(:nth-last-child(-n + 2)) {
+      white-space: nowrap;
+    }
+
+    // لتنسيق الـ badges داخل الأعمدة
+    span.badge {
+      display: inline-block;
+      max-width: 100%;
+      white-space: normal;
+      word-break: break-word;
+    }
+  }
+
+  tbody tr:hover {
+    background-color: rgba(59, 130, 246, 0.03);
+  }
 }
 
-.home-icon {
-  color: #10b981;
-  margin-bottom: 8px;
+// --- البدجات ---
+.badge {
+  &.bg-primary-role {
+    background: linear-gradient(135deg, $primary-light, #2563eb);
+    color: white;
+  }
+  &.bg-success-role {
+    background: linear-gradient(135deg, $success-light, $success);
+    color: white;
+  }
+  &.bg-success {
+    background: linear-gradient(135deg, $success-light, $success);
+    color: white;
+  }
+  &.bg-warning {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+  }
+  &.bg-danger {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+  }
+  &.bg-secondary {
+    background: linear-gradient(135deg, #64748b, #475569);
+    color: white;
+  }
 }
 
-.home-text {
-  font-size: 0.95rem;
-}
-
-/* أنماط الملف الشخصي */
-.profile-icon {
-  color: #10b981; /* لون success */
-  margin: 15px 0;
-}
-
-.profile-name {
-  color: #10b981; /* لون success */
-  font-weight: 700;
-  font-size: 1.1rem;
-}
-
-/* أنماط الروابط في الـ Sidebar */
-.custom-nav-link {
-  color: #cbd5e1;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  padding: 12px 16px;
-  border-radius: 10px;
-  font-size: 1.05rem;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-weight: 500;
-}
-
-.custom-nav-link:hover {
-  background: rgba(37, 99, 235, 0.25);
-  color: #93c5fd;
-  transform: translateX(8px);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
-}
-
-.custom-nav-link i {
-  font-size: 1.2rem;
-  width: 24px;
-  text-align: center;
-}
-
-/* أنماط الجداول والـ Badges */
-.table thead tr:first-child th {
-  background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%) !important;
-  color: #f1f5f9 !important;
-  border-bottom: 2px solid #3b82f6;
-}
-
-.badge.bg-primary {
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
-  color: white;
-}
-.badge.bg-success {
-  background: linear-gradient(135deg, #10b981, #059669);
-  color: white;
-}
-.badge.bg-warning {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
-  color: white;
-}
-.badge.bg-danger {
-  background: linear-gradient(135deg, #ef4444, #dc2626);
-  color: white;
-}
-.badge.bg-secondary {
-  background: linear-gradient(135deg, #64748b, #475569);
-  color: white;
-}
-
-/* أنماط الأزرار */
+// --- الأزرار ---
 .btn-primary {
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  background: linear-gradient(135deg, $primary-light, #2563eb);
   border: none;
-  color: white;
   font-weight: 600;
-}
-
-.btn-primary:hover {
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  }
 }
 
 .btn-outline-info {
-  border: 2px solid #3b82f6;
-  color: #3b82f6;
+  border: 2px solid $primary-light;
+  color: $primary-light;
   font-weight: 600;
+  &:hover {
+    background: rgba(59, 130, 246, 0.1);
+  }
 }
 
-.btn-outline-info:hover {
-  background: rgba(59, 130, 246, 0.1);
-  transform: translateY(-2px);
+// --- الحركات ---
+.fade-in-section {
+  animation: fadeInUp 0.5s ease forwards;
 }
 
-/* أنماط عامة */
-.table-responsive {
-  animation-delay: 0.1s;
-  padding: 10px;
-  max-height: 600px;
-  overflow-y: auto;
-  border-radius: 16px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.text-wrap {
-  white-space: normal !important;
-  word-wrap: break-word;
-}
-
-.table th {
-  background-color: #f1f5f9;
-  color: #1e293b;
-  font-weight: 600;
-}
-
-/* Responsive */
 @media (max-width: 768px) {
-  .sidebar {
+  .table-container {
+    padding: 0.8rem;
+  }
+
+  .table {
+    min-width: 600px;
+    font-size: 0.875rem;
+
+    tbody td {
+      padding: 0.75rem;
+      .btn {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+      }
+    }
+  }
+
+  .sidebar-card {
+    width: $sidebar-width-open !important;
+    transform: translateX(100%);
+    &.sidebar-open {
+      transform: translateX(0);
+    }
+  }
+
+  .main-content {
+    margin-right: 0;
+    width: 100%;
+  }
+
+  .btn-primary.btn-sm {
     position: fixed;
-    z-index: 1000;
-    height: 100vh;
-    box-shadow: 5px 0 25px rgba(0, 0, 0, 0.3);
-  }
-
-  .w-100 {
-    width: 100% !important;
-  }
-
-  .container-fluid {
-    padding: 15px !important;
-  }
-
-  .table-responsive {
-    border-radius: 12px;
+    top: 15px;
+    right: 15px;
+    z-index: 1045;
   }
 }

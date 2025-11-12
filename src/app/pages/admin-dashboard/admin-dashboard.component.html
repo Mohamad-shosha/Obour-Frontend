@@ -1,260 +1,287 @@
-<div
-  class="container-fluid p-3"
-  style="background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%)"
->
-  <button
-    class="hamburger hamburger--elastic sidebar-toggle-btn"
-    type="button"
-    [class.is-active]="sidebarOpen"
-    (click)="toggleSidebar()"
-  >
-    <span class="hamburger-box">
-      <span class="hamburger-inner"></span>
-    </span>
-  </button>
-</div>
-
-<div class="d-flex">
-  <!-- Sidebar -->
+<!-- src/app/pages/admin-dashboard/admin-dashboard.component.html -->
+<div class="admin-layout">
+  <!-- خلفية التعتيم عند فتح القائمة في الجوال -->
   <div
-    class="sidebar text-white p-3 animate__animated"
-    [class.d-none]="!sidebarOpen"
-    [ngClass]="{
-      animate__fadeInLeft: sidebarOpen,
-      animate__fadeOutLeft: !sidebarOpen
-    }"
-    style="
-      width: 280px;
-      min-height: 100vh;
-      background-color: #1e1e2f;
-      transition: all 0.4s ease;
-    "
-  >
-    <!-- رابط Home أعلى الاسم -->
-    <div class="text-center mb-2">
-      <a
-        [routerLink]="['/home']"
-        class="custom-nav-link d-block mb-2"
-        style="text-decoration: none; font-weight: bold"
-      >
-        <i class="bi bi-house-door-fill me-1"></i> الصفحة الرئيسية
-      </a>
-      <i
-        class="bi bi-person-circle d-block fs-1 text-success mb-2 animate__animated animate__fadeInDown"
-      ></i>
-      <span class="text-success fw-bold fs-6">{{ currentUser?.name }}</span>
-    </div>
-
-    <ul class="nav flex-column mt-3">
-      <li class="nav-item mb-2">
-        <a class="nav-link custom-nav-link" (click)="viewSection = 'allUsers'">
-          <i class="bi bi-people-fill me-2"></i> جميع المستخدمين
-        </a>
-      </li>
-      <li class="nav-item mb-2">
-        <a class="nav-link custom-nav-link" (click)="viewSection = 'teachers'">
-          <i class="bi bi-mortarboard-fill me-2"></i> المعلمون
-        </a>
-      </li>
-      <li class="nav-item mb-2">
-        <a class="nav-link custom-nav-link" (click)="viewSection = 'students'">
-          <i class="bi bi-person-lines-fill me-2"></i> الطلاب
-        </a>
-      </li>
-    </ul>
-  </div>
+    class="sidebar-overlay"
+    *ngIf="sidebarOpen && isMobile"
+    (click)="toggleSidebar()"
+  ></div>
 
   <!-- المحتوى الرئيسي -->
-  <div class="w-100 p-3">
-    <!-- جميع المستخدمين -->
-    <div
-      class="container-fluid animate__animated animate__fadeIn"
-      *ngIf="viewSection === 'allUsers'"
-    >
-      <h3 class="mb-4">
-        <i class="bi bi-people-fill me-2"></i> جميع المستخدمين
-      </h3>
-      <div class="table-responsive rounded shadow-sm">
-        <table class="table align-middle table-striped table-hover">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">الاسم</th>
-              <th scope="col">البريد الإلكتروني</th>
-              <th scope="col">الدور</th>
-              <th scope="col">الدرجة</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let user of users; let i = index">
-              <td>{{ i + 1 }}</td>
-              <td>{{ user.name }}</td>
-              <td>{{ user.email }}</td>
-              <td>
-                <span class="badge bg-primary" *ngIf="user.role === 'TEACHER'"
-                  >معلم</span
-                >
-                <span class="badge bg-success" *ngIf="user.role === 'STUDENT'"
-                  >طالب</span
-                >
-              </td>
-              <td>
-                <span
-                  class="badge"
-                  [ngClass]="getScoreClass(getUserScore(user.id))"
-                >
-                  {{ getUserScore(user.id) || "غير متوفر" }}
-                </span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- المعلمون فقط -->
-    <div
-      class="container-fluid animate__animated animate__fadeIn"
-      *ngIf="viewSection === 'teachers'"
-    >
-      <h3 class="mb-4"><i class="bi bi-mortarboard-fill me-2"></i> المعلمون</h3>
-      <div class="table-responsive rounded shadow-sm">
-        <table class="table align-middle table-striped table-hover">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>الاسم</th>
-              <th>البريد الإلكتروني</th>
-              <th>الدور</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let teacher of teachers; let i = index">
-              <td>{{ i + 1 }}</td>
-              <td>{{ teacher.name }}</td>
-              <td>{{ teacher.email }}</td>
-              <td><span class="badge bg-primary">معلم</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- الطلاب فقط -->
-    <div
-      class="container-fluid animate__animated animate__fadeIn"
-      *ngIf="viewSection === 'students'"
-    >
-      <h3 class="mb-4"><i class="bi bi-person-lines-fill me-2"></i> الطلاب</h3>
-      <div class="table-responsive rounded shadow-sm">
-        <table class="table align-middle table-striped table-hover">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>الاسم</th>
-              <th>البريد الإلكتروني</th>
-              <th>الدرجة العامة</th>
-              <th>تفاصيل الأقسام</th>
-              <th>عرض الإجابات</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let student of students; let i = index">
-              <td>{{ i + 1 }}</td>
-              <td>{{ student.name }}</td>
-              <td>{{ student.email }}</td>
-              <td>
-                <span
-                  class="badge"
-                  [ngClass]="getScoreClass(getUserScore(student.id))"
-                >
-                  {{ getUserScore(student.id) || "غير متوفر" }}
-                </span>
-              </td>
-              <td>
-                <button
-                  class="btn btn-sm btn-outline-info"
-                  (click)="viewStudentSections(student.id)"
-                >
-                  عرض الأقسام
-                </button>
-              </td>
-              <td>
-                <button
-                  class="btn btn-sm btn-primary"
-                  (click)="viewStudentAnswers(student.id)"
-                >
-                  عرض الإجابات
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- تفاصيل الإجابات -->
-    <div
-      *ngIf="selectedStudent"
-      class="container-fluid animate__animated animate__fadeIn mt-4"
-    >
-      <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3 class="mb-0">
-          <i class="bi bi-file-earmark-text-fill me-2 text-info"></i>
-          إجابات الطالب: {{ selectedStudent.name }}
-        </h3>
+  <div class="main-content flex-grow-1">
+    <div class="container-fluid p-4">
+      <!-- زر القائمة للجوال -->
+      <div class="d-md-none mb-3 text-end">
         <button
-          (click)="closeStudentDetails()"
-          class="btn btn-outline-secondary"
+          class="btn btn-primary btn-sm rounded-pill px-3"
+          (click)="toggleSidebar()"
+          *ngIf="!sidebarOpen"
         >
-          <i class="bi bi-x-lg"></i> إغلاق
+          <i class="bi bi-list"></i> القائمة
         </button>
       </div>
-      <div class="table-responsive rounded shadow-sm mt-3">
-        <table class="table align-middle table-hover">
-          <thead>
-            <tr>
-              <th style="width: 15%">القسم</th>
-              <th style="width: 20%">السؤال</th>
-              <th style="width: 15%">الإجابة</th>
-              <th style="width: 10%">درجة السؤال</th>
-              <th style="width: 15%">الدرجة النهائية للاختبار</th>
-              <th style="width: 15%">التاريخ</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let answer of studentAnswers; let i = index">
-              <td>
-                <span class="badge bg-primary">{{ answer.sectionName }}</span>
-              </td>
-              <td class="text-wrap" style="max-width: 200px">
-                {{ answer.questionText }}
-              </td>
-              <td>
-                <span class="badge bg-success">{{ answer.choiceText }}</span>
-              </td>
-              <td>
-                <span class="badge bg-info">{{ answer.score }} نقطة</span>
-              </td>
-              <td>
-                <span
-                  class="badge px-2 py-1"
-                  [ngClass]="getScoreClass(answer.sectionFinalScore)"
-                >
-                  {{ answer.sectionFinalScore }}
-                </span>
-              </td>
-              <td>{{ answer.createdAt | date : "dd/MM/yyyy HH:mm" }}</td>
-            </tr>
-            <tr *ngIf="studentAnswers.length === 0">
-              <td colspan="6" class="text-center py-4 text-muted">
-                <i class="bi bi-info-circle me-2"></i> لا توجد إجابات متاحة لهذا
-                الطالب
-              </td>
-            </tr>
-          </tbody>
-        </table>
+
+      <!-- جميع المستخدمين -->
+      <div *ngIf="viewSection === 'allUsers'" class="fade-in-section">
+        <h2 class="mb-4">
+          <i class="bi bi-people-fill me-2 text-primary"></i> جميع المستخدمين
+        </h2>
+        <div class="table-container">
+          <table class="table align-middle table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">الاسم</th>
+                <th scope="col">البريد الإلكتروني</th>
+                <th scope="col">الدور</th>
+                <th scope="col">الدرجة</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of users; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                  <span class="badge" [ngClass]="getRoleClass(user.role)">
+                    {{ getRoleLabel(user.role) }}
+                  </span>
+                </td>
+                <td>
+                  <span
+                    class="badge"
+                    [ngClass]="getScoreClass(getUserScore(user.id))"
+                  >
+                    {{ getUserScore(user.id) || "غير متوفر" }}
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
+
+      <!-- المعلمون -->
+      <div *ngIf="viewSection === 'teachers'" class="fade-in-section">
+        <h2 class="mb-4">
+          <i class="bi bi-mortarboard-fill me-2 text-primary"></i> المعلمون
+        </h2>
+        <div class="table-container">
+          <table class="table align-middle table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>الاسم</th>
+                <th>البريد الإلكتروني</th>
+                <th>الدور</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let teacher of teachers; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ teacher.name }}</td>
+                <td>{{ teacher.email }}</td>
+                <td><span class="badge bg-primary-role">معلم</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- الطلاب -->
+      <div *ngIf="viewSection === 'students'" class="fade-in-section">
+        <h2 class="mb-4">
+          <i class="bi bi-person-lines-fill me-2 text-primary"></i> الطلاب
+        </h2>
+        <div class="table-container">
+          <table class="table align-middle table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>الاسم</th>
+                <th>البريد الإلكتروني</th>
+                <th>الدرجة العامة</th>
+                <th>تفاصيل الأقسام</th>
+                <th>عرض الإجابات</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let student of students; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ student.name }}</td>
+                <td>{{ student.email }}</td>
+                <td>
+                  <span
+                    class="badge"
+                    [ngClass]="getScoreClass(getUserScore(student.id))"
+                  >
+                    {{ getUserScore(student.id) || "غير متوفر" }}
+                  </span>
+                </td>
+                <td>
+                  <button
+                    class="btn btn-sm btn-outline-primary w-100 w-md-auto"
+                    (click)="viewStudentSections(student.id)"
+                  >
+                    عرض الأقسام
+                  </button>
+                </td>
+                <td>
+                  <button
+                    class="btn btn-sm btn-outline-primary w-100 w-md-auto"
+                    (click)="viewStudentAnswers(student.id)"
+                  >
+                    عرض الإجابات
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- تفاصيل الإجابات -->
+      <div *ngIf="selectedStudent" class="fade-in-section mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h3 class="mb-0">
+            <i class="bi bi-file-earmark-text-fill me-2 text-info"></i>
+            إجابات الطالب: {{ selectedStudent.name }}
+          </h3>
+          <button
+            (click)="closeStudentDetails()"
+            class="btn btn-outline-secondary"
+          >
+            <i class="bi bi-x-lg"></i> إغلاق
+          </button>
+        </div>
+        <div class="table-container">
+          <table class="table align-middle table-hover">
+            <thead>
+              <tr>
+                <th style="width: 15%">القسم</th>
+                <th style="width: 20%">السؤال</th>
+                <th style="width: 15%">الإجابة</th>
+                <th style="width: 10%">درجة السؤال</th>
+                <th style="width: 15%">الدرجة النهائية</th>
+                <th style="width: 15%">التاريخ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let answer of studentAnswers; let i = index">
+                <td>
+                  <span class="badge bg-primary">{{ answer.sectionName }}</span>
+                </td>
+                <td class="text-wrap" style="max-width: 200px">
+                  {{ answer.questionText }}
+                </td>
+                <td>
+                  <span class="badge bg-success">{{ answer.choiceText }}</span>
+                </td>
+                <td>
+                  <span class="badge bg-info">{{ answer.score }} نقطة</span>
+                </td>
+                <td>
+                  <span
+                    class="badge px-2 py-1"
+                    [ngClass]="getScoreClass(answer.sectionFinalScore)"
+                  >
+                    {{ answer.sectionFinalScore }}
+                  </span>
+                </td>
+                <td>{{ answer.createdAt | date : "dd/MM/yyyy HH:mm" }}</td>
+              </tr>
+              <tr *ngIf="studentAnswers.length === 0">
+                <td colspan="6" class="text-center py-4 text-muted">
+                  <i class="bi bi-info-circle me-2"></i> لا توجد إجابات متاحة
+                  لهذا الطالب
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sidebar على اليمين -->
+  <div
+    class="sidebar-card rounded-0 shadow-lg"
+    [class.sidebar-open]="sidebarOpen"
+    [class.sidebar-closed]="!sidebarOpen"
+  >
+    <div class="sidebar-header p-3 d-flex align-items-center">
+      <button
+        class="hamburger hamburger--elastic me-auto"
+        type="button"
+        [class.is-active]="sidebarOpen"
+        (click)="toggleSidebar()"
+        aria-label="تبديل القائمة"
+      >
+        <span class="hamburger-box">
+          <span class="hamburger-inner"></span>
+        </span>
+      </button>
+      <div class="logo-section d-flex align-items-center gap-2 ms-auto">
+        <span class="logo-text fw-bold text-white">لوحة التحكم</span>
+        <div
+          class="logo-icon rounded-circle d-flex align-items-center justify-content-center"
+        >
+          <i class="bi bi-bar-chart-line fs-5 text-white"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- محتوى الشريط الجانبي -->
+    <div class="sidebar-content p-4">
+      <!-- معلومات المستخدم -->
+      <div class="user-profile text-center mb-4 p-3 rounded-3 bg-dark-subtle">
+        <i class="bi bi-person-circle fs-1 text-primary mb-2"></i>
+        <div class="fw-bold text-dark">{{ currentUser?.name }}</div>
+        <div class="badge bg-primary mt-1">معلم</div>
+      </div>
+
+      <!-- روابط التنقل -->
+      <ul class="nav flex-column gap-2">
+        <li class="nav-item">
+          <a
+            class="nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3"
+            (click)="setView('allUsers')"
+            [class.active]="viewSection === 'allUsers'"
+          >
+            <i class="bi bi-people-fill fs-5"></i>
+            <span class="nav-text">جميع المستخدمين</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3"
+            (click)="setView('teachers')"
+            [class.active]="viewSection === 'teachers'"
+          >
+            <i class="bi bi-mortarboard-fill fs-5"></i>
+            <span class="nav-text">المعلمون</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3"
+            (click)="setView('students')"
+            [class.active]="viewSection === 'students'"
+          >
+            <i class="bi bi-person-lines-fill fs-5"></i>
+            <span class="nav-text">الطلاب</span>
+          </a>
+        </li>
+        <li class="nav-item mt-3 pt-3 border-top border-secondary-subtle">
+          <a
+            [routerLink]="['/home']"
+            class="nav-link d-flex align-items-center gap-3 px-3 py-2 rounded-3 text-decoration-none"
+          >
+            <i class="bi bi-house-door-fill fs-5 text-success"></i>
+            <span class="nav-text text-success">الصفحة الرئيسية</span>
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
 </div>

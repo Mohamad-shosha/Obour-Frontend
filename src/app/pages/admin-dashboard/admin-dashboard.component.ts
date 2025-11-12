@@ -1,3 +1,4 @@
+// src/app/pages/admin-dashboard/admin-dashboard.component.ts
 import { Component, OnInit } from '@angular/core';
 import { AdminDashboardService } from '../../services/admin-dashboard.service';
 import Swal from 'sweetalert2';
@@ -28,6 +29,7 @@ interface EnrichedAnswer {
 export class AdminDashboardComponent implements OnInit {
   // --- خصائص الـ sidebar والـ sections ---
   sidebarOpen: boolean = true;
+  isMobile: boolean = false;
   viewSection: string = 'allUsers'; // 'allUsers' | 'teachers' | 'students'
   currentUser: any = null;
   teachers: any[] = [];
@@ -42,7 +44,7 @@ export class AdminDashboardComponent implements OnInit {
   sections: any[] = [];
   questionsMap: { [key: number]: any } = {};
   choicesMap: { [key: number]: any } = {};
-  sectionFinalScores: { [key: string]: number } = {}; // مخزن مؤقت للدرجات
+  sectionFinalScores: { [key: string]: number } = {};
 
   constructor(
     private adminService: AdminDashboardService,
@@ -51,6 +53,8 @@ export class AdminDashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.checkScreenSize();
+    window.addEventListener('resize', () => this.checkScreenSize());
     const currentUser = this.authService.getUserFromStorage();
     if (!currentUser || currentUser.role !== 'TEACHER') {
       Swal.fire('غير مصرح', 'هذه الصفحة مخصصة للمعلمين فقط', 'error');
@@ -62,9 +66,20 @@ export class AdminDashboardComponent implements OnInit {
     this.loadSectionsAndQuestions();
   }
 
+  checkScreenSize(): void {
+    this.isMobile = window.innerWidth <= 768;
+  }
+
   // --- دوال الـ sidebar ---
   toggleSidebar(): void {
     this.sidebarOpen = !this.sidebarOpen;
+  }
+
+  setView(section: string): void {
+    this.viewSection = section;
+    if (window.innerWidth < 992) {
+      this.sidebarOpen = false;
+    }
   }
 
   loadAllUsers(): void {
@@ -120,6 +135,14 @@ export class AdminDashboardComponent implements OnInit {
     return 'bg-danger';
   }
 
+  getRoleLabel(role: string): string {
+    return role === 'TEACHER' ? 'معلم' : 'طالب';
+  }
+
+  getRoleClass(role: string): string {
+    return role === 'TEACHER' ? 'bg-primary-role' : 'bg-success-role';
+  }
+
   viewStudentSections(studentId: number): void {
     this.adminService.getRootSections().subscribe((rootSections) => {
       let html =
@@ -136,14 +159,11 @@ export class AdminDashboardComponent implements OnInit {
         return;
       }
 
-      // معالجة كل قسم رئيسي
       const rootSectionsObs = rootSections.map((rootSection) =>
         this.adminService.getSubSections(rootSection.id).pipe(
-          catchError(() => of([])), // إذا لم توجد أقسام فرعية
-          // بعد الحصول على كل SubSections، نجمع الدرجات
+          catchError(() => of([])),
           switchMap((subSections) => {
             if (subSections.length > 0) {
-              // جلب درجات كل SubSection
               const scoresObs = subSections.map((sub) =>
                 this.adminService
                   .getStudentScoreBySection(studentId, sub.id)
@@ -153,7 +173,6 @@ export class AdminDashboardComponent implements OnInit {
                 map((scores) => ({ rootSection, subSections, scores }))
               );
             } else {
-              // لا يوجد SubSections، فقط الدرجة العامة للقسم
               return this.adminService
                 .getStudentScoreBySection(studentId, rootSection.id)
                 .pipe(
@@ -198,7 +217,7 @@ export class AdminDashboardComponent implements OnInit {
             });
           } else {
             totalScore = scores[0];
-            html += `<div class="d-flex justify-content-between align-items-center py-2"">
+            html += `<div class="d-flex justify-content-between align-items-center py-2">
             <span class="fw-medium">الدرجة العامة</span>
             <span class="badge ${this.getScoreClass(
               totalScore
@@ -206,16 +225,15 @@ export class AdminDashboardComponent implements OnInit {
           </div>`;
           }
 
-          // المجموع الكلي أسفل الكارد
           html += `<div class="d-flex justify-content-between align-items-center mt-3 border-top border-2 ${bgColor}">
           <span class="fw-bold ${textColor}">المجموع الكلي</span>
           <span class="badge ${bgColor} ${textColor} px-3 py-2">${totalScore}</span>
         </div>`;
 
-          html += '</div></div>'; // إغلاق card-body و card
+          html += '</div></div>';
         });
 
-        html += '</div>'; // إغلاق div الرئيسي
+        html += '</div>';
         Swal.fire({
           title: 'درجات الأقسام',
           html: html,
@@ -225,23 +243,6 @@ export class AdminDashboardComponent implements OnInit {
         });
       });
     });
-  }
-
-  // دالة مساعدة للتحديث وعرض النتيجة
-  private cardCount = 0;
-  private updateAndShowSwal(html: string, totalCards: number): void {
-    this.cardCount++;
-    if (this.cardCount === totalCards) {
-      html += '</div>';
-      Swal.fire({
-        title: 'درجات الأقسام',
-        html: html,
-        confirmButtonText: 'إغلاق',
-        customClass: { popup: 'swal2-wide' },
-        width: '500px',
-      });
-      this.cardCount = 0; // إعادة التعيين للمرة القادمة
-    }
   }
 
   // --- دوال عرض الإجابات ---
@@ -267,10 +268,9 @@ export class AdminDashboardComponent implements OnInit {
     const student = this.students.find((u) => u.id === studentId);
     if (student) {
       this.selectedStudent = student;
-      this.studentAnswers = []; // إعادة تعيين
+      this.studentAnswers = [];
       this.sectionFinalScores = {};
 
-      // جلب الإجابات الأساسية
       this.adminService.getStudentAnswers(studentId).subscribe({
         next: (answers) => {
           if (answers.length === 0) {
@@ -282,12 +282,10 @@ export class AdminDashboardComponent implements OnInit {
             return;
           }
 
-          // جلب تفاصيل كل إجابة بالتوازي
           const enrichedAnswers = answers.map((answer) =>
             this.enrichAnswer(answer, studentId)
           );
 
-          // الانتظار حتى يتم جلب جميع البيانات
           Promise.all(enrichedAnswers).then((resolvedAnswers) => {
             this.studentAnswers = resolvedAnswers.filter(
               (a) => a !== null
@@ -307,17 +305,14 @@ export class AdminDashboardComponent implements OnInit {
     studentId: number
   ): Promise<EnrichedAnswer | null> {
     try {
-      // 1. جلب تفاصيل السؤال
       const question = await this.getQuestionById(
         answer.questionId
       ).toPromise();
       if (!question || !question.sectionId) return null;
 
-      // 2. جلب تفاصيل القسم
       const section = await this.getSectionById(question.sectionId).toPromise();
       if (!section) return null;
 
-      // 3. جلب درجة القسم
       const sectionKey = `${studentId}-${question.sectionId}`;
       if (this.sectionFinalScores[sectionKey] === undefined) {
         const score = await this.getSectionScore(
@@ -348,7 +343,6 @@ export class AdminDashboardComponent implements OnInit {
     }
   }
 
-  // دوال مساعدة لجلب البيانات
   private getQuestionById(questionId: number): Observable<any> {
     return this.adminService.getQuestionById(questionId).pipe(
       catchError(() => {
@@ -378,7 +372,7 @@ export class AdminDashboardComponent implements OnInit {
           console.warn(
             `لا توجد إجابات للطالب ${studentId} في القسم ${sectionId}, سيتم اعتبار الدرجة 0.`
           );
-          return of(0); // اعتبر الدرجة 0 بدل الخطأ
+          return of(0);
         })
       );
   }
@@ -386,30 +380,5 @@ export class AdminDashboardComponent implements OnInit {
   closeStudentDetails(): void {
     this.selectedStudent = null;
     this.studentAnswers = [];
-  }
-
-  getQuestionSectionId(questionId: number): number {
-    const question = this.questionsMap[questionId];
-    return question ? question.sectionId : 0;
-  }
-
-  getSectionName(sectionId: number): string {
-    const section = this.sections.find((s) => s.id === sectionId);
-    return section ? section.name : 'قسم غير معروف';
-  }
-
-  getQuestionText(questionId: number): string {
-    const question = this.questionsMap[questionId];
-    return question ? question.text : 'نص السؤال غير متوفر';
-  }
-
-  getChoiceText(choiceId: number): string {
-    const choice = this.choicesMap[choiceId];
-    return choice ? choice.text : 'خيار غير معروف';
-  }
-
-  getChoiceScore(choiceId: number): number {
-    const choice = this.choicesMap[choiceId];
-    return choice ? choice.score : 0;
   }
 }
