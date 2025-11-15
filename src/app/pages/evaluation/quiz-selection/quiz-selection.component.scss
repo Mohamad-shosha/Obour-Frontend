@@ -1,57 +1,612 @@
+/* src/app/pages/evaluation/quiz-selection/quiz-selection.component.scss */
+
+// --- Modern Color Palette ---
+$primary: #6366f1;
+$primary-dark: #4f46e5;
+$primary-light: #818cf8;
+$secondary: #8b5cf6;
+$success: #10b981;
+$success-dark: #059669;
+$success-light: #34d399;
+$info: #06b6d4;
+$warning: #f59e0b;
+$danger: #ef4444;
+
+// Gradients
+$gradient-primary: linear-gradient(135deg, $primary 0%, $primary-dark 100%);
+$gradient-success: linear-gradient(135deg, $success 0%, $success-dark 100%);
+$gradient-psych: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+$gradient-bg: linear-gradient(135deg, #f8fafc 0%, #eef2ff 50%, #f0f9ff 100%);
+
+// Shadows
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+  0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+  0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+  0 10px 10px -5px rgba(0, 0, 0, 0.04);
+$shadow-glow: 0 0 30px rgba(99, 102, 241, 0.3);
+$shadow-glow-success: 0 0 30px rgba(16, 185, 129, 0.3);
+$shadow-glow-psych: 0 0 30px rgba(139, 92, 246, 0.3);
+
+// --- Quiz Section ---
 .quiz-section {
-  background: linear-gradient(135deg, #f8fafc, #eef2ff);
-  .icon-box {
-    width: 90px;
-    height: 90px;
-    background: linear-gradient(135deg, #2563eb, #60a5fa);
-    color: #fff;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  background: $gradient-bg;
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+
+// --- Background Animation ---
+.background-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+
+  .bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.1;
+    filter: blur(60px);
   }
 
-  .quiz-card {
-    transition: all 0.3s ease;
-    border-radius: 1.5rem;
-    background-color: #ffffff;
+  .bg-circle-1 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, $primary 0%, transparent 70%);
+    top: -200px;
+    right: -200px;
+  }
+
+  .bg-circle-2 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, #8b5cf6 0%, transparent 70%);
+    bottom: -150px;
+    left: -150px;
+  }
+
+  .bg-circle-3 {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, $secondary 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+}
+
+// --- Back Button ---
+.back-button-wrapper {
+  margin-bottom: 2rem;
+}
+
+.btn-back-modern {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 50px;
+  color: $primary-dark;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  box-shadow: $shadow-md;
+
+  i {
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover {
+    background: white;
+    border-color: $primary;
+    color: $primary;
+    transform: translateX(-4px);
+    box-shadow: $shadow-lg;
+
+    i {
+      transform: translateX(-4px);
+    }
+  }
+
+  &:active {
+    transform: translateX(-2px);
+  }
+}
+
+// --- Header Section ---
+.header-section {
+  margin-bottom: 4rem;
+}
+
+.icon-box-wrapper {
+  margin-bottom: 2rem;
+  position: relative;
+  display: inline-block;
+
+  &.academic-icon .icon-box {
+    background: $gradient-primary;
+    box-shadow: $shadow-glow;
+  }
+
+  &.psych-icon .icon-box {
+    background: $gradient-psych;
+    box-shadow: $shadow-glow-psych;
+  }
+}
+
+.icon-box {
+  width: 120px;
+  height: 120px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin: 0 auto;
+  transform-style: preserve-3d;
+
+  .icon-main {
+    font-size: 3rem;
+    color: white;
     position: relative;
-    overflow: hidden;
+    z-index: 2;
+  }
 
-    &.academic-card {
-      border-top: 4px solid #2563eb;
+  .icon-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    background: inherit;
+    opacity: 0.5;
+    filter: blur(20px);
+    z-index: 1;
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+.section-title {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  background: $gradient-primary;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -1px;
+}
+
+.section-subtitle {
+  font-size: 1.25rem;
+  color: #64748b;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.title-underline {
+  width: 80px;
+  height: 4px;
+  background: $gradient-primary;
+  border-radius: 2px;
+  margin: 0 auto;
+}
+
+// --- Loading Spinner ---
+.loading-wrapper {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.modern-spinner {
+  position: relative;
+  width: 80px;
+  height: 80px;
+
+  .spinner-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 4px solid transparent;
+    border-top-color: $primary;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+
+    &:nth-child(1) {
+      animation-duration: 1s;
     }
 
-    &.psych-card {
-      border-top: 4px solid #22c55e;
+    &:nth-child(2) {
+      animation-duration: 1.5s;
+      border-top-color: $primary-light;
+      width: 70%;
+      height: 70%;
+      top: 15%;
+      left: 15%;
     }
 
-    &:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
-    }
-
-    .btn {
-      font-weight: 600;
-      transition: all 0.3s ease;
-
-      &.btn-primary {
-        background: linear-gradient(135deg, #2563eb, #3b82f6);
-        border: none;
-        color: #fff;
-      }
-
-      &.btn-success {
-        background: linear-gradient(135deg, #16a34a, #22c55e);
-        border: none;
-        color: #fff;
-      }
-
-      &:hover {
-        transform: scale(1.05);
-        opacity: 0.9;
-      }
+    &:nth-child(3) {
+      animation-duration: 2s;
+      border-top-color: $secondary;
+      width: 40%;
+      height: 40%;
+      top: 30%;
+      left: 30%;
+      animation-direction: reverse;
     }
   }
 }
 
-.hover-card {
-  transition: all 0.3s ease;
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  color: $primary-dark;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+// --- Error Alert ---
+.error-alert-wrapper {
+  margin: 2rem 0;
+}
+
+.alert-modern {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 2rem;
+  border-radius: 16px;
+  font-weight: 600;
+  box-shadow: $shadow-lg;
+
+  &.alert-error {
+    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    color: #dc2626;
+    border: 2px solid #fca5a5;
+  }
+
+  i {
+    font-size: 1.5rem;
+  }
+}
+
+// --- Quiz Cards ---
+.quiz-card-wrapper {
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+.quiz-card {
+  border-radius: 24px;
+  background: white;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: $shadow-md;
+  height: 100%;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: $gradient-primary;
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+
+  &.academic-card {
+    &::before {
+      background: $gradient-primary;
+    }
+
+    .card-icon.icon-academic {
+      background: $gradient-primary;
+      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn-quiz.btn-primary {
+      background: $gradient-primary;
+    }
+  }
+
+  &.psych-card {
+    &::before {
+      background: $gradient-psych;
+    }
+
+    .card-icon.icon-psych {
+      background: $gradient-psych;
+      box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
+    }
+
+    .btn-quiz.btn-success {
+      background: $gradient-psych;
+    }
+  }
+
+  &:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: $shadow-xl;
+
+    &::before {
+      transform: scaleX(1);
+    }
+
+    .card-pattern {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .card-icon {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    .btn-quiz {
+      transform: translateY(-2px);
+      box-shadow: $shadow-lg;
+    }
+  }
+}
+
+.card-pattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.05;
+  background-image: radial-gradient(
+    circle at 2px 2px,
+    $primary 1px,
+    transparent 0
+  );
+  background-size: 40px 40px;
+  transition: all 0.4s ease;
+  pointer-events: none;
+}
+
+.card-body {
+  position: relative;
+  z-index: 1;
+}
+
+.card-icon-wrapper {
+  margin-bottom: 1.5rem;
+}
+
+.card-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  i {
+    font-size: 2.5rem;
+    color: white;
+  }
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 0.75rem;
+}
+
+.card-description {
+  color: #64748b;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+.btn-quiz {
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.4s ease, height 0.4s ease;
+  }
+
+  &:hover {
+    &::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .btn-icon {
+      transform: translateX(-4px);
+    }
+  }
+
+  .btn-text {
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn-icon {
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s ease;
+  }
+}
+
+.card-hover-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.05) 0%,
+    rgba(139, 92, 246, 0.05) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.quiz-card:hover .card-hover-effect {
+  opacity: 1;
+}
+
+// --- Empty State ---
+.empty-state {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.empty-icon {
+  font-size: 4rem;
+  color: #cbd5e1;
+  margin-bottom: 1.5rem;
+}
+
+.empty-text {
+  font-size: 1.25rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+// --- Responsive Design ---
+@media (max-width: 992px) {
+  .section-title {
+    font-size: 2.5rem;
+  }
+
+  .icon-box {
+    width: 100px;
+    height: 100px;
+
+    .icon-main {
+      font-size: 2.5rem;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .section-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .icon-box {
+    width: 90px;
+    height: 90px;
+
+    .icon-main {
+      font-size: 2rem;
+    }
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+  }
+
+  .btn-quiz {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .quiz-section {
+    padding: 1.5rem 0;
+  }
+
+  .section-title {
+    font-size: 1.75rem;
+  }
+
+  .card-icon {
+    width: 64px;
+    height: 64px;
+
+    i {
+      font-size: 2rem;
+    }
+  }
+}
+
+// --- Print Styles ---
+@media print {
+  .background-animation,
+  .btn-back-modern,
+  .card-hover-effect {
+    display: none;
+  }
+
+  .quiz-card {
+    break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #e2e8f0;
+  }
 }

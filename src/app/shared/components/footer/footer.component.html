@@ -1,100 +1,189 @@
 <!-- src/app/shared/components/footer/footer.component.html -->
-<footer class="footer-section bg-slate-900 text-white pt-5 pb-4 scroll-animate">
+<footer class="footer-section">
+  <!-- Background decorative elements -->
+  <div class="footer-background">
+    <div class="bg-gradient-1"></div>
+    <div class="bg-gradient-2"></div>
+    <div class="bg-gradient-3"></div>
+  </div>
+
   <div class="container">
-    <div class="row g-5 mb-5">
+    <div class="row g-4 g-lg-5 mb-5">
       <!-- عمود: عن المنصة -->
-      <div
-        class="col-12 col-md-4 scroll-animate"
-        style="transition-delay: 0.1s"
-      >
-        <div class="d-flex align-items-center gap-3 mb-4">
-          <div class="footer-icon-badge">
-            <i class="fas fa-graduation-cap"></i>
+      <div class="col-12 col-md-6 col-lg-4 footer-column" [@fadeInUp]>
+        <div class="footer-brand">
+          <div class="footer-logo-wrapper">
+            <div class="footer-icon-badge">
+              <i class="bi bi-mortarboard-fill"></i>
+            </div>
+            <h2 class="footer-brand-title">عبور</h2>
           </div>
-          <h2 class="h4 fw-bold mb-0">عبور</h2>
-        </div>
-        <p class="text-slate-400 mb-4">
-          منصة تقييم الجاهزية للتدريب الميداني، بدعم من هيئة تقويم التعليم
-          والتدريب.
-        </p>
-        <div class="d-flex gap-3">
-          <a href="#" class="footer-social-icon" aria-label="فيسبوك">
-            <i class="fab fa-facebook-f"></i>
-          </a>
-          <a href="#" class="footer-social-icon" aria-label="تويتر">
-            <i class="fab fa-twitter"></i>
-          </a>
-          <a href="#" class="footer-social-icon" aria-label="إنستغرام">
-            <i class="fab fa-instagram"></i>
-          </a>
+          <p class="footer-description">
+            منصة تقييم الجاهزية للتدريب الميداني، بدعم من هيئة تقويم التعليم
+            والتدريب. نساعدك على تقييم جاهزيتك للتدريب الميداني بكل سهولة ووضوح.
+          </p>
+          <div class="social-media-wrapper">
+            <a
+              href="#"
+              class="social-icon social-facebook"
+              aria-label="فيسبوك"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="bi bi-facebook"></i>
+            </a>
+            <a
+              href="#"
+              class="social-icon social-twitter"
+              aria-label="تويتر"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a
+              href="#"
+              class="social-icon social-instagram"
+              aria-label="إنستغرام"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="bi bi-instagram"></i>
+            </a>
+            <a
+              href="#"
+              class="social-icon social-linkedin"
+              aria-label="لينكد إن"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="bi bi-linkedin"></i>
+            </a>
+          </div>
         </div>
       </div>
 
       <!-- عمود: روابط سريعة -->
-      <div
-        class="col-12 col-md-4 scroll-animate"
-        style="transition-delay: 0.2s"
-      >
-        <h3 class="h5 fw-bold mb-4 footer-title">روابط سريعة</h3>
-        <ul class="list-unstyled">
-          <li class="mb-2">
-            <a routerLink="/home" class="footer-link">الرئيسية</a>
-          </li>
-          <li class="mb-2">
-            <a routerLink="/evaluation" class="footer-link">تقييم الجاهزية</a>
-          </li>
-          <li class="mb-2">
-            <a routerLink="/dashboard" class="footer-link">لوحة المعلومات</a>
-          </li>
-          <li class="mb-2">
-            <a routerLink="/reports" class="footer-link">التقارير والتحليلات</a>
-          </li>
-          <li class="mb-2">
-            <a routerLink="/about" class="footer-link">عن المنصة</a>
-          </li>
-        </ul>
+      <div class="col-12 col-md-6 col-lg-4 footer-column" [@fadeInUp]>
+        <div class="footer-links-section">
+          <h3 class="footer-section-title">
+            <i class="bi bi-link-45deg me-2"></i>روابط سريعة
+          </h3>
+          <ul class="footer-links-list">
+            <li>
+              <a routerLink="/home" class="footer-link">
+                <i class="bi bi-house-door-fill"></i>
+                <span>الرئيسية</span>
+                <i class="bi bi-arrow-left link-arrow"></i>
+              </a>
+            </li>
+            <li>
+              <a routerLink="/evaluation" class="footer-link">
+                <i class="bi bi-clipboard-check-fill"></i>
+                <span>تقييم الجاهزية</span>
+                <i class="bi bi-arrow-left link-arrow"></i>
+              </a>
+            </li>
+            <li>
+              <a routerLink="/dashboard" class="footer-link">
+                <i class="bi bi-speedometer2"></i>
+                <span>لوحة المعلومات</span>
+                <i class="bi bi-arrow-left link-arrow"></i>
+              </a>
+            </li>
+            <li>
+              <a routerLink="/reports" class="footer-link">
+                <i class="bi bi-graph-up-arrow"></i>
+                <span>التقارير والتحليلات</span>
+                <i class="bi bi-arrow-left link-arrow"></i>
+              </a>
+            </li>
+            <li>
+              <a routerLink="/about" class="footer-link">
+                <i class="bi bi-info-circle-fill"></i>
+                <span>عن المنصة</span>
+                <i class="bi bi-arrow-left link-arrow"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
 
       <!-- عمود: تواصل معنا -->
-      <div
-        class="col-12 col-md-4 scroll-animate"
-        style="transition-delay: 0.3s"
-      >
-        <h3 class="h5 fw-bold mb-4 footer-title">تواصل معنا</h3>
-        <ul class="list-unstyled">
-          <li class="d-flex align-items-start gap-3 mb-3">
-            <div class="contact-icon">
-              <i class="fas fa-envelope"></i>
-            </div>
-            <span class="text-slate-400">support@abour.edu.sa</span>
-          </li>
-          <li class="d-flex align-items-start gap-3 mb-3">
-            <div class="contact-icon">
-              <i class="fas fa-phone-alt"></i>
-            </div>
-            <span class="text-slate-400">920000000+</span>
-          </li>
-          <li class="d-flex align-items-start gap-3">
-            <div class="contact-icon">
-              <i class="fas fa-map-marker-alt"></i>
-            </div>
-            <span class="text-slate-400">الرياض، المملكة العربية السعودية</span>
-          </li>
-        </ul>
+      <div class="col-12 col-md-6 col-lg-4 footer-column" [@fadeInUp]>
+        <div class="footer-contact-section">
+          <h3 class="footer-section-title">
+            <i class="bi bi-envelope-paper me-2"></i>تواصل معنا
+          </h3>
+          <ul class="contact-info-list">
+            <li class="contact-item">
+              <div class="contact-icon-wrapper email">
+                <i class="bi bi-envelope-fill"></i>
+              </div>
+              <div class="contact-details">
+                <span class="contact-label">البريد الإلكتروني</span>
+                <a href="mailto:support@abour.edu.sa" class="contact-value"
+                  >support@abour.edu.sa</a
+                >
+              </div>
+            </li>
+            <li class="contact-item">
+              <div class="contact-icon-wrapper phone">
+                <i class="bi bi-telephone-fill"></i>
+              </div>
+              <div class="contact-details">
+                <span class="contact-label">الهاتف</span>
+                <a href="tel:+966920000000" class="contact-value">920000000+</a>
+              </div>
+            </li>
+            <li class="contact-item">
+              <div class="contact-icon-wrapper location">
+                <i class="bi bi-geo-alt-fill"></i>
+              </div>
+              <div class="contact-details">
+                <span class="contact-label">العنوان</span>
+                <span class="contact-value"
+                  >الرياض، المملكة العربية السعودية</span
+                >
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
 
     <!-- حقوق الملكية -->
-    <div
-      class="pt-4 border-top border-slate-800 text-center scroll-animate"
-      style="transition-delay: 0.4s"
-    >
-      <p class="text-slate-500 mb-0">
-        © {{ currentYear }} منصة عبور - جميع الحقوق محفوظة
-      </p>
-      <p class="text-slate-600 small mt-2">
-        بدعم من هيئة تقويم التعليم والتدريب
-      </p>
+    <div class="footer-bottom" [@fadeInUp]>
+      <div class="footer-divider"></div>
+      <div class="footer-copyright">
+        <div class="copyright-content">
+          <p class="copyright-text">
+            <i class="bi bi-c-circle me-2"></i>
+            <span>{{ currentYear }} منصة عبور</span>
+            <span class="copyright-separator">-</span>
+            <span>جميع الحقوق محفوظة</span>
+          </p>
+          <p class="copyright-support">
+            <i class="bi bi-heart-fill me-2"></i>
+            بدعم من
+            <span class="support-org">هيئة تقويم التعليم والتدريب</span>
+          </p>
+        </div>
+        <div class="footer-badge">
+          <i class="bi bi-shield-check"></i>
+          <span>منصة آمنة</span>
+        </div>
+      </div>
     </div>
   </div>
+
+  <!-- Scroll to top button -->
+  <button
+    class="scroll-to-top"
+    (click)="scrollToTop()"
+    *ngIf="showScrollTop"
+    [@fadeInOut]="showScrollTop.toString()"
+  >
+    <i class="bi bi-arrow-up"></i>
+  </button>
 </footer>

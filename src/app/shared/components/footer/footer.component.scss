@@ -1,137 +1,704 @@
 /* src/app/shared/components/footer/footer.component.scss */
 
-// --- ألوان ---
-$primary: #3b82f6;
-$primary-dark: #1e40af;
-$primary-light: #60a5fa;
+// --- Modern Color Palette ---
+$primary: #6366f1;
+$primary-dark: #4f46e5;
+$primary-light: #818cf8;
+$secondary: #8b5cf6;
+$success: #10b981;
+$info: #06b6d4;
 $slate-900: #0f172a;
 $slate-800: #1e293b;
 $slate-700: #334155;
 $slate-600: #475569;
 $slate-500: #64748b;
 $slate-400: #94a3b8;
+$slate-300: #cbd5e1;
 
-// --- Scroll Animation (يجب أن يكون مطابقًا لـ home) ---
-.scroll-animate {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-.scroll-animate.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+// Gradients
+$gradient-primary: linear-gradient(135deg, $primary 0%, $primary-dark 100%);
+$gradient-secondary: linear-gradient(135deg, $secondary 0%, #7c3aed 100%);
+$gradient-footer: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+
+// Shadows
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+  0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+  0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+  0 10px 10px -5px rgba(0, 0, 0, 0.04);
+$shadow-glow: 0 0 20px rgba(99, 102, 241, 0.3);
 
 // --- Footer Section ---
 .footer-section {
-  background-color: $slate-900;
+  background: $gradient-footer;
   color: white;
   position: relative;
   overflow: hidden;
+  padding: 4rem 0 2rem;
+  margin-top: 4rem;
 
-  // زخرفة خفيفة (اختياري)
   &::before {
     content: "";
     position: absolute;
-    top: -100px;
-    right: -100px;
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    background: radial-gradient(
-      circle,
-      rgba($primary, 0.1) 0%,
-      transparent 70%
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(99, 102, 241, 0.5) 50%,
+      transparent 100%
     );
-    z-index: 0;
   }
 }
 
-// --- العناصر الداخلية ---
+// --- Background Decorations ---
+.footer-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+
+  .bg-gradient-1 {
+    position: absolute;
+    top: -200px;
+    right: -200px;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(99, 102, 241, 0.15) 0%,
+      transparent 70%
+    );
+    animation: float 20s ease-in-out infinite;
+  }
+
+  .bg-gradient-2 {
+    position: absolute;
+    bottom: -150px;
+    left: -150px;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(139, 92, 246, 0.1) 0%,
+      transparent 70%
+    );
+    animation: float 25s ease-in-out infinite reverse;
+  }
+
+  .bg-gradient-3 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(6, 182, 212, 0.08) 0%,
+      transparent 70%
+    );
+    animation: pulse 15s ease-in-out infinite;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(30px, -30px) scale(1.1);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+}
+
+// --- Container ---
 .container {
   position: relative;
   z-index: 1;
 }
 
-.footer-title {
-  position: relative;
-  padding-bottom: 0.5rem;
+// --- Footer Columns ---
+.footer-column {
+  margin-bottom: 2rem;
 }
 
-// --- أيقونة الشعار ---
-.footer-icon-badge {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, $primary-dark, $primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 12px rgba($primary, 0.2);
-  i {
-    font-size: 1.2rem;
-    color: white;
+// --- Footer Brand ---
+.footer-brand {
+  .footer-logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-icon-badge {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    background: $gradient-primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: $shadow-glow;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+      );
+      transition: left 0.5s ease;
+    }
+
+    &:hover {
+      transform: translateY(-4px) rotate(5deg);
+      box-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+
+      &::before {
+        left: 100%;
+      }
+    }
+
+    i {
+      font-size: 1.75rem;
+      color: white;
+      position: relative;
+      z-index: 1;
+    }
+  }
+
+  .footer-brand-title {
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0;
+    background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+  }
+
+  .footer-description {
+    color: $slate-400;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
   }
 }
 
-// --- الروابط ---
-.footer-link {
-  color: $slate-400;
+// --- Social Media Icons ---
+.social-media-wrapper {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.social-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
-  transition: color 0.3s ease, padding-right 0.3s ease;
-  display: inline-block;
-  padding-right: 0;
+  color: $slate-400;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  font-size: 1.1rem;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.4s ease, height 0.4s ease;
+  }
+
+  i {
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s ease;
+  }
 
   &:hover {
-    color: $primary-light;
-    padding-right: 8px;
+    transform: translateY(-4px);
+    border-color: transparent;
+    color: white;
+
+    &::before {
+      width: 100%;
+      height: 100%;
+    }
+
+    i {
+      transform: scale(1.2) rotate(5deg);
+    }
+  }
+
+  &.social-facebook:hover {
+    background: linear-gradient(135deg, #1877f2 0%, #0d5dbf 100%);
+    box-shadow: 0 4px 15px rgba(24, 119, 242, 0.4);
+  }
+
+  &.social-twitter:hover {
+    background: linear-gradient(135deg, #1da1f2 0%, #0d8bd9 100%);
+    box-shadow: 0 4px 15px rgba(29, 161, 242, 0.4);
+  }
+
+  &.social-instagram:hover {
+    background: linear-gradient(135deg, #e4405f 0%, #c13584 50%, #833ab4 100%);
+    box-shadow: 0 4px 15px rgba(228, 64, 95, 0.4);
+  }
+
+  &.social-linkedin:hover {
+    background: linear-gradient(135deg, #0077b5 0%, #005885 100%);
+    box-shadow: 0 4px 15px rgba(0, 119, 181, 0.4);
   }
 }
 
-// --- أيقونات التواصل ---
-.contact-icon {
-  width: 20px;
-  height: 20px;
+// --- Footer Section Titles ---
+.footer-section-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: white;
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: $primary;
+  position: relative;
+  padding-bottom: 0.75rem;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50px;
+    height: 3px;
+    background: $gradient-primary;
+    border-radius: 2px;
+  }
+
+  i {
+    color: $primary-light;
+  }
+}
+
+// --- Footer Links ---
+.footer-links-section {
+  .footer-links-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      margin-bottom: 0.75rem;
+    }
+  }
+
+  .footer-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: $slate-400;
+    text-decoration: none;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    position: relative;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid transparent;
+
+    i:first-child {
+      font-size: 1.1rem;
+      color: $primary-light;
+      width: 24px;
+      text-align: center;
+    }
+
+    span {
+      flex: 1;
+      font-weight: 500;
+    }
+
+    .link-arrow {
+      opacity: 0;
+      transform: translateX(5px);
+      transition: all 0.3s ease;
+      color: $primary-light;
+      font-size: 0.875rem;
+    }
+
+    &:hover {
+      background: rgba(99, 102, 241, 0.1);
+      border-color: rgba(99, 102, 241, 0.3);
+      color: white;
+      transform: translateX(-8px);
+      box-shadow: $shadow-md;
+
+      .link-arrow {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+  }
+}
+
+// --- Contact Section ---
+.footer-contact-section {
+  .contact-info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba(99, 102, 241, 0.1);
+      border-color: rgba(99, 102, 241, 0.3);
+      transform: translateX(-4px);
+    }
+  }
+
+  .contact-icon-wrapper {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+
+    i {
+      font-size: 1.25rem;
+      color: white;
+    }
+
+    &.email {
+      background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+    }
+
+    &.phone {
+      background: $gradient-primary;
+    }
+
+    &.location {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+  }
+
+  .contact-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .contact-label {
+    font-size: 0.75rem;
+    color: $slate-500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+  }
+
+  .contact-value {
+    color: $slate-300;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: $primary-light;
+    }
+  }
+}
+
+// --- Footer Bottom ---
+.footer-bottom {
+  margin-top: 3rem;
+  padding-top: 2rem;
+}
+
+.footer-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 20%,
+    rgba(255, 255, 255, 0.1) 80%,
+    transparent 100%
+  );
+  margin-bottom: 2rem;
+}
+
+.footer-copyright {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.copyright-content {
+  flex: 1;
+  min-width: 250px;
+}
+
+.copyright-text {
+  color: $slate-400;
+  margin: 0 0 0.5rem 0;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  i {
+    color: $primary-light;
+  }
+}
+
+.copyright-separator {
+  color: $slate-600;
+}
+
+.copyright-support {
+  color: $slate-500;
+  margin: 0;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  i {
+    color: #ef4444;
+    animation: heartbeat 2s ease-in-out infinite;
+  }
+
+  .support-org {
+    color: $primary-light;
+    font-weight: 600;
+  }
+}
+
+@keyframes heartbeat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  10%,
+  30% {
+    transform: scale(1.1);
+  }
+  20%,
+  40% {
+    transform: scale(1);
+  }
+}
+
+.footer-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 50px;
+  color: #10b981;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+
   i {
     font-size: 1rem;
   }
-}
-
-// --- أيقونات السوشيال ميديا ---
-.footer-social-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: rgba($slate-400, 0.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: $slate-400;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  font-size: 0.9rem;
 
   &:hover {
-    background: $primary;
-    color: white;
-    transform: translateY(-3px);
+    background: rgba(16, 185, 129, 0.2);
+    border-color: rgba(16, 185, 129, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
   }
 }
 
-// --- الحدود والألوان ---
-.text-slate-400 {
-  color: $slate-400;
+// --- Scroll to Top Button ---
+.scroll-to-top {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: $gradient-primary;
+  border: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: $shadow-xl;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  font-size: 1.25rem;
+
+  &:hover {
+    transform: translateY(-4px) scale(1.1);
+    box-shadow: $shadow-glow;
+    background: linear-gradient(135deg, $primary-light 0%, $primary 100%);
+  }
+
+  &:active {
+    transform: translateY(-2px) scale(1.05);
+  }
 }
-.text-slate-500 {
-  color: $slate-500;
+
+// --- Responsive Design ---
+@media (max-width: 992px) {
+  .footer-section {
+    padding: 3rem 0 1.5rem;
+  }
+
+  .footer-copyright {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+
+  .copyright-content {
+    text-align: center;
+  }
 }
-.text-slate-600 {
-  color: $slate-600;
+
+@media (max-width: 768px) {
+  .footer-section {
+    padding: 2.5rem 0 1.5rem;
+  }
+
+  .footer-brand-title {
+    font-size: 1.75rem;
+  }
+
+  .footer-icon-badge {
+    width: 56px;
+    height: 56px;
+
+    i {
+      font-size: 1.5rem;
+    }
+  }
+
+  .social-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .footer-link {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.9rem;
+  }
+
+  .contact-item {
+    padding: 0.875rem;
+  }
+
+  .contact-icon-wrapper {
+    width: 40px;
+    height: 40px;
+
+    i {
+      font-size: 1.1rem;
+    }
+  }
+
+  .scroll-to-top {
+    width: 48px;
+    height: 48px;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    font-size: 1.1rem;
+  }
 }
-.border-slate-800 {
-  border-color: $slate-800 !important;
+
+@media (max-width: 576px) {
+  .footer-section {
+    padding: 2rem 0 1rem;
+  }
+
+  .footer-brand-title {
+    font-size: 1.5rem;
+  }
+
+  .footer-section-title {
+    font-size: 1.1rem;
+  }
+
+  .social-media-wrapper {
+    justify-content: center;
+  }
+}
+
+// --- Print Styles ---
+@media print {
+  .footer-section {
+    background: white;
+    color: black;
+  }
+
+  .scroll-to-top {
+    display: none;
+  }
 }

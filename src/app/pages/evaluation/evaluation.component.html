@@ -1,106 +1,122 @@
 <!-- src/app/pages/evaluation/evaluation.component.html -->
-<div class="py-5 bg-light min-vh-100">
-  <div class="container">
+<div class="evaluation-section min-vh-100" dir="rtl">
+  <!-- Animated Background Elements -->
+  <div class="background-animation">
+    <div class="bg-circle bg-circle-1"></div>
+    <div class="bg-circle bg-circle-2"></div>
+    <div class="bg-circle bg-circle-3"></div>
+  </div>
+
+  <div class="container py-5 position-relative">
     <!-- العنوان -->
-    <div class="text-center mb-5">
-      <h1 class="display-5 fw-bold text-dark mb-3">
-        تقييم الجاهزية للتدريب الميداني
-      </h1>
-      <p class="text-muted fs-5">
-        تحليل شامل متعدد الأبعاد لقياس مستوى استعدادك
-      </p>
+    <div class="text-center mb-5 header-section" #headerSection>
+      <h1 class="page-title">تقييم الجاهزية للتدريب الميداني</h1>
+      <p class="page-subtitle">تحليل شامل متعدد الأبعاد لقياس مستوى استعدادك</p>
+      <div class="title-underline"></div>
+    </div>
+
+    <!-- بطاقات الإحصائيات (من Dashboard) -->
+    <div class="row g-4 mb-5 stats-section" #statsSection>
+      <div
+        class="col-12 col-md-6 col-lg-3 stat-card-wrapper"
+        *ngFor="let stat of stats; let i = index"
+      >
+        <div class="stat-card modern-card" [ngClass]="'stat-' + stat.color">
+          <div class="stat-icon-wrapper">
+            <i [class]="stat.iconClass"></i>
+          </div>
+          <div class="stat-content">
+            <h3 class="stat-value">{{ stat.value }}</h3>
+            <h4 class="stat-title">{{ stat.title }}</h4>
+            <p class="stat-description">{{ stat.description }}</p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- الجاهزية الإجمالية -->
-    <div
-      class="bg-white rounded-3 p-4 p-md-5 mb-5 card-shadow animate-slide-up"
-    >
+    <div class="overall-readiness-card modern-card mb-5" #overallCard>
       <div class="text-center">
-        <h2 class="h4 fw-bold text-dark mb-4">مستوى الجاهزية الإجمالي</h2>
-        <div class="d-flex flex-column align-items-center gap-3 mb-4">
+        <div class="readiness-header">
+          <div class="readiness-icon-wrapper">
+            <i class="bi bi-trophy-fill"></i>
+          </div>
+          <h2 class="readiness-title">مستوى الجاهزية الإجمالي</h2>
+        </div>
+        <div class="readiness-content">
           <app-progress-circle
             [percentage]="overallReadiness"
-            [size]="160"
-            [strokeWidth]="12"
+            [size]="180"
+            [strokeWidth]="14"
             color="auto"
           ></app-progress-circle>
-          <div class="d-flex align-items-center gap-2">
-            <span class="fs-5 fw-semibold" [ngClass]="readinessColor">
+          <div class="readiness-badge">
+            <span class="readiness-message" [ngClass]="readinessColor">
               {{ readinessMessage }}
             </span>
+            <span class="readiness-score">{{ overallReadiness }}%</span>
           </div>
         </div>
-        <p class="text-muted">
+        <p class="readiness-description">
           بناءً على التقييم الشامل، أنت تمتلك مستوى
-          <span *ngIf="overallReadiness >= 80">عالٍ جداً</span>
-          <span *ngIf="overallReadiness >= 70 && overallReadiness < 80"
+          <span *ngIf="overallReadiness >= 80" class="fw-bold text-success"
+            >عالٍ جداً</span
+          >
+          <span
+            *ngIf="overallReadiness >= 70 && overallReadiness < 80"
+            class="fw-bold text-warning"
             >جيد</span
           >
-          <span *ngIf="overallReadiness < 70">مقبول</span>
+          <span *ngIf="overallReadiness < 70" class="fw-bold text-danger"
+            >مقبول</span
+          >
           من الجاهزية للتدريب الميداني
         </p>
       </div>
     </div>
 
-    <!-- الأقسام الثلاثة -->
-    <div class="row g-4">
+    <!-- الأقسام (أكاديمي ونفسي فقط) -->
+    <div class="row g-4 mb-5">
       <div
-        class="col-12 col-lg-4 animate-slide-up"
+        class="col-12 col-lg-6"
         *ngFor="let section of getSections(); let i = index"
-        [attr.style]="'animation-delay: ' + i * 0.1 + 's'"
+        #sectionCard
       >
         <div
-          class="bg-white rounded-3 overflow-hidden card-shadow card-hover h-100"
+          class="section-card modern-card h-100"
+          [ngClass]="'section-' + section.color"
         >
           <!-- رأس البطاقة -->
-          <div class="p-4" [ngClass]="getSectionBgClass(section.color)">
-            <div class="d-flex align-items-center justify-content-between mb-3">
-              <div class="d-flex align-items-center gap-3">
-                <div
-                  class="rounded-2 bg-white bg-opacity-20 d-flex align-items-center justify-content-center"
-                  style="width: 48px; height: 48px"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    width="24"
-                    height="24"
-                    class="text-white"
-                  >
-                    <path [attr.d]="section.iconPath"></path>
-                  </svg>
+          <div
+            class="section-header"
+            [ngClass]="getSectionBgClass(section.color)"
+          >
+            <div class="section-header-content">
+              <div class="section-icon-wrapper">
+                <div class="section-icon">
+                  <i [class]="getIconClass(section)"></i>
                 </div>
-                <h3 class="h5 fw-bold text-white mb-0">{{ section.title }}</h3>
+                <div class="section-info">
+                  <h3 class="section-title">{{ section.title }}</h3>
+                  <div class="section-level">
+                    <i class="bi bi-star-fill me-1"></i>
+                    <span>{{ getLevelText(section.overall) }}</span>
+                  </div>
+                </div>
               </div>
-              <div class="fs-2 fw-bold text-white">{{ section.overall }}%</div>
-            </div>
-            <div
-              class="d-flex align-items-center gap-2 text-white-75 small bg-white bg-opacity-20 px-2 py-1 rounded-2"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                width="16"
-                height="16"
-              >
-                <path d="M2 12h20M12 2v20"></path>
-              </svg>
-              <span>المستوى: {{ getLevelText(section.overall) }}</span>
+              <div class="section-score">
+                <span class="score-value">{{ section.overall }}</span>
+                <span class="score-label">%</span>
+              </div>
             </div>
           </div>
 
           <!-- محتوى البطاقة -->
-          <div class="p-4">
-            <h4 class="h6 fw-bold text-dark mb-3">المقاييس التفصيلية</h4>
-            <div class="mb-4">
+          <div class="section-body">
+            <h4 class="metrics-title">
+              <i class="bi bi-bar-chart-fill me-2"></i>المقاييس التفصيلية
+            </h4>
+            <div class="metrics-list">
               <app-progress-bar
                 *ngFor="let metric of section.metrics"
                 [label]="metric.label"
@@ -109,83 +125,37 @@
               </app-progress-bar>
             </div>
 
-            <div class="pt-3 border-top border-light">
+            <div class="section-details">
               <!-- نقاط القوة -->
-              <div class="mb-4">
-                <h5
-                  class="fw-bold text-dark mb-3 d-flex align-items-center gap-2"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    width="20"
-                    height="20"
-                    class="text-success"
-                  >
-                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                  </svg>
+              <div class="strengths-section">
+                <h5 class="detail-title">
+                  <i class="bi bi-check-circle-fill me-2 text-success"></i>
                   نقاط القوة
                 </h5>
-                <ul class="list-unstyled">
+                <ul class="detail-list">
                   <li
-                    class="text-muted small mb-2 d-flex align-items-start gap-2"
                     *ngFor="let strength of section.strengths"
+                    class="detail-item"
                   >
-                    <span
-                      class="d-inline-block mt-1"
-                      style="
-                        width: 6px;
-                        height: 6px;
-                        background-color: #10b981;
-                        border-radius: 50%;
-                      "
-                    ></span>
-                    {{ strength }}
+                    <i class="bi bi-dot"></i>
+                    <span>{{ strength }}</span>
                   </li>
                 </ul>
               </div>
 
               <!-- فرص التحسين -->
-              <div>
-                <h5
-                  class="fw-bold text-dark mb-3 d-flex align-items-center gap-2"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    width="20"
-                    height="20"
-                    class="text-primary"
-                  >
-                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                  </svg>
+              <div class="improvements-section">
+                <h5 class="detail-title">
+                  <i class="bi bi-lightbulb-fill me-2 text-warning"></i>
                   فرص التحسين
                 </h5>
-                <ul class="list-unstyled">
+                <ul class="detail-list">
                   <li
-                    class="text-muted small mb-2 d-flex align-items-start gap-2"
                     *ngFor="let improvement of section.improvements"
+                    class="detail-item"
                   >
-                    <span
-                      class="d-inline-block mt-1"
-                      style="
-                        width: 6px;
-                        height: 6px;
-                        background-color: #3b82f6;
-                        border-radius: 50%;
-                      "
-                    ></span>
-                    {{ improvement }}
+                    <i class="bi bi-dot"></i>
+                    <span>{{ improvement }}</span>
                   </li>
                 </ul>
               </div>
@@ -195,89 +165,174 @@
       </div>
     </div>
 
+    <!-- قسم Dashboard (تطور الأداء والمهارات) -->
+    <div class="dashboard-section mb-5" #dashboardSection>
+      <div class="row g-4 mb-5">
+        <!-- تطور الأداء الشهري -->
+        <div class="col-12 col-lg-6">
+          <div class="dashboard-card modern-card">
+            <div class="dashboard-card-header">
+              <div class="dashboard-card-icon">
+                <i class="bi bi-graph-up-arrow"></i>
+              </div>
+              <h3 class="dashboard-card-title">تطور الأداء الشهري</h3>
+            </div>
+            <div class="dashboard-card-body">
+              <div class="performance-list">
+                <app-progress-bar
+                  *ngFor="let item of performanceData"
+                  [label]="item.month"
+                  [percentage]="item.value"
+                  [color]="getValueColorClass(item.value)"
+                >
+                </app-progress-bar>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- التوزيع حسب المحاور -->
+        <div class="col-12 col-lg-6">
+          <div class="dashboard-card modern-card">
+            <div class="dashboard-card-header">
+              <div class="dashboard-card-icon">
+                <i class="bi bi-pie-chart-fill"></i>
+              </div>
+              <h3 class="dashboard-card-title">التوزيع حسب المحاور</h3>
+            </div>
+            <div class="dashboard-card-body">
+              <div class="row text-center g-4">
+                <div class="col-6" *ngFor="let axis of axesData">
+                  <app-progress-circle
+                    [percentage]="axis.percentage"
+                    [size]="120"
+                    [strokeWidth]="10"
+                    [color]="axis.color"
+                  >
+                  </app-progress-circle>
+                  <p class="axis-title mt-3">{{ axis.title }}</p>
+                  <p class="axis-level">
+                    {{
+                      axis.percentage >= 80
+                        ? "ممتاز"
+                        : axis.percentage >= 70
+                        ? "جيد جداً"
+                        : "جيد"
+                    }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- المهارات الأساسية وآخر الإنجازات -->
+      <div class="row g-4">
+        <div class="col-12 col-lg-8">
+          <div class="dashboard-card modern-card">
+            <div class="dashboard-card-header">
+              <div class="dashboard-card-icon">
+                <i class="bi bi-book-fill"></i>
+              </div>
+              <h3 class="dashboard-card-title">المهارات الأساسية</h3>
+            </div>
+            <div class="dashboard-card-body">
+              <div class="skills-list">
+                <app-progress-bar
+                  *ngFor="let skill of skills"
+                  [label]="skill.label"
+                  [percentage]="skill.percentage"
+                  [color]="skill.color"
+                >
+                </app-progress-bar>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-4">
+          <div class="dashboard-card modern-card">
+            <div class="dashboard-card-header">
+              <div class="dashboard-card-icon">
+                <i class="bi bi-trophy-fill"></i>
+              </div>
+              <h3 class="dashboard-card-title">آخر الإنجازات</h3>
+            </div>
+            <div class="dashboard-card-body">
+              <div class="achievements-list">
+                <div
+                  class="achievement-item"
+                  *ngFor="let achievement of achievements"
+                >
+                  <div
+                    class="achievement-icon"
+                    [ngClass]="'achievement-' + achievement.color"
+                  >
+                    <i [class]="achievement.iconClass"></i>
+                  </div>
+                  <div class="achievement-content">
+                    <h5 class="achievement-title">{{ achievement.title }}</h5>
+                    <p class="achievement-description">
+                      {{ achievement.description }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- التوصيات الذكية -->
-    <div class="mt-5 bg-light rounded-3 p-4 p-md-5 card-shadow">
-      <h3 class="h4 fw-bold text-dark mb-4 text-center">التوصيات الذكية</h3>
+    <div class="recommendations-section modern-card" #recommendationsSection>
+      <div class="recommendations-header">
+        <div class="recommendations-icon">
+          <i class="bi bi-lightbulb-fill"></i>
+        </div>
+        <h3 class="recommendations-title">التوصيات الذكية</h3>
+      </div>
       <div class="row g-4">
         <div class="col-12 col-md-6">
-          <div class="bg-white rounded-3 p-4 card-shadow h-100">
-            <h4 class="fw-bold text-dark mb-3">خطة التطوير المقترحة</h4>
-            <ul class="list-unstyled">
-              <li class="text-muted small mb-2 d-flex align-items-start gap-2">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  width="16"
-                  height="16"
-                  class="text-success mt-1 flex-shrink-0"
-                >
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
+          <div class="recommendation-card">
+            <h4 class="recommendation-card-title">
+              <i class="bi bi-clipboard-check-fill me-2"></i>خطة التطوير
+              المقترحة
+            </h4>
+            <ul class="recommendation-list">
+              <li class="recommendation-item">
+                <i class="bi bi-check-circle-fill"></i>
                 <span>حضور ورشة عمل في إدارة الضغوط</span>
               </li>
-              <li class="text-muted small mb-2 d-flex align-items-start gap-2">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  width="16"
-                  height="16"
-                  class="text-success mt-1 flex-shrink-0"
-                >
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
+              <li class="recommendation-item">
+                <i class="bi bi-check-circle-fill"></i>
                 <span>المشاركة في مشاريع بحثية تطبيقية</span>
               </li>
-              <li class="text-muted small mb-2 d-flex align-items-start gap-2">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  width="16"
-                  height="16"
-                  class="text-success mt-1 flex-shrink-0"
-                >
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
+              <li class="recommendation-item">
+                <i class="bi bi-check-circle-fill"></i>
                 <span>الانضمام لفريق عمل طلابي لتعزيز المهارات القيادية</span>
               </li>
             </ul>
           </div>
         </div>
         <div class="col-12 col-md-6">
-          <div class="bg-white rounded-3 p-4 card-shadow h-100">
-            <h4 class="fw-bold text-dark mb-3">التخصصات الموصى بها</h4>
-            <div class="space-y-2">
-              <div
-                class="d-flex align-items-center justify-content-between p-3 bg-primary bg-opacity-10 rounded-2"
-              >
-                <span class="small fw-medium text-dark">هندسة البرمجيات</span>
-                <span class="small fw-bold text-primary">95% توافق</span>
+          <div class="recommendation-card">
+            <h4 class="recommendation-card-title">
+              <i class="bi bi-briefcase-fill me-2"></i>التخصصات الموصى بها
+            </h4>
+            <div class="specializations-list">
+              <div class="specialization-item specialization-primary">
+                <span class="specialization-name">هندسة البرمجيات</span>
+                <span class="specialization-match">95% توافق</span>
               </div>
-              <div
-                class="d-flex align-items-center justify-content-between p-3 bg-success bg-opacity-10 rounded-2"
-              >
-                <span class="small fw-medium text-dark">تحليل البيانات</span>
-                <span class="small fw-bold text-success">92% توافق</span>
+              <div class="specialization-item specialization-success">
+                <span class="specialization-name">تحليل البيانات</span>
+                <span class="specialization-match">92% توافق</span>
               </div>
-              <div
-                class="d-flex align-items-center justify-content-between p-3 bg-purple bg-opacity-10 rounded-2"
-              >
-                <span class="small fw-medium text-dark">إدارة المشاريع</span>
-                <span class="small fw-bold text-purple">88% توافق</span>
+              <div class="specialization-item specialization-purple">
+                <span class="specialization-name">إدارة المشاريع</span>
+                <span class="specialization-match">88% توافق</span>
               </div>
             </div>
           </div>

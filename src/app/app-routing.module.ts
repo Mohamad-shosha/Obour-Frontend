@@ -5,7 +5,6 @@ import { RouterModule, Routes } from '@angular/router';
 // استيراد جميع مكونات الصفحات
 import { HomeComponent } from './pages/home/home.component';
 import { EvaluationComponent } from './pages/evaluation/evaluation.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { AboutComponent } from './pages/about/about.component';
 import { AuthComponent } from './pages/auth/auth.component';
 import { CategoriesComponent } from './pages/evaluation/categories/categories.component';
@@ -18,11 +17,10 @@ import { EvaluationAboutComponent } from './pages/evaluation/evaluation-about/ev
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' }, // الصفحة الافتراضية
   { path: 'home', component: HomeComponent },
-  // { path: 'evaluation', component: EvaluationComponent },
-  { path: 'dashboard', component: DashboardComponent },
   { path: 'about', component: AboutComponent },
   { path: 'auth', component: AuthComponent, data: { mode: 'login' } },
   { path: 'evaluation', component: CategoriesComponent },
+  { path: 'evaluation/results', component: EvaluationComponent },
   { path: 'evaluation/sections/:sectionId', component: QuizSelectionComponent },
   { path: 'evaluation/test/:sectionId', component: QuizTestComponent },
   { path: 'admin/dashboard', component: AdminDashboardComponent },

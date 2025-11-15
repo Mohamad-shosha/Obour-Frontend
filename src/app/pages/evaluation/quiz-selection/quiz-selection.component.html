@@ -1,69 +1,139 @@
-<div class="quiz-section min-vh-100 d-flex align-items-center justify-content-center bg-light" dir="rtl">
-  <div class="container py-5">
+<!-- src/app/pages/evaluation/quiz-selection/quiz-selection.component.html -->
+<div
+  class="quiz-section min-vh-100 d-flex align-items-center justify-content-center"
+  dir="rtl"
+>
+  <!-- Animated Background Elements -->
+  <div class="background-animation">
+    <div class="bg-circle bg-circle-1"></div>
+    <div class="bg-circle bg-circle-2"></div>
+    <div class="bg-circle bg-circle-3"></div>
+  </div>
+
+  <div class="container py-5 position-relative">
     <!-- زر الرجوع -->
-    <div class="mb-4">
-      <button class="btn btn-link text-decoration-none px-0" (click)="goBack()">
-        <i class="fas fa-arrow-right me-2"></i> العودة إلى الفئات
+    <div class="back-button-wrapper" #backButton>
+      <button class="btn btn-back-modern" (click)="goBack()">
+        <i class="bi bi-arrow-right me-2"></i>
+        <span>العودة إلى الفئات</span>
       </button>
     </div>
 
     <!-- رأس القسم الرئيسي -->
-    <div class="text-center mb-5" *ngIf="parentSection">
+    <div
+      class="text-center mb-5 header-section"
+      *ngIf="parentSection"
+      #headerSection
+    >
       <div
-        class="icon-box mx-auto mb-4 d-flex align-items-center justify-content-center rounded-circle shadow"
+        class="icon-box-wrapper"
         [ngClass]="{
-          'bg-primary': parentSection.type === 'academic',
-          'bg-success': parentSection.type === 'psychological'
+          'academic-icon': parentSection.type === 'academic',
+          'psych-icon': parentSection.type === 'psychological'
         }"
       >
-        <i [class]="getIconClass(parentSection.type)" class="text-white fa-2x"></i>
+        <div class="icon-box">
+          <i [class]="getIconClass(parentSection.type)" class="icon-main"></i>
+          <div class="icon-glow"></div>
+        </div>
       </div>
-      <h1 class="display-6 fw-bold text-dark mb-2">{{ parentSection.name }}</h1>
-      <p class="text-muted fs-5">اختر الاختبار الذي تريد إجراءه</p>
+      <h1 class="section-title">{{ parentSection.name }}</h1>
+      <p class="section-subtitle">اختر الاختبار الذي تريد إجراءه</p>
+      <div class="title-underline"></div>
     </div>
 
     <!-- مؤشر التحميل -->
-    <div *ngIf="loading" class="text-center my-5">
-      <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">جارٍ التحميل...</span>
+    <div
+      *ngIf="loading"
+      class="loading-wrapper text-center my-5"
+      #loadingElement
+    >
+      <div class="modern-spinner">
+        <div class="spinner-ring"></div>
+        <div class="spinner-ring"></div>
+        <div class="spinner-ring"></div>
       </div>
+      <p class="loading-text mt-4">جارٍ التحميل...</p>
     </div>
 
     <!-- رسالة خطأ -->
-    <div *ngIf="error" class="alert alert-danger text-center" role="alert">
-      {{ error }}
+    <div *ngIf="error" class="error-alert-wrapper" #errorElement>
+      <div class="alert-modern alert-error">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        <span>{{ error }}</span>
+      </div>
     </div>
 
     <!-- شبكة الاختبارات الفرعية -->
-    <div *ngIf="!loading && !error">
+    <div *ngIf="!loading && !error" class="quiz-grid-wrapper">
       <div class="row justify-content-center g-4">
         <div
-          *ngFor="let section of subSections"
-          class="col-sm-10 col-md-6 col-lg-4"
-          (click)="startQuiz(section.id)"
-          style="cursor: pointer"
+          *ngFor="let section of subSections; let i = index"
+          class="col-sm-10 col-md-6 col-lg-4 quiz-card-wrapper"
+          [attr.data-index]="i"
+          #quizCard
         >
           <div
-            class="card quiz-card text-center h-100 border-0 shadow-sm rounded-4 hover-card"
+            class="card quiz-card text-center h-100 border-0"
             [ngClass]="{
               'academic-card': section.type === 'academic',
               'psych-card': section.type === 'psychological'
             }"
+            (click)="startQuiz(section.id)"
+            (mouseenter)="onCardHover($event)"
+            (mouseleave)="onCardLeave($event)"
           >
+            <!-- Card Background Pattern -->
+            <div class="card-pattern"></div>
+
+            <!-- Card Content -->
             <div class="card-body d-flex flex-column p-4">
-              <h5 class="card-title fw-semibold fs-5 mb-3">{{ section.name }}</h5>
+              <!-- Card Icon -->
+              <div class="card-icon-wrapper">
+                <div
+                  class="card-icon"
+                  [ngClass]="{
+                    'icon-academic': section.type === 'academic',
+                    'icon-psych': section.type === 'psychological'
+                  }"
+                >
+                  <i [class]="getCardIconClass(section.type)"></i>
+                </div>
+              </div>
+
+              <!-- Card Title -->
+              <h5 class="card-title">{{ section.name }}</h5>
+
+              <!-- Card Description Placeholder -->
+              <p class="card-description">ابدأ التقييم الآن</p>
+
+              <!-- Card Button -->
               <div class="mt-auto">
-                <button [ngClass]="getButtonClass(section.type)" class="btn w-100 rounded-pill">
-                  ابدأ الاختبار
+                <button
+                  [ngClass]="getButtonClass(section.type)"
+                  class="btn btn-quiz w-100"
+                >
+                  <span class="btn-text">ابدأ الاختبار</span>
+                  <i class="bi bi-arrow-left btn-icon"></i>
                 </button>
               </div>
             </div>
+
+            <!-- Card Hover Effect -->
+            <div class="card-hover-effect"></div>
           </div>
         </div>
 
         <!-- لا توجد اختبارات -->
-        <div *ngIf="subSections.length === 0" class="col-12 text-center py-5">
-          <p class="text-muted fs-4">لا توجد اختبارات متاحة لهذا القسم حاليًا</p>
+        <div
+          *ngIf="subSections.length === 0"
+          class="col-12 text-center py-5 empty-state"
+          #emptyState
+        >
+          <div class="empty-icon">
+            <i class="bi bi-inbox"></i>
+          </div>
+          <p class="empty-text">لا توجد اختبارات متاحة لهذا القسم حاليًا</p>
         </div>
       </div>
     </div>

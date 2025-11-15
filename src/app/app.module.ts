@@ -7,7 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { HomeComponent } from './pages/home/home.component';
 import { EvaluationComponent } from './pages/evaluation/evaluation.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { AboutComponent } from './pages/about/about.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { StatCardComponent } from './shared/components/stat-card/stat-card.component';
@@ -29,7 +28,6 @@ import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard
     HeaderComponent,
     HomeComponent,
     EvaluationComponent,
-    DashboardComponent,
     AboutComponent,
     FooterComponent,
     StatCardComponent,
