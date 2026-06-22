@@ -1,113 +1,161 @@
 <!-- src/app/pages/evaluation/evaluation.component.html -->
-<div class="py-5 bg-light min-vh-100">
-  <div class="container">
+<div class="evaluation-section min-vh-100" dir="rtl">
+  <!-- Animated Background Elements -->
+  <div class="background-animation">
+    <div class="bg-circle bg-circle-1"></div>
+    <div class="bg-circle bg-circle-2"></div>
+    <div class="bg-circle bg-circle-3"></div>
+  </div>
 
-    <!-- Page Header -->
-    <div class="text-center mb-5">
-      <h1 class="display-5 fw-bold text-dark mb-2">
-        <i class="fa-solid fa-chart-pie text-primary me-2"></i>
-        تقرير جاهزيتك التدريبية
-      </h1>
-      <p class="text-muted fs-5">تحليل شامل متعدد الأبعاد لقياس مستوى استعدادك</p>
+  <div class="container py-5 position-relative">
+    <!-- العنوان -->
+    <div class="text-center mb-5 header-section" #headerSection>
+      <h1 class="page-title">تقييم الجاهزية للتدريب الميداني</h1>
+      <p class="page-subtitle">تحليل شامل متعدد الأبعاد لقياس مستوى استعدادك</p>
+      <div class="title-underline"></div>
     </div>
 
-    <!-- Overall Readiness -->
-    <div class="card-shadow rounded-4 p-4 p-md-5 mb-5 animate-slide-up">
-      <div class="text-center">
-        <h2 class="h4 fw-bold text-dark mb-4">
-          <i class="fa-solid fa-bullseye text-primary ms-2"></i>
-          مستوى الجاهزية الإجمالي
-        </h2>
-        <div class="d-flex flex-column align-items-center gap-3 mb-4">
-          <app-progress-circle
-            [percentage]="overallReadiness"
-            [size]="160"
-            [strokeWidth]="12"
-            color="auto">
-          </app-progress-circle>
-          <div class="d-flex align-items-center gap-2">
-            <span class="fs-5 fw-semibold" [ngClass]="readinessColor">
-              {{ readinessMessage }}
-            </span>
+    <!-- بطاقات الإحصائيات (من Dashboard) -->
+    <div class="row g-4 mb-5 stats-section" #statsSection>
+      <div
+        class="col-12 col-md-6 col-lg-3 stat-card-wrapper"
+        *ngFor="let stat of stats; let i = index"
+      >
+        <div class="stat-card modern-card" [ngClass]="'stat-' + stat.color">
+          <div class="stat-icon-wrapper">
+            <i [class]="stat.iconClass"></i>
+          </div>
+          <div class="stat-content">
+            <h3 class="stat-value">{{ stat.value }}</h3>
+            <h4 class="stat-title">{{ stat.title }}</h4>
+            <p class="stat-description">{{ stat.description }}</p>
           </div>
         </div>
-        <p class="text-muted fs-6 mb-0">
+      </div>
+    </div>
+
+    <!-- الجاهزية الإجمالية -->
+    <div class="overall-readiness-card modern-card mb-5" #overallCard>
+      <div class="text-center">
+        <div class="readiness-header">
+          <div class="readiness-icon-wrapper">
+            <i class="bi bi-trophy-fill"></i>
+          </div>
+          <h2 class="readiness-title">مستوى الجاهزية الإجمالي</h2>
+        </div>
+        <div class="readiness-content">
+          <app-progress-circle
+            [percentage]="overallReadiness"
+            [size]="180"
+            [strokeWidth]="14"
+            color="auto"
+          ></app-progress-circle>
+          <div class="readiness-badge">
+            <span class="readiness-message" [ngClass]="readinessColor">
+              {{ readinessMessage }}
+            </span>
+            <span class="readiness-score">{{ overallReadiness }}%</span>
+          </div>
+        </div>
+        <p class="readiness-description">
           بناءً على التقييم الشامل، أنت تمتلك مستوى
-          <span *ngIf="overallReadiness >= 80" class="fw-bold text-success">عالٍ جداً</span>
-          <span *ngIf="overallReadiness >= 70 && overallReadiness < 80" class="fw-bold text-primary">جيد</span>
-          <span *ngIf="overallReadiness < 70" class="fw-bold text-warning">مقبول</span>
+          <span *ngIf="overallReadiness >= 80" class="fw-bold text-success"
+            >عالٍ جداً</span
+          >
+          <span
+            *ngIf="overallReadiness >= 70 && overallReadiness < 80"
+            class="fw-bold text-warning"
+            >جيد</span
+          >
+          <span *ngIf="overallReadiness < 70" class="fw-bold text-danger"
+            >مقبول</span
+          >
           من الجاهزية للتدريب الميداني
         </p>
       </div>
     </div>
 
-    <!-- Three Sections (Academic / Psychological / Behavioral) -->
+    <!-- الأقسام (أكاديمي ونفسي فقط) -->
     <div class="row g-4 mb-5">
-      <div class="col-12 col-lg-4 animate-slide-up"
-           *ngFor="let section of getSections(); let i = index"
-           [attr.style]="'animation-delay: ' + i * 0.1 + 's'">
-        <div class="bg-white rounded-4 overflow-hidden card-shadow card-hover h-100">
-
-          <!-- Card Header -->
-          <div class="p-4" [ngClass]="getSectionBgClass(section.color)">
-            <div class="d-flex align-items-center justify-content-between mb-3">
-              <div class="d-flex align-items-center gap-3">
-                <div class="rounded-3 bg-white bg-opacity-20 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" class="text-white">
-                    <path [attr.d]="section.iconPath"></path>
-                  </svg>
+      <div
+        class="col-12 col-lg-6"
+        *ngFor="let section of getSections(); let i = index"
+        #sectionCard
+      >
+        <div
+          class="section-card modern-card h-100"
+          [ngClass]="'section-' + section.color"
+        >
+          <!-- رأس البطاقة -->
+          <div
+            class="section-header"
+            [ngClass]="getSectionBgClass(section.color)"
+          >
+            <div class="section-header-content">
+              <div class="section-icon-wrapper">
+                <div class="section-icon">
+                  <i [class]="getIconClass(section)"></i>
                 </div>
-                <h3 class="h5 fw-bold text-white mb-0">{{ section.title }}</h3>
+                <div class="section-info">
+                  <h3 class="section-title">{{ section.title }}</h3>
+                  <div class="section-level">
+                    <i class="bi bi-star-fill me-1"></i>
+                    <span>{{ getLevelText(section.overall) }}</span>
+                  </div>
+                </div>
               </div>
-              <div class="fs-2 fw-bold text-white">{{ section.overall }}%</div>
-            </div>
-            <div class="d-flex align-items-center gap-2 text-white small bg-white bg-opacity-20 px-3 py-1 rounded-pill d-inline-flex">
-              <i class="fa-solid fa-layer-group"></i>
-              <span>المستوى: {{ getLevelText(section.overall) }}</span>
+              <div class="section-score">
+                <span class="score-value">{{ section.overall }}</span>
+                <span class="score-label">%</span>
+              </div>
             </div>
           </div>
 
-          <!-- Card Body -->
-          <div class="p-4">
-            <h4 class="h6 fw-bold text-dark mb-3">
-              <i class="fa-solid fa-sliders text-muted ms-2"></i>
-              المقاييس التفصيلية
+          <!-- محتوى البطاقة -->
+          <div class="section-body">
+            <h4 class="metrics-title">
+              <i class="bi bi-bar-chart-fill me-2"></i>المقاييس التفصيلية
             </h4>
-            <div class="mb-4">
+            <div class="metrics-list">
               <app-progress-bar
                 *ngFor="let metric of section.metrics"
                 [label]="metric.label"
-                [percentage]="metric.value">
+                [percentage]="metric.value"
+              >
               </app-progress-bar>
             </div>
 
-            <div class="pt-3 border-top">
-              <!-- Strengths -->
-              <div class="mb-4">
-                <h5 class="fw-bold text-dark mb-3 d-flex align-items-center gap-2 fs-6">
-                  <i class="fa-solid fa-circle-check text-success fs-5"></i>
+            <div class="section-details">
+              <!-- نقاط القوة -->
+              <div class="strengths-section">
+                <h5 class="detail-title">
+                  <i class="bi bi-check-circle-fill me-2 text-success"></i>
                   نقاط القوة
                 </h5>
-                <ul class="list-unstyled">
-                  <li class="text-muted small mb-2 d-flex align-items-start gap-2"
-                      *ngFor="let strength of section.strengths">
-                    <span class="strength-dot mt-1"></span>
-                    {{ strength }}
+                <ul class="detail-list">
+                  <li
+                    *ngFor="let strength of section.strengths"
+                    class="detail-item"
+                  >
+                    <i class="bi bi-dot"></i>
+                    <span>{{ strength }}</span>
                   </li>
                 </ul>
               </div>
 
-              <!-- Improvements -->
-              <div>
-                <h5 class="fw-bold text-dark mb-3 d-flex align-items-center gap-2 fs-6">
-                  <i class="fa-solid fa-arrow-trend-up text-primary fs-5"></i>
+              <!-- فرص التحسين -->
+              <div class="improvements-section">
+                <h5 class="detail-title">
+                  <i class="bi bi-lightbulb-fill me-2 text-warning"></i>
                   فرص التحسين
                 </h5>
-                <ul class="list-unstyled">
-                  <li class="text-muted small mb-2 d-flex align-items-start gap-2"
-                      *ngFor="let improvement of section.improvements">
-                    <span class="improvement-dot mt-1"></span>
-                    {{ improvement }}
+                <ul class="detail-list">
+                  <li
+                    *ngFor="let improvement of section.improvements"
+                    class="detail-item"
+                  >
+                    <i class="bi bi-dot"></i>
+                    <span>{{ improvement }}</span>
                   </li>
                 </ul>
               </div>
@@ -117,59 +165,179 @@
       </div>
     </div>
 
-    <!-- Smart Recommendations -->
-    <div class="card-shadow rounded-4 p-4 p-md-5 bg-light">
-      <h3 class="h4 fw-bold text-dark mb-4 text-center">
-        <i class="fa-solid fa-wand-magic-sparkles text-primary ms-2"></i>
-        التوصيات الذكية
-      </h3>
+    <!-- قسم Dashboard (تطور الأداء والمهارات) -->
+    <div class="dashboard-section mb-5" #dashboardSection>
+      <div class="row g-4 mb-5">
+        <!-- تطور الأداء الشهري -->
+        <div class="col-12 col-lg-6">
+          <div class="dashboard-card modern-card">
+            <div class="dashboard-card-header">
+              <div class="dashboard-card-icon">
+                <i class="bi bi-graph-up-arrow"></i>
+              </div>
+              <h3 class="dashboard-card-title">تطور الأداء الشهري</h3>
+            </div>
+            <div class="dashboard-card-body">
+              <div class="performance-list">
+                <app-progress-bar
+                  *ngFor="let item of performanceData"
+                  [label]="item.month"
+                  [percentage]="item.value"
+                  [color]="getValueColorClass(item.value)"
+                >
+                </app-progress-bar>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- التوزيع حسب المحاور -->
+        <div class="col-12 col-lg-6">
+          <div class="dashboard-card modern-card">
+            <div class="dashboard-card-header">
+              <div class="dashboard-card-icon">
+                <i class="bi bi-pie-chart-fill"></i>
+              </div>
+              <h3 class="dashboard-card-title">التوزيع حسب المحاور</h3>
+            </div>
+            <div class="dashboard-card-body">
+              <div class="row text-center g-4">
+                <div class="col-6" *ngFor="let axis of axesData">
+                  <app-progress-circle
+                    [percentage]="axis.percentage"
+                    [size]="120"
+                    [strokeWidth]="10"
+                    [color]="axis.color"
+                  >
+                  </app-progress-circle>
+                  <p class="axis-title mt-3">{{ axis.title }}</p>
+                  <p class="axis-level">
+                    {{
+                      axis.percentage >= 80
+                        ? "ممتاز"
+                        : axis.percentage >= 70
+                        ? "جيد جداً"
+                        : "جيد"
+                    }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- المهارات الأساسية وآخر الإنجازات -->
+      <div class="row g-4">
+        <div class="col-12 col-lg-8">
+          <div class="dashboard-card modern-card">
+            <div class="dashboard-card-header">
+              <div class="dashboard-card-icon">
+                <i class="bi bi-book-fill"></i>
+              </div>
+              <h3 class="dashboard-card-title">المهارات الأساسية</h3>
+            </div>
+            <div class="dashboard-card-body">
+              <div class="skills-list">
+                <app-progress-bar
+                  *ngFor="let skill of skills"
+                  [label]="skill.label"
+                  [percentage]="skill.percentage"
+                  [color]="skill.color"
+                >
+                </app-progress-bar>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-4">
+          <div class="dashboard-card modern-card">
+            <div class="dashboard-card-header">
+              <div class="dashboard-card-icon">
+                <i class="bi bi-trophy-fill"></i>
+              </div>
+              <h3 class="dashboard-card-title">آخر الإنجازات</h3>
+            </div>
+            <div class="dashboard-card-body">
+              <div class="achievements-list">
+                <div
+                  class="achievement-item"
+                  *ngFor="let achievement of achievements"
+                >
+                  <div
+                    class="achievement-icon"
+                    [ngClass]="'achievement-' + achievement.color"
+                  >
+                    <i [class]="achievement.iconClass"></i>
+                  </div>
+                  <div class="achievement-content">
+                    <h5 class="achievement-title">{{ achievement.title }}</h5>
+                    <p class="achievement-description">
+                      {{ achievement.description }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- التوصيات الذكية -->
+    <div class="recommendations-section modern-card" #recommendationsSection>
+      <div class="recommendations-header">
+        <div class="recommendations-icon">
+          <i class="bi bi-lightbulb-fill"></i>
+        </div>
+        <h3 class="recommendations-title">التوصيات الذكية</h3>
+      </div>
       <div class="row g-4">
         <div class="col-12 col-md-6">
-          <div class="bg-white rounded-4 p-4 card-shadow h-100">
-            <h4 class="fw-bold text-dark mb-4 d-flex align-items-center gap-2">
-              <i class="fa-solid fa-road text-primary fs-5"></i>
-              خطة التطوير المقترحة
+          <div class="recommendation-card">
+            <h4 class="recommendation-card-title">
+              <i class="bi bi-clipboard-check-fill me-2"></i>خطة التطوير
+              المقترحة
             </h4>
-            <ul class="list-unstyled">
-              <li class="text-muted small mb-3 d-flex align-items-start gap-2">
-                <i class="fa-solid fa-circle-check text-success mt-1 flex-shrink-0"></i>
+            <ul class="recommendation-list">
+              <li class="recommendation-item">
+                <i class="bi bi-check-circle-fill"></i>
                 <span>حضور ورشة عمل في إدارة الضغوط</span>
               </li>
-              <li class="text-muted small mb-3 d-flex align-items-start gap-2">
-                <i class="fa-solid fa-circle-check text-success mt-1 flex-shrink-0"></i>
+              <li class="recommendation-item">
+                <i class="bi bi-check-circle-fill"></i>
                 <span>المشاركة في مشاريع بحثية تطبيقية</span>
               </li>
-              <li class="text-muted small mb-3 d-flex align-items-start gap-2">
-                <i class="fa-solid fa-circle-check text-success mt-1 flex-shrink-0"></i>
+              <li class="recommendation-item">
+                <i class="bi bi-check-circle-fill"></i>
                 <span>الانضمام لفريق عمل طلابي لتعزيز المهارات القيادية</span>
               </li>
             </ul>
           </div>
         </div>
         <div class="col-12 col-md-6">
-          <div class="bg-white rounded-4 p-4 card-shadow h-100">
-            <h4 class="fw-bold text-dark mb-4 d-flex align-items-center gap-2">
-              <i class="fa-solid fa-star text-warning fs-5"></i>
-              التخصصات الموصى بها
+          <div class="recommendation-card">
+            <h4 class="recommendation-card-title">
+              <i class="bi bi-briefcase-fill me-2"></i>التخصصات الموصى بها
             </h4>
-            <div class="d-grid gap-3">
-              <div class="d-flex align-items-center justify-content-between p-3 rounded-3 match-row" style="background: var(--obour-primary-soft)">
-                <span class="small fw-semibold text-dark">هندسة البرمجيات</span>
-                <span class="badge rounded-pill" style="background: var(--obour-primary); color: white;">95% توافق</span>
+            <div class="specializations-list">
+              <div class="specialization-item specialization-primary">
+                <span class="specialization-name">هندسة البرمجيات</span>
+                <span class="specialization-match">95% توافق</span>
               </div>
-              <div class="d-flex align-items-center justify-content-between p-3 rounded-3 match-row" style="background: rgba(16,185,129,0.08)">
-                <span class="small fw-semibold text-dark">تحليل البيانات</span>
-                <span class="badge rounded-pill bg-success">92% توافق</span>
+              <div class="specialization-item specialization-success">
+                <span class="specialization-name">تحليل البيانات</span>
+                <span class="specialization-match">92% توافق</span>
               </div>
-              <div class="d-flex align-items-center justify-content-between p-3 rounded-3 match-row" style="background: rgba(139,92,246,0.08)">
-                <span class="small fw-semibold text-dark">إدارة المشاريع</span>
-                <span class="badge rounded-pill" style="background: #8b5cf6; color: white;">88% توافق</span>
+              <div class="specialization-item specialization-purple">
+                <span class="specialization-name">إدارة المشاريع</span>
+                <span class="specialization-match">88% توافق</span>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 </div>

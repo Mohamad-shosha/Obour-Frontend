@@ -74,7 +74,7 @@ export class HeaderComponent implements OnInit {
       this.menuItems = [
         ...baseItems,
         {
-          id: 'dashboard',
+          id: 'evaluation-results',
           label: 'لوحة المعلومات',
           icon: 'fa-solid fa-chart-line',
         },
@@ -99,6 +99,8 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(['/evaluation/about']);
     } else if (pageId === 'admin-dashboard') {
       this.router.navigate(['/admin/dashboard']);
+    } else if (pageId === 'evaluation-results') {
+      this.router.navigate(['/evaluation/results']);
     } else {
       this.router.navigate([`/${pageId}`]);
     }
