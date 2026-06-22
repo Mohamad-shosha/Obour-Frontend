@@ -1,76 +1,59 @@
 <!-- src/app/pages/evaluation/evaluation.component.html -->
 <div class="py-5 bg-light min-vh-100">
   <div class="container">
-    <!-- العنوان -->
+
+    <!-- Page Header -->
     <div class="text-center mb-5">
-      <h1 class="display-5 fw-bold text-dark mb-3">
-        تقييم الجاهزية للتدريب الميداني
+      <h1 class="display-5 fw-bold text-dark mb-2">
+        <i class="fa-solid fa-chart-pie text-primary me-2"></i>
+        تقرير جاهزيتك التدريبية
       </h1>
-      <p class="text-muted fs-5">
-        تحليل شامل متعدد الأبعاد لقياس مستوى استعدادك
-      </p>
+      <p class="text-muted fs-5">تحليل شامل متعدد الأبعاد لقياس مستوى استعدادك</p>
     </div>
 
-    <!-- الجاهزية الإجمالية -->
-    <div
-      class="bg-white rounded-3 p-4 p-md-5 mb-5 card-shadow animate-slide-up"
-    >
+    <!-- Overall Readiness -->
+    <div class="card-shadow rounded-4 p-4 p-md-5 mb-5 animate-slide-up">
       <div class="text-center">
-        <h2 class="h4 fw-bold text-dark mb-4">مستوى الجاهزية الإجمالي</h2>
+        <h2 class="h4 fw-bold text-dark mb-4">
+          <i class="fa-solid fa-bullseye text-primary ms-2"></i>
+          مستوى الجاهزية الإجمالي
+        </h2>
         <div class="d-flex flex-column align-items-center gap-3 mb-4">
           <app-progress-circle
             [percentage]="overallReadiness"
             [size]="160"
             [strokeWidth]="12"
-            color="auto"
-          ></app-progress-circle>
+            color="auto">
+          </app-progress-circle>
           <div class="d-flex align-items-center gap-2">
             <span class="fs-5 fw-semibold" [ngClass]="readinessColor">
               {{ readinessMessage }}
             </span>
           </div>
         </div>
-        <p class="text-muted">
+        <p class="text-muted fs-6 mb-0">
           بناءً على التقييم الشامل، أنت تمتلك مستوى
-          <span *ngIf="overallReadiness >= 80">عالٍ جداً</span>
-          <span *ngIf="overallReadiness >= 70 && overallReadiness < 80"
-            >جيد</span
-          >
-          <span *ngIf="overallReadiness < 70">مقبول</span>
+          <span *ngIf="overallReadiness >= 80" class="fw-bold text-success">عالٍ جداً</span>
+          <span *ngIf="overallReadiness >= 70 && overallReadiness < 80" class="fw-bold text-primary">جيد</span>
+          <span *ngIf="overallReadiness < 70" class="fw-bold text-warning">مقبول</span>
           من الجاهزية للتدريب الميداني
         </p>
       </div>
     </div>
 
-    <!-- الأقسام الثلاثة -->
-    <div class="row g-4">
-      <div
-        class="col-12 col-lg-4 animate-slide-up"
-        *ngFor="let section of getSections(); let i = index"
-        [attr.style]="'animation-delay: ' + i * 0.1 + 's'"
-      >
-        <div
-          class="bg-white rounded-3 overflow-hidden card-shadow card-hover h-100"
-        >
-          <!-- رأس البطاقة -->
+    <!-- Three Sections (Academic / Psychological / Behavioral) -->
+    <div class="row g-4 mb-5">
+      <div class="col-12 col-lg-4 animate-slide-up"
+           *ngFor="let section of getSections(); let i = index"
+           [attr.style]="'animation-delay: ' + i * 0.1 + 's'">
+        <div class="bg-white rounded-4 overflow-hidden card-shadow card-hover h-100">
+
+          <!-- Card Header -->
           <div class="p-4" [ngClass]="getSectionBgClass(section.color)">
             <div class="d-flex align-items-center justify-content-between mb-3">
               <div class="d-flex align-items-center gap-3">
-                <div
-                  class="rounded-2 bg-white bg-opacity-20 d-flex align-items-center justify-content-center"
-                  style="width: 48px; height: 48px"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    width="24"
-                    height="24"
-                    class="text-white"
-                  >
+                <div class="rounded-3 bg-white bg-opacity-20 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" class="text-white">
                     <path [attr.d]="section.iconPath"></path>
                   </svg>
                 </div>
@@ -78,113 +61,52 @@
               </div>
               <div class="fs-2 fw-bold text-white">{{ section.overall }}%</div>
             </div>
-            <div
-              class="d-flex align-items-center gap-2 text-white-75 small bg-white bg-opacity-20 px-2 py-1 rounded-2"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                width="16"
-                height="16"
-              >
-                <path d="M2 12h20M12 2v20"></path>
-              </svg>
+            <div class="d-flex align-items-center gap-2 text-white small bg-white bg-opacity-20 px-3 py-1 rounded-pill d-inline-flex">
+              <i class="fa-solid fa-layer-group"></i>
               <span>المستوى: {{ getLevelText(section.overall) }}</span>
             </div>
           </div>
 
-          <!-- محتوى البطاقة -->
+          <!-- Card Body -->
           <div class="p-4">
-            <h4 class="h6 fw-bold text-dark mb-3">المقاييس التفصيلية</h4>
+            <h4 class="h6 fw-bold text-dark mb-3">
+              <i class="fa-solid fa-sliders text-muted ms-2"></i>
+              المقاييس التفصيلية
+            </h4>
             <div class="mb-4">
               <app-progress-bar
                 *ngFor="let metric of section.metrics"
                 [label]="metric.label"
-                [percentage]="metric.value"
-              >
+                [percentage]="metric.value">
               </app-progress-bar>
             </div>
 
-            <div class="pt-3 border-top border-light">
-              <!-- نقاط القوة -->
+            <div class="pt-3 border-top">
+              <!-- Strengths -->
               <div class="mb-4">
-                <h5
-                  class="fw-bold text-dark mb-3 d-flex align-items-center gap-2"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    width="20"
-                    height="20"
-                    class="text-success"
-                  >
-                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                  </svg>
+                <h5 class="fw-bold text-dark mb-3 d-flex align-items-center gap-2 fs-6">
+                  <i class="fa-solid fa-circle-check text-success fs-5"></i>
                   نقاط القوة
                 </h5>
                 <ul class="list-unstyled">
-                  <li
-                    class="text-muted small mb-2 d-flex align-items-start gap-2"
-                    *ngFor="let strength of section.strengths"
-                  >
-                    <span
-                      class="d-inline-block mt-1"
-                      style="
-                        width: 6px;
-                        height: 6px;
-                        background-color: #10b981;
-                        border-radius: 50%;
-                      "
-                    ></span>
+                  <li class="text-muted small mb-2 d-flex align-items-start gap-2"
+                      *ngFor="let strength of section.strengths">
+                    <span class="strength-dot mt-1"></span>
                     {{ strength }}
                   </li>
                 </ul>
               </div>
 
-              <!-- فرص التحسين -->
+              <!-- Improvements -->
               <div>
-                <h5
-                  class="fw-bold text-dark mb-3 d-flex align-items-center gap-2"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    width="20"
-                    height="20"
-                    class="text-primary"
-                  >
-                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                  </svg>
+                <h5 class="fw-bold text-dark mb-3 d-flex align-items-center gap-2 fs-6">
+                  <i class="fa-solid fa-arrow-trend-up text-primary fs-5"></i>
                   فرص التحسين
                 </h5>
                 <ul class="list-unstyled">
-                  <li
-                    class="text-muted small mb-2 d-flex align-items-start gap-2"
-                    *ngFor="let improvement of section.improvements"
-                  >
-                    <span
-                      class="d-inline-block mt-1"
-                      style="
-                        width: 6px;
-                        height: 6px;
-                        background-color: #3b82f6;
-                        border-radius: 50%;
-                      "
-                    ></span>
+                  <li class="text-muted small mb-2 d-flex align-items-start gap-2"
+                      *ngFor="let improvement of section.improvements">
+                    <span class="improvement-dot mt-1"></span>
                     {{ improvement }}
                   </li>
                 </ul>
@@ -195,94 +117,59 @@
       </div>
     </div>
 
-    <!-- التوصيات الذكية -->
-    <div class="mt-5 bg-light rounded-3 p-4 p-md-5 card-shadow">
-      <h3 class="h4 fw-bold text-dark mb-4 text-center">التوصيات الذكية</h3>
+    <!-- Smart Recommendations -->
+    <div class="card-shadow rounded-4 p-4 p-md-5 bg-light">
+      <h3 class="h4 fw-bold text-dark mb-4 text-center">
+        <i class="fa-solid fa-wand-magic-sparkles text-primary ms-2"></i>
+        التوصيات الذكية
+      </h3>
       <div class="row g-4">
         <div class="col-12 col-md-6">
-          <div class="bg-white rounded-3 p-4 card-shadow h-100">
-            <h4 class="fw-bold text-dark mb-3">خطة التطوير المقترحة</h4>
+          <div class="bg-white rounded-4 p-4 card-shadow h-100">
+            <h4 class="fw-bold text-dark mb-4 d-flex align-items-center gap-2">
+              <i class="fa-solid fa-road text-primary fs-5"></i>
+              خطة التطوير المقترحة
+            </h4>
             <ul class="list-unstyled">
-              <li class="text-muted small mb-2 d-flex align-items-start gap-2">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  width="16"
-                  height="16"
-                  class="text-success mt-1 flex-shrink-0"
-                >
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
+              <li class="text-muted small mb-3 d-flex align-items-start gap-2">
+                <i class="fa-solid fa-circle-check text-success mt-1 flex-shrink-0"></i>
                 <span>حضور ورشة عمل في إدارة الضغوط</span>
               </li>
-              <li class="text-muted small mb-2 d-flex align-items-start gap-2">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  width="16"
-                  height="16"
-                  class="text-success mt-1 flex-shrink-0"
-                >
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
+              <li class="text-muted small mb-3 d-flex align-items-start gap-2">
+                <i class="fa-solid fa-circle-check text-success mt-1 flex-shrink-0"></i>
                 <span>المشاركة في مشاريع بحثية تطبيقية</span>
               </li>
-              <li class="text-muted small mb-2 d-flex align-items-start gap-2">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  width="16"
-                  height="16"
-                  class="text-success mt-1 flex-shrink-0"
-                >
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
+              <li class="text-muted small mb-3 d-flex align-items-start gap-2">
+                <i class="fa-solid fa-circle-check text-success mt-1 flex-shrink-0"></i>
                 <span>الانضمام لفريق عمل طلابي لتعزيز المهارات القيادية</span>
               </li>
             </ul>
           </div>
         </div>
         <div class="col-12 col-md-6">
-          <div class="bg-white rounded-3 p-4 card-shadow h-100">
-            <h4 class="fw-bold text-dark mb-3">التخصصات الموصى بها</h4>
-            <div class="space-y-2">
-              <div
-                class="d-flex align-items-center justify-content-between p-3 bg-primary bg-opacity-10 rounded-2"
-              >
-                <span class="small fw-medium text-dark">هندسة البرمجيات</span>
-                <span class="small fw-bold text-primary">95% توافق</span>
+          <div class="bg-white rounded-4 p-4 card-shadow h-100">
+            <h4 class="fw-bold text-dark mb-4 d-flex align-items-center gap-2">
+              <i class="fa-solid fa-star text-warning fs-5"></i>
+              التخصصات الموصى بها
+            </h4>
+            <div class="d-grid gap-3">
+              <div class="d-flex align-items-center justify-content-between p-3 rounded-3 match-row" style="background: var(--obour-primary-soft)">
+                <span class="small fw-semibold text-dark">هندسة البرمجيات</span>
+                <span class="badge rounded-pill" style="background: var(--obour-primary); color: white;">95% توافق</span>
               </div>
-              <div
-                class="d-flex align-items-center justify-content-between p-3 bg-success bg-opacity-10 rounded-2"
-              >
-                <span class="small fw-medium text-dark">تحليل البيانات</span>
-                <span class="small fw-bold text-success">92% توافق</span>
+              <div class="d-flex align-items-center justify-content-between p-3 rounded-3 match-row" style="background: rgba(16,185,129,0.08)">
+                <span class="small fw-semibold text-dark">تحليل البيانات</span>
+                <span class="badge rounded-pill bg-success">92% توافق</span>
               </div>
-              <div
-                class="d-flex align-items-center justify-content-between p-3 bg-purple bg-opacity-10 rounded-2"
-              >
-                <span class="small fw-medium text-dark">إدارة المشاريع</span>
-                <span class="small fw-bold text-purple">88% توافق</span>
+              <div class="d-flex align-items-center justify-content-between p-3 rounded-3 match-row" style="background: rgba(139,92,246,0.08)">
+                <span class="small fw-semibold text-dark">إدارة المشاريع</span>
+                <span class="badge rounded-pill" style="background: #8b5cf6; color: white;">88% توافق</span>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
   </div>
 </div>

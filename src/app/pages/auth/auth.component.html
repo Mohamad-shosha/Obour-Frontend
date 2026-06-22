@@ -1,188 +1,99 @@
-<div class="auth-container">
-  <div class="auth-bg"></div>
-  <div class="auth-bg-radial-1"></div>
-  <div class="auth-bg-radial-2"></div>
-
-  <div class="container py-5">
-    <div class="row justify-content-center">
-      <div class="col-12 col-md-10 col-lg-8 animate-slide-in">
-        <div class="text-center mb-5">
-          <h1 class="display-5 fw-bold text-primary">
-            <i
-              class="fa-solid"
-              [ngClass]="isLogin ? 'fa-right-to-bracket' : 'fa-user-plus'"
-            ></i>
-            {{ isLogin ? "مرحباً بعودتك" : "انضم إلينا" }}
-          </h1>
-          <p class="text-muted fs-5 mt-2">
-            {{
-              isLogin
-                ? "سجّل الدخول لمتابعة رحلتك التعليمية"
-                : "أنشئ حسابًا وابدأ رحلتك اليوم"
-            }}
-          </p>
-          <div class="d-flex justify-content-center gap-2 mt-3">
-            <div class="auth-indicator" [class.active]="isLogin"></div>
-            <div class="auth-indicator" [class.active]="!isLogin"></div>
-          </div>
-        </div>
-
-        <div class="card auth-card shadow-lg">
-          <div class="card-body p-4 p-md-5">
-            <div class="text-center mb-4">
-              <h2 class="h4 fw-bold text-primary">
-                {{ isLogin ? "تسجيل الدخول" : "إنشاء حساب جديد" }}
-              </h2>
-              <p class="text-muted small">
-                {{
-                  isLogin
-                    ? "مرحباً بعودتك! أدخل بياناتك للمتابعة"
-                    : "املأ الحقول أدناه لإنشاء حساب جديد"
-                }}
-              </p>
-            </div>
-
-            <form
-              [formGroup]="isLogin ? loginForm : registerForm"
-              (ngSubmit)="onSubmit()"
-              novalidate
-            >
-              <!-- اختيار الدور (فقط في وضع التسجيل) -->
-              <div *ngIf="!isLogin" class="mb-4">
-                <label class="form-label d-block mb-3">اختر دورك</label>
-                <div class="d-flex gap-3">
-                  <!-- بطاقة الطالب -->
-                  <div
-                    class="role-card text-center p-4 flex-fill"
-                    [class.active]="selectedRole === 'STUDENT'"
-                    (click)="onRoleSelect('STUDENT')"
-                  >
-                    <div class="mb-3">
-                      <i class="fas fa-user-graduate fa-2x text-primary"></i>
-                    </div>
-                    <h5 class="h6 fw-bold">طالب</h5>
-                    <p class="text-muted small mt-2">
-                      أشارك في التقييمات وأطور مهاراتي
-                    </p>
-                  </div>
-
-                  <!-- بطاقة المعلم -->
-                  <div
-                    class="role-card text-center p-4 flex-fill"
-                    [class.active]="selectedRole === 'TEACHER'"
-                    (click)="onRoleSelect('TEACHER')"
-                  >
-                    <div class="mb-3">
-                      <i
-                        class="fas fa-chalkboard-teacher fa-2x text-primary"
-                      ></i>
-                    </div>
-                    <h5 class="h6 fw-bold">معلم</h5>
-                    <p class="text-muted small mt-2">
-                      أنشئ أسئلة وأتابع تقييمات الطلاب
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <!-- الاسم -->
-              <div *ngIf="!isLogin" class="mb-3">
-                <label class="form-label">الاسم الكامل</label>
-                <div class="input-group glow-border">
-                  <i class="fa-solid fa-user icon-input"></i>
-                  <input
-                    formControlName="name"
-                    type="text"
-                    class="form-control form-control-lg auth-input"
-                    placeholder="أحمد محمد"
-                    (focus)="onFocus($event)"
-                    (blur)="onBlur($event)"
-                    [ngClass]="{ 'is-invalid': isFieldInvalid('name') }"
-                  />
-                </div>
-                <div *ngIf="isFieldInvalid('name')" class="error-text">
-                  <i class="fa-solid fa-circle-exclamation me-2"></i>
-                  {{ getErrorMessage("name") }}
-                </div>
-              </div>
-
-              <!-- البريد -->
-              <div class="mb-3">
-                <label class="form-label">البريد الإلكتروني</label>
-                <div class="input-group glow-border">
-                  <i class="fa-solid fa-envelope icon-input"></i>
-                  <input
-                    formControlName="email"
-                    type="email"
-                    class="form-control form-control-lg auth-input"
-                    placeholder="example@email.com"
-                    (focus)="onFocus($event)"
-                    (blur)="onBlur($event)"
-                    [ngClass]="{ 'is-invalid': isFieldInvalid('email') }"
-                  />
-                </div>
-                <div *ngIf="isFieldInvalid('email')" class="error-text">
-                  <i class="fa-solid fa-circle-exclamation me-2"></i>
-                  {{ getErrorMessage("email") }}
-                </div>
-              </div>
-
-              <!-- كلمة المرور -->
-              <div class="mb-4">
-                <label class="form-label">كلمة المرور</label>
-                <div class="input-group glow-border">
-                  <i class="fa-solid fa-lock icon-input"></i>
-                  <input
-                    formControlName="password"
-                    type="password"
-                    class="form-control form-control-lg auth-input"
-                    placeholder="••••••••"
-                    (focus)="onFocus($event)"
-                    (blur)="onBlur($event)"
-                    [ngClass]="{ 'is-invalid': isFieldInvalid('password') }"
-                  />
-                </div>
-                <div *ngIf="isFieldInvalid('password')" class="error-text">
-                  <i class="fa-solid fa-circle-exclamation me-2"></i>
-                  {{ getErrorMessage("password") }}
-                </div>
-              </div>
-
-              <!-- زر الإرسال -->
-              <button
-                type="submit"
-                class="btn btn-primary w-100 py-3 fw-bold submit-btn"
-              >
-                <i
-                  class="fa-solid"
-                  [ngClass]="isLogin ? 'fa-right-to-bracket' : 'fa-user-plus'"
-                ></i>
-                <span class="ms-2">
-                  {{ isLogin ? "تسجيل الدخول" : "إنشاء حساب" }}
-                </span>
-              </button>
-
-              <div class="divider my-4">
-                <span class="divider-text">أو</span>
-              </div>
-
-              <div class="text-center">
-                <button
-                  type="button"
-                  class="btn btn-link text-primary fw-semibold switch-btn"
-                  (click)="toggleMode()"
-                >
-                  {{
-                    isLogin
-                      ? "ليس لديك حساب؟ أنشئ حساب الآن"
-                      : "لديك حساب؟ سجّل الدخول"
-                  }}
-                  <i class="fa-solid fa-arrow-left ms-1"></i>
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
+<div class="auth-layout animate-fade-in">
+  <!-- Right Panel (RTL) - Branding/Visuals -->
+  <div class="auth-branding d-none d-lg-flex flex-column justify-content-center align-items-center position-relative">
+    <div class="branding-content text-white text-center p-5 z-index-10">
+      <div class="logo-circle-large mx-auto mb-4">
+        <i class="fa-solid fa-graduation-cap fs-1"></i>
       </div>
+      <h1 class="display-5 fw-bold mb-3">منصة عبور</h1>
+      <p class="lead opacity-75 max-w-md mx-auto">
+        نظام ذكي متكامل لقياس جاهزية طلبة الجامعات للتدريب الميداني باستخدام تقنيات الذكاء الاصطناعي.
+      </p>
+    </div>
+    <div class="auth-bg-shapes"></div>
+  </div>
+
+  <!-- Left Panel (RTL) - Form -->
+  <div class="auth-form-container d-flex justify-content-center align-items-center p-4 p-md-5">
+    <div class="auth-form-content w-100 animate-slide-up" [class.shake]="!cardAnimation">
+      
+      <!-- Header -->
+      <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center mb-5 gap-3">
+        <div>
+          <h2 class="fw-bold text-dark mb-1">{{ isLogin ? 'مرحباً بعودتك' : 'انضم إلينا' }}</h2>
+          <p class="text-muted small mb-0">{{ isLogin ? 'سجل دخولك لمتابعة التقدم' : 'أنشئ حسابك لتبدأ رحلتك الأكاديمية' }}</p>
+        </div>
+        <button type="button" class="btn btn-outline-primary btn-sm rounded-pill px-3 fw-semibold" (click)="toggleMode()">
+          {{ isLogin ? 'إنشاء حساب جديد' : 'لدي حساب بالفعل' }}
+        </button>
+      </div>
+
+      <!-- Form -->
+      <form [formGroup]="isLogin ? loginForm : registerForm" (ngSubmit)="onSubmit()" novalidate>
+        
+        <!-- Role Selection -->
+        <div *ngIf="!isLogin" class="mb-4">
+          <label class="form-label-modern">أنا...</label>
+          <div class="role-selector d-flex gap-3">
+            <div class="role-option flex-fill" [class.active]="selectedRole === 'STUDENT'" (click)="onRoleSelect('STUDENT')" role="button" aria-label="طالب">
+              <i class="fa-solid fa-user-graduate mb-2 fs-4"></i>
+              <span class="fw-semibold d-block">طالب</span>
+            </div>
+            <div class="role-option flex-fill" [class.active]="selectedRole === 'TEACHER'" (click)="onRoleSelect('TEACHER')" role="button" aria-label="معلم">
+              <i class="fa-solid fa-chalkboard-user mb-2 fs-4"></i>
+              <span class="fw-semibold d-block">معلم</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Name -->
+        <div *ngIf="!isLogin" class="form-group mb-4">
+          <label class="form-label-modern" for="nameInput">الاسم الكامل</label>
+          <div class="position-relative">
+            <i class="fa-solid fa-user input-icon"></i>
+            <input id="nameInput" formControlName="name" type="text" class="input-modern" placeholder="أحمد محمد" [ngClass]="{'is-invalid': isFieldInvalid('name')}">
+          </div>
+          <div *ngIf="isFieldInvalid('name')" class="error-text-modern">
+            <i class="fa-solid fa-circle-exclamation"></i> {{ getErrorMessage('name') }}
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group mb-4">
+          <label class="form-label-modern" for="emailInput">البريد الإلكتروني</label>
+          <div class="position-relative">
+            <i class="fa-solid fa-envelope input-icon"></i>
+            <input id="emailInput" formControlName="email" type="email" class="input-modern" placeholder="example@domain.com" [ngClass]="{'is-invalid': isFieldInvalid('email')}">
+          </div>
+          <div *ngIf="isFieldInvalid('email')" class="error-text-modern">
+            <i class="fa-solid fa-circle-exclamation"></i> {{ getErrorMessage('email') }}
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group mb-5">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <label class="form-label-modern mb-0" for="passwordInput">كلمة المرور</label>
+            <a *ngIf="isLogin" href="javascript:void(0)" class="text-primary small fw-semibold text-decoration-none hover-underline">نسيت كلمة المرور؟</a>
+          </div>
+          <div class="position-relative">
+            <i class="fa-solid fa-lock input-icon"></i>
+            <input id="passwordInput" formControlName="password" type="password" class="input-modern" placeholder="••••••••" [ngClass]="{'is-invalid': isFieldInvalid('password')}">
+          </div>
+          <div *ngIf="isFieldInvalid('password')" class="error-text-modern">
+            <i class="fa-solid fa-circle-exclamation"></i> {{ getErrorMessage('password') }}
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" [disabled]="loading" class="btn btn-primary w-100 py-3 rounded-3 mt-2 d-flex align-items-center justify-content-center gap-2 shadow-sm transition-all hover-lift">
+          <span *ngIf="!loading">{{ isLogin ? 'تسجيل الدخول' : 'إنشاء الحساب' }}</span>
+          <i *ngIf="!loading" class="fa-solid fa-arrow-left mt-1"></i>
+          <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          <span *ngIf="loading">جاري المعالجة...</span>
+        </button>
+
+      </form>
     </div>
   </div>
 </div>

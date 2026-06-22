@@ -16,21 +16,17 @@ import { EvaluationAboutComponent } from './pages/evaluation/evaluation-about/ev
 
 // تعريف المسارات
 const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' }, // الصفحة الافتراضية
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  // { path: 'evaluation', component: EvaluationComponent },
-  { path: 'dashboard', component: DashboardComponent },
+  { path: 'dashboard', component: DashboardComponent, data: { hideFooter: true } },
   { path: 'about', component: AboutComponent },
-  { path: 'auth', component: AuthComponent, data: { mode: 'login' } },
+  { path: 'auth', component: AuthComponent, data: { mode: 'login', hideFooter: true } },
   { path: 'evaluation', component: CategoriesComponent },
   { path: 'evaluation/sections/:sectionId', component: QuizSelectionComponent },
-  { path: 'evaluation/test/:sectionId', component: QuizTestComponent },
-  { path: 'admin/dashboard', component: AdminDashboardComponent },
-  {
-    path: 'evaluation/about',
-    component: EvaluationAboutComponent,
-  },
-  { path: '**', redirectTo: '/home' }, // صفحة خطأ 404
+  { path: 'evaluation/test/:sectionId', component: QuizTestComponent, data: { hideFooter: true } },
+  { path: 'admin/dashboard', component: AdminDashboardComponent, data: { hideHeader: true, hideFooter: true } },
+  { path: 'evaluation/about', component: EvaluationAboutComponent },
+  { path: '**', redirectTo: '/home' },
 ];
 
 @NgModule({

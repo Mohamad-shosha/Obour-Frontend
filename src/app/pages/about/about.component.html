@@ -1,136 +1,112 @@
 <!-- src/app/pages/about/about.component.html -->
-<div class="about-page py-5 bg-light min-vh-100">
-  <!-- البانر التمهيدي -->
-  <section
-    class="hero-section text-white text-center position-relative py-6 scroll-animate"
-  >
+<div class="about-page min-vh-100 bg-light">
+
+  <!-- Hero Banner -->
+  <section class="hero-section text-center position-relative scroll-animate">
     <div class="overlay"></div>
-    <div class="container position-relative">
-      <div class="d-inline-block mb-3 px-4 py-2 badge-support rounded-pill">
-        <span class="small fw-bold">منصة عبور</span>
+    <div class="container position-relative py-5 py-lg-6">
+      <div class="badge-support mb-4 mx-auto d-inline-block">
+        <i class="fa-solid fa-star text-warning ms-2"></i>
+        <span>منصة عبور للتقييم الأكاديمي</span>
       </div>
-      <h1 class="display-3 fw-bold mb-3 scroll-animate">
-        رحلة نحو التميز المهني
-      </h1>
-      <p class="fs-5 max-w-3xl mx-auto text-white-75 scroll-animate">
+      <h1 class="display-3 fw-bold mb-3 scroll-animate">رحلة نحو التميز المهني</h1>
+      <p class="fs-5 max-w-3xl mx-auto text-white-75 scroll-animate mb-0">
         نحن لسنا مجرد منصة تقييم... نحن شريكك في بناء مستقبلك الوظيفي.
       </p>
     </div>
   </section>
 
-  <!-- القسم الأول: ماذا نقدم؟ -->
+  <!-- What Makes Us Different -->
   <section class="py-6 scroll-animate">
-    <div class="container py-6">
-      <div class="text-center mb-5 scroll-animate">
-        <h2 class="display-5 fw-bold text-dark mb-4">
-          <i class="fa-solid fa-lightbulb text-primary me-2"></i>
-          ما الذي يجعل "عبور" مختلفة؟
+    <div class="container">
+      <div class="text-center mb-5 max-w-2xl mx-auto scroll-animate">
+        <h2 class="display-5 fw-bold text-dark mb-3">
+          ما الذي يجعل <span class="text-primary">عبور</span> مختلفة؟
         </h2>
-        <p class="text-muted fs-5 max-w-2xl mx-auto">
-          ندمج بين العمق الأكاديمي، الفهم النفسي، والذكاء التحليلي لرسم خريطة
-          طريق فريدة لكل طالب.
-        </p>
+        <p class="text-muted fs-5">ندمج بين العمق الأكاديمي، الفهم النفسي، والذكاء التحليلي لرسم خريطة طريق فريدة لكل طالب.</p>
       </div>
 
-      <div class="row g-5">
-        <!-- زيادة الفجوة إلى g-5 -->
-        <div
-          class="col-12 col-md-4 scroll-animate"
-          style="transition-delay: 0.1s"
-        >
-          <div class="service-card h-100 rounded-4 p-5 text-center">
-            <!-- زيادة padding إلى p-5 -->
+      <div class="row g-4">
+        <div class="col-12 col-md-4 scroll-animate" style="transition-delay: 0.1s">
+          <div class="service-card p-5">
             <div class="icon-circle bg-primary mx-auto mb-4">
-              <i class="fa-solid fa-brain fa-xl text-white"></i>
+              <i class="fa-solid fa-brain fa-xl"></i>
             </div>
             <h3 class="h5 fw-bold text-dark mb-3">تحليل شامل</h3>
-            <p class="text-muted">
-              لا نقيس المعرفة فقط، بل نفهم شخصيتك، مهاراتك السلوكية، وطريقة
-              تفكيرك.
-            </p>
+            <p class="text-muted mb-0">لا نقيس المعرفة فقط، بل نفهم شخصيتك، مهاراتك السلوكية، وطريقة تفكيرك.</p>
           </div>
         </div>
-        <div
-          class="col-12 col-md-4 scroll-animate"
-          style="transition-delay: 0.2s"
-        >
-          <div class="service-card h-100 rounded-4 p-5 text-center">
+        <div class="col-12 col-md-4 scroll-animate" style="transition-delay: 0.2s">
+          <div class="service-card p-5">
             <div class="icon-circle bg-success mx-auto mb-4">
-              <i class="fa-solid fa-chart-line fa-xl text-white"></i>
+              <i class="fa-solid fa-chart-line fa-xl"></i>
             </div>
             <h3 class="h5 fw-bold text-dark mb-3">ذكاء تحليلي</h3>
-            <p class="text-muted">
-              نستخدم خوارزميات متقدمة لتحويل إجاباتك إلى رؤى قابلة للتنفيذ.
-            </p>
+            <p class="text-muted mb-0">نستخدم خوارزميات متقدمة لتحويل إجاباتك إلى رؤى قابلة للتنفيذ.</p>
           </div>
         </div>
-        <div
-          class="col-12 col-md-4 scroll-animate"
-          style="transition-delay: 0.3s"
-        >
-          <div class="service-card h-100 rounded-4 p-5 text-center">
+        <div class="col-12 col-md-4 scroll-animate" style="transition-delay: 0.3s">
+          <div class="service-card p-5">
             <div class="icon-circle bg-academic mx-auto mb-4">
-              <i class="fa-solid fa-graduation-cap fa-xl text-white"></i>
+              <i class="fa-solid fa-graduation-cap fa-xl"></i>
             </div>
-            <h3 class="h5 fw-bold text-dark mb-3">لوحة معلوماتك الأكاديمية</h3>
-            <p class="text-muted">
-              تحصل على لوحة تحكم شخصية تعرض تحليلاتك، نقاط قوتك، وتوصيات تطويرية
-              مخصصة.
-            </p>
+            <h3 class="h5 fw-bold text-dark mb-3">لوحتك الأكاديمية</h3>
+            <p class="text-muted mb-0">تحصل على لوحة تحكم شخصية تعرض تحليلاتك، نقاط قوتك، وتوصيات تطويرية مخصصة.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- القسم الثاني: لوحة التحكم -->
+  <!-- Dashboard Showcase -->
   <section class="dashboard-showcase py-6 scroll-animate">
-    <div class="container py-6">
+    <div class="container">
       <div class="row align-items-center g-5">
         <div class="col-12 col-lg-6 scroll-animate">
-          <div class="dashboard-preview rounded-4 p-5 shadow-lg">
+          <div class="dashboard-preview rounded-4 p-5">
             <div class="d-flex align-items-center gap-2 mb-4">
               <div class="dot bg-success"></div>
               <div class="dot bg-warning"></div>
               <div class="dot bg-danger"></div>
             </div>
-            <h4 class="fw-bold text-dark mb-4">لوحة معلوماتك الأكاديمية</h4>
+            <h4 class="fw-bold text-dark mb-4">
+              <i class="fa-solid fa-chart-pie text-primary me-2"></i>
+              لوحة معلوماتك الأكاديمية
+            </h4>
             <ul class="dashboard-features list-unstyled">
-              <li class="mb-4">
-                <i class="fa-solid fa-circle-check text-success me-2"></i>
-                <span>مؤشرات الجاهزية : أكاديمي، نفسي، </span>
+              <li class="mb-3">
+                <i class="fa-solid fa-circle-check text-success"></i>
+                <span class="text-dark">مؤشرات الجاهزية: أكاديمي ونفسي</span>
               </li>
-              <li class="mb-4">
-                <i class="fa-solid fa-circle-check text-success me-2"></i>
-                <span>مقارنة مع متوسط الجامعة والمستوى الوطني</span>
+              <li class="mb-3">
+                <i class="fa-solid fa-circle-check text-success"></i>
+                <span class="text-dark">مقارنة مع متوسط الجامعة والمستوى الوطني</span>
               </li>
-              <li class="mb-4">
-                <i class="fa-solid fa-circle-check text-success me-2"></i>
-                <span>خطة تطوير مخصصة مع موارد تعليمية مقترحة</span>
+              <li class="mb-3">
+                <i class="fa-solid fa-circle-check text-success"></i>
+                <span class="text-dark">خطة تطوير مخصصة مع موارد تعليمية مقترحة</span>
               </li>
-              <li class="mb-4">
-                <i class="fa-solid fa-circle-check text-success me-2"></i>
-                <span>توصيات بتخصصات تدريبية مناسبة لملفك الأكاديمي</span>
+              <li>
+                <i class="fa-solid fa-circle-check text-success"></i>
+                <span class="text-dark">توصيات بتخصصات تدريبية مناسبة لملفك</span>
               </li>
             </ul>
           </div>
         </div>
-        <div class="col-12 col-lg-6 scroll-animate">
+        <div class="col-12 col-lg-6 scroll-animate" style="transition-delay: 0.2s">
           <h2 class="display-5 fw-bold text-dark mb-4">
             <i class="fa-solid fa-table-columns text-primary me-2"></i>
             لوحة تفهمك... وتوجهك أكاديميًا
           </h2>
           <p class="fs-5 text-muted mb-4">
-            بعد إكمال التقييم، لا تحصل فقط على درجة... بل على لوحة معلومات
-            أكاديمية ذكية تعرض:
+            بعد إكمال التقييم، لا تحصل فقط على درجة... بل على لوحة معلومات أكاديمية ذكية تعرض:
           </p>
-          <div class="d-flex align-items-start gap-3">
-            <div class="icon-badge bg-primary">
-              <i class="fa-solid fa-user-graduate text-white"></i>
+          <div class="d-flex align-items-start gap-3 bg-white rounded-3 p-4 border shadow-sm">
+            <div class="icon-badge bg-primary flex-shrink-0">
+              <i class="fa-solid fa-user-graduate"></i>
             </div>
-            <p class="m-0 text-dark fw-medium">
-              تحليلًا شخصيًا عميقًا يعكس صورتك الحقيقية كمستعد للتدريب الميداني،
-              مع رؤى تطويرية مبنية على بيانات فعلية.
+            <p class="m-0 text-dark fw-medium lh-lg">
+              تحليلًا شخصيًا عميقًا يعكس صورتك الحقيقية كمستعد للتدريب الميداني، مع رؤى تطويرية مبنية على بيانات فعلية.
             </p>
           </div>
         </div>
@@ -138,50 +114,37 @@
     </div>
   </section>
 
-  <!-- القسم الثالث: أثرنا التنموي -->
+  <!-- Impact Section -->
   <section class="py-6 scroll-animate">
     <div class="container">
-      <div class="text-center mb-5 scroll-animate">
-        <h2 class="display-5 fw-bold text-dark mb-4">
-          <i class="fa-solid fa-seedling text-primary me-2"></i>
+      <div class="text-center mb-5 max-w-2xl mx-auto scroll-animate">
+        <h2 class="display-5 fw-bold text-dark mb-3">
+          <i class="fa-solid fa-seedling text-success me-2"></i>
           أثرنا التنموي
         </h2>
-        <p class="text-muted fs-5 max-w-2xl mx-auto">
-          نُسهم في بناء جيل واعٍ، مؤهل، ومستعد لقيادة المستقبل المهني
-        </p>
+        <p class="text-muted fs-5">نُسهم في بناء جيل واعٍ، مؤهل، ومستعد لقيادة المستقبل المهني</p>
       </div>
 
-      <div class="row g-5">
-        <div
-          class="col-12 col-md-6 scroll-animate"
-          style="transition-delay: 0.1s"
-        >
-          <div class="impact-narrative-card rounded-4 p-5 h-100">
+      <div class="row g-4">
+        <div class="col-12 col-md-6 scroll-animate" style="transition-delay: 0.1s">
+          <div class="impact-narrative-card p-5 h-100">
             <div class="icon-badge bg-primary mb-4">
-              <i class="fa-solid fa-user-graduate text-white"></i>
+              <i class="fa-solid fa-user-graduate"></i>
             </div>
             <h3 class="h4 fw-bold text-dark mb-3">تنمية الطالب</h3>
-            <p class="text-muted mb-0">
-              نُمكّن الطالب من فهم نفسه بعمق، وتحديد نقاط القوة والضعف لديه،
-              وبناء خطة تطوير شخصية قائمة على بيانات حقيقية، مما يعزز ثقته ويزيد
-              جاهزيته للانخراط في سوق العمل بفعالية.
+            <p class="text-muted mb-0 lh-lg">
+              نُمكّن الطالب من فهم نفسه بعمق، وتحديد نقاط القوة والضعف لديه، وبناء خطة تطوير شخصية قائمة على بيانات حقيقية، مما يعزز ثقته ويزيد جاهزيته للانخراط في سوق العمل بفعالية.
             </p>
           </div>
         </div>
-
-        <div
-          class="col-12 col-md-6 scroll-animate"
-          style="transition-delay: 0.2s"
-        >
-          <div class="impact-narrative-card rounded-4 p-5 h-100">
+        <div class="col-12 col-md-6 scroll-animate" style="transition-delay: 0.2s">
+          <div class="impact-narrative-card p-5 h-100">
             <div class="icon-badge bg-success mb-4">
-              <i class="fa-solid fa-school text-white"></i>
+              <i class="fa-solid fa-school"></i>
             </div>
             <h3 class="h4 fw-bold text-dark mb-3">تحسين الجامعات</h3>
-            <p class="text-muted mb-0">
-              نوفر للجامعات رؤى تحليلية دقيقة حول جاهزية خريجيها، تُسهم في تطوير
-              المناهج الدراسية، وتعديل خطط التدريس، واتخاذ قرارات استراتيجية
-              تواكب متطلبات سوق العمل وتعزز جودة مخرجات التعليم.
+            <p class="text-muted mb-0 lh-lg">
+              نوفر للجامعات رؤى تحليلية دقيقة حول جاهزية خريجيها، تُسهم في تطوير المناهج الدراسية، وتعديل خطط التدريس، واتخاذ قرارات استراتيجية تواكب متطلبات سوق العمل.
             </p>
           </div>
         </div>
@@ -189,25 +152,20 @@
     </div>
   </section>
 
-  <!-- القسم الرابع: دعوة للعمل -->
-  <section class="cta-section py-6 text-center scroll-animate">
+  <!-- CTA -->
+  <section class="cta-section text-center scroll-animate">
     <div class="container">
-      <div class="callout rounded-4 p-5 mx-auto" style="max-width: 700px">
-        <h2 class="display-5 fw-bold text-white mb-3">
-          ابدأ رحلتك الأكاديمية الآن
-        </h2>
+      <div class="callout p-5 mx-auto" style="max-width: 700px">
+        <h2 class="display-5 fw-bold mb-3">ابدأ رحلتك الأكاديمية الآن</h2>
         <p class="fs-5 text-white-75 mb-4">
-          انضم إلى آلاف الطلاب الذين بدأوا رحلتهم نحو التميز المهني عبر منصة
-          عبور.
+          انضم إلى آلاف الطلاب الذين بدأوا رحلتهم نحو التميز المهني عبر منصة عبور.
         </p>
-        <button
-          class="btn btn-light btn-lg fw-bold px-5 py-3 rounded-pill shadow"
-          (click)="startEvaluation()"
-        >
+        <button class="btn btn-light btn-lg fw-bold px-5 py-3 rounded-pill shadow hover-lift" (click)="startEvaluation()">
           <i class="fa-solid fa-graduation-cap me-2"></i>
-          ابدأ التقييم واحصل على لوحة معلوماتك الأكاديمية
+          ابدأ التقييم واحصل على لوحة معلوماتك
         </button>
       </div>
     </div>
   </section>
+
 </div>

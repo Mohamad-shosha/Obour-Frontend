@@ -1,22 +1,18 @@
-/* src/app/shared/components/progress-bar/progress-bar.component.css */
-/* تخصيص ألوان Bootstrap الافتراضية لتكون أقرب للأصل */
-.progress-bar.bg-success {
-  background-color: #10b981 !important; /* أخضر Tailwind */
+/* src/app/shared/components/progress-bar/progress-bar.component.scss */
+
+.progress {
+  background-color: #e2e8f0;
+  border-radius: 6px;
+  height: 8px;
+  overflow: hidden;
 }
 
-.progress-bar.bg-primary {
-  background-color: #3b82f6 !important; /* أزرق Tailwind */
-}
-
-.progress-bar.bg-warning {
-  background-color: #f59e0b !important; /* برتقالي Tailwind */
-}
-
-.progress-bar.bg-danger {
-  background-color: #ef4444 !important; /* أحمر Tailwind */
-}
-
-/* إضافة تأثير الانتقال (Transition) */
 .progress-bar {
-  transition: width 1s ease-out;
+  transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 6px;
+
+  &.bg-success { background-color: #10b981 !important; }
+  &.bg-primary { background-color: var(--obour-primary) !important; }
+  &.bg-warning { background-color: #f59e0b !important; }
+  &.bg-danger  { background-color: #ef4444 !important; }
 }

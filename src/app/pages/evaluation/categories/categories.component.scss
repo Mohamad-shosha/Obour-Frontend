@@ -1,138 +1,144 @@
 /* src/app/pages/evaluation/categories/categories.component.scss */
 
-/* تدرجات الألوان */
-$academic: #1e40af;
-$academic-light: #dbeafe;
-$psychological: #059669;
-$psychological-light: #f0fdfa;
+.max-w-xl { max-width: 36rem; }
+
+/* Page Badge */
+.page-badge {
+  display: inline-flex;
+  align-items: center;
+  background: var(--obour-primary-soft);
+  color: var(--obour-primary);
+  border: 1px solid rgba(15, 76, 129, 0.15);
+  padding: 0.5rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
 
 /* Animations */
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
 .animate-slide-up {
-  animation: slideUp 0.6s ease-out forwards;
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .animate-fade-in {
   animation: fadeIn 0.5s ease-in;
 }
 
-.animate-cards {
-  > div {
-    opacity: 0;
-    animation: slideUp 0.6s ease-out forwards;
-    @for $i from 0 through 5 {
-      &:nth-child(#{$i + 1}) {
-        animation-delay: #{$i * 0.12}s;
-      }
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-cards > div {
+  opacity: 0;
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  @for $i from 0 through 5 {
+    &:nth-child(#{$i + 1}) {
+      animation-delay: #{$i * 0.12}s;
     }
   }
 }
 
-/* Hero Badge */
-.badge {
-  font-size: 0.9rem;
-  letter-spacing: 0.5px;
-}
-
-/* Section Card */
-.section-card {
-  transition: all 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
-  position: relative;
+/* ==========================================================================
+   Category Card
+   ========================================================================== */
+.category-card {
+  border: 1px solid var(--obour-border);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   background: white;
+  box-shadow: var(--shadow-sm);
 
   &:hover {
     transform: translateY(-8px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12) !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   }
 
-  &.academic {
+  /* Academic Card */
+  &.category-card--academic {
+    .card-banner {
+      background: linear-gradient(135deg, var(--obour-primary), var(--obour-primary-light));
+    }
     .icon-badge {
-      background: $academic;
-    }
-    .btn {
-      background: $academic;
-      border-color: $academic;
-    }
-    &:hover .btn {
-      background: darken($academic, 5%);
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
     }
   }
 
-  &.psychological {
+  /* Psychological Card */
+  &.category-card--psych {
+    .card-banner {
+      background: linear-gradient(135deg, #059669, #10b981);
+    }
     .icon-badge {
-      background: $psychological;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
     }
-    .btn {
-      background: $psychological;
-      border-color: $psychological;
-    }
-    &:hover .btn {
-      background: darken($psychological, 5%);
-    }
+  }
+}
+
+.card-banner {
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at top left, rgba(255,255,255,0.15) 0%, transparent 60%);
+    pointer-events: none;
   }
 }
 
 .icon-badge {
-  width: 72px;
-  height: 72px;
+  width: 80px;
+  height: 80px;
   border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-
-  i {
-    font-size: 1.8rem;
-  }
+  backdrop-filter: blur(10px);
 }
 
-/* Features List */
-.features-list {
+.text-white-75 { color: rgba(255, 255, 255, 0.75); }
+
+/* Feature List */
+.feature-list {
   list-style: none;
   padding: 0;
   margin: 0;
-  li {
-    position: relative;
-    padding-right: 1.5rem;
-    margin-bottom: 0.8rem;
-    font-size: 0.95rem;
-    color: #475569;
-    &::before {
-      content: "•";
-      position: absolute;
-      right: 0;
-      color: currentColor;
-      font-weight: bold;
-      font-size: 1.4rem;
-      line-height: 1;
-    }
-  }
+}
+
+/* Skeleton Card */
+.skeleton-card {
+  background: white;
+  border: 1px solid var(--obour-border);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Empty State */
+.empty-state-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bg-danger-soft {
+  background: rgba(239, 68, 68, 0.1);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .section-card {
-    max-width: 500px;
-    margin: 0 auto;
-  }
+  .category-card { max-width: 480px; margin: 0 auto; }
 }

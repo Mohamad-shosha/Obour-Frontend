@@ -1,0 +1,235 @@
+/* src/app/pages/evaluation/quiz-test/quiz-test.component.scss */
+
+.quiz-test-page {
+  background: #f8fafc;
+}
+
+.max-w-2xl { max-width: 720px; margin-left: auto; margin-right: auto; }
+
+/* ==========================================================================
+   Top Progress Bar
+   ========================================================================== */
+.quiz-top-bar {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--obour-border);
+  z-index: 100;
+}
+
+.btn-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1.5px solid var(--obour-border);
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--obour-text-main);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: var(--obour-primary-soft);
+    border-color: var(--obour-primary);
+    color: var(--obour-primary);
+  }
+}
+
+.quiz-progress-track {
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.quiz-progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &.fill-primary { background: linear-gradient(90deg, var(--obour-primary), var(--obour-primary-light)); }
+  &.fill-success { background: linear-gradient(90deg, #059669, #10b981); }
+}
+
+.question-counter {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--obour-text-light);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   Question Bubbles
+   ========================================================================== */
+.question-bubbles {
+  gap: 8px;
+}
+
+.bubble {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--obour-border);
+  background: white;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--obour-text-light);
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: var(--obour-primary);
+    color: var(--obour-primary);
+  }
+
+  &.bubble--current {
+    background: var(--obour-primary);
+    border-color: var(--obour-primary);
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(15, 76, 129, 0.3);
+  }
+
+  &.bubble--answered {
+    background: #e0f2fe;
+    border-color: #0ea5e9;
+    color: #0369a1;
+  }
+}
+
+/* ==========================================================================
+   Question Card
+   ========================================================================== */
+.question-card {
+  box-shadow: var(--shadow-md);
+  animation: fadeIn 0.35s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.question-label { }
+
+.badge-q {
+  display: inline-block;
+  padding: 0.3rem 1rem;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 700;
+
+  &.badge-q--primary {
+    background: var(--obour-primary-soft);
+    color: var(--obour-primary);
+  }
+
+  &.badge-q--success {
+    background: rgba(16, 185, 129, 0.1);
+    color: #059669;
+  }
+}
+
+.question-text {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--obour-text-main);
+  line-height: 1.8;
+}
+
+/* ==========================================================================
+   Choice Buttons
+   ========================================================================== */
+.choice-btn {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  border: 2px solid var(--obour-border);
+  border-radius: var(--radius-md);
+  background: white;
+  text-align: right;
+  font-weight: 600;
+  color: var(--obour-text-main);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+
+  .choice-letter {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.85rem;
+    color: var(--obour-text-light);
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+  }
+
+  .choice-check {
+    margin-right: auto;
+    color: white;
+    font-size: 1.1rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  &:hover:not(.choice-btn--selected-primary):not(.choice-btn--selected-success) {
+    border-color: #94a3b8;
+    background: #f8fafc;
+    .choice-letter {
+      background: #e2e8f0;
+    }
+  }
+
+  &.choice-btn--selected-primary {
+    border-color: var(--obour-primary);
+    background: var(--obour-primary-soft);
+    color: var(--obour-primary);
+    .choice-letter {
+      background: var(--obour-primary);
+      color: white;
+    }
+    .choice-check {
+      opacity: 1;
+      color: var(--obour-primary);
+    }
+  }
+
+  &.choice-btn--selected-success {
+    border-color: #10b981;
+    background: rgba(16, 185, 129, 0.08);
+    color: #059669;
+    .choice-letter {
+      background: #10b981;
+      color: white;
+    }
+    .choice-check {
+      opacity: 1;
+      color: #10b981;
+    }
+  }
+}
+
+/* Empty State */
+.empty-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 576px) {
+  .question-text { font-size: 1.1rem; }
+  .bubble { width: 32px; height: 32px; font-size: 0.75rem; }
+}

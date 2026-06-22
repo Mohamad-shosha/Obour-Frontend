@@ -1,91 +1,89 @@
-<div class="min-vh-100 bg-light" dir="rtl">
+<div class="categories-page min-vh-100 bg-light" dir="rtl">
   <div class="container px-4 py-5">
-    <!-- Hero Section -->
-    <div class="text-center mb-6 animate-slide-up">
-      <div
-        class="badge bg-primary bg-opacity-10 text-primary fw-bold px-3 py-2 rounded-pill mb-3"
-      >
-        اختر مسارك
+
+    <!-- Page Header -->
+    <div class="text-center mb-5 animate-slide-up">
+      <div class="page-badge mx-auto mb-3">
+        <i class="fa-solid fa-rocket ms-2"></i>
+        اختر مسارك التقييمي
       </div>
-      <h1 class="display-4 fw-bold mb-3 text-dark">
-        منصة الاختبارات التفاعلية
-      </h1>
-      <p class="lead text-muted col-md-7 mx-auto">
-        اختر القسم المناسب لك لبدء رحلة التقييم والتطوير الذاتي
+      <h1 class="display-5 fw-bold text-dark mb-3">ابدأ رحلة التقييم</h1>
+      <p class="lead text-muted mx-auto max-w-xl">
+        اختر القسم المناسب لك لبدء رحلة القياس والتطوير الذاتي. كل قسم يمنحك رؤية أعمق عن مهاراتك.
       </p>
     </div>
 
-    <!-- Loading -->
-    <div *ngIf="loading" class="text-center my-5 animate-fade-in">
-      <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">جارٍ التحميل...</span>
-      </div>
-      <p class="mt-3 text-muted">يتم تحميل الأقسام...</p>
-    </div>
-
-    <!-- Error -->
-    <div
-      *ngIf="error"
-      class="alert alert-danger text-center animate-fade-in"
-      role="alert"
-    >
-      {{ error }}
-    </div>
-
-    <!-- Sections Grid -->
-    <div
-      class="row g-4 justify-content-center animate-cards"
-      *ngIf="!loading && !error"
-    >
-      <div
-        *ngFor="let section of sections; let i = index"
-        class="col-12 col-md-6 col-lg-5"
-        (click)="goToSection(section.id)"
-        style="cursor: pointer"
-      >
-        <div
-          class="section-card h-100 rounded-4 border-0 shadow-sm overflow-hidden pt-3"
-          [ngClass]="{
-            academic: section.type === 'academic',
-            psychological: section.type === 'psychological'
-          }"
-        >
-          <!-- Header with Icon & Color Bar -->
-          <div class="card-header border-0 pb-0">
-            <div class="icon-badge mx-auto mb-3">
-              <i [class]="getIconClass(section.type)" class="text-white"></i>
-            </div>
-          </div>
-
-          <!-- Body -->
-          <div class="card-body d-flex flex-column p-4">
-            <h5 class="card-title fs-4 fw-bold mb-3 text-dark">
-              {{ section.name }}
-            </h5>
-            <p class="card-text text-muted mb-4">
-              {{
-                section.type === "academic"
-                  ? "تقييم شامل لمهاراتك الأكاديمية والتقنية"
-                  : "تحليل عميق لقدراتك النفسية والسلوكية"
-              }}
-            </p>
-
-            <div class="mt-auto">
-              <ul class="features-list mb-4">
-                <li *ngFor="let item of getItemsForSection(section.type)">
-                  {{ item }}
-                </li>
-              </ul>
-              <button
-                [ngClass]="getButtonClass(section.type)"
-                class="btn w-100 rounded-pill fw-bold py-2"
-              >
-                ابدأ الاختبار
-              </button>
-            </div>
-          </div>
+    <!-- Skeleton Loaders -->
+    <div *ngIf="loading" class="row g-4 justify-content-center">
+      <div class="col-12 col-md-6 col-lg-5" *ngFor="let i of [0,1]">
+        <div class="skeleton-card p-4 rounded-4">
+          <div class="skeleton mb-4" style="height: 80px; width: 80px; border-radius: 20px; margin: 0 auto;"></div>
+          <div class="skeleton mb-3" style="height: 24px; width: 60%; margin: 0 auto;"></div>
+          <div class="skeleton mb-2" style="height: 16px; width: 80%; margin: 0 auto;"></div>
+          <div class="skeleton mb-4" style="height: 16px; width: 70%; margin: 0 auto;"></div>
+          <div class="skeleton" style="height: 48px; border-radius: 50px;"></div>
         </div>
       </div>
     </div>
+
+    <!-- Error State -->
+    <div *ngIf="error" class="text-center py-5 animate-fade-in">
+      <div class="empty-state-icon mx-auto mb-4 bg-danger-soft">
+        <i class="fa-solid fa-triangle-exclamation text-danger fs-2"></i>
+      </div>
+      <h3 class="h4 fw-bold text-dark mb-2">حدث خطأ</h3>
+      <p class="text-muted">{{ error }}</p>
+    </div>
+
+    <!-- Sections Grid -->
+    <div class="row g-4 justify-content-center animate-cards" *ngIf="!loading && !error">
+      <div *ngFor="let section of sections; let i = index"
+           class="col-12 col-md-6 col-lg-5"
+           (click)="goToSection(section.id)"
+           style="cursor: pointer">
+        <div class="category-card h-100 rounded-4 overflow-hidden"
+             [ngClass]="{'category-card--academic': section.type === 'academic', 'category-card--psych': section.type !== 'academic'}">
+
+          <!-- Card Top Banner -->
+          <div class="card-banner p-4 text-center">
+            <div class="icon-badge mx-auto mb-3">
+              <i [class]="getIconClass(section.type)" class="text-white fs-2"></i>
+            </div>
+            <h2 class="fs-4 fw-bold text-white mb-1">{{ section.name }}</h2>
+            <p class="text-white-75 small mb-0">
+              {{ section.type === 'academic' ? 'التقييم الأكاديمي والتقني' : 'التحليل النفسي والسلوكي' }}
+            </p>
+          </div>
+
+          <!-- Card Body -->
+          <div class="card-body-content p-4 bg-white">
+            <ul class="feature-list mb-4">
+              <li *ngFor="let item of getItemsForSection(section.type)" class="d-flex align-items-center gap-3 mb-3">
+                <i class="fa-solid fa-circle-check flex-shrink-0" [ngClass]="section.type === 'academic' ? 'text-primary' : 'text-success'"></i>
+                <span class="text-muted small">{{ item }}</span>
+              </li>
+            </ul>
+
+            <button class="btn w-100 py-3 rounded-pill fw-bold fs-6"
+                    [ngClass]="getButtonClass(section.type)">
+              ابدأ الاختبار
+              <i class="fa-solid fa-arrow-left ms-2"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div *ngIf="sections.length === 0" class="col-12">
+        <div class="text-center py-5">
+          <div class="empty-state-icon mx-auto mb-4">
+            <i class="fa-solid fa-inbox text-muted fs-2"></i>
+          </div>
+          <h3 class="h4 fw-bold text-dark mb-2">لا توجد أقسام متاحة</h3>
+          <p class="text-muted">لم يتم إضافة أي أقسام حتى الآن.</p>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>

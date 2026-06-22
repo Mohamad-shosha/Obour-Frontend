@@ -1,107 +1,119 @@
-<div class="min-vh-100 bg-light">
-  <div class="container px-4 py-4">
-    <!-- Header -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <button class="btn btn-link px-0" (click)="goBack()">
-        <i class="fas fa-arrow-right me-2"></i> العودة
+<div class="quiz-test-page min-vh-100" dir="rtl">
+  <!-- Top Progress Bar (full width sticky) -->
+  <div class="quiz-top-bar sticky-top shadow-sm" *ngIf="!loading && !error && questions.length > 0">
+    <div class="container px-4 py-3 d-flex align-items-center gap-4">
+      <button class="btn-icon" (click)="goBack()" aria-label="العودة">
+        <i class="fa-solid fa-arrow-right"></i>
       </button>
-      <h2 class="h5 mb-0 text-muted d-none d-md-block">
-        {{ sectionName }}
-      </h2>
+      <div class="flex-grow-1">
+        <div class="d-flex justify-content-between align-items-center mb-1">
+          <small class="fw-semibold text-muted">{{ sectionName }}</small>
+          <small class="fw-semibold text-muted">{{ getProgress() | number:'1.0-0' }}%</small>
+        </div>
+        <div class="quiz-progress-track">
+          <div class="quiz-progress-fill"
+               [ngClass]="isAcademic ? 'fill-primary' : 'fill-success'"
+               [style.width.%]="getProgress()">
+          </div>
+        </div>
+      </div>
+      <span class="question-counter">
+        {{ currentQuestionIndex + 1 }} / {{ questions.length }}
+      </span>
     </div>
+  </div>
 
-    <!-- Loading -->
-    <div *ngIf="loading" class="text-center my-5">
-      <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">جارٍ التحميل...</span>
+  <div class="container px-4 py-5">
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="max-w-2xl mx-auto">
+      <div class="skeleton mb-4" style="height: 10px; border-radius: 5px;"></div>
+      <div class="bg-white rounded-4 p-5 border">
+        <div class="skeleton mb-4" style="height: 28px; width: 90%;"></div>
+        <div class="skeleton mb-2" style="height: 20px;"></div>
+        <div class="d-grid gap-3 mt-4">
+          <div class="skeleton" style="height: 64px; border-radius: 12px;" *ngFor="let i of [0,1,2,3]"></div>
+        </div>
       </div>
     </div>
 
-    <!-- Error -->
-    <div *ngIf="error" class="alert alert-danger text-center" role="alert">
-      {{ error }}
+    <!-- Error State -->
+    <div *ngIf="error" class="alert alert-danger rounded-3 text-center" role="alert">
+      <i class="fa-solid fa-circle-exclamation me-2"></i>{{ error }}
     </div>
 
     <!-- Question Card -->
-    <div *ngIf="!loading && !error && questions.length > 0" class="max-w-3xl mx-auto">
-      <!-- Progress Bar -->
-      <div class="mb-5">
-        <div class="d-flex justify-content-between mb-2">
-          <small class="text-muted">
-            السؤال {{ currentQuestionIndex + 1 }} من {{ questions.length }}
-          </small>
-          <small class="text-muted">{{ getProgress() | number: '1.0-0' }}%</small>
+    <div *ngIf="!loading && !error && questions.length > 0" class="max-w-2xl mx-auto">
+
+      <!-- Question Bubble Navigation -->
+      <div class="question-bubbles d-flex flex-wrap gap-2 mb-4 justify-content-center">
+        <button *ngFor="let q of questions; let i = index"
+                class="bubble"
+                [class.bubble--current]="i === currentQuestionIndex"
+                [class.bubble--answered]="isAnswered(i) && i !== currentQuestionIndex"
+                (click)="currentQuestionIndex = i"
+                [attr.aria-label]="'سؤال ' + (i + 1)">
+          {{ i + 1 }}
+        </button>
+      </div>
+
+      <!-- Main Question Card -->
+      <div class="question-card rounded-4 bg-white border p-4 p-md-5 mb-4 animate-fade-in"
+           [attr.key]="currentQuestionIndex">
+
+        <!-- Question Label -->
+        <div class="question-label mb-3">
+          <span class="badge-q" [ngClass]="isAcademic ? 'badge-q--primary' : 'badge-q--success'">
+            السؤال {{ currentQuestionIndex + 1 }}
+          </span>
         </div>
-        <div class="progress" style="height: 8px">
-          <div
-            class="progress-bar"
-            [ngClass]="{
-              'bg-primary': isAcademic,
-              'bg-success': !isAcademic
-            }"
-            [style.width.%]="getProgress()"
-          ></div>
+
+        <!-- Question Text -->
+        <h2 class="question-text mb-5" [attr.dir]="textDirection" [style.text-align]="textAlign">
+          {{ getCurrentQuestion().text }}
+        </h2>
+
+        <!-- Choices -->
+        <div class="choices-grid d-grid gap-3" [attr.dir]="textDirection">
+          <button *ngFor="let choice of getCurrentQuestion().choices; let ci = index"
+                  type="button"
+                  class="choice-btn"
+                  [class.choice-btn--selected-primary]="isChoiceSelected(choice.id) && isAcademic"
+                  [class.choice-btn--selected-success]="isChoiceSelected(choice.id) && !isAcademic"
+                  [style.text-align]="textAlign"
+                  (click)="selectChoice(choice.id)">
+            <span class="choice-letter">{{ ['أ','ب','ج','د'][ci] || ci + 1 }}</span>
+            <span class="flex-grow-1">{{ choice.text }}</span>
+            <i class="fa-solid fa-circle-check choice-check" *ngIf="isChoiceSelected(choice.id)"></i>
+          </button>
         </div>
       </div>
 
-      <!-- Question Card -->
-      <div class="card border-2">
-        <div class="card-body" [attr.dir]="textDirection">
-          <h2 class="h4 mb-4" [style.text-align]="textAlign">
-            {{ getCurrentQuestion().text }}
-          </h2>
-
-          <!-- Choices -->
-          <div class="d-grid gap-3">
-            <button
-              *ngFor="let choice of getCurrentQuestion().choices"
-              type="button"
-              class="btn p-3 rounded-3"
-              [ngClass]="{
-                'btn-primary text-white': isChoiceSelected(choice.id) && isAcademic,
-                'btn-success text-white': isChoiceSelected(choice.id) && !isAcademic,
-                'btn-outline-secondary': !isChoiceSelected(choice.id)
-              }"
-              [attr.dir]="textDirection"
-              [style.text-align]="textAlign"
-              (click)="selectChoice(choice.id)"
-            >
-              <div class="d-flex justify-content-between align-items-center">
-                <span>
-                  {{ choice.text }}
-                </span>
-              </div>
-            </button>
-          </div>
-
-          <!-- Navigation -->
-          <div class="d-flex gap-3 mt-4">
-            <button
-              class="btn btn-outline-secondary flex-fill"
-              [disabled]="currentQuestionIndex === 0"
-              (click)="goToPrevious()"
-            >
-              <i class="fas fa-chevron-right ms-2"></i> السابق
-            </button>
-            <button
-              class="btn flex-fill"
-              [ngClass]="{
-                'btn-primary': isAcademic,
-                'btn-success': !isAcademic
-              }"
-              (click)="goToNext()"
-            >
-              {{ currentQuestionIndex === questions.length - 1 ? 'إنهاء' : 'التالي' }}
-              <i class="fas fa-chevron-left me-2"></i>
-            </button>
-          </div>
-        </div>
+      <!-- Navigation Buttons -->
+      <div class="d-flex gap-3">
+        <button class="btn btn-outline-secondary flex-fill py-3 rounded-3 fw-semibold"
+                [disabled]="currentQuestionIndex === 0"
+                (click)="goToPrevious()">
+          <i class="fa-solid fa-chevron-right ms-2"></i>
+          السابق
+        </button>
+        <button class="btn flex-fill py-3 rounded-3 fw-bold"
+                [ngClass]="isAcademic ? 'btn-primary' : 'btn-success'"
+                (click)="goToNext()">
+          {{ currentQuestionIndex === questions.length - 1 ? 'إنهاء الاختبار' : 'التالي' }}
+          <i class="fa-solid" [ngClass]="currentQuestionIndex === questions.length - 1 ? 'fa-flag-checkered' : 'fa-chevron-left'" class="me-2"></i>
+        </button>
       </div>
     </div>
 
-    <!-- No questions -->
+    <!-- No Questions State -->
     <div *ngIf="!loading && !error && questions.length === 0" class="text-center py-5">
-      <p class="text-muted fs-4">لا توجد أسئلة لهذا الاختبار</p>
+      <div class="empty-icon mx-auto mb-4">
+        <i class="fa-solid fa-clipboard-question text-muted fs-2"></i>
+      </div>
+      <h3 class="h4 fw-bold text-dark mb-2">لا توجد أسئلة</h3>
+      <p class="text-muted">لا توجد أسئلة متاحة لهذا الاختبار.</p>
     </div>
+
   </div>
 </div>

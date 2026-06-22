@@ -1,14 +1,75 @@
-/* src/app/pages/evaluation/evaluation.component.css */
-/* التدرجات الخاصة بالأقسام */
-.section-bg-blue {
-  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-}
-.section-bg-purple {
-  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
-}
-.section-bg-green {
-  background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+/* src/app/pages/evaluation/evaluation.component.scss */
+
+/* Section gradient header classes used in evaluation results */
+.section-bg-blue   { background: linear-gradient(135deg, var(--obour-primary), var(--obour-primary-light)); }
+.section-bg-purple { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+.section-bg-green  { background: linear-gradient(135deg, #059669, #10b981); }
+
+/* Animate slide up */
+.animate-slide-up {
+  opacity: 0;
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+  @for $i from 0 through 6 {
+    &:nth-child(#{$i + 1}) {
+      animation-delay: #{$i * 0.1}s;
+    }
+  }
 }
 
-/* الأنماط المشتركة */
-@import "../home/home.component.scss";
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Card with shadow for evaluation section */
+.card-shadow {
+  background: var(--obour-surface);
+  border: 1px solid var(--obour-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+/* Card hover lift */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+/* Metric progress bars inside evaluation result cards */
+.progress {
+  background: #e2e8f0;
+  border-radius: 6px;
+}
+.progress-bar {
+  transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 6px;
+}
+
+/* Strength/Improvement bullet dots */
+.strength-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--bs-success);
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+.improvement-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--obour-primary);
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
+/* Specialty match rows */
+.match-row {
+  transition: background 0.2s ease;
+  border-radius: var(--radius-sm);
+  &:hover { background: var(--obour-primary-soft); }
+}

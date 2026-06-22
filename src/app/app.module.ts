@@ -22,6 +22,8 @@ import { CategoriesComponent } from './pages/evaluation/categories/categories.co
 import { QuizSelectionComponent } from './pages/evaluation/quiz-selection/quiz-selection.component';
 import { QuizTestComponent } from './pages/evaluation/quiz-test/quiz-test.component';
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
+import { EvaluationAboutComponent } from './pages/evaluation/evaluation-about/evaluation-about.component';
+import { BackgroundShapesComponent } from './shared/components/background-shapes/background-shapes.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,8 @@ import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard
     QuizSelectionComponent,
     QuizTestComponent,
     AdminDashboardComponent,
+    EvaluationAboutComponent,
+    BackgroundShapesComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,14 +1,245 @@
-/* You can add global styles to this file, and also import other style files */
-/* استيراد أنماط Bootstrap */
-@import "~bootstrap/dist/css/bootstrap.min.css";
+/* ==========================================================================
+   OBOUR PLATFORM - GLOBAL DESIGN SYSTEM
+   ========================================================================== */
 
-/* تعيين الخط الافتراضي */
-* {
-  font-family: "Cairo", sans-serif;
+/* 1. BOOTSTRAP OVERRIDES (Must be declared before importing Bootstrap) */
+$primary: #0f4c81;
+$secondary: #ff7a59;
+$success: #10b981;
+$danger: #ef4444;
+$warning: #f59e0b;
+$info: #3b82f6;
+$light: #f8fafc;
+$dark: #0f172a;
+
+$body-bg: #f4f7f9;
+$body-color: #334155;
+$text-muted: #64748b;
+
+$font-family-base: 'Cairo', system-ui, -apple-system, sans-serif;
+$border-radius: 12px;
+$border-radius-lg: 16px;
+$border-radius-sm: 8px;
+
+/* Import Bootstrap SCSS */
+@import "bootstrap/scss/bootstrap";
+
+/* ==========================================================================
+   2. GLOBAL SETUP & CSS VARIABLES
+   ========================================================================== */
+
+:root {
+  --obour-primary: #0f4c81;
+  --obour-primary-light: #2c6ba5;
+  --obour-primary-soft: rgba(15, 76, 129, 0.08);
+  --obour-secondary: #ff7a59;
+  --obour-bg: #f4f7f9;
+  --obour-surface: #ffffff;
+  --obour-text-main: #334155;
+  --obour-text-light: #64748b;
+  --obour-border: #e2e8f0;
+  
+  --shadow-sm: 0 1px 3px 0 rgba(0,0,0,0.05), 0 1px 2px 0 rgba(0,0,0,0.03);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.03);
+  --shadow-glow: 0 0 15px rgba(15, 76, 129, 0.15);
+  
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  
+  --transition-fast: 0.15s ease-in-out;
+  --transition-normal: 0.3s ease-in-out;
 }
 
-/* دعم الاتجاه من اليمين لليسار */
 body {
   direction: rtl;
   text-align: right;
+  background-color: var(--obour-bg);
+  color: var(--obour-text-main);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================================================
+   3. MODERN COMPONENTS
+   ========================================================================== */
+
+/* Modern Cards */
+.card-modern {
+  background: var(--obour-surface);
+  border: 1px solid var(--obour-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-normal);
+  overflow: hidden;
+
+  &:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+}
+
+/* Modern Inputs */
+.input-modern {
+  border: 1.5px solid var(--obour-border);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  background-color: #f8fafc;
+  transition: var(--transition-fast);
+  font-size: 1rem;
+  width: 100%;
+  color: var(--obour-text-main);
+
+  &:hover {
+    border-color: #cbd5e1;
+  }
+
+  &:focus, &:focus-visible {
+    outline: none;
+    border-color: var(--obour-primary);
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px var(--obour-primary-soft);
+  }
+
+  &.is-invalid {
+    border-color: var(--bs-danger);
+    background-color: #fffafa;
+    &:focus {
+      box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+    }
+  }
+}
+
+/* Form Labels */
+.form-label-modern {
+  font-weight: 600;
+  color: var(--obour-text-main);
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  display: block;
+}
+
+.error-text-modern {
+  color: var(--bs-danger);
+  font-size: 0.85rem;
+  margin-top: 0.35rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  animation: slideDown 0.2s ease-out;
+}
+
+/* ==========================================================================
+   4. ANIMATIONS & UTILITIES
+   ========================================================================== */
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fadeIn var(--transition-normal);
+}
+
+/* Skeleton Loader */
+.skeleton {
+  background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: var(--radius-sm);
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Focus Visible */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+:focus-visible {
+  outline: 2px solid var(--obour-primary);
+  outline-offset: 2px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* ==========================================================================
+   5. GLOBAL UTILITIES (Shared across all pages)
+   ========================================================================== */
+
+/* Hover Lift — used across all page cards */
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg) !important;
+  }
+}
+
+/* Text gradient using brand colors */
+.text-gradient-primary {
+  background: linear-gradient(135deg, var(--obour-primary), var(--obour-primary-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Background soft tints */
+.bg-primary-soft { background-color: var(--obour-primary-soft) !important; }
+.bg-success-soft { background-color: rgba(16, 185, 129, 0.08) !important; }
+.bg-warning-soft { background-color: rgba(245, 158, 11, 0.08) !important; }
+.bg-danger-soft  { background-color: rgba(239, 68, 68, 0.08) !important; }
+
+/* Shared utility padding py-6 */
+.py-6 {
+  padding-top: 3.5rem !important;
+  padding-bottom: 3.5rem !important;
+}
+
+/* Width constraints */
+.max-w-xl  { max-width: 36rem; }
+.max-w-2xl { max-width: 42rem; }
+.max-w-3xl { max-width: 48rem; }
+
+/* Text utilities */
+.text-white-75 { color: rgba(255, 255, 255, 0.75); }
+
+/* Shared z-index helpers */
+.z-index-1  { z-index: 1; }
+.z-index-10 { z-index: 10; }
+
+/* Smooth scroll-animate (shared IntersectionObserver pattern) */
+.scroll-animate {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

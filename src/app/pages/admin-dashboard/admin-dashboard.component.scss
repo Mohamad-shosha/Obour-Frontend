@@ -1,15 +1,9 @@
 /* src/app/pages/admin-dashboard/admin-dashboard.component.scss */
 
-// --- المتغيرات ---
-$primary: #1e40af;
-$primary-light: #3b82f6;
-$success: #059669;
-$success-light: #10b981;
-$sidebar-bg: #ffffff;
 $sidebar-width-open: 300px;
 $sidebar-width-closed: 72px;
 
-// --- خلفية التعتيم ---
+// --- Overlay ---
 .sidebar-overlay {
   position: fixed;
   top: 0;
@@ -18,47 +12,45 @@ $sidebar-width-closed: 72px;
   height: 100%;
   background: rgba(0, 0, 0, 0.4);
   z-index: 1040;
-  display: block;
+  backdrop-filter: blur(2px);
 }
 
-// --- الهيكل العام ---
+// --- Layout ---
 .admin-layout {
   display: flex;
   min-height: 100vh;
-  background-color: #f8fafc;
+  background-color: var(--obour-bg);
   position: relative;
 }
 
-// --- المحتوى الرئيسي ---
 .main-content {
   flex: 1;
   transition: all 0.3s ease;
   min-height: 100vh;
   width: calc(100% - #{$sidebar-width-closed});
   margin-right: $sidebar-width-closed;
-
-  .sidebar-open ~ & {
-    width: calc(100% - #{$sidebar-width-open});
-    margin-right: $sidebar-width-open;
-  }
 }
 
-// --- كارت الشريط الجانبي (على اليمين) ---
+// ==========================================================================
+// Sidebar
+// ==========================================================================
 .sidebar-card {
-  background: $sidebar-bg;
-  border-left: 1px solid #e2e8f0;
-  transition: all 0.3s ease;
+  background: var(--obour-surface);
+  border-left: 1px solid var(--obour-border);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   height: 100vh;
   position: fixed;
   top: 0;
   right: 0;
   z-index: 1050;
-  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1);
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.06);
   width: $sidebar-width-closed;
+  overflow: hidden;
 
   &.sidebar-open {
     width: $sidebar-width-open;
   }
+
   &.sidebar-closed {
     .logo-text,
     .nav-text,
@@ -69,6 +61,7 @@ $sidebar-width-closed: 72px;
       padding: 0 !important;
       margin: 0 !important;
       overflow: hidden;
+      transition: all 0.2s ease;
     }
     .nav-link {
       justify-content: center;
@@ -77,26 +70,28 @@ $sidebar-width-closed: 72px;
   }
 }
 
-// --- رأس الكارت ---
 .sidebar-header {
-  background: linear-gradient(135deg, $primary 0%, #1e3a8a 100%);
+  background: linear-gradient(135deg, var(--obour-primary) 0%, #1e3a8a 100%);
   color: white;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  height: 60px;
-  flex-direction: row-reverse;
+  height: 64px;
   display: flex;
-  justify-content: space-between; // التوزيع بين hamburger و logo
-  align-items: center; // عموديًا في المنتصف
-  padding: 0 12px; // مسافة جانبية
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 14px;
+  flex-direction: row-reverse;
 
   .hamburger {
     display: flex;
-    align-items: center; // محاذاة منتصف البوكس
+    align-items: center;
     justify-content: center;
     width: 36px;
     height: 36px;
     cursor: pointer;
     padding: 6px;
+    border-radius: 6px;
+    transition: background 0.2s ease;
+
     .hamburger-inner,
     .hamburger-inner::before,
     .hamburger-inner::after {
@@ -104,12 +99,9 @@ $sidebar-width-closed: 72px;
       width: 18px;
       height: 2px;
     }
+
     &:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 6px;
-    }
-    .hamburger-box {
-      text-align: center;
+      background: rgba(255, 255, 255, 0.15);
     }
   }
 
@@ -118,193 +110,177 @@ $sidebar-width-closed: 72px;
       width: 36px;
       height: 36px;
       background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
     }
-    .logo-text {
-      font-size: 1.1rem;
-    }
+    .logo-text { font-size: 1.05rem; font-weight: 700; }
   }
 }
 
-// --- محتوى الشريط الجانبي ---
 .sidebar-content {
-  height: calc(100vh - 60px);
+  height: calc(100vh - 64px);
   overflow-y: auto;
   padding-bottom: 2rem;
-
-  .user-profile {
-    transition: all 0.3s ease;
-  }
-
-  .nav-link {
-    color: #475569;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    position: relative;
-
-    &:hover {
-      background: rgba(30, 64, 175, 0.08);
-      color: $primary;
-      transform: translateX(-4px);
-    }
-
-    &.active {
-      background: rgba(30, 64, 175, 0.12);
-      color: $primary;
-      font-weight: 600;
-      box-shadow: inset -4px 0 0 $primary;
-    }
-
-    i {
-      width: 24px;
-      text-align: center;
-      color: #64748b;
-    }
-
-    &:hover i,
-    &.active i {
-      color: $primary;
-    }
-  }
 }
 
-// --- الجداول ---
+.user-profile {
+  transition: all 0.3s ease;
+  background: var(--obour-primary-soft);
+  border-radius: var(--radius-md);
+}
+
+// Nav Links
+.nav-link {
+  color: var(--obour-text-main);
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+
+  &:hover {
+    background: var(--obour-primary-soft);
+    color: var(--obour-primary);
+  }
+
+  &.active {
+    background: var(--obour-primary-soft);
+    color: var(--obour-primary);
+    box-shadow: inset -4px 0 0 var(--obour-primary);
+  }
+
+  i {
+    width: 24px;
+    text-align: center;
+    color: var(--obour-text-light);
+    transition: color 0.2s ease;
+  }
+
+  &:hover i, &.active i { color: var(--obour-primary); }
+}
+
+// ==========================================================================
+// Tables
+// ==========================================================================
 .table-container {
-  background: white;
-  border-radius: 12px;
-  padding: 1.2rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  max-height: 600px; // ارتفاع الجدول
-  overflow: auto; // يسمح بالتمرير أفقي ورأسي
+  background: var(--obour-surface);
+  border-radius: var(--radius-lg);
+  padding: 0;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--obour-border);
+  overflow: hidden;
+  max-height: 65vh;
+  overflow-y: auto;
 }
 
 .table {
   width: 100%;
-  min-width: 800px;
+  min-width: 700px;
+  margin-bottom: 0;
 
   thead th {
-    background: $primary;
+    background: var(--obour-primary);
     color: white;
-    font-weight: 600;
-    padding: 1rem;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 1rem 1.25rem;
     position: sticky;
     top: 0;
+    z-index: 10;
+    border: none;
+    white-space: nowrap;
   }
 
   tbody td {
-    padding: 1rem;
-    white-space: normal; // السماح بالكسور
-    word-break: break-word; // تقطيع الكلمات الطويلة
-    max-width: 250px; // الحد الأقصى للعرض لتجنب خروج النص من الجدول
-
-    // تطبيق على آخر عمودين إذا حبيت تتحكم فيهم بشكل مختلف
-    &:nth-last-child(-n + 2) {
-      white-space: normal;
-      word-break: break-word;
-    }
-
-    &:not(:nth-last-child(-n + 2)) {
-      white-space: nowrap;
-    }
-
-    // لتنسيق الـ badges داخل الأعمدة
-    span.badge {
-      display: inline-block;
-      max-width: 100%;
-      white-space: normal;
-      word-break: break-word;
-    }
+    padding: 0.9rem 1.25rem;
+    vertical-align: middle;
+    border-color: var(--obour-border);
+    font-size: 0.9rem;
+    color: var(--obour-text-main);
+    max-width: 250px;
+    word-break: break-word;
   }
 
-  tbody tr:hover {
-    background-color: rgba(59, 130, 246, 0.03);
+  tbody tr {
+    transition: background 0.15s ease;
+    &:hover { background-color: var(--obour-primary-soft); }
+  }
+
+  .btn-sm {
+    font-size: 0.8rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    font-weight: 600;
+    white-space: nowrap;
   }
 }
 
-// --- البدجات ---
+// ==========================================================================
+// Badges
+// ==========================================================================
 .badge {
+  font-weight: 700;
+  font-size: 0.78rem;
+  padding: 0.4em 0.8em;
+
   &.bg-primary-role {
-    background: linear-gradient(135deg, $primary-light, #2563eb);
+    background: var(--obour-primary);
     color: white;
   }
-  &.bg-success-role {
-    background: linear-gradient(135deg, $success-light, $success);
-    color: white;
-  }
+  &.bg-success-role,
   &.bg-success {
-    background: linear-gradient(135deg, $success-light, $success);
+    background: #059669;
     color: white;
   }
   &.bg-warning {
-    background: linear-gradient(135deg, #f59e0b, #d97706);
+    background: #d97706;
     color: white;
   }
   &.bg-danger {
-    background: linear-gradient(135deg, #ef4444, #dc2626);
+    background: #dc2626;
     color: white;
   }
   &.bg-secondary {
-    background: linear-gradient(135deg, #64748b, #475569);
+    background: #475569;
+    color: white;
+  }
+  &.bg-info {
+    background: #0284c7;
+    color: white;
+  }
+  &.bg-primary {
+    background: var(--obour-primary);
     color: white;
   }
 }
 
-// --- الأزرار ---
-.btn-primary {
-  background: linear-gradient(135deg, $primary-light, #2563eb);
-  border: none;
-  font-weight: 600;
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-  }
-}
-
-.btn-outline-info {
-  border: 2px solid $primary-light;
-  color: $primary-light;
-  font-weight: 600;
-  &:hover {
-    background: rgba(59, 130, 246, 0.1);
-  }
-}
-
-// --- الحركات ---
+// ==========================================================================
+// Animations
+// ==========================================================================
 .fade-in-section {
-  animation: fadeInUp 0.5s ease forwards;
+  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
+// ==========================================================================
+// Responsive
+// ==========================================================================
 @media (max-width: 768px) {
-  .table-container {
-    padding: 0.8rem;
-  }
-
+  .table-container { padding: 0; }
   .table {
-    min-width: 600px;
-    font-size: 0.875rem;
-
-    tbody td {
-      padding: 0.75rem;
-      .btn {
-        font-size: 0.75rem;
-        padding: 0.25rem 0.5rem;
-      }
-    }
+    min-width: 560px;
+    font-size: 0.8rem;
+    tbody td { padding: 0.6rem 0.85rem; }
   }
 
   .sidebar-card {
     width: $sidebar-width-open !important;
     transform: translateX(100%);
+    transition: transform 0.3s ease;
+
     &.sidebar-open {
       transform: translateX(0);
     }
@@ -313,12 +289,5 @@ $sidebar-width-closed: 72px;
   .main-content {
     margin-right: 0;
     width: 100%;
-  }
-
-  .btn-primary.btn-sm {
-    position: fixed;
-    top: 15px;
-    right: 15px;
-    z-index: 1045;
   }
 }

@@ -1,194 +1,160 @@
 /* src/app/pages/evaluation/evaluation-about/evaluation-about.component.scss */
 
-// --- المتغيرات ---
-$primary-dark: #1e40af;
-$success: #059669;
-$color-primary: #3b82f6;
-$color-primary-light: #60a5fa;
-$secondary-dark: #374151;
+.max-w-2xl { max-width: 42rem; }
+.max-w-3xl { max-width: 48rem; }
+.py-6 { padding-top: 3.5rem !important; padding-bottom: 3.5rem !important; }
+.text-white-75 { color: rgba(255, 255, 255, 0.75); }
 
-// --- Scroll Animation ---
+// Scroll Animation
 .scroll-animate {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .scroll-animate.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-// --- البانر ---
+// ==========================================================================
+// Hero Banner
+// ==========================================================================
 .hero-section {
-  background: linear-gradient(135deg, $primary-dark 0%, $color-primary 100%);
-  position: relative;
+  background: linear-gradient(135deg, var(--obour-primary) 0%, var(--obour-primary-light) 100%);
+  border-radius: var(--radius-xl);
+  margin-bottom: 3rem;
+  box-shadow: 0 10px 30px rgba(15, 76, 129, 0.25);
   overflow: hidden;
-  border-radius: 24px;
-  margin-bottom: 3.5rem;
-  box-shadow: 0 10px 30px rgba(30, 64, 175, 0.25);
+  position: relative;
 
   .overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.12);
     z-index: 1;
   }
-
-  .container {
-    position: relative;
-    z-index: 2;
-  }
+  .container { position: relative; z-index: 2; }
 
   .badge-support {
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     color: white;
     border-radius: 50px;
-    span {
-      background: linear-gradient(135deg, $color-primary-light, $color-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      font-size: 1.1rem;
-      color: transparent;
-    }
+    font-weight: 700;
+    span { color: white; }
   }
 }
 
-// --- بطاقات المزايا ---
+// ==========================================================================
+// Feature Cards
+// ==========================================================================
 .feature-card {
-  background: #fff;
-  border-radius: 16px;
+  background: var(--obour-surface);
+  border: 1px solid var(--obour-border);
+  border-radius: var(--radius-lg);
   padding: 2rem;
   height: 100%;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  transition: all 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 
   &:hover {
     transform: translateY(-8px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+    box-shadow: var(--shadow-lg);
   }
 
   .icon-box {
-    width: 72px;
-    height: 72px;
-    border-radius: 18px;
+    width: 68px;
+    height: 68px;
+    border-radius: var(--radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto 1.5rem;
-    background: rgba($primary-dark, 0.1);
-    color: $primary-dark;
+
+    // Default: primary
+    background: var(--obour-primary-soft);
+    color: var(--obour-primary);
 
     &.bg-success {
-      background: rgba($success, 0.1);
-      color: $success;
+      background: rgba(16, 185, 129, 0.1);
+      color: #059669;
     }
     &.bg-info {
-      background: rgba($color-primary, 0.1);
-      color: $color-primary;
+      background: rgba(59, 130, 246, 0.1);
+      color: #2563eb;
+    }
+    &.bg-warning {
+      background: rgba(245, 158, 11, 0.1);
+      color: #d97706;
+    }
+    &.bg-danger {
+      background: rgba(239, 68, 68, 0.1);
+      color: #dc2626;
     }
 
-    i {
-      font-size: 1.8rem;
-    }
+    i { font-size: 1.8rem; }
   }
 
-  h3 {
-    transition: color 0.3s ease;
-  }
-  &:hover h3 {
-    color: $primary-dark;
-  }
+  &:hover h3 { color: var(--obour-primary); }
+  h3 { transition: color 0.3s ease; }
 }
 
-// --- قسم الفوائد ---
+// ==========================================================================
+// Benefits Section
+// ==========================================================================
 .benefits-section {
-  background: #f0fdf4;
-  border: 2px solid #bbf7d0;
-  border-radius: 20px;
+  background: rgba(16, 185, 129, 0.05);
+  border: 2px solid rgba(16, 185, 129, 0.2);
+  border-radius: var(--radius-lg);
   padding: 2.5rem;
-  box-shadow: 0 6px 20px rgba(5, 150, 105, 0.1);
-  position: relative;
-  z-index: 1;
 }
 
 .benefits-list {
   list-style: none;
   padding: 0;
   margin: 0;
-  display: block;
 
   li {
     display: flex;
     align-items: flex-start;
-    margin-bottom: 1.2rem;
-    padding: 0.6rem 0;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem 0;
     transition: transform 0.2s ease;
-    &:hover {
-      transform: translateX(8px);
-    }
-    i {
-      font-size: 1.1rem;
-      flex-shrink: 0;
-      margin-top: 0.2rem;
-    }
-    span {
-      font-weight: 500;
-      color: #065f46;
-    }
+    &:hover { transform: translateX(-6px); } // RTL
+    i { flex-shrink: 0; margin-top: 0.15rem; }
+    span { font-weight: 600; color: var(--obour-text-main); }
   }
 }
 
-// --- قسم الحث على البدء ---
-.cta-section {
-  margin-top: 2rem;
-}
-
+// ==========================================================================
+// CTA
+// ==========================================================================
 .call-to-action {
-  background: linear-gradient(135deg, $primary-dark 0%, $secondary-dark 100%);
-  max-width: 800px;
-  margin: 0 auto;
-  box-shadow: 0 10px 30px rgba(30, 64, 175, 0.35);
+  background: linear-gradient(135deg, var(--obour-primary) 0%, #1e3a8a 100%);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 10px 30px rgba(15, 76, 129, 0.3);
 }
 
 .start-btn {
-  transition: all 0.3s ease;
   font-weight: 700;
   letter-spacing: 0.5px;
   background: white;
-  color: $primary-dark;
+  color: var(--obour-primary);
+  transition: all 0.3s ease;
 
   &:hover {
-    transform: scale(1.03);
-    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.4);
-    background: rgba(255, 255, 255, 0.95);
-    color: $primary-dark;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
   }
 }
 
-// --- نصوص مساعدة ---
-.text-white-75 {
-  color: rgba(255, 255, 255, 0.75);
-}
-
-// --- Responsive ---
+// ==========================================================================
+// Responsive
+// ==========================================================================
 @media (max-width: 768px) {
-  .hero-section {
-    padding: 2rem 1rem;
-  }
-  .feature-card {
-    padding: 1.5rem;
-  }
-  .benefits-section {
-    padding: 1.8rem;
-  }
-  .call-to-action {
-    padding: 2rem;
-  }
-  .start-btn {
-    width: 100%;
-  }
+  .hero-section { border-radius: var(--radius-lg); }
+  .start-btn { width: 100%; }
 }

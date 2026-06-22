@@ -177,6 +177,11 @@ export class QuizTestComponent implements OnInit {
     return this.selectedChoices[this.getCurrentQuestion().id] === choiceId;
   }
 
+  isAnswered(questionIndex: number): boolean {
+    const q = this.questions[questionIndex];
+    return q != null && this.selectedChoices[q.id] != null;
+  }
+
   goToPrevious(): void {
     if (this.currentQuestionIndex > 0) this.currentQuestionIndex--;
   }

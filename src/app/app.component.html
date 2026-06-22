@@ -1,12 +1,12 @@
-<div class="min-vh-100 d-flex flex-column bg-light">
-  <!-- نعرض Header فقط إذا hideHeaderFooter = false -->
-  <app-header *ngIf="!hideHeaderFooter"></app-header>
+<div class="min-vh-100 d-flex flex-column global-wrapper">
+  <!-- Dynamic Animated Background -->
+  <app-background-shapes></app-background-shapes>
 
-  <!-- محتوى الصفحة الديناميكي -->
-  <main class="flex-grow-1">
+  <app-header *ngIf="!hideHeader" class="z-index-10 position-relative"></app-header>
+
+  <main class="flex-grow-1 position-relative z-index-1">
     <router-outlet></router-outlet>
   </main>
 
-  <!-- نعرض Footer فقط إذا hideHeaderFooter = false -->
-  <app-footer *ngIf="!hideHeaderFooter"></app-footer>
+  <app-footer *ngIf="!hideFooter" class="z-index-10 position-relative"></app-footer>
 </div>

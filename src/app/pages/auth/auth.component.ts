@@ -64,14 +64,6 @@ export class AuthComponent implements OnInit {
     setTimeout(() => (this.cardAnimation = true), 50);
   }
 
-  onFocus(event: any) {
-    event.target.closest('.glow-border').classList.add('active');
-  }
-
-  onBlur(event: any) {
-    event.target.closest('.glow-border').classList.remove('active');
-  }
-
   onRoleSelect(role: 'TEACHER' | 'STUDENT'): void {
     this.selectedRole = role;
     this.registerForm.patchValue({ role: role });

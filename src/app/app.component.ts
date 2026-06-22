@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { filter, map, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -7,16 +8,24 @@ import { Router, NavigationEnd } from '@angular/router';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  hideHeaderFooter = false;
+  hideHeader = false;
+  hideFooter = false;
 
-  constructor(private router: Router) {
-    // متابعة تغيير المسار
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        // نخفي Header/Footer للصفحة الخاصة بالـ Admin Dashboard فقط
-        this.hideHeaderFooter =
-          event.urlAfterRedirects.includes('admin/dashboard');
-      }
-    });
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+    this.router.events
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        map(() => this.activatedRoute),
+        map((route) => {
+          while (route.firstChild) route = route.firstChild;
+          return route;
+        }),
+        filter((route) => route.outlet === 'primary'),
+        mergeMap((route) => route.data)
+      )
+      .subscribe((data) => {
+        this.hideHeader = data['hideHeader'] === true;
+        this.hideFooter = data['hideFooter'] === true;
+      });
   }
 }

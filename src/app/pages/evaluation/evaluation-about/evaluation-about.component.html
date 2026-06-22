@@ -1,119 +1,105 @@
 <!-- src/app/pages/evaluation/evaluation-about/evaluation-about.component.html -->
 <div class="py-5 bg-light min-vh-100">
   <div class="container">
-    <!-- البانر التمهيدي -->
-    <section
-      class="hero-section text-white text-center position-relative py-5 scroll-animate"
-    >
+
+    <!-- Hero Banner -->
+    <section class="hero-section text-white text-center py-5 scroll-animate">
       <div class="overlay"></div>
-      <div class="container position-relative">
-        <div
-          class="d-inline-block mb-3 px-4 py-2 badge-support rounded-pill scroll-animate"
-        >
-          <span class="small fw-bold">بدعم من هيئة تقويم التعليم والتدريب</span>
+      <div class="container position-relative py-4">
+        <div class="badge-support d-inline-block mb-3 px-4 py-2 scroll-animate">
+          <span class="small fw-bold">نظام تقييم ذكي وشامل</span>
         </div>
         <h1 class="display-4 fw-bold mb-3 scroll-animate">
           تقييم الجاهزية للتدريب الميداني
         </h1>
-        <p class="fs-5 text-white-75 max-w-3xl mx-auto scroll-animate">
+        <p class="fs-5 text-white-75 max-w-3xl mx-auto scroll-animate mb-0">
           خطوتك الأولى نحو التميز المهني وبناء مستقبل وظيفي ناجح
         </p>
       </div>
     </section>
 
-    <!-- قسم: لماذا هذا التقييم؟ -->
+    <!-- Why This Evaluation -->
     <section class="py-6 scroll-animate">
-      <div class="text-center mb-5 scroll-animate">
+      <div class="text-center mb-5 max-w-2xl mx-auto scroll-animate">
         <h2 class="display-6 fw-bold text-dark mb-3">
-          <i class="fa-solid fa-circle-question text-primary me-2"></i>
           لماذا يجب أن تبدأ التقييم الآن؟
         </h2>
-        <p class="text-muted fs-5 max-w-2xl mx-auto">
-          هذا التقييم ليس مجرد اختبار — بل خريطة طريق لمستقبلك المهني
-        </p>
+        <p class="text-muted fs-5">هذا التقييم ليس مجرد اختبار — بل خريطة طريق لمستقبلك المهني</p>
       </div>
       <div class="row g-4">
-        <div
-          class="col-12 col-md-6 col-lg-4 scroll-animate"
-          *ngFor="let feature of whyEvaluate; let i = index"
-          [style.transition-delay]="i * 0.1 + 's'"
-        >
-          <div class="feature-card h-100">
-            <div [class]="'icon-box ' + feature.bgClass">
-              <i class="fa-solid {{ feature.icon }} text-white"></i>
+        <div class="col-12 col-md-6 col-lg-4 scroll-animate"
+             *ngFor="let feature of whyEvaluate; let i = index"
+             [style.transition-delay]="i * 0.1 + 's'">
+          <div class="feature-card">
+            <div [class]="'icon-box ' + feature.bgClass + ' text-center'">
+              <i [class]="'fa-solid fa-' + feature.icon"></i>
             </div>
-            <h3 class="h5 fw-bold text-dark mb-2">{{ feature.title }}</h3>
-            <p class="text-muted">{{ feature.description }}</p>
+            <h3 class="h5 fw-bold text-dark mb-2 text-center">{{ feature.title }}</h3>
+            <p class="text-muted text-center mb-0">{{ feature.description }}</p>
           </div>
         </div>
       </div>
     </section>
-    <!-- قسم: فوائد التقييم -->
-    <section class="mb-6 benefits-section scroll-animate">
-      <div class="text-center mb-5">
-        <h2 class="display-6 fw-bold text-success mb-3">
-          <i class="fa-solid fa-gift text-success me-2"></i>
-          ما الذي ستكسبه من هذا التقييم؟
-        </h2>
+
+    <!-- Benefits -->
+    <section class="mb-6 scroll-animate">
+      <div class="text-center mb-4 scroll-animate">
+        <h2 class="display-6 fw-bold text-dark mb-3">ما الذي ستكسبه من هذا التقييم؟</h2>
+        <p class="text-muted fs-5">فوائد حقيقية تنعكس على مسارك الأكاديمي والمهني</p>
       </div>
-      <div class="row g-4">
-        <!-- القوائم كما هي -->
-        <div class="col-12 col-md-6">
-          <ul class="benefits-list scroll-animate">
-            <li>
-              <i class="fa-solid fa-circle-check text-success me-2"></i>
-              <span>كشف نقاط القوة والضعف بدقة عالية</span>
-            </li>
-            <li>
-              <i class="fa-solid fa-circle-check text-success me-2"></i>
-              <span>خريطة طريق شخصية لتطوير مهاراتك</span>
-            </li>
-            <li>
-              <i class="fa-solid fa-circle-check text-success me-2"></i>
-              <span>فرص تدريبية متوافقة مع ملفك الشخصي</span>
-            </li>
-          </ul>
-        </div>
-        <div class="col-12 col-md-6">
-          <ul class="benefits-list scroll-animate">
-            <li>
-              <i class="fa-solid fa-circle-check text-success me-2"></i>
-              <span>تقرير شامل يُعتمد في قبول التدريب الميداني</span>
-            </li>
-            <li>
-              <i class="fa-solid fa-circle-check text-success me-2"></i>
-              <span>دعم اتخاذ القرار المهني المستقبلي</span>
-            </li>
-            <li>
-              <i class="fa-solid fa-circle-check text-success me-2"></i>
-              <span>التوافق مع معايير جودة التعليم الوطني</span>
-            </li>
-          </ul>
+      <div class="benefits-section">
+        <div class="row g-4">
+          <div class="col-12 col-md-6">
+            <ul class="benefits-list scroll-animate">
+              <li>
+                <i class="fa-solid fa-circle-check text-success fs-5"></i>
+                <span>كشف نقاط القوة والضعف بدقة عالية</span>
+              </li>
+              <li>
+                <i class="fa-solid fa-circle-check text-success fs-5"></i>
+                <span>خريطة طريق شخصية لتطوير مهاراتك</span>
+              </li>
+              <li>
+                <i class="fa-solid fa-circle-check text-success fs-5"></i>
+                <span>فرص تدريبية متوافقة مع ملفك الشخصي</span>
+              </li>
+            </ul>
+          </div>
+          <div class="col-12 col-md-6">
+            <ul class="benefits-list scroll-animate">
+              <li>
+                <i class="fa-solid fa-circle-check text-success fs-5"></i>
+                <span>تقرير شامل يُعتمد في قبول التدريب الميداني</span>
+              </li>
+              <li>
+                <i class="fa-solid fa-circle-check text-success fs-5"></i>
+                <span>دعم اتخاذ القرار المهني المستقبلي</span>
+              </li>
+              <li>
+                <i class="fa-solid fa-circle-check text-success fs-5"></i>
+                <span>التوافق مع معايير جودة التعليم الوطني</span>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- قسم الحث على البدء -->
-    <section class="text-center cta-section py-6 scroll-animate">
-      <div
-        class="call-to-action rounded-4 p-5 mx-auto"
-        style="max-width: 800px"
-      >
-        <h2 class="display-6 fw-bold mb-3 scroll-animate">
+    <!-- CTA -->
+    <section class="text-center mb-5 scroll-animate">
+      <div class="call-to-action p-5 mx-auto" style="max-width: 800px">
+        <h2 class="display-6 fw-bold text-white mb-3 scroll-animate">
           هل أنت مستعد لخطوتك التالية؟
         </h2>
         <p class="fs-5 text-white-75 mb-4 max-w-2xl mx-auto scroll-animate">
-          لا تؤجل مستقبلك. خذ 20 دقيقة الآن لتقييم جاهزيتك، وابدأ رحلتك نحو
-          التميز المهني.
+          لا تؤجل مستقبلك. خذ 20 دقيقة الآن لتقييم جاهزيتك، وابدأ رحلتك نحو التميز المهني.
         </p>
-        <button
-          class="btn btn-light btn-lg fw-bold px-5 py-3 rounded-pill shadow-lg start-btn scroll-animate"
-          (click)="startEvaluation()"
-        >
+        <button class="btn btn-light btn-lg fw-bold px-5 py-3 rounded-pill shadow-lg start-btn scroll-animate" (click)="startEvaluation()">
           <i class="fa-solid fa-play me-2"></i>
           ابدأ التقييم الآن
         </button>
       </div>
     </section>
+
   </div>
 </div>
