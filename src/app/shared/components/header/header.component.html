@@ -1,4 +1,4 @@
-<header class="main-header shadow-sm sticky-top bg-white animate-header">
+<header class="main-header sticky-top animate-header">
   <div class="container py-3 d-flex align-items-center">
     <!-- Logo (يسار) -->
     <div class="d-flex align-items-center gap-3 logo-area" (click)="onNavigate('home')" role="button" aria-label="الصفحة الرئيسية">
@@ -30,8 +30,17 @@
       </div>
     </nav>
 
-    <!-- User Area أو أزرار الضيوف (اليمين - يظهر فقط على الشاشات المتوسطة فأعلى) -->
+    <!-- User Area or Guest Buttons -->
     <div class="d-none d-md-flex align-items-center gap-3 fade-in">
+      <!-- Theme Toggle -->
+      <button
+        class="theme-toggle-btn"
+        (click)="toggleTheme()"
+        [attr.aria-label]="(isDark$ | async) ? 'تبديل إلى الوضع الفاتح' : 'تبديل إلى الوضع المظلم'"
+        [title]="(isDark$ | async) ? 'الوضع الفاتح' : 'الوضع المظلم'"
+      >
+        <i class="fa-solid" [class.fa-sun]="isDark$ | async" [class.fa-moon]="!(isDark$ | async)"></i>
+      </button>
       <div class="vr"></div>
       <ng-container *ngIf="user; else guestButtons">
         <div class="text-end">
@@ -76,7 +85,7 @@
     </button>
   </div>
 
-  <!-- Mobile Menu (يظهر فقط على الشاشات الصغيرة عند فتح القائمة) -->
+  <!-- Mobile Menu -->
   <div *ngIf="isMenuOpen" class="mobile-menu mt-3 p-3 border-top slide-down">
     <button
       *ngFor="let item of menuItems"
@@ -85,6 +94,12 @@
       [class.active]="currentPage === item.id"
     >
       <i [class]="item.icon"></i> {{ item.label }}
+    </button>
+
+    <!-- Theme Toggle (Mobile) -->
+    <button class="mobile-link theme-toggle-mobile" (click)="toggleTheme()">
+      <i class="fa-solid" [class.fa-sun]="isDark$ | async" [class.fa-moon]="!(isDark$ | async)"></i>
+      {{ (isDark$ | async) ? 'الوضع الفاتح' : 'الوضع المظلم' }}
     </button>
 
     <hr />

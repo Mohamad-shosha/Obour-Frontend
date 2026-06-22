@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { ThemeService } from 'src/app/services/theme.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -15,7 +16,17 @@ export class HeaderComponent implements OnInit {
   user: any = null;
   menuItems: { id: string; label: string; icon: string }[] = [];
 
-  constructor(private router: Router, private authService: AuthService) {}
+  isDark$ = this.themeService.isDark$;
+
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    public themeService: ThemeService
+  ) {}
+
+  toggleTheme(): void {
+    this.themeService.toggleTheme();
+  }
 
   ngOnInit(): void {
     this.updateUserState();

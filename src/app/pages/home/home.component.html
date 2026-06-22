@@ -1,196 +1,249 @@
 <!-- src/app/pages/home/home.component.html -->
-<div class="bg-light min-vh-100 overflow-hidden">
-  
-  <!-- ================= Hero Section ================= -->
-  <section class="hero-section text-center position-relative scroll-animate py-5 py-lg-6">
-    <!-- Abstract Background -->
-    <div class="hero-bg-shapes">
-      <div class="shape shape-1"></div>
-      <div class="shape shape-2"></div>
-      <div class="shape shape-3"></div>
-    </div>
-    
-    <div class="container position-relative z-index-10 mt-5 mb-5">
-      <div class="support-badge mb-4 mx-auto animate-fade-in scroll-animate">
-        <i class="fa-solid fa-sparkles text-warning me-2"></i>
-        <span>عبور حيث يلتقي الذكاء بالتطوير</span>
-      </div>
-      
-      <h1 class="display-3 fw-bold mb-4 text-dark scroll-animate">
-        المنصة الرائدة لقياس <span class="text-gradient-primary">الجاهزية</span>
-      </h1>
-      
-      <p class="lead text-muted mb-5 mx-auto max-w-2xl scroll-animate fs-4">
-        نظام ذكي متكامل لقياس جاهزية طلبة الجامعات للتدريب الميداني. تحليل شامل يجمع بين التقييم الأكاديمي، النفسي والسلوكي باستخدام تقنيات الذكاء الاصطناعي.
-      </p>
-      
-      <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center scroll-animate">
-        <button class="btn btn-primary btn-lg fw-bold px-5 py-3 rounded-pill shadow-lg hover-lift" (click)="startEvaluation()">
-          ابدأ التقييم الآن
-          <i class="fa-solid fa-arrow-left ms-2"></i>
-        </button>
-        <button class="btn btn-outline-secondary btn-lg fw-bold px-5 py-3 rounded-pill bg-white hover-lift" (click)="startAbout()">
-          تعرف على المنصة
-        </button>
-      </div>
-    </div>
-  </section>
 
-  <!-- ================= Stats Section (Uncommented & Restyled) ================= -->
-  <section class="stats-section py-5 bg-white position-relative scroll-animate border-top border-bottom">
-    <div class="container">
-      <div class="row g-4 justify-content-center text-center">
-        <div class="col-6 col-md-3 scroll-animate" *ngFor="let stat of stats; let i = index" [style.transition-delay]="i * 0.1 + 's'">
-          <div class="stat-item p-3">
-            <h3 class="display-5 fw-bold text-gradient-primary mb-2">{{ stat.value }}</h3>
-            <p class="fw-semibold text-dark mb-1 fs-5">{{ stat.title }}</p>
-            <small class="text-muted">{{ stat.description }}</small>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<!-- ==========================================================================
+     HERO SECTION (High-Contrast Premium Vibe)
+     ========================================================================== -->
+<section class="hero-wrapper py-hero position-relative">
+  <!-- Dynamic Mesh Background -->
+  <div class="hero-mesh">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
 
-  <!-- ================= Features Section ================= -->
-  <section class="features-section py-5 py-lg-6 bg-light text-center scroll-animate">
-    <div class="container">
-      <div class="mb-5 max-w-2xl mx-auto">
-        <h2 class="display-6 fw-bold text-dark mb-3 scroll-animate">لماذا تختار منصة عبور؟</h2>
-        <p class="text-muted fs-5 scroll-animate">نجمع بين التكنولوجيا الحديثة والمعايير الأكاديمية العالية لتقديم تقييم دقيق وشامل.</p>
-      </div>
-
-      <div class="row g-4 justify-content-center">
-        <div class="col-12 col-md-6 col-lg-3 scroll-animate" *ngFor="let feature of features; let i = index" [style.transition-delay]="i * 0.1 + 's'">
-          <div class="card-modern feature-card h-100 p-4 text-center">
-            <div class="icon-box mx-auto mb-4 bg-primary-soft text-primary">
-              <i [class]="'fa-solid ' + feature.icon + ' fs-3'"></i>
-            </div>
-            <h4 class="fw-bold text-dark mb-3 fs-5">{{ feature.title }}</h4>
-            <p class="text-muted mb-0 fs-6">{{ feature.description }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= Vision & Mission ================= -->
-  <section class="py-5 py-lg-6 bg-white scroll-animate">
-    <div class="container">
-      <div class="row g-5 align-items-center">
-        <div class="col-12 col-lg-6 scroll-animate">
-          <div class="vision-box p-5 rounded-4 bg-primary-gradient text-white position-relative overflow-hidden h-100 hover-lift">
-            <div class="icon-circle bg-white text-primary mb-4 shadow-sm">
-              <i class="fa-solid fa-eye fs-4"></i>
-            </div>
-            <h2 class="display-6 fw-bold mb-4">رؤيتنا</h2>
-            <p class="fs-5 opacity-90 lh-lg mb-0">
-              أن نكون المنصة الرائدة إقليمياً في قياس وتطوير جاهزية الطلبة للتدريب الميداني، ونساهم في بناء جيل متميز من الكفاءات الوطنية المؤهلة لسوق العمل.
-            </p>
-            <div class="bg-shape position-absolute end-0 bottom-0 opacity-25">
-              <i class="fa-solid fa-compass fs-10" style="font-size: 15rem; transform: translate(20%, 20%);"></i>
-            </div>
-          </div>
+  <div class="container hero-content position-relative">
+    <div class="row align-items-center g-5">
+      <!-- Right Column (Text in RTL) -->
+      <div class="col-12 col-lg-6 scroll-animate delay-1">
+        <div class="badge rounded-pill border border-secondary text-secondary px-3 py-2 mb-4 d-inline-flex align-items-center" style="background: rgba(255, 122, 89, 0.1);">
+          <i class="fa-solid fa-sparkles me-2"></i>
+          <span class="fw-bold fs-6">الإصدار الحديث 2026</span>
         </div>
         
-        <div class="col-12 col-lg-6 scroll-animate" style="transition-delay: 0.2s">
-          <div class="mission-box p-5 rounded-4 bg-slate-900 text-white position-relative overflow-hidden h-100 hover-lift">
-            <div class="icon-circle bg-white text-dark mb-4 shadow-sm">
-              <i class="fa-solid fa-bullseye fs-4"></i>
-            </div>
-            <h2 class="display-6 fw-bold mb-4">رسالتنا</h2>
-            <p class="fs-5 opacity-90 lh-lg mb-0">
-              توفير نظام تقييم ذكي وشامل يساعد الطلبة والجامعات والجهات التدريبية على قياس الجاهزية بدقة، وتقديم توصيات مبنية على البيانات لتطوير المهارات وتحقيق التميز.
-            </p>
-            <div class="bg-shape position-absolute end-0 bottom-0 opacity-10">
-              <i class="fa-solid fa-rocket fs-10" style="font-size: 15rem; transform: translate(20%, 20%);"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= How It Works ================= -->
-  <section class="py-5 py-lg-6 bg-light scroll-animate">
-    <div class="container">
-      <div class="text-center mb-5 max-w-2xl mx-auto">
-        <h2 class="display-6 fw-bold text-dark mb-3">كيف تعمل المنصة؟</h2>
-        <p class="text-muted fs-5">خطوات بسيطة نحو تقييم شامل وتطوير مستمر</p>
-      </div>
-
-      <div class="row text-center g-4 position-relative">
-        <!-- Connecting Line -->
-        <div class="d-none d-md-block position-absolute top-50 start-50 translate-middle w-75" style="height: 2px; background: var(--obour-border); z-index: 0;"></div>
+        <h1 class="display-3 fw-bold mb-4 text-dark lh-base">
+          منصة تقييم الجاهزية <br>
+          <span class="text-gradient-primary">بذكاء اصطناعي</span>
+        </h1>
         
-        <div class="col-12 col-md-4 scroll-animate position-relative z-index-1" *ngFor="let step of steps; let i = index" [style.transition-delay]="i * 0.2 + 's'">
-          <div class="step-card bg-white p-4 rounded-4 shadow-sm hover-lift h-100 border">
-            <div class="step-number bg-primary text-white mx-auto mb-4 shadow-sm d-flex align-items-center justify-content-center fw-bold fs-3 rounded-circle" style="width: 70px; height: 70px; border: 5px solid white;">
-              {{ step.number }}
-            </div>
-            <h3 class="h4 fw-bold text-dark mb-3">{{ step.title }}</h3>
-            <p class="text-muted mb-0">{{ step.description }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= Saudi Vision 2030 & Details ================= -->
-  <section class="py-5 py-lg-6 bg-white scroll-animate">
-    <div class="container">
-      <div class="row g-5">
-        <div class="col-12 col-lg-6 scroll-animate">
-          <div class="card-modern p-4 p-md-5 h-100 bg-light border-0">
-            <div class="d-flex align-items-center gap-3 mb-4">
-              <div class="icon-box bg-success-soft text-success">
-                <i class="fa-solid fa-list-check fs-4"></i>
-              </div>
-              <h2 class="h3 fw-bold text-dark mb-0">المزايا بالتفصيل</h2>
-            </div>
-            <ul class="list-unstyled custom-list">
-              <li *ngFor="let item of detailedFeatures" class="mb-3 d-flex align-items-start gap-3">
-                <i class="fa-solid fa-circle-check text-success mt-1"></i>
-                <span class="text-dark fw-medium fs-6">{{ item }}</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        
-        <div class="col-12 col-lg-6 scroll-animate" style="transition-delay: 0.2s">
-          <div class="card-modern p-4 p-md-5 h-100 text-white" style="background: linear-gradient(135deg, #4c1d95, #6d28d9);">
-            <div class="d-flex align-items-center gap-3 mb-4">
-              <div class="icon-box bg-white text-purple">
-                <i class="fa-solid fa-flag fs-4"></i>
-              </div>
-              <h2 class="h3 fw-bold text-white mb-0">دعم رؤية 2030</h2>
-            </div>
-            <p class="mb-4 fs-5 opacity-90">تساهم منصة عبور في تحقيق أهداف رؤية المملكة 2030 من خلال:</p>
-            <ul class="list-unstyled custom-list vision-list">
-              <li *ngFor="let item of vision2030" class="mb-3 d-flex align-items-start gap-3">
-                <i class="fa-solid fa-star text-warning mt-1 fs-6"></i>
-                <span class="text-white fw-medium fs-6 opacity-90">{{ item }}</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= CTA / Final Badge ================= -->
-  <section class="py-5 bg-light scroll-animate mb-4">
-    <div class="container">
-      <div class="card-modern p-5 text-center bg-white border-0 shadow-sm hover-lift" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%230f4c81\' fill-opacity=\'0.03\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');">
-        <div class="icon-box mx-auto mb-4 bg-primary text-white shadow" style="width: 80px; height: 80px;">
-          <i class="fa-solid fa-building-columns fs-2"></i>
-        </div>
-        <h2 class="display-6 fw-bold text-dark mb-4">عبور حيث يلتقي الذكاء بالتطوير</h2>
-        <p class="fs-5 text-muted max-w-3xl mx-auto mb-5">
-          تعمل منصة عبور كمنظومة تعليمية مستقلة، تعتمد على معايير دقيقة في التصميم والتقييم، وتهدف إلى تقديم تجربة اختبار تفاعلية موثوقة تدعم الطالب وتمنحه بيئة تقييم حديثة ومتطورة.
+        <p class="lead mb-5 text-muted fs-4" style="max-width: 90%;">
+          المنصة الأكثر تطوراً لقياس الجاهزية الأكاديمية والمهنية. نستخدم تقنيات الذكاء الاصطناعي لتقديم تحليلات دقيقة تضمن مخرجات تعليمية تلبي متطلبات المستقبل.
         </p>
-        <button class="btn btn-primary btn-lg fw-bold px-5 py-3 rounded-pill shadow-sm" (click)="startEvaluation()">ابدأ رحلتك الآن</button>
+        
+        <div class="d-flex flex-column flex-sm-row gap-3">
+          <button class="btn btn-premium fs-5 px-5" (click)="startEvaluation()">
+            ابدأ التقييم الآن
+            <i class="fa-solid fa-arrow-left ms-2"></i>
+          </button>
+          <button class="btn btn-premium-outline fs-5 px-5" (click)="startAbout()">
+            <i class="fa-solid fa-play me-2"></i>
+            شاهد كيف نعمل
+          </button>
+        </div>
+      </div>
+
+      <!-- Left Column (3D Mockup Graphic in RTL) -->
+      <div class="col-12 col-lg-6 scroll-animate delay-2">
+        <div class="hero-mockup">
+          <div class="mockup-glass">
+            <div class="mockup-header">
+              <div class="dot" style="background: #ef4444;"></div>
+              <div class="dot" style="background: #f59e0b;"></div>
+              <div class="dot" style="background: #10b981;"></div>
+            </div>
+            <div class="mockup-body">
+              <!-- Animated mock components representing the platform's UI -->
+              <div class="mockup-card d-flex align-items-center px-3 gap-3">
+                <i class="fa-solid fa-chart-pie text-primary fs-3 opacity-75"></i>
+                <div class="w-100">
+                  <div class="bg-primary opacity-25 rounded mb-2" style="height: 8px; width: 60%;"></div>
+                  <div class="bg-primary opacity-10 rounded" style="height: 8px; width: 40%;"></div>
+                </div>
+              </div>
+              <div class="mockup-card d-flex align-items-center px-3 gap-3" style="animation-delay: 1s;">
+                <i class="fa-solid fa-brain text-accent fs-3 opacity-75"></i>
+                <div class="w-100">
+                  <div class="bg-accent opacity-25 rounded mb-2" style="height: 8px; width: 80%;"></div>
+                  <div class="bg-accent opacity-10 rounded" style="height: 8px; width: 50%;"></div>
+                </div>
+              </div>
+              <div class="mockup-chart p-3">
+                <div class="d-flex justify-content-between mb-3">
+                  <div class="bg-primary opacity-25 rounded" style="height: 12px; width: 30%;"></div>
+                  <div class="bg-primary opacity-25 rounded" style="height: 12px; width: 10%;"></div>
+                </div>
+                <!-- Abstract chart bars -->
+                <div class="d-flex align-items-end h-100 pb-4 gap-2 opacity-75">
+                  <div class="chart-bar bg-primary-light rounded-top w-100" style="height: 40%; animation-delay: 0.1s;"></div>
+                  <div class="chart-bar bg-primary rounded-top w-100" style="height: 70%; animation-delay: 0.2s;"></div>
+                  <div class="chart-bar bg-accent rounded-top w-100" style="height: 50%; animation-delay: 0.3s;"></div>
+                  <div class="chart-bar bg-secondary rounded-top w-100" style="height: 90%; animation-delay: 0.4s;"></div>
+                  <div class="chart-bar bg-primary-light rounded-top w-100" style="height: 60%; animation-delay: 0.5s;"></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-</div>
+<!-- ==========================================================================
+     FLOATING STATS SECTION
+     ========================================================================== -->
+<section class="container position-relative z-index-10 scroll-animate">
+  <div class="glass-panel stats-floating-bar p-0">
+    <div class="row g-0">
+      <div class="col-12 col-md-6 col-lg-3 stat-card" *ngFor="let stat of stats">
+        <div class="stat-icon">
+          <i [class]="'fa-solid ' + stat.icon"></i>
+        </div>
+        <div class="stat-value text-gradient-primary">{{ stat.value }}</div>
+        <div class="fw-bold fs-5 mb-1">{{ stat.title }}</div>
+        <div class="text-muted small">{{ stat.description }}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     BENTO BOX FEATURES
+     ========================================================================== -->
+<section class="py-section container">
+  <div class="text-center mb-5 scroll-animate">
+    <h2 class="display-6 fw-bold mb-3">قدرات <span class="text-gradient-primary">استثنائية</span></h2>
+    <p class="text-muted fs-5 max-w-2xl mx-auto">
+      تم تصميم المنصة بأحدث تقنيات التصميم والتطوير لتوفير تجربة مستخدم سلسة وتحليلات عميقة لا مثيل لها.
+    </p>
+  </div>
+
+  <div class="bento-grid scroll-animate delay-1">
+    <!-- Main Feature (Span 2 columns) -->
+    <div class="bento-item span-2 hover-lift" style="background: linear-gradient(145deg, #ffffff, #f8fafc);">
+      <div class="content">
+        <div class="bento-icon text-primary"><i class="fa-solid fa-brain"></i></div>
+        <h3 class="fw-bold fs-4 mb-3">ذكاء اصطناعي متقدم</h3>
+        <p class="text-muted mb-0 fs-6">
+          نظامنا يعتمد على خوارزميات تعلم آلي متطورة قادرة على تحليل البيانات المعقدة للطلبة، والتنبؤ بمسارهم المهني بدقة عالية بناءً على نتائج التقييمات الأكاديمية والسلوكية.
+        </p>
+      </div>
+    </div>
+
+    <!-- Feature 2 -->
+    <div class="bento-item hover-lift">
+      <div class="content">
+        <div class="bento-icon text-accent"><i class="fa-solid fa-chart-pie"></i></div>
+        <h3 class="fw-bold fs-5 mb-3">تقارير ديناميكية</h3>
+        <p class="text-muted mb-0 fs-6">
+          لوحات تحكم تفاعلية توفر نظرة شاملة ولحظية لنتائج التقييمات مع إمكانية التصدير.
+        </p>
+      </div>
+    </div>
+
+    <!-- Feature 3 -->
+    <div class="bento-item hover-lift">
+      <div class="content">
+        <div class="bento-icon text-secondary"><i class="fa-solid fa-shield-halved"></i></div>
+        <h3 class="fw-bold fs-5 mb-3">موثوقية وأمان</h3>
+        <p class="text-muted mb-0 fs-6">
+          بنية تحتية قوية تضمن حماية البيانات وخصوصية المستخدمين وفق أعلى المعايير.
+        </p>
+      </div>
+    </div>
+
+    <!-- Feature 4 (Span 2 columns) -->
+    <div class="bento-item span-2 hover-lift">
+      <div class="content">
+        <div class="bento-icon text-success"><i class="fa-solid fa-graduation-cap"></i></div>
+        <h3 class="fw-bold fs-4 mb-3">تقييم أكاديمي ونفسي متكامل</h3>
+        <p class="text-muted mb-0 fs-6">
+          لا نكتفي بقياس الجانب المعرفي فقط، بل نقدم تحليلاً شاملاً يدمج القياس النفسي والسلوكي لتحديد جاهزية الطالب الفعلية لبيئة العمل وتحديات التدريب الميداني.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     DARK MODE SECTION: VISION & MISSION
+     ========================================================================== -->
+<section class="dark-features-section py-section">
+  <div class="bg-grid"></div>
+  <div class="container position-relative z-index-10">
+    <div class="row g-5 align-items-center">
+      <div class="col-12 col-lg-6 scroll-animate">
+        <div class="badge rounded-pill border border-light text-light px-3 py-2 mb-4">
+          <i class="fa-solid fa-flag me-2 text-warning"></i>
+          <span>رؤية المملكة 2030</span>
+        </div>
+        <h2 class="display-5 fw-bold mb-4 text-white">نطمح للمساهمة في بناء جيل يصنع المستقبل.</h2>
+        <p class="fs-5 text-white-75 mb-5 lh-lg">
+          تساهم منصتنا في تحقيق أهداف الرؤية من خلال تمكين الشباب وتطوير قدراتهم وربط مخرجات التعليم باحتياجات سوق العمل الحديث.
+        </p>
+        
+        <div class="glass-panel-dark p-4 border-0">
+          <ul class="list-unstyled mb-0 pr-0">
+            <li *ngFor="let item of vision2030">
+              <i class="fa-solid fa-check text-success"></i>
+              <span class="fs-6 opacity-75">{{ item }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="col-12 col-lg-6 scroll-animate delay-2">
+        <div class="glass-panel-dark p-5 border-0 hover-lift h-100">
+          <div class="d-inline-flex align-items-center justify-content-center bg-primary rounded-circle mb-4" style="width: 60px; height: 60px;">
+            <i class="fa-solid fa-bullseye fs-3 text-white"></i>
+          </div>
+          <h3 class="fw-bold mb-4 text-white">رسالتنا</h3>
+          <p class="fs-5 text-white-75 lh-lg mb-0">
+            توفير نظام تقييم ذكي وشامل يساعد الطلبة والجامعات والجهات التدريبية على قياس الجاهزية بدقة متناهية، وتقديم توصيات مبنية على بيانات حقيقية لتطوير المهارات وتحقيق التميز في سوق العمل.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     HOW IT WORKS (Glowing Pipeline)
+     ========================================================================== -->
+<section class="py-section container pipeline-section scroll-animate">
+  <div class="text-center mb-5">
+    <h2 class="display-6 fw-bold mb-3">كيف يعمل النظام؟</h2>
+    <p class="text-muted fs-5">تجربة سلسة من التسجيل وحتى الحصول على النتائج التحليلية</p>
+  </div>
+
+  <div class="position-relative mt-5 pt-3">
+    <!-- Animated Connector Line -->
+    <div class="pipeline-connector"></div>
+    
+    <div class="row g-4 position-relative">
+      <div class="col-12 col-md-4 step-node scroll-animate" *ngFor="let step of steps; let i = index" [ngClass]="'delay-' + (i + 1)">
+        <div class="step-number">{{ step.number }}</div>
+        <h4 class="fw-bold mb-3">{{ step.title }}</h4>
+        <p class="text-muted px-md-3">{{ step.description }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     FINAL CTA BANNER
+     ========================================================================== -->
+<section class="container py-5 mb-5 scroll-animate">
+  <div class="cta-banner p-5 p-lg-6 text-center shadow-xl hover-lift">
+    <div class="cta-content">
+      <h2 class="display-5 fw-bold mb-4">مستعد للبدء في رحلة التقييم؟</h2>
+      <p class="fs-5 mb-5 opacity-90 max-w-2xl mx-auto">
+        انضم الآن إلى آلاف الطلبة الذين استخدموا المنصة لاكتشاف قدراتهم وتطوير مهاراتهم للتدريب الميداني وسوق العمل.
+      </p>
+      <button class="btn btn-light btn-lg rounded-pill px-5 py-3 fw-bold shadow text-primary hover-lift" (click)="startEvaluation()">
+        ابدأ رحلتك الآن
+        <i class="fa-solid fa-rocket ms-2"></i>
+      </button>
+    </div>
+  </div>
+</section>

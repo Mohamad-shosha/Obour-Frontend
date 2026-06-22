@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
+import { ThemeService } from './services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,11 @@ export class AppComponent {
   hideHeader = false;
   hideFooter = false;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private themeService: ThemeService  // Injects & initializes theme on app start
+  ) {
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
