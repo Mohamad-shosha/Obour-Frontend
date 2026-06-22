@@ -17,7 +17,11 @@
     "importHelpers": true,
     "target": "es2020",
     "module": "es2020",
-    "lib": ["es2020", "dom"]
+    "lib": ["es2020", "dom"],
+    "paths": {
+      "gsap": ["./node_modules/gsap/types/index"],
+      "gsap/ScrollTrigger": ["./node_modules/gsap/types/scroll-trigger"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
