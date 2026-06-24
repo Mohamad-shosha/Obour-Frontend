@@ -1,5 +1,5 @@
 // src/app/pages/home/home.component.ts
-import { Component, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,8 +9,10 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements AfterViewInit, OnDestroy {
   private observer!: IntersectionObserver;
+  heroRotateX = 10;
+  heroRotateY = -15;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   ngAfterViewInit() {
     this.initScrollAnimations();
@@ -20,6 +22,34 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     if (this.observer) {
       this.observer.disconnect();
     }
+  }
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(e: MouseEvent) {
+    // Hero Mockup 3D Tilt calculation
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    
+    const mouseX = e.clientX;
+    const mouseY = e.clientY;
+    
+    // Calculate rotation (-10 to 10 degrees) based on cursor position
+    const rotateY = ((mouseX / windowWidth) - 0.5) * 20;
+    const rotateX = ((mouseY / windowHeight) - 0.5) * -20;
+    
+    // Apply easing by interpolating with current values for smooth feel
+    this.heroRotateX = this.heroRotateX + (rotateX - this.heroRotateX) * 0.1;
+    this.heroRotateY = this.heroRotateY + (rotateY - this.heroRotateY) * 0.1;
+
+    // Bento Grid Spotlight Effect
+    const bentoItems = document.querySelectorAll('.bento-item') as NodeListOf<HTMLElement>;
+    bentoItems.forEach(item => {
+      const rect = item.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      item.style.setProperty('--mouse-x', `${x}px`);
+      item.style.setProperty('--mouse-y', `${y}px`);
+    });
   }
 
   initScrollAnimations() {
@@ -162,5 +192,36 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
       description:
         'تقدم المنصة تقارير تفصيلية وتوصيات مخصصة لتطوير المهارات وتحسين الجاهزية',
     },
+  ];
+
+  partners = [
+    { name: 'جامعة الملك سعود', logo: 'fa-building-columns' },
+    { name: 'جامعة الملك عبدالعزيز', logo: 'fa-graduation-cap' },
+    { name: 'جامعة الإمام محمد بن سعود', logo: 'fa-book' },
+    { name: 'جامعة أم القرى', logo: 'fa-mosque' },
+    { name: 'جامعة الملك فهد', logo: 'fa-microscope' },
+    { name: 'وزارة التعليم', logo: 'fa-school' },
+    { name: 'جامعة طيبة', logo: 'fa-book-open-reader' }
+  ];
+
+  testimonials = [
+    {
+      content: 'المنصة أحدثت نقلة نوعية في قدرتنا على التنبؤ بمستوى جاهزية طلابنا قبل التخرج. دقة التحليلات ساعدتنا في تطوير المناهج.',
+      author: 'د. أحمد عبدالله',
+      role: 'عميد كلية الهندسة',
+      avatar: 'fa-user-tie'
+    },
+    {
+      content: 'تجربتي مع المنصة كانت ممتازة. اكتشفت نقاط قوتي وتعرفت على المهارات التي أحتاج تطويرها لدخول سوق العمل بثقة.',
+      author: 'سارة خالد',
+      role: 'طالبة خريجة - علوم حاسب',
+      avatar: 'fa-user-graduate'
+    },
+    {
+      content: 'التقارير المفصلة التي توفرها المنصة تختصر الكثير من الوقت والجهد على المرشدين الأكاديميين لتوجيه الطلبة بالشكل الصحيح.',
+      author: 'أ. محمد العتيبي',
+      role: 'مرشد أكاديمي',
+      avatar: 'fa-user-clock'
+    }
   ];
 }

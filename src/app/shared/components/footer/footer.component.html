@@ -9,11 +9,11 @@
   <div class="container">
     <div class="row g-4 g-lg-5 mb-5">
       <!-- عمود: عن المنصة -->
-      <div class="col-12 col-md-6 col-lg-4 footer-column" [@fadeInUp]>
+      <div class="col-12 col-md-6 col-lg-3 footer-column" [@fadeInUp]>
         <div class="footer-brand">
           <div class="footer-logo-wrapper">
             <div class="footer-icon-badge">
-              <i class="bi bi-mortarboard-fill"></i>
+              <i class="fa-solid fa-graduation-cap"></i>
             </div>
             <h2 class="footer-brand-title">عبور</h2>
           </div>
@@ -29,7 +29,7 @@
               target="_blank"
               rel="noopener noreferrer"
             >
-              <i class="bi bi-facebook"></i>
+              <i class="fa-brands fa-facebook"></i>
             </a>
             <a
               href="#"
@@ -38,7 +38,7 @@
               target="_blank"
               rel="noopener noreferrer"
             >
-              <i class="bi bi-twitter"></i>
+              <i class="fa-brands fa-x-twitter"></i>
             </a>
             <a
               href="#"
@@ -47,7 +47,7 @@
               target="_blank"
               rel="noopener noreferrer"
             >
-              <i class="bi bi-instagram"></i>
+              <i class="fa-brands fa-instagram"></i>
             </a>
             <a
               href="#"
@@ -56,52 +56,45 @@
               target="_blank"
               rel="noopener noreferrer"
             >
-              <i class="bi bi-linkedin"></i>
+              <i class="fa-brands fa-linkedin-in"></i>
             </a>
           </div>
         </div>
       </div>
 
       <!-- عمود: روابط سريعة -->
-      <div class="col-12 col-md-6 col-lg-4 footer-column" [@fadeInUp]>
+      <div class="col-12 col-md-6 col-lg-2 footer-column" [@fadeInUp]>
         <div class="footer-links-section">
-          <h3 class="footer-section-title">
-            <i class="bi bi-link-45deg me-2"></i>روابط سريعة
-          </h3>
+          <h3 class="footer-section-title">روابط سريعة</h3>
           <ul class="footer-links-list">
             <li>
               <a routerLink="/home" class="footer-link">
-                <i class="bi bi-house-door-fill"></i>
                 <span>الرئيسية</span>
-                <i class="bi bi-arrow-left link-arrow"></i>
+                <i class="fa-solid fa-arrow-left link-arrow"></i>
               </a>
             </li>
             <li>
               <a routerLink="/evaluation" class="footer-link">
-                <i class="bi bi-clipboard-check-fill"></i>
                 <span>تقييم الجاهزية</span>
-                <i class="bi bi-arrow-left link-arrow"></i>
+                <i class="fa-solid fa-arrow-left link-arrow"></i>
               </a>
             </li>
             <li>
               <a routerLink="/dashboard" class="footer-link">
-                <i class="bi bi-speedometer2"></i>
                 <span>لوحة المعلومات</span>
-                <i class="bi bi-arrow-left link-arrow"></i>
+                <i class="fa-solid fa-arrow-left link-arrow"></i>
               </a>
             </li>
             <li>
               <a routerLink="/reports" class="footer-link">
-                <i class="bi bi-graph-up-arrow"></i>
-                <span>التقارير والتحليلات</span>
-                <i class="bi bi-arrow-left link-arrow"></i>
+                <span>التقارير</span>
+                <i class="fa-solid fa-arrow-left link-arrow"></i>
               </a>
             </li>
             <li>
               <a routerLink="/about" class="footer-link">
-                <i class="bi bi-info-circle-fill"></i>
                 <span>عن المنصة</span>
-                <i class="bi bi-arrow-left link-arrow"></i>
+                <i class="fa-solid fa-arrow-left link-arrow"></i>
               </a>
             </li>
           </ul>
@@ -109,15 +102,13 @@
       </div>
 
       <!-- عمود: تواصل معنا -->
-      <div class="col-12 col-md-6 col-lg-4 footer-column" [@fadeInUp]>
+      <div class="col-12 col-md-6 col-lg-3 footer-column" [@fadeInUp]>
         <div class="footer-contact-section">
-          <h3 class="footer-section-title">
-            <i class="bi bi-envelope-paper me-2"></i>تواصل معنا
-          </h3>
+          <h3 class="footer-section-title">تواصل معنا</h3>
           <ul class="contact-info-list">
             <li class="contact-item">
               <div class="contact-icon-wrapper email">
-                <i class="bi bi-envelope-fill"></i>
+                <i class="fa-solid fa-envelope"></i>
               </div>
               <div class="contact-details">
                 <span class="contact-label">البريد الإلكتروني</span>
@@ -128,7 +119,7 @@
             </li>
             <li class="contact-item">
               <div class="contact-icon-wrapper phone">
-                <i class="bi bi-telephone-fill"></i>
+                <i class="fa-solid fa-phone"></i>
               </div>
               <div class="contact-details">
                 <span class="contact-label">الهاتف</span>
@@ -137,7 +128,7 @@
             </li>
             <li class="contact-item">
               <div class="contact-icon-wrapper location">
-                <i class="bi bi-geo-alt-fill"></i>
+                <i class="fa-solid fa-location-dot"></i>
               </div>
               <div class="contact-details">
                 <span class="contact-label">العنوان</span>
@@ -149,6 +140,22 @@
           </ul>
         </div>
       </div>
+
+      <!-- عمود: النشرة البريدية -->
+      <div class="col-12 col-md-6 col-lg-4 footer-column" [@fadeInUp]>
+        <div class="footer-newsletter-section">
+          <h3 class="footer-section-title">النشرة البريدية</h3>
+          <p class="mb-4 text-muted" style="font-size: 0.9rem;">
+            اشترك في نشرتنا البريدية للحصول على أحدث التقارير والمقالات حول الجاهزية المهنية والتطوير الأكاديمي.
+          </p>
+          <form class="newsletter-form position-relative">
+            <input type="email" class="form-control newsletter-input" placeholder="البريد الإلكتروني..." required>
+            <button type="submit" class="btn newsletter-submit">
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
 
     <!-- حقوق الملكية -->
@@ -157,19 +164,19 @@
       <div class="footer-copyright">
         <div class="copyright-content">
           <p class="copyright-text">
-            <i class="bi bi-c-circle me-2"></i>
+            <i class="fa-regular fa-copyright me-2"></i>
             <span>{{ currentYear }} منصة عبور</span>
             <span class="copyright-separator">-</span>
             <span>جميع الحقوق محفوظة</span>
           </p>
           <p class="copyright-support">
-            <i class="bi bi-heart-fill me-2"></i>
+            <i class="fa-solid fa-heart me-2 text-danger"></i>
             بدعم من
             <span class="support-org">هيئة تقويم التعليم والتدريب</span>
           </p>
         </div>
         <div class="footer-badge">
-          <i class="bi bi-shield-check"></i>
+          <i class="fa-solid fa-shield-halved"></i>
           <span>منصة آمنة</span>
         </div>
       </div>
@@ -183,6 +190,6 @@
     *ngIf="showScrollTop"
     [@fadeInOut]="showScrollTop.toString()"
   >
-    <i class="bi bi-arrow-up"></i>
+    <i class="fa-solid fa-arrow-up"></i>
   </button>
 </footer>

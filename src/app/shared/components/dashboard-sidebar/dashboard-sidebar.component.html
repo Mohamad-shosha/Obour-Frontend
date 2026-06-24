@@ -1,0 +1,30 @@
+<aside class="sidebar-container">
+  <div class="sidebar-brand">
+    <h2 class="brand-title">Obour Platform</h2>
+    <span class="brand-subtitle">Educational Intelligence</span>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a *ngFor="let item of navItems" [routerLink]="item.link" class="nav-item" [class.active]="item.active">
+      <i [ngClass]="['bi', item.icon, 'nav-icon']"></i>
+      <span class="nav-label">{{ item.label }}</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <a href="#" class="footer-link">
+      <i class="bi bi-question-circle nav-icon"></i>
+      <span>Support</span>
+    </a>
+    <div class="theme-toggle">
+      <i class="bi bi-moon nav-icon"></i>
+      <span>Dark Mode</span>
+      <!-- Replace with an actual toggle switch later -->
+      <div class="toggle-switch active"></div>
+    </div>
+    
+    <button class="btn-command-center">
+      Command Center
+    </button>
+  </div>
+</aside>

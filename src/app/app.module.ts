@@ -23,6 +23,10 @@ import { QuizTestComponent } from './pages/evaluation/quiz-test/quiz-test.compon
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
 import { EvaluationAboutComponent } from './pages/evaluation/evaluation-about/evaluation-about.component';
 import { BackgroundShapesComponent } from './shared/components/background-shapes/background-shapes.component';
+import { DashboardLayoutComponent } from './shared/components/dashboard-layout/dashboard-layout.component';
+import { DashboardSidebarComponent } from './shared/components/dashboard-sidebar/dashboard-sidebar.component';
+import { DashboardHeaderComponent } from './shared/components/dashboard-header/dashboard-header.component';
+import { SupervisorDashboardComponent } from './pages/supervisor-dashboard/supervisor-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +47,10 @@ import { BackgroundShapesComponent } from './shared/components/background-shapes
     AdminDashboardComponent,
     EvaluationAboutComponent,
     BackgroundShapesComponent,
+    DashboardLayoutComponent,
+    DashboardSidebarComponent,
+    DashboardHeaderComponent,
+    SupervisorDashboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,4 +64,4 @@ import { BackgroundShapesComponent } from './shared/components/background-shapes
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

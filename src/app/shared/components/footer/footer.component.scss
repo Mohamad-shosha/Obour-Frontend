@@ -466,6 +466,74 @@ $shadow-glow: 0 0 20px rgba(99, 102, 241, 0.3);
   }
 }
 
+// --- Newsletter Section ---
+.footer-newsletter-section {
+  .newsletter-form {
+    display: flex;
+    position: relative;
+    box-shadow: $shadow-md;
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    overflow: hidden;
+
+    &:focus-within {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(99, 102, 241, 0.5);
+      box-shadow: $shadow-glow;
+    }
+  }
+
+  .newsletter-input {
+    background: transparent;
+    border: none;
+    color: white;
+    padding: 0.875rem 1.25rem;
+    padding-left: 3.5rem; // make room for the button
+    width: 100%;
+    font-size: 0.95rem;
+
+    &::placeholder {
+      color: $slate-500;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: none;
+      background: transparent;
+      color: white;
+    }
+  }
+
+  .newsletter-submit {
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    bottom: 4px;
+    width: 44px;
+    border-radius: 100px;
+    background: $gradient-primary;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+
+    i {
+      font-size: 1rem;
+      transform: translateX(-1px);
+    }
+
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: $shadow-glow;
+    }
+  }
+}
+
 // --- Footer Bottom ---
 .footer-bottom {
   margin-top: 3rem;

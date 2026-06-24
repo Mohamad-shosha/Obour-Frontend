@@ -1,0 +1,215 @@
+<div class="dashboard-header-section">
+  <div>
+    <h1 class="page-title">Supervisor Dashboard</h1>
+    <p class="page-subtitle">Monitoring performance across 12 active student cohorts.</p>
+  </div>
+  
+  <div class="header-actions">
+    <button class="btn-secondary">
+      <i class="bi bi-filter"></i> Filters
+    </button>
+    <button class="btn-primary">
+      <i class="bi bi-plus"></i> New Report
+    </button>
+  </div>
+</div>
+
+<!-- Top KPIs -->
+<div class="kpi-grid">
+  <!-- KPI 1 -->
+  <div class="kpi-card">
+    <div class="kpi-header">
+      <span class="kpi-label">AVG PERFORMANCE</span>
+      <i class="bi bi-graph-up-arrow text-success"></i>
+    </div>
+    <div class="kpi-value-container">
+      <span class="kpi-value">{{ kpis.avgPerformance }}</span>
+      <span class="kpi-trend text-success">{{ kpis.performanceTrend }}</span>
+    </div>
+    <div class="kpi-progress">
+      <div class="progress-bar" style="width: 84%"></div>
+    </div>
+  </div>
+
+  <!-- KPI 2 -->
+  <div class="kpi-card danger-card">
+    <div class="kpi-header">
+      <span class="kpi-label">AT-RISK COUNT</span>
+      <i class="bi bi-exclamation-triangle text-danger"></i>
+    </div>
+    <div class="kpi-value-container">
+      <span class="kpi-value">{{ kpis.atRiskCount }}</span>
+      <span class="kpi-trend text-danger">{{ kpis.atRiskChange }}</span>
+    </div>
+    <p class="kpi-desc">Requires attention within 48h</p>
+  </div>
+
+  <!-- KPI 3 -->
+  <div class="kpi-card">
+    <div class="kpi-header">
+      <span class="kpi-label">COMPLETION</span>
+      <i class="bi bi-check-all text-warning"></i>
+    </div>
+    <div class="kpi-value-container">
+      <span class="kpi-value">{{ kpis.completionCurrent }}</span>
+      <span class="kpi-total">/ {{ kpis.completionTotal }}</span>
+    </div>
+    <div class="completion-steps">
+      <div class="step active"></div>
+      <div class="step active"></div>
+      <div class="step active"></div>
+      <div class="step"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Content Grid -->
+<div class="main-grid">
+  <!-- Chart Area placeholder -->
+  <div class="chart-container card">
+    <div class="card-header">
+      <h3 class="card-title">Cohort Performance Comparison</h3>
+      <div class="chart-legend">
+        <span class="legend-item"><span class="dot purple"></span> CS Fundamentals</span>
+        <span class="legend-item"><span class="dot green"></span> Adv Mathematics</span>
+      </div>
+    </div>
+    <div class="chart-body">
+      <!-- CSS representation of the bar chart -->
+      <div class="css-chart">
+        <div class="chart-col">
+          <div class="bar-group">
+            <div class="bar purple" style="height: 60%"></div>
+            <div class="bar green" style="height: 40%"></div>
+          </div>
+          <span class="col-label">Week 1</span>
+        </div>
+        <div class="chart-col">
+          <div class="bar-group">
+            <div class="bar purple" style="height: 65%"></div>
+            <div class="bar green" style="height: 45%"></div>
+          </div>
+          <span class="col-label">Week 2</span>
+        </div>
+        <div class="chart-col">
+          <div class="bar-group">
+            <div class="bar purple" style="height: 70%"></div>
+            <div class="bar green" style="height: 50%"></div>
+          </div>
+          <span class="col-label">Week 3</span>
+        </div>
+        <div class="chart-col">
+          <div class="bar-group">
+            <div class="bar purple active" style="height: 85%"></div>
+            <div class="bar green active" style="height: 60%"></div>
+          </div>
+          <span class="col-label">Week 4</span>
+        </div>
+        <div class="chart-col">
+          <div class="bar-group">
+            <div class="bar purple" style="height: 80%"></div>
+            <div class="bar green" style="height: 55%"></div>
+          </div>
+          <span class="col-label">Week 5</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Insights Area -->
+  <div class="insights-container card">
+    <div class="card-header">
+      <h3 class="card-title"><i class="bi bi-stars"></i> Smart Insights</h3>
+    </div>
+    <div class="card-body">
+      <h4 class="section-title">TOP PERFORMING (THIS WEEK)</h4>
+      
+      <div class="insight-list">
+        <div class="insight-item">
+          <div class="avatar-sm purple">AM</div>
+          <span class="name">Alex Murphy</span>
+          <span class="score text-success">98.5%</span>
+        </div>
+        <div class="insight-item">
+          <div class="avatar-sm green">SK</div>
+          <span class="name">Sarah K.</span>
+          <span class="score text-success">96.2%</span>
+        </div>
+        <div class="insight-item">
+          <div class="avatar-sm orange">JW</div>
+          <span class="name">James Wu</span>
+          <span class="score text-success">95.0%</span>
+        </div>
+      </div>
+
+      <h4 class="section-title mt-4">IMMEDIATE INTERVENTION</h4>
+      
+      <div class="alert-box">
+        <div class="alert-header">
+          <span class="alert-title">Critical Drop in Engagement</span>
+          <i class="bi bi-x-circle"></i>
+        </div>
+        <p class="alert-text">3 students missed the last 2 project milestones. Recommendation: 1-on-1 review.</p>
+        <button class="btn-outline-danger w-100">Launch Review Protocol</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- At-Risk Table -->
+<div class="table-container card mt-4">
+  <div class="card-header flex-between">
+    <h3 class="card-title">At-Risk Student Monitoring</h3>
+    <div class="header-actions">
+      <span class="text-secondary">Showing 14 results</span>
+      <div class="view-toggles">
+        <button class="toggle-btn active"><i class="bi bi-list-ul"></i></button>
+        <button class="toggle-btn"><i class="bi bi-grid-fill"></i></button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="table-responsive">
+    <table class="dashboard-table">
+      <thead>
+        <tr>
+          <th>STUDENT PROFILE</th>
+          <th>COHORT</th>
+          <th>RISK SCORE</th>
+          <th>LAST ACTIVITY</th>
+          <th>ACTIONS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of atRiskStudents">
+          <td>
+            <div class="student-profile">
+              <img [src]="student.avatar" onerror="this.src='https://ui-avatars.com/api/?name=' + student.name" class="avatar-img">
+              <div class="student-info">
+                <span class="name">{{ student.name }}</span>
+                <span class="email">{{ student.email }}</span>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="cohort-info">{{ student.cohort }}</div>
+          </td>
+          <td>
+            <div class="risk-badge" [ngClass]="student.riskLevel.toLowerCase()">
+              <span class="dot"></span>
+              {{ student.riskLevel }} ({{ student.riskScore }}/10)
+            </div>
+          </td>
+          <td>{{ student.lastActivity }}</td>
+          <td>
+            <div class="action-buttons">
+              <button class="icon-btn"><i class="bi bi-envelope"></i></button>
+              <button class="icon-btn"><i class="bi bi-calendar"></i></button>
+              <button class="btn-secondary small">Review</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

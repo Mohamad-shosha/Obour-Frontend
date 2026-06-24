@@ -1,29 +1,25 @@
-<header class="main-header sticky-top animate-header">
-  <div class="container py-3 d-flex align-items-center">
-    <!-- Logo (يسار) -->
-    <div class="d-flex align-items-center gap-3 logo-area" (click)="onNavigate('home')" role="button" aria-label="الصفحة الرئيسية">
-      <div class="logo-circle">
-        <i class="fa-solid fa-graduation-cap text-white fs-5"></i>
+<header class="main-header sticky-top animate-header pt-3 pb-2">
+  <div class="container">
+    <div class="floating-header-inner px-3 px-md-4 py-2 d-flex align-items-center justify-content-between">
+      
+      <!-- Logo (يسار) -->
+      <div class="d-flex align-items-center gap-2 gap-md-3 logo-area" (click)="onNavigate('home')" role="button" aria-label="الصفحة الرئيسية">
+        <div class="logo-circle">
+          <i class="fa-solid fa-graduation-cap text-white fs-6 fs-md-5"></i>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <h1 class="h5 fw-bold mb-0" style="color: var(--obour-primary);">عبور</h1>
+          <span class="d-none d-xl-block" style="color: var(--obour-text-secondary); font-size: 0.85rem; padding-right: 5px; border-right: 1px solid var(--obour-border);">
+            منصة تقييم الجاهزية للتدريب الميداني
+          </span>
+        </div>
       </div>
-      <div>
-        <h1 class="h5 fw-bold text-primary mb-0">عبور</h1>
-        <p class="small text-muted mb-0">
-          منصة تقييم الجاهزية للتدريب الميداني
-        </p>
-      </div>
-    </div>
 
     <!-- Navigation (المنتصف - يظهر فقط على الشاشات المتوسطة فأعلى) -->
-    <nav
-      class="d-none d-md-flex align-items-center justify-content-center flex-grow-1 fade-in"
-    >
+    <nav class="d-none d-md-flex align-items-center justify-content-center flex-grow-1 fade-in">
       <div class="d-flex gap-3">
-        <button
-          *ngFor="let item of menuItems"
-          (click)="onNavigate(item.id)"
-          class="header-link"
-          [class.active]="currentPage === item.id"
-        >
+        <button *ngFor="let item of menuItems" (click)="onNavigate(item.id)" class="header-link"
+          [class.active]="currentPage === item.id">
           <i [class]="item.icon"></i>
           <span>{{ item.label }}</span>
         </button>
@@ -33,12 +29,9 @@
     <!-- User Area or Guest Buttons -->
     <div class="d-none d-md-flex align-items-center gap-3 fade-in">
       <!-- Theme Toggle -->
-      <button
-        class="theme-toggle-btn"
-        (click)="toggleTheme()"
+      <button class="theme-toggle-btn" (click)="toggleTheme()"
         [attr.aria-label]="(isDark$ | async) ? 'تبديل إلى الوضع الفاتح' : 'تبديل إلى الوضع المظلم'"
-        [title]="(isDark$ | async) ? 'الوضع الفاتح' : 'الوضع المظلم'"
-      >
+        [title]="(isDark$ | async) ? 'الوضع الفاتح' : 'الوضع المظلم'">
         <i class="fa-solid" [class.fa-sun]="isDark$ | async" [class.fa-moon]="!(isDark$ | async)"></i>
       </button>
       <div class="vr"></div>
@@ -56,43 +49,29 @@
       </ng-container>
 
       <ng-template #guestButtons>
-        <button
-          type="button"
-          (click)="onNavigate('auth', 'login')"
-          class="d-flex align-items-center gap-2 px-3 py-2 rounded-3 text-dark header-link"
-        >
+        <button type="button" (click)="onNavigate('auth', 'login')" class="btn-ghost d-flex align-items-center gap-2">
           <i class="fa-solid fa-arrow-right-to-bracket"></i>
-          <span>تسجيل الدخول</span>
+          <span>دخول</span>
         </button>
-        <button
-          type="button"
-          (click)="onNavigate('auth', 'register')"
-          class="d-flex align-items-center gap-2 px-3 py-2 rounded-3 bg-primary text-white header-link"
-        >
+        <button type="button" (click)="onNavigate('auth', 'register')" class="btn-premium d-flex align-items-center gap-2 px-3 py-2" style="font-size: 0.9rem;">
           <i class="fa-solid fa-user-plus"></i>
-          <span>إنشاء حساب</span>
+          <span>حساب جديد</span>
         </button>
       </ng-template>
     </div>
 
-    <!-- Mobile menu toggle (يظهر فقط على الشاشات الصغيرة) -->
-    <button class="btn d-md-none text-dark" (click)="isMenuOpen = !isMenuOpen">
-      <i
-        class="fa-solid"
-        [class.fa-bars]="!isMenuOpen"
-        [class.fa-xmark]="isMenuOpen"
-      ></i>
+    <!-- Mobile menu toggle -->
+    <button class="btn d-md-none" style="color: var(--obour-text-main);" (click)="isMenuOpen = !isMenuOpen">
+      <i class="fa-solid" [class.fa-bars]="!isMenuOpen" [class.fa-xmark]="isMenuOpen"></i>
     </button>
+    
+    </div> <!-- end floating-header-inner -->
   </div>
 
   <!-- Mobile Menu -->
   <div *ngIf="isMenuOpen" class="mobile-menu mt-3 p-3 border-top slide-down">
-    <button
-      *ngFor="let item of menuItems"
-      (click)="onNavigate(item.id); isMenuOpen = false"
-      class="mobile-link"
-      [class.active]="currentPage === item.id"
-    >
+    <button *ngFor="let item of menuItems" (click)="onNavigate(item.id); isMenuOpen = false" class="mobile-link"
+      [class.active]="currentPage === item.id">
       <i [class]="item.icon"></i> {{ item.label }}
     </button>
 
@@ -117,16 +96,10 @@
     </ng-container>
 
     <ng-template #mobileGuest>
-      <button
-        (click)="onNavigate('auth', 'login'); isMenuOpen = false"
-        class="login-btn w-100 mb-2"
-      >
+      <button (click)="onNavigate('auth', 'login'); isMenuOpen = false" class="login-btn w-100 mb-2">
         <i class="fa-solid fa-arrow-right-to-bracket"></i> تسجيل الدخول
       </button>
-      <button
-        (click)="onNavigate('auth', 'register'); isMenuOpen = false"
-        class="register-btn w-100"
-      >
+      <button (click)="onNavigate('auth', 'register'); isMenuOpen = false" class="register-btn w-100">
         <i class="fa-solid fa-user-plus"></i> إنشاء حساب
       </button>
     </ng-template>

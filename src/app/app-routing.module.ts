@@ -12,6 +12,8 @@ import { QuizSelectionComponent } from './pages/evaluation/quiz-selection/quiz-s
 import { QuizTestComponent } from './pages/evaluation/quiz-test/quiz-test.component';
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
 import { EvaluationAboutComponent } from './pages/evaluation/evaluation-about/evaluation-about.component';
+import { DashboardLayoutComponent } from './shared/components/dashboard-layout/dashboard-layout.component';
+import { SupervisorDashboardComponent } from './pages/supervisor-dashboard/supervisor-dashboard.component';
 
 // تعريف المسارات
 const routes: Routes = [
@@ -26,6 +28,14 @@ const routes: Routes = [
   { path: 'evaluation/test/:sectionId', component: QuizTestComponent, data: { hideFooter: true } },
   { path: 'admin/dashboard', component: AdminDashboardComponent, data: { hideHeader: true, hideFooter: true } },
   { path: 'evaluation/about', component: EvaluationAboutComponent },
+  { 
+    path: 'dashboard', 
+    component: DashboardLayoutComponent,
+    children: [
+      { path: '', component: SupervisorDashboardComponent },
+      // Add other dashboard views here later (Analytics, Settings, etc.)
+    ]
+  },
   { path: '**', redirectTo: '/home' },
 ];
 

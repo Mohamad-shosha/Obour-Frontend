@@ -16,30 +16,34 @@
   <!-- Left Panel (RTL) - Form -->
   <div class="auth-form-container d-flex justify-content-center align-items-center p-4 p-md-5">
     <div class="auth-form-content w-100 animate-slide-up" [class.shake]="!cardAnimation">
-      
+
       <!-- Header -->
-      <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center mb-5 gap-3">
+      <div
+        class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center mb-5 gap-3">
         <div>
-          <h2 class="fw-bold text-dark mb-1">{{ isLogin ? 'مرحباً بعودتك' : 'انضم إلينا' }}</h2>
-          <p class="text-muted small mb-0">{{ isLogin ? 'سجل دخولك لمتابعة التقدم' : 'أنشئ حسابك لتبدأ رحلتك الأكاديمية' }}</p>
+          <h2 class="fw-bold mb-1" style="color: var(--obour-text-primary);">{{ isLogin ? 'مرحباً بعودتك' : 'انضم إلينا' }}</h2>
+          <p class="small mb-0" style="color: var(--obour-text-secondary);">{{ isLogin ? 'سجل دخولك لمتابعة التقدم' : 'أنشئ حسابك لتبدأ رحلتك الأكاديمية' }}</p>
         </div>
-        <button type="button" class="btn btn-outline-primary btn-sm rounded-pill px-3 fw-semibold" (click)="toggleMode()">
+        <button type="button" class="btn btn-outline-primary btn-sm rounded-pill px-3 fw-semibold"
+          (click)="toggleMode()">
           {{ isLogin ? 'إنشاء حساب جديد' : 'لدي حساب بالفعل' }}
         </button>
       </div>
 
       <!-- Form -->
       <form [formGroup]="isLogin ? loginForm : registerForm" (ngSubmit)="onSubmit()" novalidate>
-        
+
         <!-- Role Selection -->
         <div *ngIf="!isLogin" class="mb-4">
-          <label class="form-label-modern">أنا...</label>
+          <label class="form-label-modern" style="color: var(--obour-text-primary);">أنا...</label>
           <div class="role-selector d-flex gap-3">
-            <div class="role-option flex-fill" [class.active]="selectedRole === 'STUDENT'" (click)="onRoleSelect('STUDENT')" role="button" aria-label="طالب">
+            <div class="role-option flex-fill" [class.active]="selectedRole === 'STUDENT'"
+              (click)="onRoleSelect('STUDENT')" role="button" aria-label="طالب">
               <i class="fa-solid fa-user-graduate mb-2 fs-4"></i>
               <span class="fw-semibold d-block">طالب</span>
             </div>
-            <div class="role-option flex-fill" [class.active]="selectedRole === 'TEACHER'" (click)="onRoleSelect('TEACHER')" role="button" aria-label="معلم">
+            <div class="role-option flex-fill" [class.active]="selectedRole === 'TEACHER'"
+              (click)="onRoleSelect('TEACHER')" role="button" aria-label="معلم">
               <i class="fa-solid fa-chalkboard-user mb-2 fs-4"></i>
               <span class="fw-semibold d-block">معلم</span>
             </div>
@@ -48,10 +52,11 @@
 
         <!-- Name -->
         <div *ngIf="!isLogin" class="form-group mb-4">
-          <label class="form-label-modern" for="nameInput">الاسم الكامل</label>
+          <label class="form-label-modern" for="nameInput" style="color: var(--obour-text-primary);">الاسم الكامل</label>
           <div class="position-relative">
             <i class="fa-solid fa-user input-icon"></i>
-            <input id="nameInput" formControlName="name" type="text" class="input-modern" placeholder="أحمد محمد" [ngClass]="{'is-invalid': isFieldInvalid('name')}">
+            <input id="nameInput" formControlName="name" type="text" class="input-modern" placeholder="أحمد محمد"
+              [ngClass]="{'is-invalid': isFieldInvalid('name')}">
           </div>
           <div *ngIf="isFieldInvalid('name')" class="error-text-modern">
             <i class="fa-solid fa-circle-exclamation"></i> {{ getErrorMessage('name') }}
@@ -60,10 +65,11 @@
 
         <!-- Email -->
         <div class="form-group mb-4">
-          <label class="form-label-modern" for="emailInput">البريد الإلكتروني</label>
+          <label class="form-label-modern" for="emailInput" style="color: var(--obour-text-primary);">البريد الإلكتروني</label>
           <div class="position-relative">
             <i class="fa-solid fa-envelope input-icon"></i>
-            <input id="emailInput" formControlName="email" type="email" class="input-modern" placeholder="example@domain.com" [ngClass]="{'is-invalid': isFieldInvalid('email')}">
+            <input id="emailInput" formControlName="email" type="email" class="input-modern"
+              placeholder="example@domain.com" [ngClass]="{'is-invalid': isFieldInvalid('email')}">
           </div>
           <div *ngIf="isFieldInvalid('email')" class="error-text-modern">
             <i class="fa-solid fa-circle-exclamation"></i> {{ getErrorMessage('email') }}
@@ -73,12 +79,14 @@
         <!-- Password -->
         <div class="form-group mb-5">
           <div class="d-flex justify-content-between align-items-center mb-2">
-            <label class="form-label-modern mb-0" for="passwordInput">كلمة المرور</label>
-            <a *ngIf="isLogin" href="javascript:void(0)" class="text-primary small fw-semibold text-decoration-none hover-underline">نسيت كلمة المرور؟</a>
+            <label class="form-label-modern mb-0" for="passwordInput" style="color: var(--obour-text-primary);">كلمة المرور</label>
+            <a *ngIf="isLogin" href="javascript:void(0)"
+              class="small fw-semibold text-decoration-none hover-underline" style="color: var(--obour-primary);">نسيت كلمة المرور؟</a>
           </div>
           <div class="position-relative">
             <i class="fa-solid fa-lock input-icon"></i>
-            <input id="passwordInput" formControlName="password" type="password" class="input-modern" placeholder="••••••••" [ngClass]="{'is-invalid': isFieldInvalid('password')}">
+            <input id="passwordInput" formControlName="password" type="password" class="input-modern"
+              placeholder="••••••••" [ngClass]="{'is-invalid': isFieldInvalid('password')}">
           </div>
           <div *ngIf="isFieldInvalid('password')" class="error-text-modern">
             <i class="fa-solid fa-circle-exclamation"></i> {{ getErrorMessage('password') }}
@@ -86,7 +94,8 @@
         </div>
 
         <!-- Submit Button -->
-        <button type="submit" [disabled]="loading" class="btn btn-primary w-100 py-3 rounded-3 mt-2 d-flex align-items-center justify-content-center gap-2 shadow-sm transition-all hover-lift">
+        <button type="submit" [disabled]="loading"
+          class="btn-premium w-100 py-3 rounded-3 mt-2 d-flex align-items-center justify-content-center gap-2 shadow-sm transition-all hover-lift">
           <span *ngIf="!loading">{{ isLogin ? 'تسجيل الدخول' : 'إنشاء الحساب' }}</span>
           <i *ngIf="!loading" class="fa-solid fa-arrow-left mt-1"></i>
           <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>

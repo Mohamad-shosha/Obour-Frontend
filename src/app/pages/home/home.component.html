@@ -15,20 +15,23 @@
     <div class="row align-items-center g-5">
       <!-- Right Column (Text in RTL) -->
       <div class="col-12 col-lg-6 scroll-animate delay-1">
-        <div class="badge rounded-pill border border-secondary text-secondary px-3 py-2 mb-4 d-inline-flex align-items-center" style="background: rgba(255, 122, 89, 0.1);">
+        <div
+          class="badge rounded-pill border border-secondary text-secondary px-3 py-2 mb-4 d-inline-flex align-items-center"
+          style="background: rgba(255, 122, 89, 0.1);">
           <i class="fa-solid fa-sparkles me-2"></i>
           <span class="fw-bold fs-6">الإصدار الحديث 2026</span>
         </div>
-        
-        <h1 class="display-3 fw-bold mb-4 text-dark lh-base">
+
+        <h1 class="display-3 fw-bold mb-4 lh-base" style="color: var(--obour-text-primary);">
           منصة تقييم الجاهزية <br>
           <span class="text-gradient-primary">بذكاء اصطناعي</span>
         </h1>
-        
-        <p class="lead mb-5 text-muted fs-4" style="max-width: 90%;">
-          المنصة الأكثر تطوراً لقياس الجاهزية الأكاديمية والمهنية. نستخدم تقنيات الذكاء الاصطناعي لتقديم تحليلات دقيقة تضمن مخرجات تعليمية تلبي متطلبات المستقبل.
+
+        <p class="lead mb-5 fs-4" style="color: var(--obour-text-secondary); max-width: 90%;">
+          المنصة الأكثر تطوراً لقياس الجاهزية الأكاديمية والمهنية. نستخدم تقنيات الذكاء الاصطناعي لتقديم تحليلات دقيقة
+          تضمن مخرجات تعليمية تلبي متطلبات المستقبل.
         </p>
-        
+
         <div class="d-flex flex-column flex-sm-row gap-3">
           <button class="btn btn-premium fs-5 px-5" (click)="startEvaluation()">
             ابدأ التقييم الآن
@@ -44,7 +47,7 @@
       <!-- Left Column (3D Mockup Graphic in RTL) -->
       <div class="col-12 col-lg-6 scroll-animate delay-2">
         <div class="hero-mockup">
-          <div class="mockup-glass">
+          <div class="mockup-glass" [style.transform]="'rotateY(' + heroRotateY + 'deg) rotateX(' + heroRotateX + 'deg) translateZ(0)'">
             <div class="mockup-header">
               <div class="dot" style="background: #ef4444;"></div>
               <div class="dot" style="background: #f59e0b;"></div>
@@ -73,11 +76,14 @@
                 </div>
                 <!-- Abstract chart bars -->
                 <div class="d-flex align-items-end h-100 pb-4 gap-2 opacity-75">
-                  <div class="chart-bar bg-primary-light rounded-top w-100" style="height: 40%; animation-delay: 0.1s;"></div>
+                  <div class="chart-bar bg-primary-light rounded-top w-100" style="height: 40%; animation-delay: 0.1s;">
+                  </div>
                   <div class="chart-bar bg-primary rounded-top w-100" style="height: 70%; animation-delay: 0.2s;"></div>
                   <div class="chart-bar bg-accent rounded-top w-100" style="height: 50%; animation-delay: 0.3s;"></div>
-                  <div class="chart-bar bg-secondary rounded-top w-100" style="height: 90%; animation-delay: 0.4s;"></div>
-                  <div class="chart-bar bg-primary-light rounded-top w-100" style="height: 60%; animation-delay: 0.5s;"></div>
+                  <div class="chart-bar bg-secondary rounded-top w-100" style="height: 90%; animation-delay: 0.4s;">
+                  </div>
+                  <div class="chart-bar bg-primary-light rounded-top w-100" style="height: 60%; animation-delay: 0.5s;">
+                  </div>
                 </div>
               </div>
 
@@ -100,8 +106,32 @@
           <i [class]="'fa-solid ' + stat.icon"></i>
         </div>
         <div class="stat-value text-gradient-primary">{{ stat.value }}</div>
-        <div class="fw-bold fs-5 mb-1">{{ stat.title }}</div>
-        <div class="text-muted small">{{ stat.description }}</div>
+        <div class="fw-bold fs-5 mb-1" style="color: var(--obour-text-primary);">{{ stat.title }}</div>
+        <div class="small" style="color: var(--obour-text-secondary);">{{ stat.description }}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     TRUSTED BY (Marquee Section)
+     ========================================================================== -->
+<section class="trusted-by-section py-5 overflow-hidden">
+  <div class="container text-center mb-4">
+    <p class="fs-6 fw-bold text-uppercase tracking-widest" style="color: var(--obour-text-secondary); letter-spacing: 2px;">
+      جهات نعتز بثقتها
+    </p>
+  </div>
+  <div class="marquee-container">
+    <div class="marquee-content d-flex align-items-center gap-5">
+      <div class="partner-logo d-flex align-items-center gap-2" *ngFor="let partner of partners">
+        <i [class]="'fa-solid fs-3 text-secondary opacity-75 ' + partner.logo"></i>
+        <span class="fw-bold fs-5 text-secondary opacity-75">{{ partner.name }}</span>
+      </div>
+      <!-- Duplicate for infinite scroll -->
+      <div class="partner-logo d-flex align-items-center gap-2" *ngFor="let partner of partners">
+        <i [class]="'fa-solid fs-3 text-secondary opacity-75 ' + partner.logo"></i>
+        <span class="fw-bold fs-5 text-secondary opacity-75">{{ partner.name }}</span>
       </div>
     </div>
   </div>
@@ -112,20 +142,21 @@
      ========================================================================== -->
 <section class="py-section container">
   <div class="text-center mb-5 scroll-animate">
-    <h2 class="display-6 fw-bold mb-3">قدرات <span class="text-gradient-primary">استثنائية</span></h2>
-    <p class="text-muted fs-5 max-w-2xl mx-auto">
+    <h2 class="display-6 fw-bold mb-3" style="color: var(--obour-text-primary);">قدرات <span class="text-gradient-primary">استثنائية</span></h2>
+    <p class="fs-5 max-w-2xl mx-auto" style="color: var(--obour-text-secondary);">
       تم تصميم المنصة بأحدث تقنيات التصميم والتطوير لتوفير تجربة مستخدم سلسة وتحليلات عميقة لا مثيل لها.
     </p>
   </div>
 
   <div class="bento-grid scroll-animate delay-1">
     <!-- Main Feature (Span 2 columns) -->
-    <div class="bento-item span-2 hover-lift" style="background: linear-gradient(145deg, #ffffff, #f8fafc);">
+    <div class="bento-item span-2 hover-lift">
       <div class="content">
         <div class="bento-icon text-primary"><i class="fa-solid fa-brain"></i></div>
-        <h3 class="fw-bold fs-4 mb-3">ذكاء اصطناعي متقدم</h3>
-        <p class="text-muted mb-0 fs-6">
-          نظامنا يعتمد على خوارزميات تعلم آلي متطورة قادرة على تحليل البيانات المعقدة للطلبة، والتنبؤ بمسارهم المهني بدقة عالية بناءً على نتائج التقييمات الأكاديمية والسلوكية.
+        <h3 class="fw-bold fs-4 mb-3" style="color: var(--obour-text-primary);">ذكاء اصطناعي متقدم</h3>
+        <p class="mb-0 fs-6" style="color: var(--obour-text-secondary);">
+          نظامنا يعتمد على خوارزميات تعلم آلي متطورة قادرة على تحليل البيانات المعقدة للطلبة، والتنبؤ بمسارهم المهني
+          بدقة عالية بناءً على نتائج التقييمات الأكاديمية والسلوكية.
         </p>
       </div>
     </div>
@@ -134,8 +165,8 @@
     <div class="bento-item hover-lift">
       <div class="content">
         <div class="bento-icon text-accent"><i class="fa-solid fa-chart-pie"></i></div>
-        <h3 class="fw-bold fs-5 mb-3">تقارير ديناميكية</h3>
-        <p class="text-muted mb-0 fs-6">
+        <h3 class="fw-bold fs-5 mb-3" style="color: var(--obour-text-primary);">تقارير ديناميكية</h3>
+        <p class="mb-0 fs-6" style="color: var(--obour-text-secondary);">
           لوحات تحكم تفاعلية توفر نظرة شاملة ولحظية لنتائج التقييمات مع إمكانية التصدير.
         </p>
       </div>
@@ -145,8 +176,8 @@
     <div class="bento-item hover-lift">
       <div class="content">
         <div class="bento-icon text-secondary"><i class="fa-solid fa-shield-halved"></i></div>
-        <h3 class="fw-bold fs-5 mb-3">موثوقية وأمان</h3>
-        <p class="text-muted mb-0 fs-6">
+        <h3 class="fw-bold fs-5 mb-3" style="color: var(--obour-text-primary);">موثوقية وأمان</h3>
+        <p class="mb-0 fs-6" style="color: var(--obour-text-secondary);">
           بنية تحتية قوية تضمن حماية البيانات وخصوصية المستخدمين وفق أعلى المعايير.
         </p>
       </div>
@@ -156,9 +187,10 @@
     <div class="bento-item span-2 hover-lift">
       <div class="content">
         <div class="bento-icon text-success"><i class="fa-solid fa-graduation-cap"></i></div>
-        <h3 class="fw-bold fs-4 mb-3">تقييم أكاديمي ونفسي متكامل</h3>
-        <p class="text-muted mb-0 fs-6">
-          لا نكتفي بقياس الجانب المعرفي فقط، بل نقدم تحليلاً شاملاً يدمج القياس النفسي والسلوكي لتحديد جاهزية الطالب الفعلية لبيئة العمل وتحديات التدريب الميداني.
+        <h3 class="fw-bold fs-4 mb-3" style="color: var(--obour-text-primary);">تقييم أكاديمي ونفسي متكامل</h3>
+        <p class="mb-0 fs-6" style="color: var(--obour-text-secondary);">
+          لا نكتفي بقياس الجانب المعرفي فقط، بل نقدم تحليلاً شاملاً يدمج القياس النفسي والسلوكي لتحديد جاهزية الطالب
+          الفعلية لبيئة العمل وتحديات التدريب الميداني.
         </p>
       </div>
     </div>
@@ -179,9 +211,10 @@
         </div>
         <h2 class="display-5 fw-bold mb-4 text-white">نطمح للمساهمة في بناء جيل يصنع المستقبل.</h2>
         <p class="fs-5 text-white-75 mb-5 lh-lg">
-          تساهم منصتنا في تحقيق أهداف الرؤية من خلال تمكين الشباب وتطوير قدراتهم وربط مخرجات التعليم باحتياجات سوق العمل الحديث.
+          تساهم منصتنا في تحقيق أهداف الرؤية من خلال تمكين الشباب وتطوير قدراتهم وربط مخرجات التعليم باحتياجات سوق العمل
+          الحديث.
         </p>
-        
+
         <div class="glass-panel-dark p-4 border-0">
           <ul class="list-unstyled mb-0 pr-0">
             <li *ngFor="let item of vision2030">
@@ -191,15 +224,17 @@
           </ul>
         </div>
       </div>
-      
+
       <div class="col-12 col-lg-6 scroll-animate delay-2">
         <div class="glass-panel-dark p-5 border-0 hover-lift h-100">
-          <div class="d-inline-flex align-items-center justify-content-center bg-primary rounded-circle mb-4" style="width: 60px; height: 60px;">
+          <div class="d-inline-flex align-items-center justify-content-center bg-primary rounded-circle mb-4"
+            style="width: 60px; height: 60px;">
             <i class="fa-solid fa-bullseye fs-3 text-white"></i>
           </div>
           <h3 class="fw-bold mb-4 text-white">رسالتنا</h3>
           <p class="fs-5 text-white-75 lh-lg mb-0">
-            توفير نظام تقييم ذكي وشامل يساعد الطلبة والجامعات والجهات التدريبية على قياس الجاهزية بدقة متناهية، وتقديم توصيات مبنية على بيانات حقيقية لتطوير المهارات وتحقيق التميز في سوق العمل.
+            توفير نظام تقييم ذكي وشامل يساعد الطلبة والجامعات والجهات التدريبية على قياس الجاهزية بدقة متناهية، وتقديم
+            توصيات مبنية على بيانات حقيقية لتطوير المهارات وتحقيق التميز في سوق العمل.
           </p>
         </div>
       </div>
@@ -212,19 +247,50 @@
      ========================================================================== -->
 <section class="py-section container pipeline-section scroll-animate">
   <div class="text-center mb-5">
-    <h2 class="display-6 fw-bold mb-3">كيف يعمل النظام؟</h2>
-    <p class="text-muted fs-5">تجربة سلسة من التسجيل وحتى الحصول على النتائج التحليلية</p>
+    <h2 class="display-6 fw-bold mb-3" style="color: var(--obour-text-primary);">كيف يعمل النظام؟</h2>
+    <p class="fs-5" style="color: var(--obour-text-secondary);">تجربة سلسة من التسجيل وحتى الحصول على النتائج التحليلية</p>
   </div>
 
   <div class="position-relative mt-5 pt-3">
     <!-- Animated Connector Line -->
     <div class="pipeline-connector"></div>
-    
+
     <div class="row g-4 position-relative">
-      <div class="col-12 col-md-4 step-node scroll-animate" *ngFor="let step of steps; let i = index" [ngClass]="'delay-' + (i + 1)">
+      <div class="col-12 col-md-4 step-node scroll-animate" *ngFor="let step of steps; let i = index"
+        [ngClass]="'delay-' + (i + 1)">
         <div class="step-number">{{ step.number }}</div>
-        <h4 class="fw-bold mb-3">{{ step.title }}</h4>
-        <p class="text-muted px-md-3">{{ step.description }}</p>
+        <h4 class="fw-bold mb-3" style="color: var(--obour-text-primary);">{{ step.title }}</h4>
+        <p class="px-md-3" style="color: var(--obour-text-secondary);">{{ step.description }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     TESTIMONIALS SECTION
+     ========================================================================== -->
+<section class="py-section container testimonials-section scroll-animate">
+  <div class="text-center mb-5">
+    <h2 class="display-6 fw-bold mb-3" style="color: var(--obour-text-primary);">قصص <span class="text-gradient-primary">نجاح</span></h2>
+    <p class="fs-5" style="color: var(--obour-text-secondary);">آراء شركاء النجاح من طلبة وأكاديميين</p>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-12 col-md-4" *ngFor="let t of testimonials; let i = index" [ngClass]="'delay-' + (i+1)">
+      <div class="testimonial-card p-4 hover-lift h-100">
+        <div class="quote-icon mb-3 text-primary opacity-25">
+          <i class="fa-solid fa-quote-right fs-1"></i>
+        </div>
+        <p class="fs-5 mb-4 lh-lg" style="color: var(--obour-text-primary);">"{{ t.content }}"</p>
+        <div class="d-flex align-items-center gap-3 mt-auto">
+          <div class="avatar bg-primary-soft text-primary d-flex align-items-center justify-content-center rounded-circle" style="width: 50px; height: 50px;">
+            <i [class]="'fa-solid fs-4 ' + t.avatar"></i>
+          </div>
+          <div>
+            <h5 class="fw-bold mb-1" style="color: var(--obour-text-primary);">{{ t.author }}</h5>
+            <div class="small" style="color: var(--obour-text-secondary);">{{ t.role }}</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -240,7 +306,8 @@
       <p class="fs-5 mb-5 opacity-90 max-w-2xl mx-auto">
         انضم الآن إلى آلاف الطلبة الذين استخدموا المنصة لاكتشاف قدراتهم وتطوير مهاراتهم للتدريب الميداني وسوق العمل.
       </p>
-      <button class="btn btn-light btn-lg rounded-pill px-5 py-3 fw-bold shadow text-primary hover-lift" (click)="startEvaluation()">
+      <button class="btn btn-light btn-lg rounded-pill px-5 py-3 fw-bold shadow text-primary hover-lift"
+        (click)="startEvaluation()">
         ابدأ رحلتك الآن
         <i class="fa-solid fa-rocket ms-2"></i>
       </button>
