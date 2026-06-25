@@ -1,5 +1,6 @@
-<div class="categories-page min-vh-100 bg-light" dir="rtl">
+<div class="categories-page min-vh-100" dir="rtl">
   <div class="container px-4 py-5">
+
 
     <!-- Page Header -->
     <div class="text-center mb-5 animate-slide-up">
@@ -56,7 +57,7 @@
           </div>
 
           <!-- Card Body -->
-          <div class="card-body-content p-4 bg-white">
+          <div class="card-body-content p-4 bg-transparent">
             <ul class="feature-list mb-4">
               <li *ngFor="let item of getItemsForSection(section.type)" class="d-flex align-items-center gap-3 mb-3">
                 <i class="fa-solid fa-circle-check flex-shrink-0" [ngClass]="section.type === 'academic' ? 'text-primary' : 'text-success'"></i>

@@ -32,7 +32,10 @@ $shadow-glow-psych: 0 0 30px rgba(139, 92, 246, 0.3);
 
 // --- Quiz Section ---
 .quiz-section {
-  background: $gradient-bg;
+  background-color: var(--obour-bg);
+  background-image: radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.02) 0px, transparent 50%),
+                    radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.02) 0px, transparent 50%);
+  background-attachment: fixed;
   position: relative;
   overflow: hidden;
   min-height: 100vh;
@@ -314,13 +317,16 @@ $shadow-glow-psych: 0 0 30px rgba(139, 92, 246, 0.3);
 }
 
 .quiz-card {
-  border-radius: 24px;
-  background: white;
+  border-radius: var(--radius-xl);
+  background: var(--obour-surface-glass);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1.5px solid var(--obour-border-glass);
   position: relative;
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: $shadow-md;
+  transition: all 0.45s var(--ease-spring);
+  box-shadow: var(--shadow-md);
   height: 100%;
 
   &::before {

@@ -34,54 +34,67 @@ $border-radius-sm: 8px;
   --obour-primary-light: #2563eb;
   --obour-primary-dark: #072a49;
   --obour-primary-soft: rgba(37, 99, 235, 0.08);
-  --obour-primary-glow: rgba(37, 99, 235, 0.35);
+  --obour-primary-glow: rgba(37, 99, 235, 0.2);
 
   --obour-secondary: #ff7a59;
-  --obour-secondary-glow: rgba(255, 122, 89, 0.35);
+  --obour-secondary-glow: rgba(255, 122, 89, 0.2);
 
   --obour-accent: #8b5cf6;
-  --obour-accent-glow: rgba(139, 92, 246, 0.35);
+  --obour-accent-glow: rgba(139, 92, 246, 0.2);
 
   --obour-success: #10b981;
   --obour-warning: #f59e0b;
   --obour-danger: #ef4444;
   --obour-info: #3b82f6;
 
-  /* --- Surfaces & Backgrounds --- */
-  --obour-bg: #f8fafc;
-  --obour-bg-subtle: #f1f5f9;
-  --obour-surface: #ffffff;
-  --obour-surface-2: #f8fafc;
-  --obour-surface-elevated: #ffffff;
-  --obour-surface-glass: rgba(255, 255, 255, 0.75);
-  --obour-surface-glass-dark: rgba(15, 23, 42, 0.6);
+  /* --- 4-Layer Light Mode Design System --- */
+  --obour-layer-1-bg: #f4f6f9;
+  /* Layer 1: Page Background - soft slate-gray/blue canvas */
+  --obour-layer-2-bg: #e8ecf3;
+  /* Layer 2: Section Backgrounds - natural cool gray */
+  --obour-layer-3-bg: #ffffff;
+  /* Layer 3: Card surface - solid white for 3D depth */
+  --obour-layer-3-bg-nested: #f8fafc;
+  /* Layer 3 Nested inside card */
+  --obour-layer-4-bg: #ffffff;
+  /* Layer 4: Highlighted card elevated */
+
+  /* --- Surfaces & Backgrounds mappings --- */
+  --obour-bg: var(--obour-layer-1-bg);
+  --obour-bg-subtle: var(--obour-layer-2-bg);
+  --obour-surface: var(--obour-layer-3-bg);
+  --obour-surface-2: var(--obour-layer-3-bg-nested);
+  --obour-surface-elevated: var(--obour-layer-4-bg);
+  --obour-surface-glass: rgba(255, 255, 255, 0.85);
+  --obour-surface-glass-dark: rgba(15, 23, 42, 0.65);
 
   /* Dark section (always dark, e.g. dark feature sections) */
-  --obour-bg-dark: #0d1117;
-  --obour-text-dark: #e6edf3;
+  --obour-bg-dark: #090e1a;
+  --obour-text-dark: #f8fafc;
 
-  /* --- Typography --- */
-  --obour-text-main: #1e293b;
+  /* --- Typography (Comfortable slate charcoal tones to prevent eye strain) --- */
+  --obour-text-main: #334155;
   --obour-text-primary: #1e293b;
-  --obour-text-secondary: #64748b;
+  --obour-text-secondary: #475569;
   --obour-text-disabled: #94a3b8;
   --obour-text-inverse: #ffffff;
 
-  /* --- Borders --- */
-  --obour-border: #e2e8f0;
-  --obour-border-hover: #cbd5e1;
-  --obour-border-focus: #2563eb;
-  --obour-border-glass: rgba(255, 255, 255, 0.6);
-  --obour-border-glass-dark: rgba(255, 255, 255, 0.1);
+  /* --- Borders (Thin, structural brand blue borders for contrast) --- */
+  --obour-border: rgba(15, 76, 129, 0.08);
+  /* structural brand-tinted border lines */
+  --obour-border-hover: rgba(15, 76, 129, 0.16);
+  --obour-border-focus: #0f4c81;
+  --obour-border-glass: rgba(255, 255, 255, 0.55);
+  --obour-border-glass-dark: rgba(255, 255, 255, 0.08);
 
-  /* --- Shadows & Glows --- */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.06), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.07), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
-  --shadow-glow-primary: 0 0 24px var(--obour-primary-glow);
-  --shadow-glow-secondary: 0 0 24px var(--obour-secondary-glow);
-  --shadow-inner: inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
+  /* --- Shadows & Glows (Refined 3D depth system with apple/linear inset highlights) --- */
+  --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.01), 0 10px 24px -4px rgba(15, 76, 129, 0.06), inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.02), 0 20px 40px -6px rgba(15, 76, 129, 0.08), inset 0 1px 0 0 rgba(255, 255, 255, 0.85);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.03), 0 35px 70px -10px rgba(15, 76, 129, 0.12), inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
+  --shadow-glow-primary: 0 0 24px rgba(37, 99, 235, 0.12);
+  --shadow-glow-secondary: 0 0 24px rgba(255, 122, 89, 0.12);
+  --shadow-inner: inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
 
   /* --- Animation / Easing --- */
   --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.1);
@@ -105,7 +118,8 @@ $border-radius-sm: 8px;
    ========================================================================== */
 [data-theme="dark"] {
   /* --- Brand (Premium Dashboard Theme) --- */
-  --obour-primary: #3B82F6; /* Blue accent matching light mode */
+  --obour-primary: #3B82F6;
+  /* Blue accent matching light mode */
   --obour-primary-light: #60A5FA;
   --obour-primary-dark: #2563EB;
   --obour-primary-soft: rgba(59, 130, 246, 0.15);
@@ -117,17 +131,23 @@ $border-radius-sm: 8px;
   --obour-accent: #0ea5e9;
   --obour-accent-glow: rgba(14, 165, 233, 0.25);
 
-  --obour-success: #10B981; /* Emerald from template */
+  --obour-success: #10B981;
+  /* Emerald from template */
   --obour-warning: #F59E0B;
   --obour-danger: #EF4444;
   --obour-info: #3B82F6;
 
   /* --- Surfaces (layered depth system matching template) --- */
-  --obour-bg: #0B1121; /* Main Background */
-  --obour-bg-subtle: #111827; /* Subtle areas */
-  --obour-surface: #171E2E; /* Cards, Panels */
-  --obour-surface-2: #1E293B; /* Inputs, nested cards */
-  --obour-surface-elevated: #334155; /* Modals, dropdowns */
+  --obour-bg: #0B1121;
+  /* Main Background */
+  --obour-bg-subtle: #111827;
+  /* Subtle areas */
+  --obour-surface: #171E2E;
+  /* Cards, Panels */
+  --obour-surface-2: #1E293B;
+  /* Inputs, nested cards */
+  --obour-surface-elevated: #334155;
+  /* Modals, dropdowns */
   --obour-surface-glass: rgba(23, 30, 46, 0.8);
   --obour-surface-glass-dark: rgba(11, 17, 33, 0.9);
 
@@ -162,7 +182,14 @@ $border-radius-sm: 8px;
 /* ==========================================================================
    4. GLOBAL BASE STYLES
    ========================================================================== */
-body, .glass-panel, .glass-panel-dark, .bento-item, .stat-card, nav, .hero-wrapper, .app-layout {
+body,
+.glass-panel,
+.glass-panel-dark,
+.bento-item,
+.stat-card,
+nav,
+.hero-wrapper,
+.app-layout {
   transition: var(--theme-transition);
 }
 
@@ -185,11 +212,15 @@ body {
   direction: rtl;
   text-align: right;
   background-color: var(--obour-bg);
+  background-image: radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.02) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.02) 0px, transparent 50%);
+  background-attachment: fixed;
   color: var(--obour-text-main);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
+
 
 /* ==========================================================================
    5. PREMIUM COMPONENTS
@@ -757,4 +788,82 @@ body {
 :focus-visible {
   outline: 2px solid var(--obour-border-focus);
   outline-offset: 2px;
+}
+
+/* Advanced Entrance Animations (Linear/Stripe Style) */
+.fade-up-view {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s var(--ease-fluid), transform 0.8s var(--ease-fluid);
+  will-change: opacity, transform;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-view {
+  opacity: 0;
+  transition: opacity 0.8s var(--ease-fluid);
+  will-change: opacity;
+
+  &.visible {
+    opacity: 1;
+  }
+}
+
+.scale-up-view {
+  opacity: 0;
+  transform: scale(0.96) translateY(20px);
+  transition: opacity 0.8s var(--ease-spring), transform 0.8s var(--ease-spring);
+  will-change: opacity, transform;
+
+  &.visible {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.slide-left-view {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.8s var(--ease-fluid), transform 0.8s var(--ease-fluid);
+  will-change: opacity, transform;
+
+  &.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.slide-right-view {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.8s var(--ease-fluid), transform 0.8s var(--ease-fluid);
+  will-change: opacity, transform;
+
+  &.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Premium Border Gradient Utilities */
+.border-glow-premium {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.4), rgba(255, 122, 89, 0.25), rgba(139, 92, 246, 0.35));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 1;
+  }
 }

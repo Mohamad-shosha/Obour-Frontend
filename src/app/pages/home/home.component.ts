@@ -1,6 +1,7 @@
 // src/app/pages/home/home.component.ts
 import { Component, AfterViewInit, OnDestroy, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
+import { CountUp } from 'countup.js';
 
 @Component({
   selector: 'app-home',
@@ -9,18 +10,35 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements AfterViewInit, OnDestroy {
   private observer!: IntersectionObserver;
-  heroRotateX = 10;
-  heroRotateY = -15;
+  private statsObserver!: IntersectionObserver;
+  heroRotateX = 8;
+  heroRotateY = -12;
+  isIntroAnimating = true;
+
+  // Showcase Active State
+  activeShowcaseIndex = 0;
+
+  // Career Filter State
+  selectedCareerCategory = 'all';
 
   constructor(private router: Router) { }
 
   ngAfterViewInit() {
     this.initScrollAnimations();
+    this.initStatsCountUp();
+    
+    // Disable intro animation after entrance show completes
+    setTimeout(() => {
+      this.isIntroAnimating = false;
+    }, 2200);
   }
 
   ngOnDestroy() {
     if (this.observer) {
       this.observer.disconnect();
+    }
+    if (this.statsObserver) {
+      this.statsObserver.disconnect();
     }
   }
 
@@ -33,17 +51,17 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     const mouseX = e.clientX;
     const mouseY = e.clientY;
     
-    // Calculate rotation (-10 to 10 degrees) based on cursor position
-    const rotateY = ((mouseX / windowWidth) - 0.5) * 20;
-    const rotateX = ((mouseY / windowHeight) - 0.5) * -20;
+    // Calculate rotation (-8 to 8 degrees) based on cursor position
+    const rotateY = ((mouseX / windowWidth) - 0.5) * 16;
+    const rotateX = ((mouseY / windowHeight) - 0.5) * -16;
     
     // Apply easing by interpolating with current values for smooth feel
     this.heroRotateX = this.heroRotateX + (rotateX - this.heroRotateX) * 0.1;
     this.heroRotateY = this.heroRotateY + (rotateY - this.heroRotateY) * 0.1;
 
-    // Bento Grid Spotlight Effect
-    const bentoItems = document.querySelectorAll('.bento-item') as NodeListOf<HTMLElement>;
-    bentoItems.forEach(item => {
+    // Spotlight Effect for grids
+    const gridItems = document.querySelectorAll('.spotlight-card') as NodeListOf<HTMLElement>;
+    gridItems.forEach(item => {
       const rect = item.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
@@ -53,8 +71,9 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   }
 
   initScrollAnimations() {
+    // Support both standard scroll-animate and newly introduced fade-up-view/scale-up-view
     const animatedElements = document.querySelectorAll(
-      '.scroll-animate:not(.visible)'
+      '.scroll-animate:not(.visible), .fade-up-view:not(.visible), .scale-up-view:not(.visible), .slide-left-view:not(.visible), .slide-right-view:not(.visible)'
     );
     this.observer = new IntersectionObserver(
       (entries) => {
@@ -65,12 +84,57 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
         });
       },
       {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px',
+        threshold: 0.05,
+        rootMargin: '0px 0px -40px 0px',
       }
     );
 
     animatedElements.forEach((el) => this.observer.observe(el));
+  }
+
+  initStatsCountUp() {
+    const statsSection = document.querySelector('.stats-container-section');
+    if (!statsSection) return;
+
+    this.statsObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            this.runCountUp();
+            this.statsObserver.disconnect();
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+      }
+    );
+
+    this.statsObserver.observe(statsSection);
+  }
+
+  runCountUp() {
+    const elements = document.querySelectorAll('.stat-count-value');
+    elements.forEach((el) => {
+      const targetVal = parseFloat(el.getAttribute('data-target') || '0');
+      const isPercent = el.getAttribute('data-percent') === 'true';
+      const isPlus = el.getAttribute('data-plus') === 'true';
+      
+      const options = {
+        startVal: 0,
+        duration: 2.2,
+        useEasing: true,
+        useGrouping: true,
+        suffix: isPercent ? '%' : (isPlus ? '+' : '')
+      };
+      
+      const countUpObj = new CountUp(el as HTMLElement, targetVal, options);
+      if (!countUpObj.error) {
+        countUpObj.start();
+      } else {
+        console.error(countUpObj.error);
+      }
+    });
   }
 
   startEvaluation(): void {
@@ -81,117 +145,238 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     this.router.navigate(['/about']);
   }
 
-  // --- البيانات ---
+  setActiveFeature(index: number) {
+    this.activeShowcaseIndex = index;
+  }
+
+  // --- البيانات المحدثة والتفاعلية ---
+
+  // 1. Showcase Features
+  showcaseFeatures = [
+    {
+      title: 'التقييم الأكاديمي الشامل',
+      description: 'تحليل دقيق ومفصل لمستوى المعرفة الأكاديمية في مجالات التخصص الأساسية من خلال اختبارات تفاعلية ذكية تقيس مدى الفهم والتطبيق الفعلي للعلوم التخصصية.',
+      icon: 'fa-graduation-cap',
+      previewType: 'academic',
+      badge: 'الجانب المعرفي',
+      stats: { progress: 85, score: 92, questions: 40, duration: '60 دقيقة' }
+    },
+    {
+      title: 'التقييم النفسي والسلوكي',
+      description: 'قياس المهارات الشخصية الناعمة والذكاء العاطفي مثل العمل الجماعي، التواصل، والتكيف السلوكي لضمان التوافق التام مع متطلبات بيئة العمل الحديثة.',
+      icon: 'fa-brain',
+      previewType: 'psychological',
+      badge: 'المهارات الشخصية',
+      metrics: [
+         { label: 'العمل الجماعي وتنسيق الجهود', value: 92 },
+         { label: 'التواصل الفعال وبناء العلاقات', value: 88 },
+         { label: 'حل المشكلات والتفكير الإبداعي', value: 80 },
+         { label: 'القيادة وإدارة المهام وتوجيهها', value: 85 }
+      ]
+    },
+    {
+      title: 'التوصيات الذكية بالذكاء الاصطناعي',
+      description: 'تحليل فوري وشخصي لنتائج تقييماتك يقدمه محرك الذكاء الاصطناعي لدينا، يحدد بدقة نقاط القوة وفرص التطوير مع اقتراح مسارات تدريبية مخصصة لسد الفجوات.',
+      icon: 'fa-robot',
+      previewType: 'ai-recommendations',
+      badge: 'ذكاء اصطناعي',
+      recommendations: [
+         'تطوير مهارات تطوير الويب باستخدام أطر عمل متطورة مثل Angular.',
+         'التركيز على مهارات إدارة قواعد البيانات الكبيرة وتنظيم وهيكلة البيانات.',
+         'المشاركة في دورات إدارة المشاريع التنموية لبناء حس القيادة والعمل الجماعي.'
+      ]
+    },
+    {
+      title: 'التوجيه والإرشاد المهني',
+      description: 'تحديد المهن والمسارات الوظيفية الأكثر ملاءمة لقدراتك واهتماماتك وتزويدك بخارطة طريق واضحة وقابلة للقياس للانتقال بنجاح لسوق العمل.',
+      icon: 'fa-compass',
+      badge: 'الإرشاد المهني',
+      previewType: 'career',
+      paths: [
+         { role: 'مهندس برمجيات (Software Engineer)', match: '96%' },
+         { role: 'محلل بيانات وتطبيقات (Data Analyst)', match: '89%' },
+         { role: 'مهندس واجهات ومصمم تجربة (UI/UX)', match: '92%' }
+      ]
+    },
+    {
+      title: 'مؤشر جاهزية الطالب العام',
+      description: 'مقياس رقمي معتمد وموحد يمثل جاهزيتك الإجمالية للانخراط في التدريب التعاوني والميداني والوظائف المتاحة في السوق بناءً على كل تقييماتك بالمنصة.',
+      icon: 'fa-chart-pie',
+      badge: 'مؤشر الجاهزية',
+      previewType: 'readiness',
+      score: 87
+    }
+  ];
+
+  // 2. Careers Data
+  careers = [
+    {
+      title: 'مهندس برمجيات (Software Engineer)',
+      category: 'tech',
+      demand: 'مرتفع جداً',
+      compatibility: '94%',
+      description: 'تصميم وبناء وصيانة النظم البرمجية وتطبيقات الويب والخدمات السحابية باستخدام أحدث التقنيات وأطر العمل.',
+      skills: ['Angular', 'Spring Boot', 'TypeScript', 'Docker', 'REST API'],
+      color: '#3B82F6'
+    },
+    {
+      title: 'محلل بيانات (Data Analyst)',
+      category: 'tech',
+      demand: 'مرتفع جداً',
+      compatibility: '88%',
+      description: 'تحليل البيانات الضخمة، واستخلاص المعلومات الإحصائية، وتقديم لوحات تحكم تفاعلية لاتخاذ قرارات استراتيجية.',
+      skills: ['Python', 'SQL', 'Power BI', 'Excel', 'Data Mining'],
+      color: '#8B5CF6'
+    },
+    {
+      title: 'مهندس أمن سيبراني (Cybersecurity Engineer)',
+      category: 'tech',
+      demand: 'مرتفع',
+      compatibility: '82%',
+      description: 'حماية البنية التحتية، الشبكات، والأنظمة من الاختراقات الأمنية وتصميم دفاعات أمنية وحلول حماية استباقية.',
+      skills: ['Firewalls', 'Network Security', 'Penetration Testing', 'Linux'],
+      color: '#EF4444'
+    },
+    {
+      title: 'مطور واجهات المستخدم (UI/UX Developer)',
+      category: 'tech',
+      demand: 'مرتفع',
+      compatibility: '91%',
+      description: 'تحويل التصاميم التفاعلية لرمز برمجي عالي الأداء مع التركيز التام على تجربة المستخدم وسرعة استجابة الصفحات.',
+      skills: ['HTML5/CSS3', 'Sass', 'JavaScript', 'Figma', 'Responsive Design'],
+      color: '#0EA5E9'
+    },
+    {
+      title: 'محلل مالي واستثماري (Financial Analyst)',
+      category: 'business',
+      demand: 'متوسط',
+      compatibility: '85%',
+      description: 'دراسة البيانات المالية للمؤسسات لتقديم توصيات استثمارية حكيمة، وإدارة المخاطر وبناء توقعات النمو المستقبلية.',
+      skills: ['Financial Modeling', 'Corporate Finance', 'Excel', 'Valuation'],
+      color: '#F59E0B'
+    },
+    {
+      title: 'أخصائي موارد بشرية (HR Specialist)',
+      category: 'business',
+      demand: 'متوسط',
+      compatibility: '78%',
+      description: 'تنظيم عمليات الاستقطاب والتوظيف، برامج التطوير المهني والتدريب للموظفين، وتنسيق الأداء لبيئة عمل ممتازة.',
+      skills: ['Recruitment', 'Communication', 'Labor Law', 'Performance Management'],
+      color: '#10B981'
+    }
+  ];
+  filteredCareers = [...this.careers];
+
+  filterCareers(category: string) {
+    this.selectedCareerCategory = category;
+    if (category === 'all') {
+      this.filteredCareers = this.careers;
+    } else {
+      this.filteredCareers = this.careers.filter((c) => c.category === category);
+    }
+  }
+
+  // 3. AI Assistant Preview Data & typing simulation
+  chatMessages: { sender: 'user' | 'ai'; text: string; time: string; typing?: boolean }[] = [
+    {
+      sender: 'ai',
+      text: 'مرحباً! أنا المساعد الذكي لمستشار المهن لمنصة عبور. كيف يمكنني مساعدتك اليوم في استكشاف جاهزيتك للتدريب والبحث عن مسار وظيفي؟',
+      time: '10:00 ص',
+    },
+  ];
+  chatPrompts = [
+    'كيف أرفع مؤشر جاهزيتي للتدريب؟',
+    'ما المهارات المطلوبة لوظيفة مهندس البرمجيات؟',
+    'ما هي التخصصات المهنية الأكثر توافقاً معي؟',
+  ];
+  isTyping = false;
+
+  sendPrompt(promptText: string) {
+    if (this.isTyping) return;
+
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' });
+    this.chatMessages.push({ sender: 'user', text: promptText, time: timeStr });
+
+    this.isTyping = true;
+    const typingMsgIndex = this.chatMessages.length;
+    this.chatMessages.push({ sender: 'ai', text: '', time: timeStr, typing: true });
+
+    setTimeout(() => {
+      const responseText = this.getAIResponse(promptText);
+      this.chatMessages.splice(typingMsgIndex, 1); // remove typing
+      this.isTyping = false;
+      this.typeText(responseText, timeStr);
+    }, 1200);
+  }
+
+  typeText(fullText: string, timeStr: string) {
+    let currentText = '';
+    let charIndex = 0;
+    const newMessage = { sender: 'ai' as const, text: '', time: timeStr };
+    this.chatMessages.push(newMessage);
+    const msgIndex = this.chatMessages.length - 1;
+
+    const interval = setInterval(() => {
+      if (charIndex < fullText.length) {
+        currentText += fullText[charIndex];
+        this.chatMessages[msgIndex].text = currentText;
+        charIndex++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 15); // Fast fluid typing animation
+  }
+
+  getAIResponse(prompt: string): string {
+    if (prompt.includes('جاهزيتي')) {
+      return 'لزيادة مؤشر جاهزيتك للتدريب التعاوني والميداني، نوصيك أولاً بإكمال جميع الاختبارات الأكاديمية والمهارات السلوكية. بعد ذلك، قم بسد الثغرات المحددة عبر دورات مقترحة في صفحة التوصيات بالمنصة.';
+    } else if (prompt.includes('مهندس')) {
+      return 'هندسة البرمجيات تتطلب إتقاناً للغات كـ JavaScript/TypeScript مع أطر العمل الحديثة (Angular)، مهارات كتابة الكود النظيف، تصميم أنظمة قواعد البيانات، ومعرفة بأساسيات DevOps وDocker.';
+    } else if (prompt.includes('توافقاً')) {
+      return 'بناءً على نتائج تحليل منصة عبور التقييمي حتى الآن، مسارك الأنسب هو هندسة البرمجيات وتطوير الويب بمعدل توافق 96%، يليه تحليل البيانات الذكية بمعدل توافق 89%.';
+    }
+    return 'أنا هنا لمساعدتك في أي وقت بخصوص مسارك المهني أو استفسارك حول نتائج تقييمك!';
+  }
+
+  // --- البيانات الأساسية الأخرى ---
   stats = [
     {
       title: 'الجامعات المشاركة',
-      value: '45+',
+      value: 45,
       icon: 'fa-building-columns',
       description: 'جامعة حكومية وخاصة',
+      plus: true
     },
     {
       title: 'التخصصات المغطاة',
-      value: '120+',
+      value: 120,
       icon: 'fa-book-open',
       description: 'تخصص أكاديمي متنوع',
+      plus: true
     },
     {
       title: 'الطلبة المستفيدين',
-      value: '25,000+',
+      value: 25000,
       icon: 'fa-users',
-      description: 'طالب وطالبة',
+      description: 'طالب وطالبة مستفيدين',
+      plus: true
     },
     {
-      title: 'معدل التحسن',
-      value: '87%',
+      title: 'معدل التحسن والجاهزية',
+      value: 87,
       icon: 'fa-chart-line',
-      description: 'في الجاهزية للتدريب',
+      description: 'في الجاهزية للتدريب وسوق العمل',
+      percent: true
     },
-  ];
-
-  features = [
-    {
-      icon: 'fa-graduation-cap',
-      title: 'تقييم أكاديمي شامل',
-      description: 'تحليل دقيق للمستوى الأكاديمي',
-    },
-    {
-      icon: 'fa-brain',
-      title: 'التحليل النفسي والسلوكي',
-      description: 'قياس الجوانب النفسية والاجتماعية',
-    },
-    {
-      icon: 'fa-robot',
-      title: 'ذكاء اصطناعي متقدم',
-      description: 'تحليل البيانات بتقنيات الذكاء الاصطناعي',
-    },
-    {
-      icon: 'fa-file-lines',
-      title: 'تقارير تفصيلية',
-      description: 'توصيات مخصصة لكل طالب',
-    },
-  ];
-
-  goals = [
-    {
-      icon: 'fa-chart-line',
-      title: 'قياس الجاهزية',
-      description: 'تقييم دقيق لاستعداد الطلبة',
-    },
-    {
-      icon: 'fa-arrow-trend-up',
-      title: 'رفع الجودة',
-      description: 'تحسين التأهيل الأكاديمي والمهني',
-    },
-    {
-      icon: 'fa-robot',
-      title: 'التطوير المستمر',
-      description: 'توصيات ذكية لتطوير المهارات',
-    },
-    {
-      icon: 'fa-handshake',
-      title: 'التوافق مع السوق',
-      description: 'مخرجات تعليم تلبي احتياجات سوق العمل',
-    },
-  ];
-
-  detailedFeatures = [
-    'تقييم أكاديمي شامل يغطي جميع جوانب التخصص',
-    'تحليل نفسي متعمق للقدرات والمهارات الشخصية',
-    'تقييم سلوكي يقيس المهارات الاجتماعية والقيادية',
-    'استخدام تقنيات الذكاء الاصطناعي في التحليل',
-    'تقارير تفصيلية وتوصيات مخصصة لكل طالب',
-    'مقارنات معيارية مع الأقران والمعايير الوطنية',
   ];
 
   vision2030 = [
-    'بناء جيل مؤهل من الكوادر الوطنية',
-    'تحقيق التميز في التعليم والتدريب',
-    'تعزيز التعاون بين المؤسسات التعليمية وسوق العمل',
-    'رفع نسبة توظيف الخريجين في القطاع الخاص',
-    'تطوير المهارات المطلوبة للوظائف المستقبلية',
-    'دعم الاقتصاد الوطني بكفاءات مؤهلة',
-  ];
-
-  steps = [
-    {
-      number: '1',
-      title: 'التسجيل والتقييم',
-      description:
-        'يقوم الطالب بالتسجيل في المنصة وإجراء التقييمات الثلاثة: الأكاديمي والنفسي والسلوكي',
-    },
-    {
-      number: '2',
-      title: 'التحليل الذكي',
-      description:
-        'يتم تحليل البيانات باستخدام الذكاء الاصطناعي لتحديد مستوى الجاهزية ونقاط القوة والضعف',
-    },
-    {
-      number: '3',
-      title: 'التوصيات والتطوير',
-      description:
-        'تقدم المنصة تقارير تفصيلية وتوصيات مخصصة لتطوير المهارات وتحسين الجاهزية',
-    },
+    'بناء جيل مؤهل ومنافس عالمياً من الكوادر الوطنية الشابة',
+    'تحقيق التميز والجودة في التعليم والتدريب التعاوني والميداني',
+    'تعزيز التعاون والشراكات المثمرة بين الجامعات وقطاعات التوظيف',
+    'رفع نسب التوظيف المباشر للخريجين في القطاعات المستهدفة',
+    'تطوير وتحديث المهارات المستقبلية الأكثر طلباً في سوق العمل'
   ];
 
   partners = [
@@ -206,22 +391,23 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
 
   testimonials = [
     {
-      content: 'المنصة أحدثت نقلة نوعية في قدرتنا على التنبؤ بمستوى جاهزية طلابنا قبل التخرج. دقة التحليلات ساعدتنا في تطوير المناهج.',
+      content: 'أحدثت هذه المنصة نقلة نوعية في كفاءة التنبؤ بمستوى جاهزية الخريجين قبل الالتحاق بالتدريب الميداني. دقة التقييم ساعدتنا كمرشدين وأكاديميين بشكل ملحوظ.',
       author: 'د. أحمد عبدالله',
-      role: 'عميد كلية الهندسة',
+      role: 'عميد كلية الهندسة والعلوم التطبيقية',
       avatar: 'fa-user-tie'
     },
     {
-      content: 'تجربتي مع المنصة كانت ممتازة. اكتشفت نقاط قوتي وتعرفت على المهارات التي أحتاج تطويرها لدخول سوق العمل بثقة.',
+      content: 'تجربتي مع منصة عبور كانت تفاعلية وممتازة. بفضل المؤشر والتوصيات الذكية، عرفت نقاط القوة التي أمتلكها وركزت على سد فجواتي المهارية لأدخل سوق العمل بكل ثقة.',
       author: 'سارة خالد',
-      role: 'طالبة خريجة - علوم حاسب',
+      role: 'طالبة خريجة - هندسة برمجيات',
       avatar: 'fa-user-graduate'
     },
     {
-      content: 'التقارير المفصلة التي توفرها المنصة تختصر الكثير من الوقت والجهد على المرشدين الأكاديميين لتوجيه الطلبة بالشكل الصحيح.',
+      content: 'التقارير المفصلة التي توفرها المنصة تختصر الكثير من الوقت والجهد على المرشدين المهنيين لتوجيه الطلبة نحو المسار المهني الأنسب لقدراتهم النفسية والمعرفية.',
       author: 'أ. محمد العتيبي',
-      role: 'مرشد أكاديمي',
+      role: 'مرشد أكاديمي ومهني',
       avatar: 'fa-user-clock'
     }
   ];
 }
+
