@@ -19,7 +19,7 @@
 
   <!-- Left Panel (RTL) - Form -->
   <div class="auth-form-container d-flex justify-content-center align-items-center p-4 p-md-5">
-    <div class="auth-form-content w-100 animate-slide-up" [class.shake]="!cardAnimation">
+    <div class="auth-form-content w-100 animate-slide-up" [class.switching]="!cardAnimation" [class.register-mode]="!isLogin" [class.login-mode]="isLogin">
 
       <!-- Header -->
       <div

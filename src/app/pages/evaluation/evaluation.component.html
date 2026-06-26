@@ -7,13 +7,98 @@
     <div class="bg-circle bg-circle-3"></div>
   </div>
 
-  <div class="container py-5 position-relative">
-    <!-- العنوان -->
-    <div class="text-center mb-5 header-section" #headerSection>
-      <h1 class="page-title">تقييم الجاهزية للتدريب الميداني</h1>
-      <p class="page-subtitle">تحليل شامل متعدد الأبعاد لقياس مستوى استعدادك</p>
-      <div class="title-underline"></div>
+  <!-- Hero Section -->
+  <section class="hero-section position-relative" #headerSection>
+    <div class="hero-grid-pattern"></div>
+    <div class="hero-mesh">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
     </div>
+    <div class="container position-relative py-4">
+      <div class="row align-items-center g-5">
+        <!-- Right Column: Text (RTL) -->
+        <div class="col-12 col-lg-6 text-center text-lg-start">
+          <div class="badge-support mb-3 mx-auto mx-lg-0 d-inline-block">
+            <i class="fa-solid fa-chart-line ms-2" style="color: var(--obour-secondary);"></i>
+            <span>لوحة معلومات الطالب</span>
+          </div>
+          <h1 class="display-3 fw-bold mb-3 text-white page-title">تقييم الجاهزية للتدريب</h1>
+          <p class="fs-5 max-w-2xl text-white-75 mb-0 mx-auto mx-lg-0 page-subtitle">
+            تحليل شامل متعدد الأبعاد لقياس مستوى استعدادك الأكاديمي والمهني، يعرض نقاط قوتك وتوصيات سد الفجوات المهارية بدقة بالغة.
+          </p>
+        </div>
+
+        <!-- Left Column: 3D Compatibility Dashboard Mockup -->
+        <div class="col-12 col-lg-6 d-none d-lg-block">
+          <div class="perspective-container">
+            <div class="mockup-glass animate-float" [style.transform]="'rotateY(' + heroRotateY + 'deg) rotateX(' + heroRotateX + 'deg) translateZ(0)'">
+              <div class="mockup-header">
+                <div class="dot bg-danger"></div>
+                <div class="dot bg-warning"></div>
+                <div class="dot bg-success"></div>
+              </div>
+              <div class="mockup-tabs d-flex align-items-center gap-2 px-3 py-2 border-bottom border-secondary-subtle">
+                <div class="mockup-tab active px-2 py-1 rounded d-flex align-items-center gap-1">
+                  <i class="fa-solid fa-square-poll-vertical small text-primary-light"></i>
+                  <span class="fw-medium small text-primary-color">تحليل النتائج</span>
+                </div>
+              </div>
+              <div class="mockup-body p-4 text-start">
+                <div class="row align-items-center mb-3">
+                  <div class="col-7">
+                    <h6 class="fw-bold text-white mb-1">مؤشر الجاهزية الإجمالي</h6>
+                    <p class="text-white-50 small mb-0">مستوى متقدم وجاهز للعمل</p>
+                  </div>
+                  <div class="col-5 text-end">
+                    <div class="readiness-radial-badge bg-primary-soft text-primary-light border border-primary-glow d-inline-block px-3 py-1.5 rounded-pill fw-bold">
+                      85% جاهز
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Skill breakdowns progress list -->
+                <div class="skills-breakdown d-flex flex-column gap-3">
+                  <div>
+                    <div class="d-flex justify-content-between text-white-75 small mb-1">
+                      <span>التقييم الأكاديمي والتقني</span>
+                      <span class="fw-bold">85%</span>
+                    </div>
+                    <div class="progress" style="height: 6px; background: rgba(255,255,255,0.08);">
+                      <div class="progress-bar bg-primary" role="progressbar" style="width: 85%;"></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="d-flex justify-content-between text-white-75 small mb-1">
+                      <span>التحليل النفسي والسلوكي</span>
+                      <span class="fw-bold">78%</span>
+                    </div>
+                    <div class="progress" style="height: 6px; background: rgba(255,255,255,0.08);">
+                      <div class="progress-bar bg-purple" role="progressbar" style="width: 78%; background-color: #8b5cf6;"></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="d-flex justify-content-between text-white-75 small mb-1">
+                      <span>متوسط أقران التخصص</span>
+                      <span class="fw-bold">72%</span>
+                    </div>
+                    <div class="progress" style="height: 6px; background: rgba(255,255,255,0.08);">
+                      <div class="progress-bar bg-success" role="progressbar" style="width: 72%; background-color: #10b981;"></div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container py-4 position-relative">
 
     <!-- بطاقات الإحصائيات (من Dashboard) -->
     <div class="row g-4 mb-5 stats-section" #statsSection>
@@ -21,7 +106,7 @@
         class="col-12 col-md-6 col-lg-3 stat-card-wrapper"
         *ngFor="let stat of stats; let i = index"
       >
-        <div class="stat-card modern-card" [ngClass]="'stat-' + stat.color">
+        <div class="stat-card modern-card spotlight-card border-glow-premium" [ngClass]="'stat-' + stat.color">
           <div class="stat-icon-wrapper">
             <i [class]="stat.iconClass"></i>
           </div>
@@ -35,7 +120,7 @@
     </div>
 
     <!-- الجاهزية الإجمالية -->
-    <div class="overall-readiness-card modern-card mb-5" #overallCard>
+    <div class="overall-readiness-card modern-card spotlight-card border-glow-premium mb-5" #overallCard>
       <div class="text-center">
         <div class="readiness-header">
           <div class="readiness-icon-wrapper">
@@ -75,15 +160,15 @@
       </div>
     </div>
 
-    <!-- الأقسام (أكاديمي ونفسي فقط) -->
+    <!-- الأقسام (أكاديمي ونفسي وسلوكي) -->
     <div class="row g-4 mb-5">
       <div
-        class="col-12 col-lg-6"
+        class="col-12 col-lg-4"
         *ngFor="let section of getSections(); let i = index"
         #sectionCard
       >
         <div
-          class="section-card modern-card h-100"
+          class="section-card modern-card spotlight-card border-glow-premium h-100"
           [ngClass]="'section-' + section.color"
         >
           <!-- رأس البطاقة -->
@@ -193,7 +278,7 @@
 
         <!-- التوزيع حسب المحاور -->
         <div class="col-12 col-lg-6">
-          <div class="dashboard-card modern-card">
+          <div class="dashboard-card modern-card spotlight-card border-glow-premium">
             <div class="dashboard-card-header">
               <div class="dashboard-card-icon">
                 <i class="bi bi-pie-chart-fill"></i>
@@ -202,7 +287,7 @@
             </div>
             <div class="dashboard-card-body">
               <div class="row text-center g-4">
-                <div class="col-6" *ngFor="let axis of axesData">
+                <div class="col-4" *ngFor="let axis of axesData">
                   <app-progress-circle
                     [percentage]="axis.percentage"
                     [size]="120"
@@ -230,7 +315,7 @@
       <!-- المهارات الأساسية وآخر الإنجازات -->
       <div class="row g-4">
         <div class="col-12 col-lg-8">
-          <div class="dashboard-card modern-card">
+          <div class="dashboard-card modern-card spotlight-card border-glow-premium">
             <div class="dashboard-card-header">
               <div class="dashboard-card-icon">
                 <i class="bi bi-book-fill"></i>
@@ -252,7 +337,7 @@
         </div>
 
         <div class="col-12 col-lg-4">
-          <div class="dashboard-card modern-card">
+          <div class="dashboard-card modern-card spotlight-card border-glow-premium">
             <div class="dashboard-card-header">
               <div class="dashboard-card-icon">
                 <i class="bi bi-trophy-fill"></i>
@@ -286,7 +371,7 @@
     </div>
 
     <!-- التوصيات الذكية -->
-    <div class="recommendations-section modern-card" #recommendationsSection>
+    <div class="recommendations-section modern-card spotlight-card border-glow-premium" #recommendationsSection>
       <div class="recommendations-header">
         <div class="recommendations-icon">
           <i class="bi bi-lightbulb-fill"></i>

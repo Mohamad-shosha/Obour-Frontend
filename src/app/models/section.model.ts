@@ -5,4 +5,9 @@ export interface Section {
   name: string;
   type: SectionType;
   parentId?: number;
+  questionsCount?: number;
+  duration?: number;
+  difficulty?: string;
+  difficultyClass?: string;
+  description?: string;
 }

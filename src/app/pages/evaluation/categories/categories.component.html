@@ -1,90 +1,471 @@
+<!-- src/app/pages/evaluation/categories/categories.component.html -->
 <div class="categories-page min-vh-100" dir="rtl">
-  <div class="container px-4 py-5">
-
-
-    <!-- Page Header -->
-    <div class="text-center mb-5 animate-slide-up">
-      <div class="page-badge mx-auto mb-3">
-        <i class="fa-solid fa-rocket ms-2"></i>
-        اختر مسارك التقييمي
+  <!-- Hero Section -->
+  <section class="hero-section position-relative scroll-animate mb-5">
+      <div class="hero-grid-pattern"></div>
+      <div class="hero-mesh">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
       </div>
-      <h1 class="display-5 fw-bold text-dark mb-3">ابدأ رحلة التقييم</h1>
-      <p class="lead text-muted mx-auto max-w-xl">
-        اختر القسم المناسب لك لبدء رحلة القياس والتطوير الذاتي. كل قسم يمنحك رؤية أعمق عن مهاراتك.
-      </p>
-    </div>
-
-    <!-- Skeleton Loaders -->
-    <div *ngIf="loading" class="row g-4 justify-content-center">
-      <div class="col-12 col-md-6 col-lg-5" *ngFor="let i of [0,1]">
-        <div class="skeleton-card p-4 rounded-4">
-          <div class="skeleton mb-4" style="height: 80px; width: 80px; border-radius: 20px; margin: 0 auto;"></div>
-          <div class="skeleton mb-3" style="height: 24px; width: 60%; margin: 0 auto;"></div>
-          <div class="skeleton mb-2" style="height: 16px; width: 80%; margin: 0 auto;"></div>
-          <div class="skeleton mb-4" style="height: 16px; width: 70%; margin: 0 auto;"></div>
-          <div class="skeleton" style="height: 48px; border-radius: 50px;"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Error State -->
-    <div *ngIf="error" class="text-center py-5 animate-fade-in">
-      <div class="empty-state-icon mx-auto mb-4 bg-danger-soft">
-        <i class="fa-solid fa-triangle-exclamation text-danger fs-2"></i>
-      </div>
-      <h3 class="h4 fw-bold text-dark mb-2">حدث خطأ</h3>
-      <p class="text-muted">{{ error }}</p>
-    </div>
-
-    <!-- Sections Grid -->
-    <div class="row g-4 justify-content-center animate-cards" *ngIf="!loading && !error">
-      <div *ngFor="let section of sections; let i = index"
-           class="col-12 col-md-6 col-lg-5"
-           (click)="goToSection(section.id)"
-           style="cursor: pointer">
-        <div class="category-card h-100 rounded-4 overflow-hidden"
-             [ngClass]="{'category-card--academic': section.type === 'academic', 'category-card--psych': section.type !== 'academic'}">
-
-          <!-- Card Top Banner -->
-          <div class="card-banner p-4 text-center">
-            <div class="icon-badge mx-auto mb-3">
-              <i [class]="getIconClass(section.type)" class="text-white fs-2"></i>
+      <div class="container position-relative py-4">
+        <div class="row align-items-center g-5">
+          <!-- Right Column: Text (RTL) -->
+          <div class="col-12 col-lg-6 text-center text-lg-start">
+            <div class="badge-support mb-3 mx-auto mx-lg-0 d-inline-block">
+              <i class="fa-solid fa-rocket ms-2" style="color: var(--obour-secondary);"></i>
+              <span>اختر مسارك التقييمي</span>
             </div>
-            <h2 class="fs-4 fw-bold text-white mb-1">{{ section.name }}</h2>
-            <p class="text-white-75 small mb-0">
-              {{ section.type === 'academic' ? 'التقييم الأكاديمي والتقني' : 'التحليل النفسي والسلوكي' }}
+            <h1 class="display-3 fw-bold mb-3 text-white">ابدأ رحلة التقييم</h1>
+            <p class="fs-5 max-w-2xl text-white-75 mb-0 mx-auto mx-lg-0">
+              اختر القسم المناسب لك لبدء رحلة القياس والتطوير الذاتي. كل قسم يمنحك رؤية أعمق عن مهاراتك الأكاديمية والمهنية والنفسية.
             </p>
+            
+            <!-- Glass Alert panel for guidelines -->
+            <div class="guidelines-small-box p-3 rounded-3 mt-4 border text-start" style="background: rgba(255, 122, 89, 0.05); border-color: rgba(255, 122, 89, 0.2) !important; max-width: 480px; margin: 1.5rem auto 0 lg:0;">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <i class="fa-solid fa-circle-info text-secondary"></i>
+                <span class="fw-bold small text-white">إرشادات سريعة:</span>
+              </div>
+              <p class="m-0 text-white-50 small lh-base">يرجى قراءة الأسئلة بعناية؛ لا يمكنك تعديل إجاباتك بعد تسليم أي قسم.</p>
+            </div>
           </div>
 
-          <!-- Card Body -->
-          <div class="card-body-content p-4 bg-transparent">
-            <ul class="feature-list mb-4">
-              <li *ngFor="let item of getItemsForSection(section.type)" class="d-flex align-items-center gap-3 mb-3">
-                <i class="fa-solid fa-circle-check flex-shrink-0" [ngClass]="section.type === 'academic' ? 'text-primary' : 'text-success'"></i>
-                <span class="text-muted small">{{ item }}</span>
-              </li>
-            </ul>
+          <!-- Left Column: 3D Stacked Cards Deck -->
+          <div class="col-12 col-lg-6 d-none d-lg-block">
+            <div class="perspective-container">
+              <div class="deck-wrapper animate-float" [style.transform]="'rotateY(' + heroRotateY + 'deg) rotateX(' + heroRotateX + 'deg) translateZ(0)'">
+                
+                <!-- Card 3 (Bottom Stack) -->
+                <div class="stacked-card card-3 p-3 rounded-4">
+                  <div class="d-flex align-items-center gap-2 mb-2">
+                    <div class="indicator-icon bg-info text-white rounded"><i class="fa-solid fa-chart-pie small"></i></div>
+                    <span class="fw-bold small text-white">مؤشر الجاهزية</span>
+                  </div>
+                  <p class="text-white-50 small mb-0">تحليل كلي يدمج نتائجك كافة لتوليد مؤشر دقيق لمدى ملاءمتك للتدريب وسوق العمل.</p>
+                </div>
 
-            <button class="btn w-100 py-3 rounded-pill fw-bold fs-6"
-                    [ngClass]="getButtonClass(section.type)">
-              ابدأ الاختبار
-              <i class="fa-solid fa-arrow-left ms-2"></i>
-            </button>
+                <!-- Card 2 (Middle Stack) -->
+                <div class="stacked-card card-2 p-3 rounded-4">
+                  <div class="d-flex align-items-center gap-2 mb-2">
+                    <div class="indicator-icon bg-success text-white rounded"><i class="fa-solid fa-brain small"></i></div>
+                    <span class="fw-bold small text-white">التقييم النفسي والسلوكي</span>
+                  </div>
+                  <p class="text-white-50 small mb-0">قياس ذكائك العاطفي، العمل الجماعي، وإدارة الضغوط لضمان التوافق السلوكي.</p>
+                </div>
+
+                <!-- Card 1 (Top Stack) -->
+                <div class="stacked-card card-1 p-3 rounded-4">
+                  <div class="d-flex align-items-center gap-2 mb-2">
+                    <div class="indicator-icon bg-primary text-white rounded"><i class="fa-solid fa-graduation-cap small"></i></div>
+                    <span class="fw-bold small text-white">التقييم الأكاديمي والتقني</span>
+                  </div>
+                  <p class="text-white-50 small mb-0">قياس قدراتك الأكاديمية في تخصصك واختبار مدى فهمك للمفاهيم الأساسية والتطبيقية.</p>
+                </div>
+
+              </div>
+            </div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <div class="container px-4 py-5">
+      <!-- Stats Counter Strip -->
+      <section class="mb-5 scroll-animate">
+      <div class="row g-4 justify-content-center stats-strip">
+        <div class="col-6 col-md-3">
+          <div class="stat-glass-card spotlight-card border-glow-premium p-4 rounded-4 text-center h-100">
+            <div class="stat-icon-circle bg-primary-soft text-primary mx-auto mb-2">
+              <i class="fa-solid fa-university"></i>
+            </div>
+            <h3 class="fw-bold text-dark mb-1 fs-4">45+</h3>
+            <p class="text-muted mb-1 small fw-bold">الجامعات المشاركة</p>
+            <span class="text-muted-xs">حكومية وخاصة بالمملكة</span>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat-glass-card spotlight-card border-glow-premium p-4 rounded-4 text-center h-100">
+            <div class="stat-icon-circle bg-success-soft text-success mx-auto mb-2">
+              <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+            <h3 class="fw-bold text-dark mb-1 fs-4">120+</h3>
+            <p class="text-muted mb-1 small fw-bold">التخصصات المغطاة</p>
+            <span class="text-muted-xs">برامج أكاديمية وتطبيقية</span>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat-glass-card spotlight-card border-glow-premium p-4 rounded-4 text-center h-100">
+            <div class="stat-icon-circle bg-info-soft text-info mx-auto mb-2">
+              <i class="fa-solid fa-users"></i>
+            </div>
+            <h3 class="fw-bold text-dark mb-1 fs-4">25,000+</h3>
+            <p class="text-muted mb-1 small fw-bold">الطلبة المستفيدين</p>
+            <span class="text-muted-xs">طالب وطالبة مؤهلين</span>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat-glass-card spotlight-card border-glow-premium p-4 rounded-4 text-center h-100">
+            <div class="stat-icon-circle bg-warning-soft text-warning mx-auto mb-2">
+              <i class="fa-solid fa-chart-line"></i>
+            </div>
+            <h3 class="fw-bold text-dark mb-1 fs-4">87%</h3>
+            <p class="text-muted mb-1 small fw-bold">معدل التحسن والجاهزية</p>
+            <span class="text-muted-xs">للانخراط في سوق العمل</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stepper Section (Visual roadmap) -->
+    <section class="py-4 mb-5 scroll-animate">
+      <div class="card p-4 rounded-4" style="background: var(--obour-surface-2); border: 1px solid var(--obour-border);">
+        <h4 class="fw-bold text-dark fs-5 mb-4 text-center">مراحل التقييم والاعتماد المهني</h4>
+        <div class="row g-4 text-center position-relative stepper-row">
+          
+          <!-- Connecting Line (Desktop) -->
+          <div class="stepper-line d-none d-md-block"></div>
+
+          <div class="col-12 col-md-4 position-relative z-index-2">
+            <div class="d-flex flex-column align-items-center step-item">
+              <div class="step-icon-circle bg-primary-soft text-primary mb-3">
+                <i class="fa-solid fa-square-check fa-lg"></i>
+              </div>
+              <h5 class="fw-bold text-dark fs-6 mb-1">1. اختيار القسم الملائم</h5>
+              <p class="text-muted small mb-0 px-3">تحديد المجال الأكاديمي أو السلوكي المراد اختباره</p>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 position-relative z-index-2">
+            <div class="d-flex flex-column align-items-center step-item">
+              <div class="step-icon-circle bg-success-soft text-success mb-3">
+                <i class="fa-solid fa-clock fa-lg"></i>
+              </div>
+              <h5 class="fw-bold text-dark fs-6 mb-1">2. أداء الأسئلة والحل</h5>
+              <p class="text-muted small mb-0 px-3">الإجابة بمصداقية وتركيز لضمان دقة التقرير</p>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 position-relative z-index-2">
+            <div class="d-flex flex-column align-items-center step-item">
+              <div class="step-icon-circle bg-info-soft text-info mb-3">
+                <i class="fa-solid fa-award fa-lg"></i>
+              </div>
+              <h5 class="fw-bold text-dark fs-6 mb-1">3. التقرير والتوصيات</h5>
+              <p class="text-muted small mb-0 px-3">الحصول على مؤشر الجاهزية وتوصيات التطوير المهني</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Available Tracks and Live Profile -->
+    <section class="mb-5">
+      <div class="row g-4" *ngIf="!loading && !error && domains.length > 0">
+        
+        <!-- Right Column: Sections Grid (col-lg-8) -->
+        <div class="col-12 col-lg-8 animate-cards">
+          <div class="text-start mb-4">
+            <h2 class="fs-4 fw-bold text-dark mb-1">أقسام التقييم المتاحة</h2>
+            <p class="text-muted small">اختر مسارك لبدء الأسئلة وتحديد مدى ملاءمتك المهنية.</p>
+          </div>
+          
+          <div class="row g-4">
+            <div *ngFor="let domain of domains; let i = index"
+                 class="col-12 col-md-6"
+                 (click)="goToDomain(domain.id)"
+                 style="cursor: pointer">
+              <div class="category-card spotlight-card h-100 rounded-4 overflow-hidden border-glow-premium d-flex flex-column"
+                   [ngClass]="{'category-card--academic': domain.slug !== 'psychological', 'category-card--psych': domain.slug === 'psychological'}">
+
+                <!-- Card Top Banner -->
+                <div class="card-banner p-4 text-center position-relative" [style.background]="domain.gradient || domain.color">
+                  <div class="position-absolute top-3 start-3">
+                    <span class="status-badge" [ngClass]="domain.slug !== 'psychological' ? 'status-badge--academic' : 'status-badge--psych'">
+                      <span class="pulse-dot"></span>
+                      متاح الآن
+                    </span>
+                  </div>
+                  
+                  <div class="icon-badge mx-auto mb-3">
+                    <i [class]="getIconClass(domain.icon)" class="text-white fs-2"></i>
+                  </div>
+                  <h3 class="fs-5 fw-bold text-white mb-1">{{ domain.nameAr || domain.name }}</h3>
+                  <p class="text-white-75 small mb-0" style="font-size: 0.8rem; min-height: 40px;">
+                    {{ domain.descriptionAr || domain.description }}
+                  </p>
+                </div>
+
+                <!-- Card Body -->
+                <div class="card-body-content p-4 bg-transparent d-flex flex-column flex-grow-1">
+                  
+                  <!-- Quick metrics badges -->
+                  <div class="d-flex justify-content-center gap-2 mb-4 flex-wrap">
+                    <span class="badge-custom-metric d-flex align-items-center gap-1.5 small">
+                      <i class="fa-solid fa-circle-question text-primary"></i>
+                      <span>{{ domain.questionCount || 0 }} سؤالاً</span>
+                    </span>
+                  </div>
+
+                  <!-- Subject chip tags -->
+                  <div class="subject-chips mb-4 flex-grow-1 text-start">
+                    <h5 class="fw-bold text-dark fs-7 mb-2 d-flex align-items-center gap-1.5" style="color: var(--obour-text-secondary) !important;">
+                      <i class="fa-solid fa-cubes text-primary-light"></i>
+                      المقاييس والمفاهيم الرئيسية:
+                    </h5>
+                    <div class="d-flex flex-wrap gap-1.5">
+                      <span class="chip-item px-2.5 py-1 rounded-pill small border" *ngFor="let item of getItemsForDomain(domain.slug)" style="background: rgba(255,255,255,0.03); color: var(--obour-text-primary); border-color: var(--obour-border);">
+                        {{ item }}
+                      </span>
+                    </div>
+                  </div>
+
+                  <button class="btn w-100 py-3 rounded-pill fw-bold fs-6 mt-auto d-flex align-items-center justify-content-center gap-2"
+                          [ngClass]="getButtonClass(domain.slug)">
+                    <span>استكشاف التصنيفات</span>
+                    <i class="fa-solid fa-arrow-left btn-icon"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Left Column: Student Progress & Live Profile Status (col-lg-4) -->
+        <div class="col-12 col-lg-4">
+          <div class="progress-sidebar-card spotlight-card border-glow-premium rounded-4 p-4 h-100 d-flex flex-column" style="background: var(--obour-surface);">
+            
+            <!-- Avatar and greetings -->
+            <div class="sidebar-header d-flex align-items-center justify-content-between mb-4">
+              <div class="d-flex align-items-center gap-2">
+                <div class="user-avatar-placeholder d-flex align-items-center justify-content-center bg-primary-soft text-primary rounded-circle" style="width: 46px; height: 46px; font-weight: 700; border: 1.5px solid var(--obour-primary-glow);">
+                  {{ user ? user.name.substring(0,2) : 'زا' }}
+                </div>
+                <div class="text-start">
+                  <h5 class="fw-bold mb-0 text-dark fs-6">{{ user ? user.name : 'طالب زائر' }}</h5>
+                  <span class="text-muted small">حساب معتمد نشط</span>
+                </div>
+              </div>
+              <span class="badge bg-warning-soft text-warning border border-warning-glow px-2.5 py-1 rounded-pill small fw-bold">تحت القياس</span>
+            </div>
+
+            <!-- General progress bar -->
+            <div class="sidebar-progress-section mb-4 text-start p-3 rounded-3 border" style="background: var(--obour-surface-2); border-color: var(--obour-border) !important;">
+              <h6 class="fw-bold text-dark fs-6 mb-3">مؤشر اكتمال الملف المهني</h6>
+              
+              <div class="d-flex align-items-center gap-3">
+                <div class="flex-grow-1">
+                  <div class="d-flex justify-content-between mb-1">
+                    <span class="small text-muted">نسبة الإنجاز</span>
+                    <span class="small fw-bold text-dark">50%</span>
+                  </div>
+                  <div class="progress" style="height: 8px; background: rgba(0, 0, 0, 0.05); border-radius: 10px; overflow: hidden;">
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: 50%; border-radius: 10px;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+                <div class="progress-circle-wrap position-relative d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; flex-shrink: 0;">
+                  <svg width="48" height="48" viewBox="0 0 36 36">
+                    <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="rgba(0,0,0,0.05)" stroke-width="3"></path>
+                    <path class="circle" stroke-dasharray="50, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="var(--obour-primary)" stroke-width="3"></path>
+                  </svg>
+                  <span class="position-absolute small fw-bold text-dark" style="font-size: 0.75rem;">50%</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Steps checklist -->
+            <div class="sidebar-checklist-section mb-4 text-start">
+              <h6 class="fw-bold text-dark fs-6 mb-3">متطلبات الجاهزية الرقمية</h6>
+              <div class="checklist-items d-flex flex-column gap-2.5">
+                
+                <div class="checklist-item d-flex align-items-center justify-content-between p-2.5 rounded-3 border" style="background: var(--obour-surface); border-color: var(--obour-border) !important;">
+                  <div class="d-flex align-items-center gap-2">
+                    <div class="check-icon text-success bg-success-soft rounded-circle d-flex align-items-center justify-content-center" style="width: 24px; height: 24px;">
+                      <i class="fa-solid fa-check small"></i>
+                    </div>
+                    <span class="small text-dark fw-medium">إنشاء الحساب وتفعيل الملف</span>
+                  </div>
+                  <span class="text-success small">مكتمل</span>
+                </div>
+
+                <div class="checklist-item d-flex align-items-center justify-content-between p-2.5 rounded-3 border" style="background: var(--obour-surface); border-color: var(--obour-border) !important;">
+                  <div class="d-flex align-items-center gap-2">
+                    <div class="check-icon text-primary bg-primary-soft rounded-circle d-flex align-items-center justify-content-center" style="width: 24px; height: 24px;">
+                      <i class="fa-solid fa-circle-notch fa-spin small"></i>
+                    </div>
+                    <span class="small text-dark fw-medium">التقييم الأكاديمي والتقني</span>
+                  </div>
+                  <span class="text-primary small fw-bold">متاح الآن</span>
+                </div>
+
+                <div class="checklist-item d-flex align-items-center justify-content-between p-2.5 rounded-3 border opacity-75" style="background: var(--obour-surface); border-color: var(--obour-border) !important;">
+                  <div class="d-flex align-items-center gap-2">
+                    <div class="check-icon text-muted bg-light rounded-circle d-flex align-items-center justify-content-center" style="width: 24px; height: 24px;">
+                      <i class="fa-solid fa-lock small"></i>
+                    </div>
+                    <span class="small text-muted fw-medium">التحليل النفسي والسلوكي</span>
+                  </div>
+                  <span class="text-muted small">مغلق مؤقتاً</span>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Digital Badge preview -->
+            <div class="sidebar-badge-section mt-auto p-3 rounded-4 border text-center position-relative overflow-hidden" style="background: linear-gradient(135deg, rgba(15, 76, 129, 0.03) 0%, rgba(255, 122, 89, 0.03) 100%); border-color: var(--obour-border) !important;">
+              <div class="badge-lock-overlay position-absolute inset-0 d-flex flex-column align-items-center justify-content-center bg-glass-blur" style="backdrop-filter: blur(1px); background: rgba(255,255,255,0.06); z-index: 2;">
+                <i class="fa-solid fa-lock text-muted mb-1 fs-5"></i>
+                <span class="text-muted-xs fw-semibold">يُفتح بعد إتمام جميع التقييمات</span>
+              </div>
+              
+              <div class="badge-glow-icon mx-auto mb-2 text-warning opacity-50" style="font-size: 2.2rem; filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.2));">
+                <i class="fa-solid fa-medal"></i>
+              </div>
+              <h6 class="fw-bold mb-1 text-dark fs-6">وسام جاهزية عبور الرقمي</h6>
+              <p class="text-muted small mb-0 lh-base" style="font-size: 0.75rem;">شهادة رقمية ووسام يثبت جاهزيتك التامة لسوق العمل للتقديم لفرص التدريب مباشرة.</p>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Loader Skeleton -->
+      <div *ngIf="loading" class="row g-4 justify-content-center">
+        <div class="col-12 col-md-6 col-lg-5" *ngFor="let i of [0,1]">
+          <div class="skeleton-card p-4 rounded-4">
+            <div class="skeleton mb-4" style="height: 80px; width: 80px; border-radius: 20px; margin: 0 auto;"></div>
+            <div class="skeleton mb-3" style="height: 24px; width: 60%; margin: 0 auto;"></div>
+            <div class="skeleton mb-2" style="height: 16px; width: 80%; margin: 0 auto;"></div>
+            <div class="skeleton mb-4" style="height: 16px; width: 70%; margin: 0 auto;"></div>
+            <div class="skeleton" style="height: 48px; border-radius: 50px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error State -->
+      <div *ngIf="error" class="text-center py-5 animate-fade-in">
+        <div class="empty-state-icon mx-auto mb-4 bg-danger-soft">
+          <i class="fa-solid fa-triangle-exclamation text-danger fs-2"></i>
+        </div>
+        <h3 class="h4 fw-bold text-dark mb-2">حدث خطأ</h3>
+        <p class="text-muted">{{ error }}</p>
       </div>
 
       <!-- Empty State -->
-      <div *ngIf="sections.length === 0" class="col-12">
-        <div class="text-center py-5">
-          <div class="empty-state-icon mx-auto mb-4">
-            <i class="fa-solid fa-inbox text-muted fs-2"></i>
+      <div *ngIf="!loading && !error && domains.length === 0" class="text-center py-5 animate-fade-in">
+        <div class="empty-state-icon mx-auto mb-4">
+          <i class="fa-solid fa-inbox text-muted fs-2"></i>
+        </div>
+        <h3 class="h4 fw-bold text-dark mb-2">لا توجد مجالات متاحة</h3>
+        <p class="text-muted">لم يتم إضافة أي مجالات تقييم حتى الآن.</p>
+      </div>
+    </section>
+
+    <!-- Pre-Start Guidelines Detailed Section -->
+    <section class="py-5 mb-5 scroll-animate">
+      <div class="text-center mb-4 max-w-xl mx-auto">
+        <h2 class="fs-4 fw-bold text-dark mb-2">تعليمات هامة قبل البدء</h2>
+        <p class="text-muted small">يرجى مراجعة النقاط التالية لضمان الحصول على أفضل تجربة قياس.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-12 col-md-4">
+          <div class="guideline-premium-card spotlight-card border-glow-premium p-4 rounded-4 h-100 text-center" style="background: var(--obour-surface);">
+            <div class="guideline-icon bg-success-soft text-success mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 52px; height: 52px; border-radius: 12px;">
+              <i class="fa-solid fa-laptop"></i>
+            </div>
+            <h4 class="fw-bold text-dark fs-6 mb-2">استخدام الكمبيوتر</h4>
+            <p class="text-muted small mb-0 lh-lg">نوصي بشدة باستخدام جهاز كمبيوتر محمول أو مكتبي لسهولة قراءة الأسئلة الأكاديمية والرسومات المرفقة بوضوح.</p>
           </div>
-          <h3 class="h4 fw-bold text-dark mb-2">لا توجد أقسام متاحة</h3>
-          <p class="text-muted">لم يتم إضافة أي أقسام حتى الآن.</p>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="guideline-premium-card spotlight-card border-glow-premium p-4 rounded-4 h-100 text-center" style="background: var(--obour-surface);">
+            <div class="guideline-icon bg-primary-soft text-primary mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 52px; height: 52px; border-radius: 12px;">
+              <i class="fa-solid fa-wifi"></i>
+            </div>
+            <h4 class="fw-bold text-dark fs-6 mb-2">استقرار الاتصال</h4>
+            <p class="text-muted small mb-0 lh-lg">تأكد من استقرار شبكة الإنترنت لديك، فبعض الأسئلة تحتوي على وسائط متعددة تحتاج تحميل مستمر.</p>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="guideline-premium-card spotlight-card border-glow-premium p-4 rounded-4 h-100 text-center" style="background: var(--obour-surface);">
+            <div class="guideline-icon bg-secondary-soft text-secondary mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 52px; height: 52px; border-radius: 12px;">
+              <i class="fa-solid fa-user-shield"></i>
+            </div>
+            <h4 class="fw-bold text-dark fs-6 mb-2">المصداقية العالية</h4>
+            <p class="text-muted small mb-0 lh-lg">التقييم وسيلة إرشاد وتوجيه مخصصة لمساعدتك، لذا فإن إجابتك الصادقة تعطينا مؤشراً دقيقاً لتوجيهك بشكل صحيح.</p>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
+
+    <!-- Accredited Partners Section -->
+    <section class="py-5 text-center mb-5 scroll-animate" style="border-top: 1px solid var(--obour-border);">
+      <h5 class="fw-bold text-muted small mb-4 text-uppercase" style="letter-spacing: 1px;">شراكات الاعتماد والتوظيف بالمملكة</h5>
+      <div class="d-flex flex-wrap justify-content-center align-items-center gap-3 partner-badges">
+        <span class="partner-badge px-3.5 py-2.5 rounded-3 border small text-muted font-medium d-flex align-items-center gap-2">
+          <i class="fa-solid fa-graduation-cap text-primary"></i>
+          جامعة الملك سعود
+        </span>
+        <span class="partner-badge px-3.5 py-2.5 rounded-3 border small text-muted font-medium d-flex align-items-center gap-2">
+          <i class="fa-solid fa-university text-success"></i>
+          جامعة الملك عبدالعزيز
+        </span>
+        <span class="partner-badge px-3.5 py-2.5 rounded-3 border small text-muted font-medium d-flex align-items-center gap-2">
+          <i class="fa-solid fa-circle-nodes text-warning"></i>
+          برنامج المهارات الرقمية (MCIT)
+        </span>
+        <span class="partner-badge px-3.5 py-2.5 rounded-3 border small text-muted font-medium d-flex align-items-center gap-2">
+          <i class="fa-solid fa-briefcase text-info"></i>
+          صندوق تنمية الموارد البشرية (هدف)
+        </span>
+      </div>
+    </section>
+
+    <!-- FAQs & Support Split Column Accordion Section -->
+    <section class="py-5 scroll-animate mt-5" style="border-top: 1px solid var(--obour-border);">
+      <div class="row g-5 align-items-center">
+        <!-- Left side: Institutional Verification info (Desktop) -->
+        <div class="col-12 col-lg-5 text-center text-lg-start d-none d-lg-block">
+          <div class="dashboard-preview rounded-4 p-5 spotlight-card border-glow-premium" style="background: var(--obour-surface-2);">
+            <h4 class="fw-bold text-dark mb-3">اعتماد أكاديمي ومهني موثق</h4>
+            <p class="text-muted small lh-lg mb-4">تم بناء أدوات التقييم بالتعاون مع لجان الجودة الأكاديمية والشركاء لضمان توافق النتائج مع احتياجات السوق.</p>
+            
+            <div class="d-flex align-items-center gap-3 bg-white p-3 rounded-3 border text-start" style="background: var(--obour-surface) !important; border-color: var(--obour-border) !important;">
+              <div class="icon-circle bg-success text-white d-flex align-items-center justify-content-center" style="width: 44px; height: 44px; border-radius: 12px; font-size: 1.25rem;">
+                <i class="fa-solid fa-shield-halved"></i>
+              </div>
+              <div class="text-start">
+                <h6 class="fw-bold text-dark mb-0 fs-6">مشفر وخصوصية تامة</h6>
+                <p class="text-muted small mb-0">درجاتك لا تعلن إلا للمؤسسة الأكاديمية التابع لها.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right side: FAQs accordion -->
+        <div class="col-12 col-lg-7">
+          <div class="text-start mb-4">
+            <h2 class="fs-4 fw-bold text-dark mb-2">الأسئلة الشائعة</h2>
+            <p class="text-muted small">إجابات سريعة لمساعدتك في استكمال التقييم.</p>
+          </div>
+          <div class="faq-accordion d-flex flex-column gap-3">
+            <div class="faq-item rounded-3 border text-start" *ngFor="let faq of faqs; let idx = index" 
+                 [class.active]="activeFaqIndex === idx" 
+                 style="background: var(--obour-surface); border-color: var(--obour-border) !important; overflow: hidden; transition: all 0.3s ease;">
+              <div class="faq-question p-3.5 d-flex justify-content-between align-items-center" 
+                   (click)="toggleFaq(idx)" 
+                   role="button" style="cursor: pointer;">
+                <h5 class="fw-bold text-dark mb-0 fs-6">{{ faq.question }}</h5>
+                <i class="fa-solid fa-chevron-down text-secondary" style="transition: transform 0.3s ease;" [style.transform]="activeFaqIndex === idx ? 'rotate(180deg)' : 'rotate(0)'"></i>
+              </div>
+              <div class="faq-answer px-3.5 pb-3.5 text-muted small lh-lg" 
+                   *ngIf="activeFaqIndex === idx" style="animation: slideDownFaq 0.3s ease forwards;">
+                {{ faq.answer }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
   </div>
 </div>

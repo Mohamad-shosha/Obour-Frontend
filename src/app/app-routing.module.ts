@@ -15,6 +15,13 @@ import { EvaluationAboutComponent } from './pages/evaluation/evaluation-about/ev
 import { DashboardLayoutComponent } from './shared/components/dashboard-layout/dashboard-layout.component';
 import { SupervisorDashboardComponent } from './pages/supervisor-dashboard/supervisor-dashboard.component';
 
+// New Evaluation Expansion Components
+import { DomainCategoriesComponent } from './pages/evaluation/domain-categories/domain-categories.component';
+import { AssessmentStartComponent } from './pages/evaluation/assessment-start/assessment-start.component';
+import { AssessmentEngineComponent } from './pages/evaluation/assessment-engine/assessment-engine.component';
+import { AssessmentResultsComponent } from './pages/evaluation/assessment-results/assessment-results.component';
+import { AssessmentGuard } from './shared/guards/assessment.guard';
+
 // تعريف المسارات
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -23,9 +30,10 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'auth', component: AuthComponent, data: { mode: 'login', hideFooter: true } },
   { path: 'evaluation', component: CategoriesComponent },
-  { path: 'evaluation/results', component: EvaluationComponent },
-  { path: 'evaluation/sections/:sectionId', component: QuizSelectionComponent },
-  { path: 'evaluation/test/:sectionId', component: QuizTestComponent, data: { hideFooter: true } },
+  { path: 'evaluation/domains/:domainId', component: DomainCategoriesComponent },
+  { path: 'evaluation/start/:templateId', component: AssessmentStartComponent },
+  { path: 'evaluation/engine/:sessionId', component: AssessmentEngineComponent, data: { hideFooter: true, hideHeader: true }, canDeactivate: [AssessmentGuard] },
+  { path: 'evaluation/results/:sessionId', component: AssessmentResultsComponent },
   { path: 'admin/dashboard', component: AdminDashboardComponent, data: { hideHeader: true, hideFooter: true } },
   { path: 'evaluation/about', component: EvaluationAboutComponent },
   { 

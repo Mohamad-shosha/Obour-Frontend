@@ -1,24 +1,24 @@
 /* src/app/shared/components/footer/footer.component.scss */
 
 // --- Modern Color Palette ---
-$primary: #6366f1;
-$primary-dark: #4f46e5;
-$primary-light: #818cf8;
-$secondary: #8b5cf6;
+$primary: #0f4c81;         // Royal Blue matching --obour-primary
+$primary-dark: #072a49;    // Dark Royal Blue matching --obour-primary-dark
+$primary-light: #2563eb;   // Light Blue matching --obour-primary-light
+$secondary: #ff7a59;       // Orange matching --obour-secondary
 $success: #10b981;
-$info: #06b6d4;
-$slate-900: #0f172a;
-$slate-800: #1e293b;
-$slate-700: #334155;
-$slate-600: #475569;
-$slate-500: #64748b;
+$info: #3b82f6;
+$slate-900: #070d19;       // Matching dark gradient top background
+$slate-800: #0c1830;       // Matching dark gradient middle background
+$slate-700: #162a54;       // Matching dark gradient bottom background
+$slate-600: #1e293b;
+$slate-500: #475569;
 $slate-400: #94a3b8;
 $slate-300: #cbd5e1;
 
 // Gradients
-$gradient-primary: linear-gradient(135deg, $primary 0%, $primary-dark 100%);
-$gradient-secondary: linear-gradient(135deg, $secondary 0%, #7c3aed 100%);
-$gradient-footer: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+$gradient-primary: linear-gradient(135deg, $primary-light 0%, $primary 100%);
+$gradient-secondary: linear-gradient(135deg, $secondary 0%, #ff8a70 100%);
+$gradient-footer: linear-gradient(180deg, $slate-900 0%, $slate-800 100%);
 
 // Shadows
 $shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);

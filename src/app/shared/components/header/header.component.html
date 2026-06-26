@@ -1,15 +1,15 @@
-<header class="main-header sticky-top animate-header pt-3 pb-2">
+<header class="main-header sticky-top animate-header pt-2 pb-1">
   <div class="container">
-    <div class="floating-header-inner px-3 px-md-4 py-2 d-flex align-items-center justify-content-between">
+    <div class="floating-header-inner px-3 px-md-4 py-1.5 d-flex align-items-center justify-content-between flex-nowrap">
       
       <!-- Logo (يسار) -->
-      <div class="d-flex align-items-center gap-2 gap-md-3 logo-area" (click)="onNavigate('home')" role="button" aria-label="الصفحة الرئيسية">
+      <div class="d-flex align-items-center gap-2 logo-area" (click)="onNavigate('home')" role="button" aria-label="الصفحة الرئيسية">
         <div class="logo-circle">
-          <i class="fa-solid fa-graduation-cap text-white fs-6 fs-md-5"></i>
+          <i class="fa-solid fa-graduation-cap text-white fs-6"></i>
         </div>
-        <div class="d-flex align-items-center gap-2">
-          <h1 class="h5 fw-bold mb-0" style="color: var(--obour-primary);">عبور</h1>
-          <span class="d-none d-xl-block" style="color: var(--obour-text-secondary); font-size: 0.85rem; padding-right: 5px; border-right: 1px solid var(--obour-border);">
+        <div class="d-flex align-items-center gap-2 flex-nowrap">
+          <h1 class="h5 fw-bold mb-0 text-nowrap" style="color: var(--obour-primary);">عبور</h1>
+          <span class="d-none d-xl-block text-nowrap" style="color: var(--obour-text-secondary); font-size: 0.8rem; padding-right: 5px; border-right: 1px solid var(--obour-border);">
             منصة تقييم الجاهزية للتدريب الميداني
           </span>
         </div>
@@ -17,7 +17,7 @@
 
     <!-- Navigation (المنتصف - يظهر فقط على الشاشات المتوسطة فأعلى) -->
     <nav class="d-none d-md-flex align-items-center justify-content-center flex-grow-1 fade-in">
-      <div class="d-flex gap-3">
+      <div class="d-flex gap-2 flex-nowrap">
         <button *ngFor="let item of menuItems" (click)="onNavigate(item.id)" class="header-link"
           [class.active]="currentPage === item.id">
           <i [class]="item.icon"></i>
@@ -27,7 +27,7 @@
     </nav>
 
     <!-- User Area or Guest Buttons -->
-    <div class="d-none d-md-flex align-items-center gap-3 fade-in">
+    <div class="d-none d-md-flex align-items-center gap-2 flex-nowrap fade-in">
       <!-- Theme Toggle -->
       <button class="theme-toggle-btn" (click)="toggleTheme()"
         [attr.aria-label]="(isDark$ | async) ? 'تبديل إلى الوضع الفاتح' : 'تبديل إلى الوضع المظلم'"
@@ -36,9 +36,9 @@
       </button>
       <div class="vr"></div>
       <ng-container *ngIf="user; else guestButtons">
-        <div class="text-end">
-          <div class="fw-semibold">{{ user.name }}</div>
-          <small class="text-muted">
+        <div class="text-end text-nowrap">
+          <div class="fw-semibold" style="font-size: 0.85rem;">{{ user.name }}</div>
+          <small class="text-muted" style="font-size: 0.75rem;">
             {{ user.role === "TEACHER" ? "معلم" : "طالب" }}
           </small>
         </div>
@@ -49,11 +49,11 @@
       </ng-container>
 
       <ng-template #guestButtons>
-        <button type="button" (click)="onNavigate('auth', 'login')" class="btn-ghost d-flex align-items-center gap-2">
+        <button type="button" (click)="onNavigate('auth', 'login')" class="btn-ghost d-flex align-items-center gap-1.5 px-2.5 py-1.5" style="font-size: 0.85rem;">
           <i class="fa-solid fa-arrow-right-to-bracket"></i>
           <span>دخول</span>
         </button>
-        <button type="button" (click)="onNavigate('auth', 'register')" class="btn-premium d-flex align-items-center gap-2 px-3 py-2" style="font-size: 0.9rem;">
+        <button type="button" (click)="onNavigate('auth', 'register')" class="btn-premium d-flex align-items-center gap-1.5 px-3 py-1.5" style="font-size: 0.85rem;">
           <i class="fa-solid fa-user-plus"></i>
           <span>حساب جديد</span>
         </button>

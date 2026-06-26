@@ -8,13 +8,13 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  margin-inline-start: 280px; /* Width of the sidebar */
+  margin-inline-start: 240px; /* Width of the sidebar */
   min-width: 0; /* Prevents flexbox overflow issues */
 }
 
 .page-content {
   flex: 1;
-  padding: 2rem;
+  padding: 1.25rem;
   overflow-y: auto;
   
   /* Optional subtle grid background as seen in some modern dashboards */

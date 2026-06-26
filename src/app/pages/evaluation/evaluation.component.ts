@@ -7,6 +7,7 @@ import {
   ViewChild,
   ViewChildren,
   QueryList,
+  HostListener,
 } from '@angular/core';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -20,6 +21,33 @@ gsap.registerPlugin(ScrollTrigger);
   styleUrls: ['./evaluation.component.scss'],
 })
 export class EvaluationComponent implements AfterViewInit, OnDestroy {
+  heroRotateX = 8;
+  heroRotateY = -12;
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(e: MouseEvent) {
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    
+    const mouseX = e.clientX;
+    const mouseY = e.clientY;
+    
+    const rotateY = ((mouseX / windowWidth) - 0.5) * 16;
+    const rotateX = ((mouseY / windowHeight) - 0.5) * -16;
+    
+    this.heroRotateX = this.heroRotateX + (rotateX - this.heroRotateX) * 0.1;
+    this.heroRotateY = this.heroRotateY + (rotateY - this.heroRotateY) * 0.1;
+
+    // Spotlight Effect for grids
+    const gridItems = document.querySelectorAll('.spotlight-card') as NodeListOf<HTMLElement>;
+    gridItems.forEach(item => {
+      const rect = item.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      item.style.setProperty('--mouse-x', `${x}px`);
+      item.style.setProperty('--mouse-y', `${y}px`);
+    });
+  }
   // بيانات التقييم (بدون السلوكي)
   evaluationData = {
     academic: {
@@ -49,6 +77,20 @@ export class EvaluationComponent implements AfterViewInit, OnDestroy {
       ],
       strengths: ['ثقة عالية بالنفس', 'تحفيز ذاتي ممتاز'],
       improvements: ['تعزيز مهارات إدارة الضغوط', 'تطوير المرونة النفسية'],
+    },
+    behavioral: {
+      title: 'التحليل السلوكي والمهني',
+      iconClass: 'bi bi-people-fill',
+      color: 'green',
+      overall: 82,
+      metrics: [
+        { label: 'التواصل والعمل الجماعي', value: 85 },
+        { label: 'حل المشكلات واتخاذ القرار', value: 80 },
+        { label: 'الاحترافية وأخلاقيات العمل', value: 88 },
+        { label: 'المبادرة والتطوير الذاتي', value: 75 },
+      ],
+      strengths: ['التزام ممتاز بأخلاقيات العمل', 'مهارات تواصل وتفاعل جماعي قوية'],
+      improvements: ['تحسين مهارات المبادرة الفردية', 'تطوير سرعة اتخاذ القرار تحت الضغط'],
     },
   };
 
@@ -98,6 +140,7 @@ export class EvaluationComponent implements AfterViewInit, OnDestroy {
   axesData = [
     { title: 'أكاديمي', percentage: 85, color: '#6366f1' },
     { title: 'نفسي', percentage: 78, color: '#8b5cf6' },
+    { title: 'سلوكي ومهني', percentage: 82, color: '#10b981' },
   ];
 
   // بيانات المهارات الأساسية
@@ -146,8 +189,8 @@ export class EvaluationComponent implements AfterViewInit, OnDestroy {
   get overallReadiness(): number {
     const academic = this.evaluationData.academic.overall;
     const psychological = this.evaluationData.psychological.overall;
-    // حساب المتوسط بدون السلوكي
-    return Math.round((academic + psychological) / 2);
+    const behavioral = this.evaluationData.behavioral.overall;
+    return Math.round((academic + psychological + behavioral) / 3);
   }
 
   get readinessMessage(): string {

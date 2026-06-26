@@ -1,5 +1,5 @@
 // src/app/pages/about/about.component.ts
-import { Component, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,7 +9,35 @@ import { Router } from '@angular/router';
 })
 export class AboutComponent implements AfterViewInit, OnDestroy {
   private observer!: IntersectionObserver;
+  heroRotateX = 8;
+  heroRotateY = -12;
+
   constructor(private router: Router) {}
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(e: MouseEvent) {
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    
+    const mouseX = e.clientX;
+    const mouseY = e.clientY;
+    
+    const rotateY = ((mouseX / windowWidth) - 0.5) * 16;
+    const rotateX = ((mouseY / windowHeight) - 0.5) * -16;
+    
+    this.heroRotateX = this.heroRotateX + (rotateX - this.heroRotateX) * 0.1;
+    this.heroRotateY = this.heroRotateY + (rotateY - this.heroRotateY) * 0.1;
+
+    // Spotlight Effect for grids
+    const gridItems = document.querySelectorAll('.spotlight-card') as NodeListOf<HTMLElement>;
+    gridItems.forEach(item => {
+      const rect = item.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      item.style.setProperty('--mouse-x', `${x}px`);
+      item.style.setProperty('--mouse-y', `${y}px`);
+    });
+  }
 
   ngAfterViewInit() {
     this.initScrollAnimations();

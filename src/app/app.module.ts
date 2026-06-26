@@ -22,6 +22,10 @@ import { QuizSelectionComponent } from './pages/evaluation/quiz-selection/quiz-s
 import { QuizTestComponent } from './pages/evaluation/quiz-test/quiz-test.component';
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
 import { EvaluationAboutComponent } from './pages/evaluation/evaluation-about/evaluation-about.component';
+import { DomainCategoriesComponent } from './pages/evaluation/domain-categories/domain-categories.component';
+import { AssessmentStartComponent } from './pages/evaluation/assessment-start/assessment-start.component';
+import { AssessmentEngineComponent } from './pages/evaluation/assessment-engine/assessment-engine.component';
+import { AssessmentResultsComponent } from './pages/evaluation/assessment-results/assessment-results.component';
 import { BackgroundShapesComponent } from './shared/components/background-shapes/background-shapes.component';
 import { DashboardLayoutComponent } from './shared/components/dashboard-layout/dashboard-layout.component';
 import { DashboardSidebarComponent } from './shared/components/dashboard-sidebar/dashboard-sidebar.component';
@@ -46,6 +50,10 @@ import { SupervisorDashboardComponent } from './pages/supervisor-dashboard/super
     QuizTestComponent,
     AdminDashboardComponent,
     EvaluationAboutComponent,
+    DomainCategoriesComponent,
+    AssessmentStartComponent,
+    AssessmentEngineComponent,
+    AssessmentResultsComponent,
     BackgroundShapesComponent,
     DashboardLayoutComponent,
     DashboardSidebarComponent,

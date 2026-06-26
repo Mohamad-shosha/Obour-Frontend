@@ -1,20 +1,21 @@
-<!-- src/app/pages/evaluation/quiz-selection/quiz-selection.component.html -->
+<!-- quiz-selection.component.html -->
 <div
   class="quiz-section min-vh-100 d-flex align-items-center justify-content-center"
   dir="rtl"
 >
-  <!-- Animated Background Elements -->
+  <!-- Animated Background Orbs -->
   <div class="background-animation">
     <div class="bg-circle bg-circle-1"></div>
     <div class="bg-circle bg-circle-2"></div>
     <div class="bg-circle bg-circle-3"></div>
   </div>
 
-  <div class="container py-5 position-relative">
+  <div class="container py-4 position-relative">
+
     <!-- زر الرجوع -->
     <div class="back-button-wrapper" #backButton>
       <button class="btn btn-back-modern" (click)="goBack()">
-        <i class="bi bi-arrow-right me-2"></i>
+        <i class="bi bi-arrow-right"></i>
         <span>العودة إلى الفئات</span>
       </button>
     </div>
@@ -38,7 +39,7 @@
         </div>
       </div>
       <h1 class="section-title">{{ parentSection.name }}</h1>
-      <p class="section-subtitle">اختر الاختبار الذي تريد إجراءه</p>
+      <p class="section-subtitle">اختر الاختبار الذي تريد إجراءه للمتابعة</p>
       <div class="title-underline"></div>
     </div>
 
@@ -59,7 +60,7 @@
     <!-- رسالة خطأ -->
     <div *ngIf="error" class="error-alert-wrapper" #errorElement>
       <div class="alert-modern alert-error">
-        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        <i class="bi bi-exclamation-triangle-fill"></i>
         <span>{{ error }}</span>
       </div>
     </div>
@@ -74,7 +75,7 @@
           #quizCard
         >
           <div
-            class="card quiz-card text-center h-100 border-0"
+            class="card quiz-card h-100 border-0"
             [ngClass]="{
               'academic-card': section.type === 'academic',
               'psych-card': section.type === 'psychological'
@@ -83,51 +84,121 @@
             (mouseenter)="onCardHover($event)"
             (mouseleave)="onCardLeave($event)"
           >
-            <!-- Card Background Pattern -->
+            <!-- Dot-Grid Background Pattern -->
             <div class="card-pattern"></div>
+            <!-- Shine Sweep -->
+            <div class="card-shine"></div>
 
             <!-- Card Content -->
-            <div class="card-body d-flex flex-column p-4">
-              <!-- Card Icon -->
-              <div class="card-icon-wrapper">
+            <div class="card-body d-flex flex-column">
+
+              <!-- Row 1: Category Label + Difficulty -->
+              <div class="card-top-row">
+                <span class="card-category-badge">
+                  <i [class]="getCardIconClass(section.type)"></i>
+                  {{ section.type === 'academic' ? 'أكاديمي' : 'نفسي وسلوكي' }}
+                </span>
+                <span class="difficulty-badge"
+                  [ngClass]="{
+                    'level-success': section.difficultyClass === 'success',
+                    'level-warning': section.difficultyClass === 'warning',
+                    'level-danger':  section.difficultyClass === 'danger'
+                  }">
+                  <i class="bi bi-bar-chart-fill"></i>
+                  {{ section.difficulty || 'مبتدئ' }}
+                </span>
+              </div>
+
+              <!-- Row 2: Icon -->
+              <div class="card-icon-wrapper text-center">
                 <div
                   class="card-icon"
                   [ngClass]="{
                     'icon-academic': section.type === 'academic',
-                    'icon-psych': section.type === 'psychological'
+                    'icon-psych':    section.type === 'psychological'
                   }"
                 >
                   <i [class]="getCardIconClass(section.type)"></i>
                 </div>
               </div>
 
-              <!-- Card Title -->
-              <h5 class="card-title">{{ section.name }}</h5>
+              <!-- Row 3: Title + Description -->
+              <h5 class="card-title text-center">{{ section.name }}</h5>
+              <p class="card-description text-center mb-0">{{ section.description }}</p>
 
-              <!-- Card Description Placeholder -->
-              <p class="card-description">ابدأ التقييم الآن</p>
+              <!-- Row 4: Stat Chips -->
+              <div class="card-accent-bar mt-3"
+                [ngClass]="{
+                  'academic-accent': section.type === 'academic',
+                  'psych-accent': section.type === 'psychological'
+                }">
+                <div class="stat-chip">
+                  <span class="stat-value">{{ section.questionsCount || 10 }}</span>
+                  <span class="stat-label">سؤال</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-chip">
+                  <span class="stat-value">{{ section.duration || 15 }}</span>
+                  <span class="stat-label">دقيقة</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-chip">
+                  <span class="stat-value">{{ section.difficultyClass === 'danger' ? '🔴' : section.difficultyClass === 'warning' ? '🟡' : '🟢' }}</span>
+                  <span class="stat-label">مستوى</span>
+                </div>
+              </div>
 
-              <!-- Card Button -->
+              <!-- Row 5: Progress Bar -->
+              <div class="card-progress-bar-wrapper">
+                <div class="progress-label">
+                  <span>نسبة الاكتمال</span>
+                  <span>0%</span>
+                </div>
+                <div class="card-progress-bar">
+                  <div class="progress-fill"
+                    [ngClass]="{
+                      'fill-academic': section.type === 'academic',
+                      'fill-psych':    section.type === 'psychological'
+                    }"
+                    style="width: 0%"></div>
+                </div>
+              </div>
+
+              <!-- Row 6: Tags -->
+              <div class="card-tags">
+                <span class="card-tag">
+                  <i class="bi bi-clock me-1"></i>{{ section.duration || 15 }} دقيقة
+                </span>
+                <span class="card-tag">
+                  <i class="bi bi-question-circle me-1"></i>{{ section.questionsCount || 10 }} أسئلة
+                </span>
+                <span class="card-tag" *ngIf="section.type === 'academic'">
+                  <i class="bi bi-mortarboard me-1"></i>تقني
+                </span>
+                <span class="card-tag" *ngIf="section.type === 'psychological'">
+                  <i class="bi bi-heart me-1"></i>سلوكي
+                </span>
+              </div>
+
+              <!-- Row 7: CTA Button -->
               <div class="mt-auto">
                 <button
                   [ngClass]="getButtonClass(section.type)"
                   class="btn btn-quiz w-100"
                 >
-                  <span class="btn-text">ابدأ الاختبار</span>
-                  <i class="bi bi-arrow-left btn-icon"></i>
+                  <span class="btn-text">ابدأ الاختبار الآن</span>
+                  <i class="bi bi-play-circle btn-icon"></i>
                 </button>
               </div>
-            </div>
 
-            <!-- Card Hover Effect -->
-            <div class="card-hover-effect"></div>
+            </div>
           </div>
         </div>
 
         <!-- لا توجد اختبارات -->
         <div
           *ngIf="subSections.length === 0"
-          class="col-12 text-center py-5 empty-state"
+          class="col-12 empty-state"
           #emptyState
         >
           <div class="empty-icon">
@@ -137,5 +208,6 @@
         </div>
       </div>
     </div>
+
   </div>
 </div>

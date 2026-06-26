@@ -1,5 +1,5 @@
 // src/app/pages/admin-dashboard/admin-dashboard.component.ts
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import {
   trigger,
   state,
@@ -94,6 +94,18 @@ export class AdminDashboardComponent implements OnInit {
   questionsMap: { [key: number]: any } = {};
   choicesMap: { [key: number]: any } = {};
   sectionFinalScores: { [key: string]: number } = {};
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(e: MouseEvent) {
+    const gridItems = document.querySelectorAll('.spotlight-card') as NodeListOf<HTMLElement>;
+    gridItems.forEach(item => {
+      const rect = item.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      item.style.setProperty('--mouse-x', `${x}px`);
+      item.style.setProperty('--mouse-y', `${y}px`);
+    });
+  }
 
   constructor(
     private adminService: AdminDashboardService,

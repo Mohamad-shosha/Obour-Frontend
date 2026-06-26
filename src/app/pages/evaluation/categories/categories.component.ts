@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
-import { EvaluationService } from '../../../services/evaluation.service';
-import { Section } from '../../../models/section.model';
+import { AssessmentDomainService } from '../../../services/assessment-domain.service';
+import { AuthService } from '../../../services/auth.service';
+import { AssessmentDomain } from '../../../models/assessment-domain.model';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -9,28 +10,112 @@ import Swal from 'sweetalert2';
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.scss'],
 })
-export class CategoriesComponent implements OnInit {
-  sections: Section[] = [];
+export class CategoriesComponent implements OnInit, AfterViewInit, OnDestroy {
+  private observer!: IntersectionObserver;
+  domains: AssessmentDomain[] = [];
   loading = true;
   error: string | null = null;
+  heroRotateX = 8;
+  heroRotateY = -12;
+  activeFaqIndex: number | null = null;
+  user: any = null;
+
+  faqs = [
+    {
+      question: 'أي الأقسام أبدأ به أولاً؟',
+      answer: 'يُفضل البدء بالتقييم الأكاديمي والتقني أولاً، ثم الانتقال للتحليل النفسي والسلوكي. يمكنك إكمال أي منهما والعودة للآخر لاحقاً.'
+    },
+    {
+      question: 'كم يبلغ عدد الأسئلة في كل قسم؟',
+      answer: 'يحتوي القسم الأكاديمي على ما يقرب من 25-30 سؤالاً تخصصياً، بينما يحتوي القسم النفسي السلوكي على حوالي 40 سؤالاً تقيس أنماط الشخصية.'
+    },
+    {
+      question: 'هل توجد مؤشرات وقت لحل الأسئلة؟',
+      answer: 'نعم، يوجد عداد زمني توجيهي أعلى الاختبار لمساعدتك على تنظيم وقتك أثناء الحل، لكنه لن يغلق الاختبار تلقائياً فور انتهائه.'
+    }
+  ];
 
   constructor(
     private router: Router,
-    private evaluationService: EvaluationService
+    private domainService: AssessmentDomainService,
+    private authService: AuthService
   ) {}
 
-  ngOnInit(): void {
-    this.loadSections();
+  toggleFaq(index: number): void {
+    this.activeFaqIndex = this.activeFaqIndex === index ? null : index;
   }
 
-loadSections(): void {
-  this.evaluationService.getRootSections().subscribe({
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(e: MouseEvent) {
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    
+    const mouseX = e.clientX;
+    const mouseY = e.clientY;
+    
+    const rotateY = ((mouseX / windowWidth) - 0.5) * 16;
+    const rotateX = ((mouseY / windowHeight) - 0.5) * -16;
+    
+    this.heroRotateX = this.heroRotateX + (rotateX - this.heroRotateX) * 0.1;
+    this.heroRotateY = this.heroRotateY + (rotateY - this.heroRotateY) * 0.1;
+
+    // Spotlight Effect for grids
+    const gridItems = document.querySelectorAll('.spotlight-card') as NodeListOf<HTMLElement>;
+    gridItems.forEach(item => {
+      const rect = item.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      item.style.setProperty('--mouse-x', `${x}px`);
+      item.style.setProperty('--mouse-y', `${y}px`);
+    });
+  }
+
+  ngOnInit(): void {
+    this.user = this.authService.getUserFromStorage();
+    this.loadDomains();
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.initScrollAnimations();
+    }, 0);
+  }
+
+  ngOnDestroy() {
+    if (this.observer) {
+      this.observer.disconnect();
+    }
+  }
+
+  initScrollAnimations() {
+    const animatedElements = document.querySelectorAll(
+      '.scroll-animate:not(.visible)'
+    );
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px',
+      }
+    );
+
+    animatedElements.forEach((el) => this.observer.observe(el));
+  }
+
+loadDomains(): void {
+  this.domainService.getAllDomains().subscribe({
     next: (data) => {
-      this.sections = data;
+      this.domains = data;
       this.loading = false;
     },
     error: (err) => {
-      console.error('خطأ أثناء تحميل الأقسام:', err);
+      console.error('خطأ أثناء تحميل المجالات:', err);
       this.loading = false;
 
       const status = err?.status || err?.error?.status || 0;
@@ -60,34 +145,23 @@ loadSections(): void {
 }
 
 
-  goToSection(sectionId: number): void {
-    this.router.navigate(['/evaluation/sections', sectionId]);
+  goToDomain(domainId: number): void {
+    this.router.navigate(['/evaluation/domains', domainId]);
   }
 
-  getIconClass(type: string): string {
-    return type === 'academic'
-      ? 'fas fa-book-open fa-xl'
-      : 'fas fa-brain fa-xl';
+  getIconClass(icon: string): string {
+    return icon || 'bi bi-grid';
   }
 
-  getButtonClass(type: string): string {
-    return type === 'academic' ? 'btn-primary' : 'btn-success';
+  getButtonClass(slug: string): string {
+    return slug === 'psychological' ? 'btn-success' : 'btn-primary';
   }
 
-  getItemsForSection(type: string): string[] {
-    if (type === 'academic') {
-      return [
-        'إدارة المشروعات',
-        'الإنشاءات والرسومات التنفيذية',
-        'التصميم المعماري والداخلي',
-        'وأكثر من ذلك...',
-      ];
-    }
-    return [
-      'إدارة الوقت',
-      'التركيز والانتباه',
-      'الثقة بالنفس',
-      'وأكثر من ذلك...',
-    ];
+  getItemsForDomain(slug: string): string[] {
+    if (slug === 'programming') return ['Java', 'Python', 'JavaScript', 'C#'];
+    if (slug === 'architecture') return ['Design', 'AutoCAD', 'Revit', 'Urban'];
+    if (slug === 'data-science') return ['Stats', 'ML', 'Python', 'Viz'];
+    if (slug === 'cyber-security') return ['OWASP', 'Network', 'Crypto', 'Hacking'];
+    return ['المفاهيم', 'التطبيقات', 'الممارسات'];
   }
 }

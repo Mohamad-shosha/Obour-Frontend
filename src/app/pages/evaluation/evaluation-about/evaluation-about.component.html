@@ -1,25 +1,91 @@
 <!-- src/app/pages/evaluation/evaluation-about/evaluation-about.component.html -->
-<div class="py-5 bg-light min-vh-100">
-  <div class="container">
-
-    <!-- Hero Banner -->
-    <section class="hero-section text-white text-center py-5 scroll-animate">
-      <div class="overlay"></div>
+<div class="evaluation-about-page min-vh-100" dir="rtl">
+  <!-- Hero Banner -->
+  <section class="hero-section position-relative scroll-animate mb-5">
+      <div class="hero-grid-pattern"></div>
+      <div class="hero-mesh">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+      </div>
       <div class="container position-relative py-4">
-        <div class="badge-support d-inline-block mb-3 px-4 py-2 scroll-animate">
-          <span class="small fw-bold">نظام تقييم ذكي وشامل</span>
+        <div class="row align-items-center g-5">
+          <!-- Right Column: Text (RTL: text-end) -->
+          <div class="col-12 col-lg-6 text-center text-lg-start">
+            <div class="badge-support d-inline-block mb-3 px-4 py-2 mx-auto mx-lg-0">
+              <span class="small fw-bold text-gradient-primary">نظام تقييم ذكي وشامل</span>
+            </div>
+            <h1 class="display-4 fw-bold mb-3 text-white">
+              تقييم الجاهزية للتدريب الميداني
+            </h1>
+            <p class="fs-5 text-white-75 max-w-3xl mb-4 mx-auto mx-lg-0">
+              خطوتك الأولى نحو التميز المهني وبناء مستقبل وظيفي ناجح. تقييم متطور يقيس مهاراتك الفنية وتوافقك السلوكي والنفسي لتوجيهك للمسار الأفضل.
+            </p>
+            <div class="d-flex flex-wrap justify-content-center justify-content-lg-start gap-3">
+              <button class="btn btn-premium border-glow-premium" (click)="startEvaluation()">
+                ابدأ التقييم الآن
+                <i class="fa-solid fa-arrow-left ms-2"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Left Column: 3D Mockup Graphic -->
+          <div class="col-12 col-lg-6 d-none d-lg-block">
+            <div class="perspective-container">
+              <div class="mockup-glass animate-float" [style.transform]="'rotateY(' + heroRotateY + 'deg) rotateX(' + heroRotateX + 'deg) translateZ(0)'">
+                <div class="mockup-header">
+                  <div class="dot bg-danger"></div>
+                  <div class="dot bg-warning"></div>
+                  <div class="dot bg-success"></div>
+                </div>
+                <div class="mockup-tabs d-flex align-items-center gap-2 px-3 py-2 border-bottom border-secondary-subtle">
+                  <div class="mockup-tab active px-2 py-1 rounded d-flex align-items-center gap-1">
+                    <i class="fa-solid fa-file-signature small text-primary-light"></i>
+                    <span class="fw-medium small text-primary-color">تقييم تجريبي</span>
+                  </div>
+                </div>
+                <div class="mockup-body p-4 text-start">
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="small text-white-50">القسم: المهارات السلوكية والمهنية</span>
+                    <span class="small text-primary-light fw-bold">75% من الاختبار</span>
+                  </div>
+                  
+                  <!-- Progress bar -->
+                  <div class="progress mb-4" style="height: 6px; background: rgba(255,255,255,0.08);">
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+
+                  <h6 class="fw-bold mb-3 text-white" style="line-height: 1.5;">السؤال: كيف تتعامل مع التغييرات المفاجئة في متطلبات المشروع البرمجي؟</h6>
+                  
+                  <div class="quiz-options d-flex flex-column gap-2">
+                    <div class="quiz-option p-2 rounded border border-secondary-subtle bg-transparent opacity-75 d-flex align-items-center gap-2">
+                      <span class="option-letter bg-secondary-soft text-secondary-light px-2 py-0.5 rounded small">أ</span>
+                      <span class="text-white-75 small">أتمسك بالخطة الأساسية وأرفض التعديلات لتجنب التأخير.</span>
+                    </div>
+                    <div class="quiz-option active p-2 rounded border border-success bg-success-soft d-flex align-items-center justify-content-between">
+                      <div class="d-flex align-items-center gap-2">
+                        <span class="option-letter bg-success text-white px-2 py-0.5 rounded small">ب</span>
+                        <span class="text-white small fw-bold">أقوم بتحليل أثر التغيير ومناقشة الحلول البديلة مع الفريق.</span>
+                      </div>
+                      <i class="fa-solid fa-circle-check text-success"></i>
+                    </div>
+                    <div class="quiz-option p-2 rounded border border-secondary-subtle bg-transparent opacity-75 d-flex align-items-center gap-2">
+                      <span class="option-letter bg-secondary-soft text-secondary-light px-2 py-0.5 rounded small">ج</span>
+                      <span class="text-white-75 small">أطلب تأجيل تسليم المشروع لحين استقرار المتطلبات.</span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <h1 class="display-4 fw-bold mb-3 scroll-animate">
-          تقييم الجاهزية للتدريب الميداني
-        </h1>
-        <p class="fs-5 text-white-75 max-w-3xl mx-auto scroll-animate mb-0">
-          خطوتك الأولى نحو التميز المهني وبناء مستقبل وظيفي ناجح
-        </p>
       </div>
     </section>
 
-    <!-- Why This Evaluation -->
-    <section class="py-6 scroll-animate">
+    <div class="container px-4 py-3">
+      <!-- Why This Evaluation -->
+      <section class="py-6 scroll-animate">
       <div class="text-center mb-5 max-w-2xl mx-auto scroll-animate">
         <h2 class="display-6 fw-bold text-dark mb-3">
           لماذا يجب أن تبدأ التقييم الآن؟
@@ -30,13 +96,88 @@
         <div class="col-12 col-md-6 col-lg-4 scroll-animate"
              *ngFor="let feature of whyEvaluate; let i = index"
              [style.transition-delay]="i * 0.1 + 's'">
-          <div class="feature-card">
+          <div class="feature-card spotlight-card border-glow-premium p-4">
             <div [class]="'icon-box ' + feature.bgClass + ' text-center'">
               <i [class]="'fa-solid fa-' + feature.icon"></i>
             </div>
             <h3 class="h5 fw-bold text-dark mb-2 text-center">{{ feature.title }}</h3>
-            <p class="text-muted text-center mb-0">{{ feature.description }}</p>
+            <p class="text-muted text-center mb-0 small lh-lg">{{ feature.description }}</p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Detailed Assessment Structure Section -->
+    <section class="py-6 scroll-animate" style="background: var(--obour-surface-2); border-radius: var(--radius-xl); border: 1px solid var(--obour-border); margin-bottom: 3.5rem;">
+      <div class="container px-4">
+        <div class="text-center mb-5 max-w-2xl mx-auto">
+          <h2 class="display-6 fw-bold mb-3 text-dark">تفاصيل محاور التقييم</h2>
+          <p class="text-muted fs-5">مجموعات قياس متخصصة صُممت بالتعاون مع خبراء التعليم والتوظيف.</p>
+        </div>
+        
+        <div class="row g-4">
+          <!-- Academic -->
+          <div class="col-12 col-md-4">
+            <div class="card spotlight-card border-glow-premium h-100 p-4 animate-card-hover" style="background: var(--obour-surface); border: 1px solid var(--obour-border); border-radius: var(--radius-lg);">
+              <div class="icon-circle bg-primary-soft text-primary mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 64px; height: 64px; border-radius: 16px; font-size: 1.5rem; background: var(--obour-primary-soft); color: var(--obour-primary);">
+                <i class="fa-solid fa-graduation-cap"></i>
+              </div>
+              <h4 class="fw-bold text-dark fs-5 mb-2 text-center">المعارف الأكاديمية والتقنية</h4>
+              <p class="text-muted small text-center mb-4 lh-lg">قياس معارف التخصص والقدرة على تطبيق المفاهيم البرمجية وحل المشكلات الهندسية الفعلية.</p>
+              <div class="metrics-list-detail border-top border-secondary-subtle pt-3">
+                <div class="d-flex align-items-center gap-2 small text-dark mb-2"><i class="fa-solid fa-circle-check text-success"></i> المبادئ والأسس البرمجية</div>
+                <div class="d-flex align-items-center gap-2 small text-dark mb-2"><i class="fa-solid fa-circle-check text-success"></i> تصميم قواعد وبنى البيانات</div>
+                <div class="d-flex align-items-center gap-2 small text-dark"><i class="fa-solid fa-circle-check text-success"></i> هندسة وتطوير النظم البرمجية</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Psychological -->
+          <div class="col-12 col-md-4">
+            <div class="card spotlight-card border-glow-premium h-100 p-4 animate-card-hover" style="background: var(--obour-surface); border: 1px solid var(--obour-border); border-radius: var(--radius-lg);">
+              <div class="icon-circle bg-success-soft text-success mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 64px; height: 64px; border-radius: 16px; font-size: 1.5rem; background: rgba(16, 185, 129, 0.1); color: #059669;">
+                <i class="fa-solid fa-brain"></i>
+              </div>
+              <h4 class="fw-bold text-dark fs-5 mb-2 text-center">التحليل السلوكي والنفسي</h4>
+              <p class="text-muted small text-center mb-4 lh-lg">تقييم المهارات الناعمة (Soft Skills) ومؤشرات الذكاء العاطفي والتواصل وإدارة الضغوط والمشكلات.</p>
+              <div class="metrics-list-detail border-top border-secondary-subtle pt-3">
+                <div class="d-flex align-items-center gap-2 small text-dark mb-2"><i class="fa-solid fa-circle-check text-success"></i> العمل الجماعي والتواصل الفعال</div>
+                <div class="d-flex align-items-center gap-2 small text-dark mb-2"><i class="fa-solid fa-circle-check text-success"></i> سرعة التكيف وإدارة ضغوط المهام</div>
+                <div class="d-flex align-items-center gap-2 small text-dark"><i class="fa-solid fa-circle-check text-success"></i> حل النزاعات واتخاذ القرار المهني</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Readiness Placement -->
+          <div class="col-12 col-md-4">
+            <div class="card spotlight-card border-glow-premium h-100 p-4 animate-card-hover" style="background: var(--obour-surface); border: 1px solid var(--obour-border); border-radius: var(--radius-lg);">
+              <div class="icon-circle bg-info-soft text-info mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 64px; height: 64px; border-radius: 16px; font-size: 1.5rem; background: rgba(59, 130, 246, 0.1); color: #2563eb;">
+                <i class="fa-solid fa-route"></i>
+              </div>
+              <h4 class="fw-bold text-dark fs-5 mb-2 text-center">المؤشر والجاهزية المهنية</h4>
+              <p class="text-muted small text-center mb-4 lh-lg">دمج نتائجك تلقائياً لإنشاء خريطة قدرات رقمية معتمدة وتقديم توصيات مخصصة للتوظيف والتدريب.</p>
+              <div class="metrics-list-detail border-top border-secondary-subtle pt-3">
+                <div class="d-flex align-items-center gap-2 small text-dark mb-2"><i class="fa-solid fa-circle-check text-success"></i> لوحة تحليل نقاط القوة والضعف</div>
+                <div class="d-flex align-items-center gap-2 small text-dark mb-2"><i class="fa-solid fa-circle-check text-success"></i> اقتراح مسارات العمل الموصى بها</div>
+                <div class="d-flex align-items-center gap-2 small text-dark"><i class="fa-solid fa-circle-check text-success"></i> تصدير تقرير الجاهزية الرقمي المعتمد</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Guidelines Alert Panel -->
+    <section class="mb-6 scroll-animate">
+      <div class="guidelines-alert-card p-4 rounded-4 d-flex align-items-start gap-3" style="background: rgba(255, 122, 89, 0.05); border: 1.5px solid rgba(255, 122, 89, 0.25);">
+        <div class="icon-alert text-secondary flex-shrink-0" style="font-size: 1.5rem;"><i class="fa-solid fa-circle-info"></i></div>
+        <div>
+          <h5 class="fw-bold text-dark mb-2">تنبيهات وإرشادات هامة قبل البدء في التقييم:</h5>
+          <ul class="text-muted small mb-0 lh-lg" style="padding-right: 1.25rem;">
+            <li>تأكد من استقرار اتصالك بالإنترنت طوال فترة أداء الأسئلة.</li>
+            <li>يفضل استخدام جهاز كمبيوتر محمول أو مكتبي بدلاً من الهاتف لتجربة استعراض مريحة.</li>
+            <li>التقييم ليس له درجات رسوب أو نجاح، أجب بمصداقية لتعكس تقاريرك صورتك الحقيقية.</li>
+          </ul>
         </div>
       </div>
     </section>
@@ -80,6 +221,30 @@
                 <span>التوافق مع معايير جودة التعليم الوطني</span>
               </li>
             </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQs Accordion Section -->
+    <section class="py-6 scroll-animate" style="border-top: 1px solid var(--obour-border);">
+      <div class="text-center mb-5 max-w-2xl mx-auto">
+        <h2 class="display-6 fw-bold text-dark mb-2">الأسئلة الشائعة حول التقييم</h2>
+        <p class="text-muted fs-5">إجابات سريعة للأسئلة الأكثر تكراراً من الطلاب.</p>
+      </div>
+      <div class="faq-accordion max-w-3xl mx-auto d-flex flex-column gap-3">
+        <div class="faq-item rounded-4 border" *ngFor="let faq of faqs; let idx = index" 
+             [class.active]="activeFaqIndex === idx" 
+             style="background: var(--obour-surface); border-color: var(--obour-border) !important; overflow: hidden; transition: all 0.3s ease;">
+          <div class="faq-question p-4 d-flex justify-content-between align-items-center" 
+               (click)="toggleFaq(idx)" 
+               role="button" style="cursor: pointer;">
+            <h5 class="fw-bold text-dark mb-0 fs-6">{{ faq.question }}</h5>
+            <i class="fa-solid fa-chevron-down text-secondary" style="transition: transform 0.3s ease;" [style.transform]="activeFaqIndex === idx ? 'rotate(180deg)' : 'rotate(0)'"></i>
+          </div>
+          <div class="faq-answer px-4 pb-4 text-muted small lh-lg" 
+               *ngIf="activeFaqIndex === idx" style="animation: slideDownFaq 0.3s ease forwards;">
+            {{ faq.answer }}
           </div>
         </div>
       </div>

@@ -154,3 +154,354 @@
 @media (max-width: 768px) {
   .category-card { max-width: 480px; margin: 0 auto; }
 }
+
+// ==========================================================================
+// 3D DECK MOCKUP STYLING
+// ==========================================================================
+.perspective-container {
+  perspective: 1200px;
+  width: 100%;
+  max-width: 480px;
+  height: 320px;
+  margin: 0 auto;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+.deck-wrapper {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &.animate-float {
+    animation: float-3d 6s ease-in-out infinite alternate;
+  }
+}
+
+.stacked-card {
+  position: absolute;
+  width: 100%;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  text-align: right; // RTL alignment
+  
+  .indicator-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    &.bg-primary { background: linear-gradient(135deg, var(--obour-primary), var(--obour-primary-light)) !important; }
+    &.bg-success { background: linear-gradient(135deg, #059669, #10b981) !important; }
+    &.bg-info { background: linear-gradient(135deg, #0284c7, #0ea5e9) !important; }
+  }
+
+  // Layout stacking with translateZ and scale
+  &.card-1 {
+    transform: translateZ(40px) translateY(0) scale(1);
+    z-index: 3;
+    border-color: rgba(59, 130, 246, 0.3);
+  }
+
+  &.card-2 {
+    transform: translateZ(0px) translateY(30px) scale(0.94);
+    z-index: 2;
+    opacity: 0.85;
+    border-color: rgba(16, 185, 129, 0.3);
+  }
+
+  &.card-3 {
+    transform: translateZ(-40px) translateY(60px) scale(0.88);
+    z-index: 1;
+    opacity: 0.65;
+    border-color: rgba(14, 165, 233, 0.3);
+  }
+
+  // Hover animations inside the deck
+  &:hover {
+    background: rgba(15, 23, 42, 0.8);
+    border-color: rgba(255, 255, 255, 0.25);
+    
+    &.card-1 { transform: translateZ(60px) translateY(-10px) scale(1.02); }
+    &.card-2 { transform: translateZ(20px) translateY(20px) scale(0.96); opacity: 0.95; }
+    &.card-3 { transform: translateZ(-20px) translateY(50px) scale(0.9); opacity: 0.8; }
+  }
+}
+
+// Background blur elements in hero-mesh
+.orb {
+  animation: float-rotate 20s linear infinite;
+}
+
+@keyframes float-3d {
+  0% {
+    transform: rotateY(-12deg) rotateX(8deg) translateY(0);
+  }
+  100% {
+    transform: rotateY(-8deg) rotateX(12deg) translateY(-8px);
+  }
+}
+
+@keyframes slideDownFaq {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+// ==========================================================================
+// NEW STYLES FOR DETAILED ENHANCEMENT
+// ==========================================================================
+
+.text-muted-xs {
+  font-size: 0.72rem;
+  color: var(--obour-text-disabled);
+  display: block;
+}
+
+// 1. Stats counter cards
+.stat-glass-card {
+  background: var(--obour-surface);
+  border: 1px solid var(--obour-border) !important;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.35s var(--ease-fluid);
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--obour-primary-glow) !important;
+  }
+
+  .stat-icon-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    
+    &.bg-primary-soft { background: var(--obour-primary-soft); color: var(--obour-primary); }
+    &.bg-success-soft { background: rgba(16, 185, 129, 0.1); color: var(--obour-success); }
+    &.bg-info-soft { background: rgba(59, 130, 246, 0.1); color: var(--obour-info); }
+    &.bg-warning-soft { background: rgba(245, 158, 11, 0.1); color: var(--obour-warning); }
+  }
+}
+
+// 2. Stepper roadmap improvements
+.stepper-row {
+  position: relative;
+}
+
+.stepper-line {
+  position: absolute;
+  top: 48px; // aligned vertically with step-icon-circle
+  left: 16%;
+  right: 16%;
+  height: 2px;
+  background: var(--obour-border);
+  z-index: 1;
+  opacity: 0.6;
+}
+
+.step-icon-circle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: all 0.3s ease;
+  border: 2.5px solid var(--obour-border);
+  background: var(--obour-surface) !important;
+  
+  i {
+    font-size: 1.2rem;
+  }
+}
+
+.step-item:hover .step-icon-circle {
+  transform: scale(1.1);
+  border-color: var(--obour-primary);
+  box-shadow: var(--shadow-glow-primary);
+}
+
+// 3. Category cards split customization
+.category-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .card-banner {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .subject-chips {
+    .chip-item {
+      transition: all 0.2s ease;
+      background: var(--obour-surface-2) !important;
+      border-color: var(--obour-border) !important;
+      color: var(--obour-text-main) !important;
+
+      &:hover {
+        background: var(--obour-primary-soft) !important;
+        color: var(--obour-primary-light) !important;
+        border-color: var(--obour-primary-glow) !important;
+      }
+    }
+  }
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 50px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  backdrop-filter: blur(10px);
+  
+  &.status-badge--academic {
+    background: rgba(37, 99, 235, 0.2);
+    color: #93c5fd;
+    border: 1px solid rgba(37, 99, 235, 0.3);
+  }
+
+  &.status-badge--psych {
+    background: rgba(16, 185, 129, 0.2);
+    color: #a7f3d0;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+  }
+
+  .pulse-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: currentColor;
+    animation: badge-pulse 1.8s infinite ease-in-out;
+  }
+}
+
+@keyframes badge-pulse {
+  0% { transform: scale(0.85); opacity: 0.6; }
+  50% { transform: scale(1.25); opacity: 1; }
+  100% { transform: scale(0.85); opacity: 0.6; }
+}
+
+.badge-custom-metric {
+  background: var(--obour-surface-2);
+  border: 1px solid var(--obour-border);
+  color: var(--obour-text-secondary);
+  padding: 0.38rem 0.68rem;
+  border-radius: 8px;
+  font-weight: 600;
+  
+  i {
+    opacity: 0.85;
+  }
+}
+
+// 4. Progress sidebar styling
+.progress-sidebar-card {
+  background: var(--obour-surface);
+  border: 1px solid var(--obour-border);
+  box-shadow: var(--shadow-md);
+  
+  .user-avatar-placeholder {
+    font-size: 1.15rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .progress-circle-wrap {
+    svg {
+      transform: rotate(-90deg);
+      
+      .circle-bg {
+        stroke: var(--obour-border);
+      }
+      .circle {
+        stroke-linecap: round;
+        transition: stroke-dasharray 0.35s ease;
+      }
+    }
+  }
+
+  .checklist-item {
+    transition: transform 0.2s ease;
+    
+    &:hover {
+      transform: translateX(-4px); // RTL
+    }
+
+    .check-icon {
+      font-size: 0.75rem;
+    }
+  }
+
+  .sidebar-badge-section {
+    transition: all 0.3s ease;
+    
+    &:hover {
+      border-color: rgba(245, 158, 11, 0.3) !important;
+      
+      .badge-glow-icon {
+        opacity: 0.85;
+        transform: scale(1.05) rotate(5deg);
+      }
+    }
+    
+    .badge-glow-icon {
+      transition: all 0.4s var(--ease-spring);
+    }
+  }
+}
+
+// Background overlay blur for locked elements
+.bg-glass-blur {
+  background: rgba(15, 23, 42, 0.08) !important;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+// 5. Partners logos badges
+.partner-badges {
+  .partner-badge {
+    background: var(--obour-surface) !important;
+    border-color: var(--obour-border) !important;
+    color: var(--obour-text-secondary) !important;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-3px);
+      border-color: var(--obour-primary-glow) !important;
+      color: var(--obour-primary-light) !important;
+      box-shadow: var(--shadow-md);
+    }
+  }
+}
+
+// Support dark theme overrides
+[data-theme="dark"] {
+  .stat-glass-card, .progress-sidebar-card, .checklist-item, .partner-badge {
+    background: var(--obour-surface) !important;
+    border-color: var(--obour-border) !important;
+  }
+  .sidebar-badge-section {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(255, 138, 112, 0.05) 100%) !important;
+  }
+  .bg-glass-blur {
+    background: rgba(15, 23, 42, 0.45) !important;
+  }
+  .step-icon-circle {
+    background: var(--obour-surface-2) !important;
+  }
+}
+
