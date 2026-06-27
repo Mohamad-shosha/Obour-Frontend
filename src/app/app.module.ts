@@ -31,6 +31,7 @@ import { DashboardLayoutComponent } from './shared/components/dashboard-layout/d
 import { DashboardSidebarComponent } from './shared/components/dashboard-sidebar/dashboard-sidebar.component';
 import { DashboardHeaderComponent } from './shared/components/dashboard-header/dashboard-header.component';
 import { SupervisorDashboardComponent } from './pages/supervisor-dashboard/supervisor-dashboard.component';
+import { StudentDashboardComponent } from './pages/evaluation/student-dashboard/student-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { SupervisorDashboardComponent } from './pages/supervisor-dashboard/super
     DashboardSidebarComponent,
     DashboardHeaderComponent,
     SupervisorDashboardComponent,
+    StudentDashboardComponent,
   ],
   imports: [
     BrowserModule,

@@ -92,7 +92,19 @@ export class AssessmentStartComponent implements OnInit {
       resumeIfExists: true
     }).subscribe({
       next: (session) => {
-        this.router.navigate(['/evaluation/engine', session.id]);
+        if (session.status === 'SUBMITTED') {
+          Swal.fire({
+            title: 'اكتمل التقييم',
+            text: 'لقد أتممت هذا التقييم مسبقاً. سيتم نقلك لصفحة النتائج.',
+            icon: 'info',
+            timer: 3000,
+            showConfirmButton: false
+          }).then(() => {
+            this.router.navigate(['/evaluation/results', session.id]);
+          });
+        } else {
+          this.router.navigate(['/evaluation/engine', session.id]);
+        }
       },
       error: (err) => {
           console.error(err);
