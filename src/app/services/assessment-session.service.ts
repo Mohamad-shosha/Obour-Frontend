@@ -21,6 +21,10 @@ export class AssessmentSessionService {
     return this.http.post<AssessmentSession>(`${this.apiUrl}/start`, request, { headers: this.getAuthHeaders() });
   }
 
+  getSession(sessionId: number): Observable<AssessmentSession> {
+    return this.http.get<AssessmentSession>(`${this.apiUrl}/${sessionId}`, { headers: this.getAuthHeaders() });
+  }
+
   saveAnswer(sessionId: number, request: SaveAnswerRequest): Observable<void> {
     return this.http.put<void>(`${this.apiUrl}/${sessionId}/answer`, request, { headers: this.getAuthHeaders() });
   }

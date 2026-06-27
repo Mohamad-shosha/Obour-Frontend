@@ -88,16 +88,17 @@ export class AssessmentStartComponent implements OnInit {
     this.loading = true;
     this.sessionService.startSession({
       userId: user.id,
-      templateId: this.templateId,
+      categoryId: this.templateId, // The route parameter is named templateId but it's actually the categoryId
       resumeIfExists: true
     }).subscribe({
       next: (session) => {
         this.router.navigate(['/evaluation/engine', session.id]);
       },
       error: (err) => {
-        console.error(err);
-        this.loading = false;
-        Swal.fire('حدث خطأ', 'تعذر بدء الجلسة. حاول مرة أخرى', 'error');
+          console.error(err);
+          this.loading = false;
+          const msg = err.error?.message || 'تعذر بدء الجلسة. حاول مرة أخرى';
+          Swal.fire('حدث خطأ', msg, 'error');
       }
     });
   }
