@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { AssessmentResult } from 'src/app/models/assessment-result.model';
 import { AssessmentResultService } from 'src/app/services/assessment-result.service';
@@ -11,6 +11,18 @@ import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
   styleUrls: ['./student-dashboard.component.scss']
 })
 export class StudentDashboardComponent implements OnInit {
+  // Hero 3D Animation Variables
+  heroRotateX = 5;
+  heroRotateY = -10;
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(e: MouseEvent) {
+    const x = (window.innerWidth / 2 - e.clientX) / 40;
+    const y = (window.innerHeight / 2 - e.clientY) / 40;
+    this.heroRotateY = x;
+    this.heroRotateX = y;
+  }
+
   results: AssessmentResult[] = [];
   isLoading = true;
 
