@@ -1,56 +1,74 @@
 <!-- Hero Dashboard Section -->
-<section class="dashboard-hero-wrapper position-relative py-5 mb-5 rounded-bottom-4 shadow-lg">
-  <!-- Dynamic Mesh Background -->
-  <div class="hero-mesh position-absolute w-100 h-100 top-0 start-0 overflow-hidden" style="z-index: 0; pointer-events: none;">
-    <div class="orb orb-1 position-absolute rounded-circle" style="width: 400px; height: 400px; background: rgba(59, 130, 246, 0.2); filter: blur(80px); top: -20%; right: -10%;"></div>
-    <div class="orb orb-2 position-absolute rounded-circle" style="width: 350px; height: 350px; background: rgba(139, 92, 246, 0.2); filter: blur(80px); bottom: -10%; left: -5%;"></div>
+<section class="hero-section position-relative mb-5">
+  <div class="hero-grid-pattern"></div>
+  <div class="hero-mesh">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
   </div>
   
-  <div class="hero-grid-pattern position-absolute w-100 h-100 top-0 start-0" style="opacity: 0.1; z-index: 1;"></div>
-
-  <div class="container position-relative z-index-10 animate__animated animate__fadeIn">
-    <div class="row align-items-center g-4">
-      <div class="col-lg-7 text-white">
-        <div class="badge rounded-pill border border-light text-light px-3 py-2 mb-3 d-inline-flex align-items-center" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px);">
-          <i class="fa-solid fa-bolt text-warning me-2"></i>
-          <span class="fw-bold fs-6">لوحة تحكم الطالب الذكية</span>
+  <div class="container position-relative py-4 z-index-10">
+    <div class="row align-items-center g-5">
+      <!-- Right Column: Text (RTL) -->
+      <div class="col-12 col-lg-6 text-center text-lg-start">
+        <div class="badge-support d-inline-block mb-3 px-4 py-2 mx-auto mx-lg-0">
+          <span class="small fw-bold text-gradient-primary">لوحة التحكم الذكية المدعمة بالذكاء الاصطناعي</span>
         </div>
-        <h1 class="display-4 fw-bold mb-3" style="text-shadow: 0 4px 15px rgba(0,0,0,0.3);">
-          أهلاً بك في <span class="text-gradient-hero">مركز إنجازاتك</span>
+        <h1 class="display-4 fw-bold mb-3 text-white">
+          مرحباً بك في مستقبلك المهني
         </h1>
-        <p class="fs-5 opacity-75 mb-4 lh-lg max-w-2xl">
-          تتبع مسارك التعليمي والمهني، راقب تقدمك بدقة، واستفد من تحليلات الذكاء الاصطناعي لرفع جاهزيتك لسوق العمل.
+        <p class="fs-5 text-white-75 max-w-3xl mb-4 mx-auto mx-lg-0">
+          تتبع مسارك التعليمي، راقب شبكة مهاراتك بدقة، واستفد من تحليلات الذكاء الاصطناعي المتقدمة لرفع جاهزيتك لسوق العمل التنافسي.
         </p>
-        <div class="d-flex gap-3">
-          <button class="btn btn-primary btn-lg rounded-pill px-4 fw-bold shadow-lg" routerLink="/evaluation">
-            <i class="fa-solid fa-play me-2"></i> استكمال التقييمات
+        <div class="d-flex flex-wrap justify-content-center justify-content-lg-start gap-3">
+          <button class="btn btn-premium border-glow-premium" routerLink="/evaluation">
+            استكمال التقييمات
+            <i class="fa-solid fa-arrow-left ms-2"></i>
           </button>
         </div>
       </div>
       
-      <div class="col-lg-5 d-none d-lg-block">
-        <div class="hero-mockup-card glass-panel p-4 rounded-4 position-relative border border-light border-opacity-25" style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); transform: perspective(1000px) rotateY(-15deg) rotateX(10deg); box-shadow: -20px 20px 40px rgba(0,0,0,0.3);">
-          <div class="d-flex align-items-center mb-4 border-bottom border-light border-opacity-10 pb-3">
-            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
-              <i class="fa-solid fa-trophy fs-4"></i>
+      <!-- Left Column: 3D Mockup Graphic -->
+      <div class="col-12 col-lg-6 d-none d-lg-block">
+        <div class="perspective-container">
+          <div class="mockup-glass animate-float" style="transform: rotateY(-10deg) rotateX(5deg) translateZ(0);">
+            <div class="mockup-header">
+              <div class="dot bg-danger"></div>
+              <div class="dot bg-warning"></div>
+              <div class="dot bg-success"></div>
             </div>
-            <div>
-              <h5 class="text-white mb-0 fw-bold">النقاط المكتسبة</h5>
-              <div class="text-white-50 small">مستوى متقدم</div>
+            <div class="mockup-tabs d-flex align-items-center gap-2 px-3 py-2 border-bottom border-secondary-subtle">
+              <div class="mockup-tab active px-2 py-1 rounded d-flex align-items-center gap-1">
+                <i class="fa-solid fa-chart-line small text-primary-light"></i>
+                <span class="fw-medium small text-primary-color">ملخص الأداء</span>
+              </div>
             </div>
-            <div class="ms-auto text-end">
-              <h3 class="text-warning mb-0 fw-bold">{{ totalXP }}</h3>
-              <div class="text-white-50 small">XP</div>
-            </div>
-          </div>
-          
-          <div class="progress-wrap mb-3">
-            <div class="d-flex justify-content-between text-white mb-2 small">
-              <span>متوسط الأداء العام</span>
-              <span class="fw-bold">{{ averageScore }}%</span>
-            </div>
-            <div class="progress" style="height: 8px; background: rgba(255,255,255,0.1);">
-              <div class="progress-bar bg-success" role="progressbar" [style.width.%]="averageScore"></div>
+            <div class="mockup-body p-4 text-start">
+              <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-light border-opacity-25">
+                <div class="d-flex align-items-center">
+                  <div class="bg-warning text-dark rounded-circle d-flex align-items-center justify-content-center me-3 shadow" style="width: 45px; height: 45px;">
+                    <i class="fa-solid fa-star fs-5"></i>
+                  </div>
+                  <div>
+                    <h6 class="text-white mb-0 fw-bold">النقاط المكتسبة</h6>
+                    <div class="text-white-50 small">{{ overallLevelName }}</div>
+                  </div>
+                </div>
+                <div class="text-end">
+                  <h4 class="text-warning mb-0 fw-bold drop-shadow">{{ totalXP }}</h4>
+                  <div class="text-white-50 small fw-bold">XP</div>
+                </div>
+              </div>
+              
+              <div class="progress-wrap mb-2">
+                <div class="d-flex justify-content-between text-white mb-2 small fw-bold">
+                  <span>مؤشر الكفاءة العام</span>
+                  <span class="text-success">{{ averageScore }}%</span>
+                </div>
+                <div class="progress" style="height: 6px; background: rgba(255,255,255,0.08);">
+                  <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" [style.width.%]="averageScore"></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -64,20 +82,20 @@
   <div class="spinner-grow text-primary mb-3" style="width: 3rem; height: 3rem;" role="status">
     <span class="visually-hidden">جاري التحميل...</span>
   </div>
-  <h5 class="text-muted fw-bold animate__animated animate__pulse animate__infinite">جاري تجميع بياناتك...</h5>
+  <h5 class="text-muted fw-bold animate__animated animate__pulse animate__infinite">جاري تجميع وتحليل بياناتك...</h5>
 </div>
 
 <!-- Empty State -->
 <div class="container pb-5">
-  <div *ngIf="!isLoading && results.length === 0" class="empty-state-card text-center py-5 px-4 rounded-4 premium-shadow animate__animated animate__zoomIn" style="background: var(--obour-surface); border: 1px solid rgba(var(--bs-primary-rgb), 0.1);">
+  <div *ngIf="!isLoading && results.length === 0" class="empty-state-card text-center py-5 px-4 rounded-4 premium-shadow animate__animated animate__zoomIn" style="background: var(--obour-surface); border: 1px solid var(--obour-border);">
     <div class="mb-4">
-      <div class="empty-icon-wrapper mx-auto d-flex align-items-center justify-content-center rounded-circle bg-light" style="width: 120px; height: 120px;">
-        <i class="fa-solid fa-rocket text-primary" style="font-size: 4rem; opacity: 0.8;"></i>
+      <div class="empty-icon-wrapper mx-auto d-flex align-items-center justify-content-center rounded-circle bg-light shadow-inner" style="width: 120px; height: 120px;">
+        <i class="fa-solid fa-rocket text-primary" style="font-size: 4rem; opacity: 0.9;"></i>
       </div>
     </div>
-    <h3 class="fw-bold mb-3" style="color: var(--obour-text-primary);">رحلتك تبدأ هنا!</h3>
+    <h3 class="fw-bold mb-3" style="color: var(--obour-text-primary);">رحلتك للتميز تبدأ هنا!</h3>
     <p class="text-muted fs-5 mb-4 mx-auto" style="max-width: 500px;">يبدو أنك لم تخض أي تقييم بعد. ابدأ أول اختبار لك لتنطلق في مسار بناء مهاراتك وجمع نقاط الخبرة.</p>
-    <button class="btn btn-primary btn-lg rounded-pill px-5 py-3 fw-bold premium-btn" routerLink="/evaluation">
+    <button class="btn btn-primary btn-lg rounded-pill px-5 py-3 fw-bold premium-btn shadow-lg" routerLink="/evaluation">
       <i class="fa-solid fa-play me-2"></i> تصفح التقييمات المتاحة
     </button>
   </div>
@@ -85,73 +103,74 @@
   <div *ngIf="!isLoading && results.length > 0" class="animate__animated animate__fadeInUp">
     
     <!-- KPI Cards -->
-    <div class="row g-4 mb-4">
+    <div class="row g-4 mb-5">
       <div class="col-md-3">
-        <div class="kpi-card card border-0 premium-shadow rounded-4 text-center p-4 h-100 position-relative overflow-hidden glass-card">
+        <div class="kpi-card card border-0 premium-shadow rounded-4 text-center p-4 h-100 position-relative overflow-hidden glass-card hover-lift">
           <div class="kpi-bg-shape bg-primary opacity-10"></div>
-          <div class="icon-wrapper text-primary mb-3 mx-auto shadow-sm"><i class="fa-solid fa-list-check fs-3"></i></div>
-          <h6 class="text-muted mb-2 fw-bold text-uppercase tracking-wider">إجمالي التقييمات</h6>
+          <div class="icon-wrapper text-primary mb-3 mx-auto shadow-sm" style="background: rgba(59, 130, 246, 0.1);"><i class="fa-solid fa-list-check fs-3"></i></div>
+          <h6 class="text-muted mb-2 fw-bold text-uppercase">إجمالي التقييمات</h6>
           <h2 class="fw-bolder mb-0 text-primary">{{ totalAssessments }}</h2>
         </div>
       </div>
       <div class="col-md-3">
-        <div class="kpi-card card border-0 premium-shadow rounded-4 text-center p-4 h-100 position-relative overflow-hidden glass-card">
+        <div class="kpi-card card border-0 premium-shadow rounded-4 text-center p-4 h-100 position-relative overflow-hidden glass-card hover-lift">
           <div class="kpi-bg-shape bg-success opacity-10"></div>
-          <div class="icon-wrapper text-success mb-3 mx-auto shadow-sm"><i class="fa-solid fa-percent fs-3"></i></div>
-          <h6 class="text-muted mb-2 fw-bold text-uppercase tracking-wider">متوسط الأداء</h6>
+          <div class="icon-wrapper text-success mb-3 mx-auto shadow-sm" style="background: rgba(16, 185, 129, 0.1);"><i class="fa-solid fa-percent fs-3"></i></div>
+          <h6 class="text-muted mb-2 fw-bold text-uppercase">متوسط الأداء</h6>
           <h2 class="fw-bolder mb-0 text-success">{{ averageScore }}<span class="fs-5">%</span></h2>
         </div>
       </div>
       <div class="col-md-3">
-        <div class="kpi-card card border-0 premium-shadow rounded-4 text-center p-4 h-100 position-relative overflow-hidden glass-card">
+        <div class="kpi-card card border-0 premium-shadow rounded-4 text-center p-4 h-100 position-relative overflow-hidden glass-card hover-lift">
           <div class="kpi-bg-shape bg-info opacity-10"></div>
-          <div class="icon-wrapper text-info mb-3 mx-auto shadow-sm"><i class="fa-solid fa-arrow-trend-up fs-3"></i></div>
-          <h6 class="text-muted mb-2 fw-bold text-uppercase tracking-wider">أعلى نتيجة</h6>
+          <div class="icon-wrapper text-info mb-3 mx-auto shadow-sm" style="background: rgba(59, 130, 246, 0.1);"><i class="fa-solid fa-arrow-trend-up fs-3"></i></div>
+          <h6 class="text-muted mb-2 fw-bold text-uppercase">أعلى نتيجة</h6>
           <h2 class="fw-bolder mb-0 text-info">{{ highestScore }}<span class="fs-5">%</span></h2>
         </div>
       </div>
       <div class="col-md-3">
-        <div class="kpi-card card border-0 premium-shadow rounded-4 text-center p-4 h-100 position-relative overflow-hidden glass-card">
+        <div class="kpi-card card border-0 premium-shadow rounded-4 text-center p-4 h-100 position-relative overflow-hidden glass-card hover-lift">
           <div class="kpi-bg-shape bg-warning opacity-10"></div>
-          <div class="icon-wrapper text-warning mb-3 mx-auto shadow-sm"><i class="fa-solid fa-star fs-3"></i></div>
-          <h6 class="text-muted mb-2 fw-bold text-uppercase tracking-wider">النقاط (XP)</h6>
-          <h2 class="fw-bolder mb-0 text-warning">{{ totalXP }}</h2>
+          <div class="icon-wrapper text-warning mb-3 mx-auto shadow-sm" style="background: rgba(245, 158, 11, 0.1);"><i class="fa-solid fa-star fs-3"></i></div>
+          <h6 class="text-muted mb-2 fw-bold text-uppercase">النقاط (XP)</h6>
+          <h2 class="fw-bolder mb-0 text-warning drop-shadow">{{ totalXP }}</h2>
         </div>
       </div>
     </div>
 
-    <!-- AI Analytics Section (New) -->
-    <div class="row g-4 mb-4">
+    <!-- AI Analytics Section -->
+    <div class="row g-4 mb-5">
       <div class="col-xl-8">
-        <div class="card border-0 premium-shadow rounded-4 p-4 h-100 glass-card ai-glow-card">
-          <div class="d-flex align-items-center mb-4">
-            <div class="icon-box bg-primary bg-gradient text-white d-flex align-items-center justify-content-center rounded-circle me-3 shadow" style="width: 48px; height: 48px;">
+        <div class="card border-0 premium-shadow rounded-4 p-4 h-100 glass-card ai-glow-card position-relative overflow-hidden">
+          <div class="position-absolute top-0 end-0 p-3 opacity-10"><i class="fa-solid fa-brain" style="font-size: 8rem; color: var(--obour-primary);"></i></div>
+          <div class="d-flex align-items-center mb-4 position-relative z-index-1">
+            <div class="icon-box bg-primary bg-gradient text-white d-flex align-items-center justify-content-center rounded-circle me-3 shadow" style="width: 50px; height: 50px;">
               <i class="fa-solid fa-robot fs-5"></i>
             </div>
             <div>
               <h4 class="fw-bold mb-1" style="color: var(--obour-text-primary);">تحليل عبور الذكي (AI)</h4>
-              <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 rounded-pill px-3 py-1">تحديث تلقائي</span>
+              <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 rounded-pill px-3 py-1 shadow-sm">تحديث تلقائي</span>
             </div>
           </div>
-          <p class="fs-5 mb-4 text-muted lh-lg" style="color: var(--obour-text-secondary) !important;">
+          <p class="fs-5 mb-4 lh-lg position-relative z-index-1 fw-semibold" style="color: var(--obour-text-main);">
             "{{ aiAnalysisText }}"
           </p>
-          <div class="row g-3">
+          <div class="row g-4 position-relative z-index-1">
             <div class="col-md-6">
-              <h6 class="fw-bold text-success mb-3"><i class="fa-solid fa-arrow-trend-up me-2"></i> نقاط القوة</h6>
+              <h6 class="fw-bold text-success mb-3"><i class="fa-solid fa-bolt me-2"></i> أبرز نقاط القوة</h6>
               <div class="d-flex flex-column gap-2">
-                <div *ngFor="let strength of topStrengths" class="d-flex align-items-center justify-content-between p-2 rounded bg-success bg-opacity-10 border border-success border-opacity-10">
-                  <span class="fw-bold text-success" style="font-size: 0.9rem;">{{ strength.name }}</span>
-                  <span class="badge bg-success rounded-pill">{{ strength.score }}%</span>
+                <div *ngFor="let strength of topStrengths" class="d-flex align-items-center justify-content-between p-3 rounded-3 bg-success bg-opacity-10 border border-success border-opacity-25 shadow-sm hover-scale">
+                  <span class="fw-bold text-success"><i class="fa-solid fa-check text-success me-2"></i> {{ strength.name }}</span>
+                  <span class="badge bg-success rounded-pill px-2 py-1 fs-7 shadow-sm">{{ strength.score }}%</span>
                 </div>
               </div>
             </div>
             <div class="col-md-6">
               <h6 class="fw-bold text-warning mb-3"><i class="fa-solid fa-bullseye me-2"></i> فرص التحسين</h6>
               <div class="d-flex flex-column gap-2">
-                <div *ngFor="let area of areasForImprovement" class="d-flex align-items-center justify-content-between p-2 rounded bg-warning bg-opacity-10 border border-warning border-opacity-10">
-                  <span class="fw-bold text-warning text-dark" style="font-size: 0.9rem;">{{ area.name }}</span>
-                  <span class="badge bg-warning text-dark rounded-pill">{{ area.score }}%</span>
+                <div *ngFor="let area of areasForImprovement" class="d-flex align-items-center justify-content-between p-3 rounded-3 bg-warning bg-opacity-10 border border-warning border-opacity-25 shadow-sm hover-scale">
+                  <span class="fw-bold text-dark"><i class="fa-solid fa-wrench text-warning me-2"></i> {{ area.name }}</span>
+                  <span class="badge bg-warning text-dark rounded-pill px-2 py-1 fs-7 shadow-sm">{{ area.score }}%</span>
                 </div>
               </div>
             </div>
@@ -159,110 +178,121 @@
         </div>
       </div>
       <div class="col-xl-4">
-        <div class="card border-0 premium-shadow rounded-4 p-4 h-100 glass-card ai-glow-card">
+        <div class="card border-0 premium-shadow rounded-4 p-4 h-100 glass-card position-relative overflow-hidden hover-lift">
+          <div class="position-absolute bottom-0 start-0 w-100" style="height: 4px; background: linear-gradient(90deg, var(--obour-primary), var(--obour-accent));"></div>
           <h5 class="fw-bold mb-4 text-primary"><i class="fa-solid fa-compass me-2"></i> توصيات المسار المهني</h5>
           <div class="d-flex flex-column gap-3">
-            <div *ngFor="let rec of careerRecommendations; let i = index" class="d-flex align-items-start p-3 rounded" style="background: rgba(var(--bs-primary-rgb), 0.05); border-right: 3px solid var(--bs-primary);">
-              <div class="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 shadow-sm" style="width: 24px; height: 24px; margin-left: 12px;">
+            <div *ngFor="let rec of careerRecommendations; let i = index" class="d-flex align-items-start p-3 rounded-3 shadow-sm hover-scale" style="background: var(--obour-surface-2); border: 1px solid var(--obour-border);">
+              <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 shadow me-3" style="width: 28px; height: 28px;">
                 <span class="small fw-bold">{{ i + 1 }}</span>
               </div>
-              <span class="fw-semibold text-muted text-dark small" style="line-height: 1.6;">{{ rec }}</span>
+              <span class="fw-semibold text-main small mt-1" style="line-height: 1.6;">{{ rec }}</span>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Main Content Row -->
-    <div class="row g-4">
-      <!-- Analytics Chart Section -->
-      <div class="col-xl-12 mb-4">
-        <div class="card border-0 premium-shadow rounded-4 p-4 h-100 glass-card">
+    <!-- Charts Row -->
+    <div class="row g-4 mb-5">
+      <!-- Line Chart -->
+      <div class="col-xl-8">
+        <div class="card border-0 premium-shadow rounded-4 p-4 h-100 glass-card hover-lift position-relative">
           <div class="d-flex justify-content-between align-items-center mb-4">
             <h4 class="fw-bold mb-0" style="color: var(--obour-text-primary);">
               <div class="icon-box bg-primary bg-opacity-10 text-primary d-inline-flex align-items-center justify-content-center rounded-3 me-2" style="width: 36px; height: 36px;">
-                <i class="fa-solid fa-chart-column fs-6"></i>
+                <i class="fa-solid fa-chart-line fs-6"></i>
               </div>
-              مؤشر الأداء الزمني
+              مسار التطور الزمني
             </h4>
-            <span class="badge bg-light text-dark border px-3 py-2 rounded-pill shadow-sm">آخر {{ recentScores.length }} تقييمات</span>
+            <span class="badge bg-light text-dark border px-3 py-2 rounded-pill shadow-sm">آخر تقييمات</span>
           </div>
-          
-          <div class="chart-container d-flex align-items-end justify-content-around mt-4 pb-0 pt-4" style="height: 280px; border-bottom: 2px solid var(--obour-border-color); position: relative;">
-            <!-- Y-axis guide lines -->
-            <div class="y-axis-guides w-100 h-100 position-absolute" style="top: 0; left: 0; pointer-events: none; opacity: 0.05; z-index: 0;">
-              <div class="border-bottom border-secondary w-100 position-absolute" style="top: 0%; border-style: dashed !important;"></div>
-              <div class="border-bottom border-secondary w-100 position-absolute" style="top: 25%; border-style: dashed !important;"></div>
-              <div class="border-bottom border-secondary w-100 position-absolute" style="top: 50%; border-style: dashed !important;"></div>
-              <div class="border-bottom border-secondary w-100 position-absolute" style="top: 75%; border-style: dashed !important;"></div>
-            </div>
-            
-            <!-- Bars -->
-            <div *ngFor="let score of recentScores; let i = index" class="chart-bar-wrapper d-flex flex-column align-items-center" style="z-index: 1;">
-              <div class="chart-tooltip bg-dark text-white rounded px-2 py-1 mb-2 fs-7 fw-bold shadow">{{ score }}%</div>
-              <div class="chart-bar rounded-top" 
-                   [style.height.%]="score"
-                   [ngClass]="{'bar-success': score >= 60, 'bar-danger': score < 60}">
-                <div class="bar-gradient-overlay"></div>
-              </div>
-              <div class="chart-label mt-3 text-muted small fw-bold">{{ recentLabels[i] }}</div>
-            </div>
+          <div style="height: 320px; position: relative;">
+            <canvas baseChart
+              [data]="lineChartData"
+              [options]="lineChartOptions"
+              [type]="'line'">
+            </canvas>
           </div>
         </div>
       </div>
+      <!-- Radar Chart -->
+      <div class="col-xl-4">
+        <div class="card border-0 premium-shadow rounded-4 p-4 h-100 glass-card hover-lift position-relative" style="background: linear-gradient(180deg, var(--obour-surface), rgba(139, 92, 246, 0.05));">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="fw-bold mb-0" style="color: var(--obour-text-primary);">
+              <div class="icon-box bg-accent bg-opacity-10 text-accent d-inline-flex align-items-center justify-content-center rounded-3 me-2" style="width: 36px; height: 36px;">
+                <i class="fa-solid fa-spider fs-6" style="color: #8b5cf6;"></i>
+              </div>
+              شبكة المهارات
+            </h4>
+          </div>
+          <div style="height: 320px; position: relative;" class="d-flex align-items-center justify-content-center">
+            <canvas baseChart
+              [data]="radarChartData"
+              [options]="radarChartOptions"
+              [type]="'radar'">
+            </canvas>
+          </div>
+        </div>
+      </div>
+    </div>
 
-      <!-- History Table -->
+    <!-- History Table -->
+    <div class="row g-4">
       <div class="col-12">
         <div class="card border-0 premium-shadow rounded-4 p-4 overflow-hidden glass-card">
           <h4 class="fw-bold mb-4" style="color: var(--obour-text-primary);">
-            <div class="icon-box bg-info bg-opacity-10 text-info d-inline-flex align-items-center justify-content-center rounded-3 me-2" style="width: 36px; height: 36px;">
+            <div class="icon-box bg-info bg-opacity-10 text-info d-inline-flex align-items-center justify-content-center rounded-3 me-2 shadow-sm" style="width: 36px; height: 36px;">
               <i class="fa-solid fa-clock-rotate-left fs-6"></i>
             </div>
             سجل الإنجازات التفصيلي
           </h4>
           
-          <div class="table-responsive" style="border-radius: 12px;">
-            <table class="table table-hover align-middle custom-premium-table mb-0">
-              <thead>
+          <div class="table-responsive" style="border-radius: 12px; border: 1px solid var(--obour-border);">
+            <table class="table table-hover align-middle custom-premium-table mb-0 bg-transparent">
+              <thead class="bg-light bg-opacity-50">
                 <tr>
-                  <th scope="col" class="py-3 px-4 rounded-start border-0">اسم التقييم</th>
-                  <th scope="col" class="py-3 px-3 border-0">تاريخ الإنجاز</th>
-                  <th scope="col" class="py-3 px-3 border-0">النتيجة النهائية</th>
-                  <th scope="col" class="py-3 px-3 border-0">المستوى المكتسب</th>
-                  <th scope="col" class="py-3 px-4 rounded-end text-center border-0">التفاصيل</th>
+                  <th scope="col" class="py-3 px-4 border-bottom text-muted fw-bold">اسم التقييم</th>
+                  <th scope="col" class="py-3 px-3 border-bottom text-muted fw-bold">التاريخ</th>
+                  <th scope="col" class="py-3 px-3 border-bottom text-muted fw-bold">النتيجة</th>
+                  <th scope="col" class="py-3 px-3 border-bottom text-muted fw-bold">المستوى</th>
+                  <th scope="col" class="py-3 px-4 text-center border-bottom text-muted fw-bold">إجراء</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let res of results" class="table-row-animate" (click)="viewResult(res.sessionId)">
-                  <td class="py-3 px-4">
+                <tr *ngFor="let res of results" class="table-row-animate cursor-pointer" (click)="viewResult(res.sessionId)">
+                  <td class="py-3 px-4 border-bottom border-opacity-10">
                     <div class="d-flex align-items-center">
-                      <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
-                        <i class="fa-solid fa-file-lines text-primary"></i>
+                      <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3 shadow-sm" style="width: 42px; height: 42px;">
+                        <i class="fa-solid fa-file-signature text-primary"></i>
                       </div>
-                      <span class="fw-bold text-primary">{{ res.templateName }}</span>
+                      <span class="fw-bold text-main">{{ res.templateName }}</span>
                     </div>
                   </td>
-                  <td class="py-3 px-3 text-muted fw-semibold">
-                    <i class="fa-regular fa-calendar me-1"></i> {{ res.completedAt | date:'mediumDate' }}
+                  <td class="py-3 px-3 text-muted fw-semibold border-bottom border-opacity-10">
+                    <i class="fa-regular fa-calendar-check me-1 text-primary"></i> {{ res.completedAt | date:'mediumDate' }}
                   </td>
-                  <td class="py-3 px-3">
+                  <td class="py-3 px-3 border-bottom border-opacity-10">
                     <div class="d-flex align-items-center">
-                      <div class="progress flex-grow-1 me-2" style="height: 8px; max-width: 100px; background-color: var(--obour-border-color);">
-                        <div class="progress-bar rounded-pill" role="progressbar" 
+                      <div class="progress flex-grow-1 me-3 shadow-inner" style="height: 8px; max-width: 120px; background-color: var(--obour-border);">
+                        <div class="progress-bar rounded-pill progress-bar-animated" role="progressbar" 
                              [style.width.%]="res.scorePercent" 
                              [ngClass]="res.passed ? 'bg-success' : 'bg-danger'"></div>
                       </div>
-                      <span class="fw-bold" [ngClass]="res.passed ? 'text-success' : 'text-danger'">{{ res.scorePercent }}%</span>
+                      <span class="fw-bolder" [ngClass]="res.passed ? 'text-success' : 'text-danger'">{{ res.scorePercent }}%</span>
                     </div>
                   </td>
-                  <td class="py-3 px-3">
-                    <span class="badge premium-badge fs-7 px-3 py-2 rounded-pill shadow-sm" [ngClass]="getLevelClass(res.levelAchieved)">
+                  <td class="py-3 px-3 border-bottom border-opacity-10">
+                    <span class="badge premium-badge fs-7 px-3 py-2 rounded-pill shadow-sm border" 
+                          [ngClass]="getLevelClass(res.levelAchieved)"
+                          [style.borderColor]="res.passed ? 'rgba(16,185,129,0.3) !important' : 'rgba(239,68,68,0.3) !important'">
                       <i class="fa-solid fa-award me-1"></i> {{ getLevelName(res.levelAchieved) }}
                     </span>
                   </td>
-                  <td class="py-3 px-4 text-center">
-                    <button class="btn btn-sm btn-light rounded-pill px-3 fw-bold text-primary action-btn shadow-sm">
-                      مراجعة <i class="fa-solid fa-arrow-left-long ms-1 ms-1-anim"></i>
+                  <td class="py-3 px-4 text-center border-bottom border-opacity-10">
+                    <button class="btn btn-sm btn-outline-primary rounded-pill px-4 fw-bold action-btn shadow-sm">
+                      مراجعة دقيقة <i class="fa-solid fa-magnifying-glass ms-1 ms-1-anim"></i>
                     </button>
                   </td>
                 </tr>
