@@ -32,6 +32,7 @@ import { DashboardSidebarComponent } from './shared/components/dashboard-sidebar
 import { DashboardHeaderComponent } from './shared/components/dashboard-header/dashboard-header.component';
 import { SupervisorDashboardComponent } from './pages/supervisor-dashboard/supervisor-dashboard.component';
 import { StudentDashboardComponent } from './pages/evaluation/student-dashboard/student-dashboard.component';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { StudentDashboardComponent } from './pages/evaluation/student-dashboard/
     BrowserAnimationsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgChartsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

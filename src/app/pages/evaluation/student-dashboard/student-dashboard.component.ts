@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AssessmentResult } from 'src/app/models/assessment-result.model';
 import { AssessmentResultService } from 'src/app/services/assessment-result.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 
 @Component({
   selector: 'app-student-dashboard',
@@ -21,8 +22,54 @@ export class StudentDashboardComponent implements OnInit {
   overallLevelName = 'مبتدئ';
 
   // Chart Data
-  recentScores: number[] = [];
-  recentLabels: string[] = [];
+  public lineChartData: ChartConfiguration['data'] = {
+    datasets: [],
+    labels: []
+  };
+  public lineChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    maintainAspectRatio: false,
+    elements: {
+      line: { tension: 0.4 }
+    },
+    scales: {
+      y: { 
+        beginAtZero: true, 
+        max: 100,
+        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+        ticks: { color: 'rgba(255, 255, 255, 0.5)' }
+      },
+      x: {
+        grid: { display: false },
+        ticks: { color: 'rgba(255, 255, 255, 0.5)' }
+      }
+    },
+    plugins: {
+      legend: { display: false }
+    }
+  };
+
+  public radarChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      r: {
+        angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
+        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+        pointLabels: { color: 'rgba(255, 255, 255, 0.7)', font: { size: 12, family: 'Cairo' } },
+        ticks: { display: false },
+        min: 0,
+        max: 100
+      }
+    },
+    plugins: {
+      legend: { display: false }
+    }
+  };
+  public radarChartData: ChartData<'radar'> = {
+    labels: [],
+    datasets: []
+  };
 
   // Rich Analytics Data
   topStrengths: { name: string; score: number }[] = [];
@@ -74,18 +121,81 @@ export class StudentDashboardComponent implements OnInit {
   }
 
   private prepareChartData() {
-    const recent = this.results.slice(0, 10).reverse();
-    this.recentScores = recent.map(r => r.scorePercent || 0);
-    this.recentLabels = recent.map(r => {
-      const d = new Date(r.completedAt);
-      return `${d.getDate()}/${d.getMonth()+1}`;
+    const recent = [...this.results].slice(0, 10).reverse();
+    
+    // Line Chart Data
+    this.lineChartData = {
+      labels: recent.map(r => {
+        const d = new Date(r.completedAt);
+        return `${d.getDate()}/${d.getMonth()+1}`;
+      }),
+      datasets: [
+        {
+          data: recent.map(r => r.scorePercent || 0),
+          label: 'النتيجة (%)',
+          borderColor: '#3b82f6',
+          backgroundColor: 'rgba(59, 130, 246, 0.15)',
+          fill: true,
+          pointBackgroundColor: '#3b82f6',
+          pointBorderColor: '#fff',
+          pointHoverBackgroundColor: '#fff',
+          pointHoverBorderColor: '#3b82f6',
+          borderWidth: 3,
+          pointRadius: 4,
+        }
+      ]
+    };
+
+    // Radar Chart Data (Domains)
+    const domainMap = new Map<string, { total: number, count: number }>();
+    this.results.forEach(res => {
+      if (res.domainScores && res.domainScores.length > 0) {
+        res.domainScores.forEach(ds => {
+          const key = ds.domainNameAr || ds.domainName;
+          const current = domainMap.get(key) || { total: 0, count: 0 };
+          domainMap.set(key, { total: current.total + ds.scorePct, count: current.count + 1 });
+        });
+      } else if (res.domainNameAr || res.domainName) {
+         const key = res.domainNameAr || res.domainName;
+         const current = domainMap.get(key) || { total: 0, count: 0 };
+         domainMap.set(key, { total: current.total + res.scorePercent, count: current.count + 1 });
+      }
     });
+
+    const radarLabels: string[] = [];
+    const radarData: number[] = [];
+
+    domainMap.forEach((val, key) => {
+      radarLabels.push(key);
+      radarData.push(Math.round(val.total / val.count));
+    });
+
+    if (radarLabels.length === 0) {
+      radarLabels.push('أساسيات', 'تحليل', 'تطبيق', 'سرعة الإنجاز');
+      radarData.push(this.averageScore, this.averageScore > 10 ? this.averageScore - 10 : this.averageScore, this.averageScore, 80);
+    }
+
+    this.radarChartData = {
+      labels: radarLabels,
+      datasets: [
+        {
+          data: radarData,
+          label: 'قوة المهارة (%)',
+          backgroundColor: 'rgba(139, 92, 246, 0.4)',
+          borderColor: '#8b5cf6',
+          pointBackgroundColor: '#8b5cf6',
+          pointBorderColor: '#fff',
+          pointHoverBackgroundColor: '#fff',
+          pointHoverBorderColor: '#8b5cf6',
+          borderWidth: 2,
+        }
+      ]
+    };
   }
 
   private generateRichAnalytics() {
     if (this.results.length === 0) return;
 
-    // Simulate AI Analytics based on average score
     if (this.averageScore >= 80) {
       this.aiAnalysisText = "أداؤك استثنائي! تظهر تحليلاتنا أنك تمتلك فهماً عميقاً للمفاهيم الأساسية، مما يجعلك مؤهلاً بقوة للبدء في مشاريع التدريب الميداني المتقدمة. سرعة استجابتك ودقتك في الإجابة تشير إلى قدرات تحليلية عالية.";
       this.topStrengths = [
