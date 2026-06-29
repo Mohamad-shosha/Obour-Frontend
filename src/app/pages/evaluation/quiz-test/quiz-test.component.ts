@@ -6,6 +6,7 @@ import {
   SubmitAnswersRequest,
   AnswerItem,
 } from '../../../models/student-answer.model';
+import { TextDirectionUtil } from '../../../shared/utils/text-direction.util';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -27,6 +28,7 @@ export class QuizTestComponent implements OnInit {
   // اتجاه النص ومحاذاته
   textDirection: 'ltr' | 'rtl' = 'rtl';
   textAlign: 'left' | 'right' = 'right';
+  isAcademicSection = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -54,6 +56,25 @@ export class QuizTestComponent implements OnInit {
     });
   }
 
+  // --- Dynamic RTL/LTR Helper methods ---
+  getQuestionDirection(question: Question): 'ltr' | 'rtl' {
+    if (!question) return 'rtl';
+    return TextDirectionUtil.getTextDirection(question.text);
+  }
+
+  getQuestionAlign(question: Question): 'left' | 'right' {
+    return this.getQuestionDirection(question) === 'rtl' ? 'right' : 'left';
+  }
+
+  getChoiceLabel(question: Question, index: number): string {
+    const dir = this.getQuestionDirection(question);
+    return TextDirectionUtil.getChoiceLetter(question.text, index);
+  }
+
+  getChoiceDirection(choiceText: string): 'ltr' | 'rtl' {
+    return TextDirectionUtil.getTextDirection(choiceText);
+  }
+
   loadSectionAndDirection(): void {
     this.evaluationService.getSection(this.sectionId).subscribe({
       next: (section) => {
@@ -64,9 +85,11 @@ export class QuizTestComponent implements OnInit {
           next: (parentSection) => {
             const type = parentSection.name.toLowerCase();
             if (type.includes('academic')) {
+              this.isAcademicSection = true;
               this.textDirection = 'ltr';
               this.textAlign = 'left';
             } else {
+              this.isAcademicSection = false;
               this.textDirection = 'rtl';
               this.textAlign = 'right';
             }
@@ -82,7 +105,6 @@ export class QuizTestComponent implements OnInit {
       error: (err) => {
         console.error('فشل تحميل اسم الاختبار', err);
         this.showError('فشل تحميل بيانات الاختبار');
-        // لا نستدعي checkIf... هنا لأننا بحاجة لـ sectionId و studentId
       },
     });
   }
@@ -297,7 +319,7 @@ export class QuizTestComponent implements OnInit {
   }
 
   get isAcademic(): boolean {
-    return this.textDirection === 'ltr';
+    return this.isAcademicSection;
   }
 
   private showWarning(message: string): void {

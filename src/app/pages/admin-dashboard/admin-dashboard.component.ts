@@ -14,6 +14,7 @@ import { AuthService } from '../../services/auth.service';
 import { Observable } from 'rxjs';
 import { forkJoin, of } from 'rxjs';
 import { catchError, switchMap, map } from 'rxjs/operators';
+import { TextDirectionUtil } from '../../shared/utils/text-direction.util';
 
 // واجهة لبيانات الإجابة الموسعة
 interface EnrichedAnswer {
@@ -441,5 +442,14 @@ export class AdminDashboardComponent implements OnInit {
   closeStudentDetails(): void {
     this.selectedStudent = null;
     this.studentAnswers = [];
+  }
+
+  getDirection(text: string): 'ltr' | 'rtl' {
+    if (!text) return 'rtl';
+    return TextDirectionUtil.getTextDirection(text);
+  }
+
+  getAlign(text: string): 'left' | 'right' {
+    return this.getDirection(text) === 'rtl' ? 'right' : 'left';
   }
 }

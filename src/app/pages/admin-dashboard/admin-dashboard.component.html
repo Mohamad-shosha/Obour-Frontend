@@ -277,13 +277,16 @@
                       >{{ answer.sectionName }}
                     </span>
                   </td>
-                  <td class="text-wrap question-cell">
+                  <td class="text-wrap question-cell" 
+                      [attr.dir]="getDirection(answer.questionText)"
+                      [style.text-align]="getAlign(answer.questionText)">
                     {{ answer.questionText }}
                   </td>
                   <td>
-                    <span class="badge modern-badge bg-success">
-                      <i class="bi bi-check-circle-fill me-1"></i
-                      >{{ answer.choiceText }}
+                    <span class="badge modern-badge bg-success"
+                          [attr.dir]="getDirection(answer.choiceText)"
+                          [style.text-align]="getAlign(answer.choiceText)">
+                      <i class="bi bi-check-circle-fill me-1"></i>{{ answer.choiceText }}
                     </span>
                   </td>
                   <td>

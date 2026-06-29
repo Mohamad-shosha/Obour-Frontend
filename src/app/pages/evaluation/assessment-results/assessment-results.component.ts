@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssessmentResultService } from '../../../services/assessment-result.service';
 import { AssessmentResult } from '../../../models/assessment-result.model';
+import { TextDirectionUtil } from '../../../shared/utils/text-direction.util';
 
 @Component({
   selector: 'app-assessment-results',
@@ -110,28 +111,37 @@ import { AssessmentResult } from '../../../models/assessment-result.model';
                     </div>
                     
                     <div class="flex-grow-1">
-                      <h5 class="fw-bold mb-3 lh-base text-main">
+                      <h5 class="fw-bold mb-3 lh-base text-main" 
+                          [attr.dir]="getReviewDirection(review)" 
+                          [style.text-align]="getReviewAlign(review)">
                         <span class="text-muted me-2 fs-6">السؤال {{ i + 1 }}:</span> 
                         {{ review.questionTextAr || review.questionText }}
                       </h5>
                       
                       <div class="d-flex flex-column gap-3 mt-3">
                         <!-- User's Choice -->
-                        <div class="p-3 rounded-3" [ngClass]="review.isCorrect ? 'bg-success bg-opacity-10 border border-success border-opacity-25' : 'bg-danger bg-opacity-10 border border-danger border-opacity-25'">
-                          <span class="fw-bold small text-muted d-block mb-2">إجابتك:</span>
-                          <span class="fs-6" [ngClass]="review.isCorrect ? 'text-success fw-bold' : 'text-danger fw-bold text-decoration-line-through'">
+                        <div class="p-3 rounded-3" 
+                             [ngClass]="review.isCorrect ? 'bg-success bg-opacity-10 border border-success border-opacity-25' : 'bg-danger bg-opacity-10 border border-danger border-opacity-25'"
+                             [attr.dir]="getChoiceDirection(review.userChoiceTextAr || review.userChoiceText)">
+                          <span class="fw-bold small text-muted d-block mb-2" [attr.dir]="'rtl'" [style.text-align]="'right'">إجابتك:</span>
+                          <span class="fs-6" 
+                                [ngClass]="review.isCorrect ? 'text-success fw-bold' : 'text-danger fw-bold text-decoration-line-through'"
+                                [style.text-align]="getChoiceDirection(review.userChoiceTextAr || review.userChoiceText) === 'rtl' ? 'right' : 'left'">
                             <i class="fa-solid" [ngClass]="review.isCorrect ? 'fa-check-circle me-2' : 'fa-times-circle me-2'"></i>
                             {{ review.userChoiceTextAr || review.userChoiceText || 'لم يتم الإجابة' }}
                           </span>
                         </div>
                         
                         <!-- Explanation & Correct Answer (Only shown if wrong) -->
-                        <div class="p-4 rounded-4" *ngIf="!review.isCorrect" style="background: rgba(59, 130, 246, 0.05); border: 1px dashed rgba(59, 130, 246, 0.3);">
-                          <h6 class="fw-bold text-primary mb-3 d-flex align-items-center">
+                        <div class="p-4 rounded-4" *ngIf="!review.isCorrect" 
+                             style="background: rgba(59, 130, 246, 0.05); border: 1px dashed rgba(59, 130, 246, 0.3);"
+                             [attr.dir]="getExplanationDirection(review.explanation)">
+                          <h6 class="fw-bold text-primary mb-3 d-flex align-items-center" [attr.dir]="'rtl'">
                             <i class="fa-solid fa-lightbulb text-warning fs-5 me-2"></i> 
                             لماذا أخطأت؟ (الإجابة الصحيحة والتوضيح)
                           </h6>
-                          <p class="mb-0 text-main fs-6 lh-lg fw-semibold">
+                          <p class="mb-0 text-main fs-6 lh-lg fw-semibold"
+                             [style.text-align]="getExplanationDirection(review.explanation) === 'rtl' ? 'right' : 'left'">
                             {{ review.explanation || 'الإجابة التي اخترتها غير صحيحة بناءً على المفاهيم الأساسية للمجال. يرجى مراجعة المادة العلمية المتعلقة بهذا السؤال لضمان عدم تكرار الخطأ مستقبلاً.' }}
                           </p>
                         </div>
@@ -240,5 +250,27 @@ export class AssessmentResultsComponent implements OnInit {
 
   goDashboard() {
     this.router.navigate(['/evaluation/results']);
+  }
+
+  getReviewText(review: any): string {
+    return review.questionTextAr || review.questionText;
+  }
+
+  getReviewDirection(review: any): 'ltr' | 'rtl' {
+    return TextDirectionUtil.getTextDirection(this.getReviewText(review));
+  }
+
+  getReviewAlign(review: any): 'left' | 'right' {
+    return this.getReviewDirection(review) === 'rtl' ? 'right' : 'left';
+  }
+
+  getChoiceDirection(text: string | undefined | null): 'ltr' | 'rtl' {
+    if (!text) return 'rtl';
+    return TextDirectionUtil.getTextDirection(text);
+  }
+
+  getExplanationDirection(text: string | undefined | null): 'ltr' | 'rtl' {
+    if (!text) return 'rtl';
+    return TextDirectionUtil.getTextDirection(text);
   }
 }

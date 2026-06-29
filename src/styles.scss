@@ -4,6 +4,7 @@
    ========================================================================== */
 
 /* 1. BOOTSTRAP SASS VARIABLES (declared before import) */
+$rtl: true;
 $primary: #0f4c81;
 $secondary: #ff7a59;
 $success: #10b981;
@@ -48,16 +49,18 @@ $border-radius-sm: 6px;
   --obour-info: #3b82f6;
 
   /* --- 4-Layer Light Mode Design System --- */
-  --obour-layer-1-bg: #eef2f6;
-  /* Layer 1: Page Background - deeper cool gray/blue canvas for contrast */
-  --obour-layer-2-bg: #e2e8f0;
-  /* Layer 2: Section Backgrounds - stronger cool gray */
+  --obour-layer-1-bg: #e8edf3;
+  /* Layer 1: Page Background - cooler/deeper canvas for card contrast */
+  --obour-layer-2-bg: #dde4ed;
+  /* Layer 2: Section Backgrounds - visible distinction from page bg */
   --obour-layer-3-bg: #ffffff;
-  /* Layer 3: Card surface - solid white for 3D depth */
-  --obour-layer-3-bg-nested: #f8fafc;
+  /* Layer 3: Card surface - solid white for 3D pop */
+  --obour-layer-3-bg-nested: #f4f7fa;
   /* Layer 3 Nested inside card */
   --obour-layer-4-bg: #ffffff;
   /* Layer 4: Highlighted card elevated */
+  --obour-surface-highlight: #f0f4f8;
+  /* Hover/active card highlight */
 
   /* --- Surfaces & Backgrounds mappings --- */
   --obour-bg: var(--obour-layer-1-bg);
@@ -79,21 +82,23 @@ $border-radius-sm: 6px;
   --obour-text-disabled: #94a3b8;
   --obour-text-inverse: #ffffff;
 
-  /* --- Borders (Thin, structural brand blue borders for contrast) --- */
-  --obour-border: rgba(15, 76, 129, 0.12);
-  /* structural brand-tinted border lines with more opacity */
-  --obour-border-hover: rgba(15, 76, 129, 0.22);
+  /* --- Borders (Strengthened for light mode card distinction) --- */
+  --obour-border: rgba(15, 45, 80, 0.18);
+  /* structural brand-tinted borders — clearly visible on white cards */
+  --obour-border-hover: rgba(15, 45, 80, 0.28);
   --obour-border-focus: #0f4c81;
+  --obour-border-card: rgba(15, 45, 80, 0.13);
+  /* dedicated card border — lighter but still visible */
   --obour-border-glass: rgba(255, 255, 255, 0.55);
   --obour-border-glass-dark: rgba(255, 255, 255, 0.08);
 
-  /* --- Shadows & Glows (Refined 3D depth system with apple/linear inset highlights) --- */
-  --shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.08);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 12px 28px -4px rgba(15, 76, 129, 0.12), inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 25px 50px -6px rgba(15, 76, 129, 0.15), inset 0 1px 0 0 rgba(255, 255, 255, 0.85);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 40px 80px -10px rgba(15, 76, 129, 0.18), inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
-  --shadow-glow-primary: 0 0 24px rgba(37, 99, 235, 0.12);
-  --shadow-glow-secondary: 0 0 24px rgba(255, 122, 89, 0.12);
+  /* --- Shadows & Glows (Stronger depth for light backgrounds) --- */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.06), 0 1px 3px 0 rgba(15, 23, 42, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 10px 20px -4px rgba(15, 45, 80, 0.14), inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
+  --shadow-lg: 0 8px 16px -4px rgba(0, 0, 0, 0.1), 0 20px 40px -8px rgba(15, 45, 80, 0.16), inset 0 1px 0 0 rgba(255, 255, 255, 0.85);
+  --shadow-xl: 0 16px 32px -6px rgba(0, 0, 0, 0.12), 0 32px 64px -12px rgba(15, 45, 80, 0.2), inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
+  --shadow-glow-primary: 0 0 20px rgba(37, 99, 235, 0.15);
+  --shadow-glow-secondary: 0 0 20px rgba(255, 122, 89, 0.15);
   --shadow-inner: inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
 
   /* --- Animation / Easing --- */
@@ -166,8 +171,12 @@ $border-radius-sm: 6px;
   --obour-border: #1E293B;
   --obour-border-hover: #334155;
   --obour-border-focus: #3B82F6;
+  --obour-border-card: #1E293B;
   --obour-border-glass: rgba(30, 41, 59, 0.8);
   --obour-border-glass-dark: rgba(30, 41, 59, 0.5);
+
+  /* --- Additional --- */
+  --obour-surface-highlight: #1E293B;
 
   /* --- Shadows (soft, purple-tinted, not harsh black) --- */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
@@ -430,17 +439,22 @@ h6, .h6 { font-size: 0.825rem !important; }
 }
 
 /* --- Cards (generic, token-based) --- */
-.card-premium {
-  background: var(--obour-surface);
-  border: 1px solid var(--obour-border);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-md);
+.card-premium, .card {
+  background: var(--obour-surface) !important;
+  border: 1px solid var(--obour-border-card) !important;
+  border-radius: var(--radius-xl) !important;
+  box-shadow: var(--shadow-md) !important;
   transition: transform var(--transition-normal), box-shadow var(--transition-normal), border-color var(--transition-normal);
 
   &:hover {
+    border-color: var(--obour-border-hover) !important;
+  }
+}
+
+.card-premium {
+  &:hover {
     transform: translateY(-4px);
-    box-shadow: var(--shadow-xl);
-    border-color: var(--obour-border-hover);
+    box-shadow: var(--shadow-xl) !important;
   }
 }
 
