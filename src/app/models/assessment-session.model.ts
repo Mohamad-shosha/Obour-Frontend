@@ -30,6 +30,7 @@ export interface AssessmentSession {
 
 export interface StartSessionRequest {
   userId: number;
-  templateId: number;
+  templateId?: number;
+  categoryId?: number;
   resumeIfExists?: boolean;
 }

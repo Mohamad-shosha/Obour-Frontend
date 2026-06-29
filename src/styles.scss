@@ -48,10 +48,10 @@ $border-radius-sm: 6px;
   --obour-info: #3b82f6;
 
   /* --- 4-Layer Light Mode Design System --- */
-  --obour-layer-1-bg: #f4f6f9;
-  /* Layer 1: Page Background - soft slate-gray/blue canvas */
-  --obour-layer-2-bg: #e8ecf3;
-  /* Layer 2: Section Backgrounds - natural cool gray */
+  --obour-layer-1-bg: #eef2f6;
+  /* Layer 1: Page Background - deeper cool gray/blue canvas for contrast */
+  --obour-layer-2-bg: #e2e8f0;
+  /* Layer 2: Section Backgrounds - stronger cool gray */
   --obour-layer-3-bg: #ffffff;
   /* Layer 3: Card surface - solid white for 3D depth */
   --obour-layer-3-bg-nested: #f8fafc;
@@ -80,18 +80,18 @@ $border-radius-sm: 6px;
   --obour-text-inverse: #ffffff;
 
   /* --- Borders (Thin, structural brand blue borders for contrast) --- */
-  --obour-border: rgba(15, 76, 129, 0.08);
-  /* structural brand-tinted border lines */
-  --obour-border-hover: rgba(15, 76, 129, 0.16);
+  --obour-border: rgba(15, 76, 129, 0.12);
+  /* structural brand-tinted border lines with more opacity */
+  --obour-border-hover: rgba(15, 76, 129, 0.22);
   --obour-border-focus: #0f4c81;
   --obour-border-glass: rgba(255, 255, 255, 0.55);
   --obour-border-glass-dark: rgba(255, 255, 255, 0.08);
 
   /* --- Shadows & Glows (Refined 3D depth system with apple/linear inset highlights) --- */
-  --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.01), 0 10px 24px -4px rgba(15, 76, 129, 0.06), inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.02), 0 20px 40px -6px rgba(15, 76, 129, 0.08), inset 0 1px 0 0 rgba(255, 255, 255, 0.85);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.03), 0 35px 70px -10px rgba(15, 76, 129, 0.12), inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
+  --shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.08);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 12px 28px -4px rgba(15, 76, 129, 0.12), inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 25px 50px -6px rgba(15, 76, 129, 0.15), inset 0 1px 0 0 rgba(255, 255, 255, 0.85);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 40px 80px -10px rgba(15, 76, 129, 0.18), inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
   --shadow-glow-primary: 0 0 24px rgba(37, 99, 235, 0.12);
   --shadow-glow-secondary: 0 0 24px rgba(255, 122, 89, 0.12);
   --shadow-inner: inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
@@ -1069,3 +1069,99 @@ h6, .h6 { font-size: 0.825rem !important; }
     .orb-3 { background: var(--obour-secondary-glow); }
   }
 }
+
+/* ==========================================================================
+   SWEETALERT2 GLOBAL PREMIUM STYLES
+   ========================================================================== */
+div:where(.swal2-container) {
+  /* Override default backdrop for a premium blur effect */
+  backdrop-filter: blur(4px);
+  background: rgba(15, 23, 42, 0.6);
+}
+
+.swal2-popup {
+  background-color: var(--obour-surface) !important;
+  color: var(--obour-text-main) !important;
+  border-radius: var(--radius-xl) !important;
+  box-shadow: var(--shadow-xl) !important;
+  border: 1px solid var(--obour-border) !important;
+  padding: 2rem !important;
+  font-family: var(--font-family-base) !important;
+}
+
+.swal2-title {
+  color: var(--obour-text-primary) !important;
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+}
+
+.swal2-html-container {
+  color: var(--obour-text-secondary) !important;
+  font-size: 1.1rem !important;
+}
+
+.swal2-actions {
+  gap: 1rem;
+  margin-top: 2rem !important;
+}
+
+.swal2-confirm {
+  background: linear-gradient(135deg, var(--obour-primary), var(--obour-primary-dark)) !important;
+  color: #ffffff !important;
+  border-radius: var(--radius-md) !important;
+  padding: 0.75rem 1.5rem !important;
+  font-weight: 600 !important;
+  box-shadow: var(--shadow-sm) !important;
+  transition: all 0.3s ease !important;
+  border: none !important;
+}
+
+.swal2-confirm:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow-primary) !important;
+  background: linear-gradient(135deg, var(--obour-primary-light), var(--obour-primary)) !important;
+}
+
+.swal2-cancel {
+  background: var(--obour-surface-2) !important;
+  color: var(--obour-text-main) !important;
+  border-radius: var(--radius-md) !important;
+  padding: 0.75rem 1.5rem !important;
+  font-weight: 600 !important;
+  border: 1px solid var(--obour-border) !important;
+  transition: all 0.3s ease !important;
+}
+
+.swal2-cancel:hover {
+  background: var(--obour-bg-subtle) !important;
+  color: var(--obour-text-primary) !important;
+}
+
+.swal2-icon {
+  border-width: 0 !important;
+  margin-bottom: 1.5rem !important;
+}
+.swal2-icon.swal2-success {
+  color: var(--obour-success) !important;
+  background: rgba(16, 185, 129, 0.1) !important;
+  border-radius: 50% !important;
+  padding: 1rem;
+}
+.swal2-icon.swal2-error {
+  color: var(--obour-danger) !important;
+  background: rgba(239, 68, 68, 0.1) !important;
+  border-radius: 50% !important;
+  padding: 1rem;
+}
+.swal2-icon.swal2-warning {
+  color: var(--obour-warning) !important;
+  background: rgba(245, 158, 11, 0.1) !important;
+  border-radius: 50% !important;
+  padding: 1rem;
+}
+.swal2-icon.swal2-info {
+  color: var(--obour-info) !important;
+  background: rgba(59, 130, 246, 0.1) !important;
+  border-radius: 50% !important;
+  padding: 1rem;
+}

@@ -1,1 +1,165 @@
-<!-- Empty for now since it's a stub -->
+<div class="assessment-engine" dir="rtl" *ngIf="!loading && session">
+
+  <!-- ═══ Top Bar ═══ -->
+  <div class="engine-topbar">
+    <div class="topbar-right">
+      <div class="assessment-title">
+        <i class="fa-solid fa-file-lines"></i>
+        <span>{{ session.templateNameAr || session.templateName }}</span>
+      </div>
+    </div>
+
+    <div class="topbar-center">
+      <div class="timer-display" [class.timer-urgent]="timerUrgent">
+        <i class="fa-solid fa-clock"></i>
+        <span class="timer-value">{{ timerFormatted }}</span>
+      </div>
+    </div>
+
+    <div class="topbar-left">
+      <div class="progress-info">
+        <span class="progress-text">{{ answeredCount }} / {{ totalQuestions }}</span>
+        <div class="mini-progress">
+          <div class="mini-progress-fill" [style.width.%]="progressPercent"></div>
+        </div>
+      </div>
+      <button class="btn-icon" (click)="toggleQuestionMap()" [class.active]="showQuestionMap" title="خريطة الأسئلة">
+        <i class="fa-solid fa-grip"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══ Main Content ═══ -->
+  <div class="engine-body">
+
+    <!-- Question Map Sidebar -->
+    <div class="question-map-overlay" *ngIf="showQuestionMap" (click)="toggleQuestionMap()"></div>
+    <aside class="question-map-panel" [class.open]="showQuestionMap">
+      <div class="map-header">
+        <h3><i class="fa-solid fa-grip"></i> خريطة الأسئلة</h3>
+        <button class="btn-close-map" (click)="toggleQuestionMap()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="map-legend">
+        <span class="legend-item"><span class="legend-dot answered"></span> تم الإجابة</span>
+        <span class="legend-item"><span class="legend-dot current"></span> الحالي</span>
+        <span class="legend-item"><span class="legend-dot flagged"></span> مُعلَّم</span>
+        <span class="legend-item"><span class="legend-dot unanswered"></span> لم يُجب</span>
+      </div>
+
+      <div class="map-grid">
+        <button
+          *ngFor="let q of session.questions; let i = index"
+          class="map-btn"
+          [class]="'map-btn ' + getQuestionStatus(i)"
+          (click)="goToQuestion(i); toggleQuestionMap()">
+          {{ i + 1 }}
+        </button>
+      </div>
+
+      <div class="map-stats">
+        <div class="map-stat">
+          <span class="map-stat-value text-success">{{ answeredCount }}</span>
+          <span class="map-stat-label">تم الإجابة</span>
+        </div>
+        <div class="map-stat">
+          <span class="map-stat-value text-muted">{{ totalQuestions - answeredCount }}</span>
+          <span class="map-stat-label">متبقي</span>
+        </div>
+        <div class="map-stat">
+          <span class="map-stat-value text-warning">{{ flaggedQuestions.size }}</span>
+          <span class="map-stat-label">مُعلَّم</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ═══ Question Area ═══ -->
+    <main class="question-area">
+      <div class="question-container" *ngIf="currentQuestion">
+
+        <!-- Question Header -->
+        <div class="question-header">
+          <div class="question-number">
+            <span class="q-badge">سؤال {{ currentQuestionIndex + 1 }} من {{ totalQuestions }}</span>
+            <span class="q-difficulty" *ngIf="currentQuestion.difficulty">
+              {{ currentQuestion.difficulty === 'EASY' ? 'سهل' : currentQuestion.difficulty === 'MEDIUM' ? 'متوسط' : currentQuestion.difficulty === 'HARD' ? 'صعب' : currentQuestion.difficulty }}
+            </span>
+          </div>
+          <button class="btn-flag" [class.flagged]="isFlagged(currentQuestionIndex)" (click)="toggleFlag()" title="تعليم السؤال للمراجعة">
+            <i class="fa-solid" [ngClass]="isFlagged(currentQuestionIndex) ? 'fa-bookmark' : 'fa-bookmark'"></i>
+            <span>{{ isFlagged(currentQuestionIndex) ? 'إزالة العلامة' : 'علّم للمراجعة' }}</span>
+          </button>
+        </div>
+
+        <!-- Question Text -->
+        <div class="question-text">
+          <p>{{ currentQuestion.questionTextAr || currentQuestion.questionText }}</p>
+        </div>
+
+        <!-- Code Snippet (if any) -->
+        <div class="code-snippet" *ngIf="currentQuestion.codeSnippet">
+          <div class="code-header">
+            <i class="fa-solid fa-code"></i>
+            <span>{{ currentQuestion.codeLanguage || 'Code' }}</span>
+          </div>
+          <pre><code>{{ currentQuestion.codeSnippet }}</code></pre>
+        </div>
+
+        <!-- Choices -->
+        <div class="choices-list">
+          <button
+            *ngFor="let choice of currentQuestion.choices; let ci = index"
+            class="choice-btn"
+            [class.selected]="isSelectedChoice(choice.id)"
+            (click)="selectChoice(choice)">
+            <span class="choice-letter">{{ ['أ','ب','ج','د','هـ','و'][ci] || ci + 1 }}</span>
+            <span class="choice-text">{{ choice.choiceTextAr || choice.choiceText }}</span>
+            <span class="choice-check" *ngIf="isSelectedChoice(choice.id)">
+              <i class="fa-solid fa-check"></i>
+            </span>
+          </button>
+        </div>
+
+        <!-- Auto-save indicator -->
+        <div class="save-indicator" *ngIf="savingAnswer">
+          <i class="fa-solid fa-circle-notch fa-spin"></i>
+          <span>جاري حفظ الإجابة...</span>
+        </div>
+
+      </div>
+
+      <!-- Navigation Footer -->
+      <div class="question-nav">
+        <button class="nav-btn nav-prev" (click)="prevQuestion()" [disabled]="currentQuestionIndex === 0">
+          <i class="fa-solid fa-arrow-right"></i>
+          السابق
+        </button>
+
+        <div class="nav-center">
+          <button class="nav-btn nav-submit" (click)="confirmSubmit()" [disabled]="submitting">
+            <i class="fa-solid fa-paper-plane"></i>
+            تسليم التقييم
+          </button>
+        </div>
+
+        <button class="nav-btn nav-next" (click)="nextQuestion()" [disabled]="currentQuestionIndex === totalQuestions - 1">
+          التالي
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ═══ Loading State ═══ -->
+<div class="engine-loading" *ngIf="loading" dir="rtl">
+  <div class="loading-content">
+    <div class="loading-spinner">
+      <i class="fa-solid fa-circle-notch fa-spin"></i>
+    </div>
+    <h2>جاري تحميل التقييم...</h2>
+    <p>يُرجى الانتظار</p>
+  </div>
+</div>

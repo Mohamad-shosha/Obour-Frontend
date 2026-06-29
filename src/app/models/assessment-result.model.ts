@@ -17,13 +17,13 @@ export interface DomainScore {
 export interface QuestionReview {
   questionId: number;
   questionText: string;
-  selectedChoiceText: string;
-  correctChoiceText: string;
+  questionTextAr?: string;
+  userChoiceId?: number;
+  userChoiceText?: string;
+  userChoiceTextAr?: string;
   isCorrect: boolean;
-  explanation: string;
-  difficulty: string;
-  pointsEarned: number;
-  maxPoints: number;
+  correctChoiceId?: number;
+  explanation?: string;
 }
 
 export interface AssessmentResult {

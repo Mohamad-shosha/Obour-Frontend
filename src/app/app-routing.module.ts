@@ -20,6 +20,7 @@ import { DomainCategoriesComponent } from './pages/evaluation/domain-categories/
 import { AssessmentStartComponent } from './pages/evaluation/assessment-start/assessment-start.component';
 import { AssessmentEngineComponent } from './pages/evaluation/assessment-engine/assessment-engine.component';
 import { AssessmentResultsComponent } from './pages/evaluation/assessment-results/assessment-results.component';
+import { StudentDashboardComponent } from './pages/evaluation/student-dashboard/student-dashboard.component';
 import { AssessmentGuard } from './shared/guards/assessment.guard';
 
 // تعريف المسارات
@@ -33,6 +34,7 @@ const routes: Routes = [
   { path: 'evaluation/domains/:domainId', component: DomainCategoriesComponent },
   { path: 'evaluation/start/:templateId', component: AssessmentStartComponent },
   { path: 'evaluation/engine/:sessionId', component: AssessmentEngineComponent, data: { hideFooter: true, hideHeader: true }, canDeactivate: [AssessmentGuard] },
+  { path: 'evaluation/results', component: StudentDashboardComponent },
   { path: 'evaluation/results/:sessionId', component: AssessmentResultsComponent },
   { path: 'admin/dashboard', component: AdminDashboardComponent, data: { hideHeader: true, hideFooter: true } },
   { path: 'evaluation/about', component: EvaluationAboutComponent },
