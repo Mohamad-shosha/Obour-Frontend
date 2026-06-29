@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AssessmentSessionService } from '../../../services/assessment-session.service';
 import { AssessmentSession, SaveAnswerRequest } from '../../../models/assessment-session.model';
 import { QuestionBank, QuestionBankChoice } from '../../../models/question-bank.model';
+import { TextDirectionUtil } from '../../../shared/utils/text-direction.util';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -21,6 +22,26 @@ export class AssessmentEngineComponent implements OnInit, OnDestroy {
   submitting = false;
   showQuestionMap = false;
   savingAnswer = false;
+
+  // --- RTL/LTR direction helpers ---
+  getQuestionDirection(): 'rtl' | 'ltr' {
+    if (!this.currentQuestion) return 'rtl';
+    const text = this.currentQuestion.questionTextAr || this.currentQuestion.questionText;
+    return TextDirectionUtil.getTextDirection(text);
+  }
+
+  getQuestionAlign(): 'right' | 'left' {
+    return this.getQuestionDirection() === 'rtl' ? 'right' : 'left';
+  }
+
+  getChoiceLabel(index: number): string {
+    const letters = TextDirectionUtil.getChoiceLetters(this.getQuestionDirection());
+    return letters[index] || String(index + 1);
+  }
+
+  getChoiceDirection(choiceText: string): 'rtl' | 'ltr' {
+    return TextDirectionUtil.getTextDirection(choiceText);
+  }
 
   constructor(
     private route: ActivatedRoute,

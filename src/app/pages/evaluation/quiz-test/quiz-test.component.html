@@ -69,20 +69,23 @@
         </div>
 
         <!-- Question Text -->
-        <h2 class="question-text mb-5" [attr.dir]="textDirection" [style.text-align]="textAlign">
+        <h2 class="question-text mb-5" 
+            [attr.dir]="getQuestionDirection(getCurrentQuestion())" 
+            [style.text-align]="getQuestionAlign(getCurrentQuestion())">
           {{ getCurrentQuestion().text }}
         </h2>
 
         <!-- Choices -->
-        <div class="choices-grid d-grid gap-3" [attr.dir]="textDirection">
+        <div class="choices-grid d-grid gap-3" [attr.dir]="getQuestionDirection(getCurrentQuestion())">
           <button *ngFor="let choice of getCurrentQuestion().choices; let ci = index"
                   type="button"
                   class="choice-btn"
                   [class.choice-btn--selected-primary]="isChoiceSelected(choice.id) && isAcademic"
                   [class.choice-btn--selected-success]="isChoiceSelected(choice.id) && !isAcademic"
-                  [style.text-align]="textAlign"
+                  [attr.dir]="getChoiceDirection(choice.text)"
+                  [style.text-align]="getChoiceDirection(choice.text) === 'rtl' ? 'right' : 'left'"
                   (click)="selectChoice(choice.id)">
-            <span class="choice-letter">{{ ['أ','ب','ج','د'][ci] || ci + 1 }}</span>
+            <span class="choice-letter">{{ getChoiceLabel(getCurrentQuestion(), ci) }}</span>
             <span class="flex-grow-1">{{ choice.text }}</span>
             <i class="fa-solid fa-circle-check choice-check" *ngIf="isChoiceSelected(choice.id)"></i>
           </button>

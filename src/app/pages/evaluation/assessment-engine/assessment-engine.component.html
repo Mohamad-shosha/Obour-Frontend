@@ -94,7 +94,7 @@
         </div>
 
         <!-- Question Text -->
-        <div class="question-text">
+        <div class="question-text" [attr.dir]="getQuestionDirection()" [style.text-align]="getQuestionAlign()">
           <p>{{ currentQuestion.questionTextAr || currentQuestion.questionText }}</p>
         </div>
 
@@ -108,13 +108,15 @@
         </div>
 
         <!-- Choices -->
-        <div class="choices-list">
+        <div class="choices-list" [attr.dir]="getQuestionDirection()">
           <button
             *ngFor="let choice of currentQuestion.choices; let ci = index"
             class="choice-btn"
             [class.selected]="isSelectedChoice(choice.id)"
+            [attr.dir]="getChoiceDirection(choice.choiceTextAr || choice.choiceText)"
+            [style.text-align]="getChoiceDirection(choice.choiceTextAr || choice.choiceText) === 'rtl' ? 'right' : 'left'"
             (click)="selectChoice(choice)">
-            <span class="choice-letter">{{ ['أ','ب','ج','د','هـ','و'][ci] || ci + 1 }}</span>
+            <span class="choice-letter">{{ getChoiceLabel(ci) }}</span>
             <span class="choice-text">{{ choice.choiceTextAr || choice.choiceText }}</span>
             <span class="choice-check" *ngIf="isSelectedChoice(choice.id)">
               <i class="fa-solid fa-check"></i>
