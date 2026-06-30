@@ -5,7 +5,7 @@
   min-height: 100vh;
   background-color: var(--obour-bg);
   background-image: radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.02) 0px, transparent 50%),
-                    radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.02) 0px, transparent 50%);
+    radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.02) 0px, transparent 50%);
   direction: rtl;
 }
 
@@ -15,7 +15,7 @@
 .auth-branding {
   flex: 1.2;
   background-color: #050b14;
-  background-image: 
+  background-image:
     radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.12) 0%, transparent 50%),
     radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
   position: relative;
@@ -28,7 +28,7 @@
     z-index: 1;
     opacity: 0.15;
     background-size: 40px 40px;
-    background-image: 
+    background-image:
       linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
       linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
     mask-image: radial-gradient(ellipse at 50% 50%, black, transparent 80%);
@@ -120,28 +120,29 @@
 
 .input-icon {
   position: absolute;
-  right: 18px;
+  right: 14px;
   top: 50%;
   transform: translateY(-50%);
   color: var(--obour-text-secondary);
   z-index: 5;
-  font-size: 1rem;
+  font-size: 0.95rem;
   transition: color 0.3s;
 }
 
 .input-modern {
-  padding-right: 48px !important;
-  padding-left: 18px !important;
-  height: 54px;
+  padding-right: 40px !important;
+  padding-left: 14px !important;
+  height: 44px;
+  /* SaaS layout density */
   background-color: var(--obour-surface-2);
-  border: 1.5px solid var(--obour-border);
+  border: 1px solid var(--obour-border);
   color: var(--obour-text-primary);
   border-radius: var(--radius-md);
   width: 100%;
-  font-size: 0.95rem;
+  font-size: 0.925rem;
   font-weight: 500;
   transition: all var(--transition-normal);
-  
+
   &::placeholder {
     color: var(--obour-text-disabled);
   }
@@ -155,19 +156,19 @@
     outline: none;
     border-color: var(--obour-primary-light);
     background-color: var(--obour-surface);
-    box-shadow: 0 0 0 4px var(--obour-primary-soft);
+    box-shadow: 0 0 0 1px var(--obour-primary-light), 0 0 0 3px var(--obour-primary-soft);
 
-    + .input-icon {
+    +.input-icon {
       color: var(--obour-primary-light);
     }
   }
 
   &.is-invalid {
     border-color: var(--obour-danger);
-    background-color: rgba(239, 68, 68, 0.02);
-    
+    background-color: rgba(239, 68, 68, 0.01);
+
     &:focus {
-      box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
+      box-shadow: 0 0 0 1px var(--obour-danger), 0 0 0 3px rgba(239, 68, 68, 0.12);
     }
   }
 }
@@ -249,7 +250,7 @@
    ========================================================================== */
 .auth-form-content {
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
-  
+
   &.switching {
     opacity: 0;
     transform: translateY(10px) scale(0.97);
@@ -265,13 +266,27 @@
 }
 
 @keyframes authFormEnterLogin {
-  from { opacity: 0; transform: translateX(-15px) scale(0.97); }
-  to { opacity: 1; transform: translateX(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateX(-15px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
 }
 
 @keyframes authFormEnterRegister {
-  from { opacity: 0; transform: translateX(15px) scale(0.97); }
-  to { opacity: 1; transform: translateX(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateX(15px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
 }
 
 .shake {
@@ -279,10 +294,27 @@
 }
 
 @keyframes shake {
-  10%, 90% { transform: translate3d(-1px, 0, 0); }
-  20%, 80% { transform: translate3d(2px, 0, 0); }
-  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-  40%, 60% { transform: translate3d(4px, 0, 0); }
+
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
 }
 
 .hover-lift:hover {
@@ -292,6 +324,7 @@
 
 .hover-underline {
   transition: color 0.2s;
+
   &:hover {
     color: var(--obour-primary-light) !important;
     text-decoration: underline !important;

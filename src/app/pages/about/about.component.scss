@@ -1,10 +1,22 @@
 /* src/app/pages/about/about.component.scss */
 
 // Utilities
-.max-w-2xl { max-width: 42rem; }
-.max-w-3xl { max-width: 48rem; }
-.py-6 { padding-top: 2.5rem !important; padding-bottom: 2.5rem !important; }
-.text-white-75 { color: rgba(255, 255, 255, 0.75); }
+.max-w-2xl {
+  max-width: 42rem;
+}
+
+.max-w-3xl {
+  max-width: 48rem;
+}
+
+.py-6 {
+  padding-top: 2.5rem !important;
+  padding-bottom: 2.5rem !important;
+}
+
+.text-white-75 {
+  color: rgba(255, 255, 255, 0.75);
+}
 
 // Scroll Animation
 .scroll-animate {
@@ -12,6 +24,7 @@
   transform: translateY(30px);
   transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
 .scroll-animate.visible {
   opacity: 1;
   transform: translateY(0);
@@ -47,11 +60,22 @@
     justify-content: center;
     margin: 0 auto 1.5rem;
 
-    &.bg-primary  { background: linear-gradient(135deg, var(--obour-primary), var(--obour-primary-light)); }
-    &.bg-success  { background: linear-gradient(135deg, #059669, #10b981); }
-    &.bg-academic { background: linear-gradient(135deg, var(--obour-primary-light), #3b82f6); }
+    &.bg-primary {
+      background: linear-gradient(135deg, var(--obour-primary), var(--obour-primary-light));
+    }
 
-    i { font-size: 1.8rem; color: white; }
+    &.bg-success {
+      background: linear-gradient(135deg, #059669, #10b981);
+    }
+
+    &.bg-academic {
+      background: linear-gradient(135deg, var(--obour-primary-light), #3b82f6);
+    }
+
+    i {
+      font-size: 1.8rem;
+      color: white;
+    }
   }
 }
 
@@ -72,9 +96,18 @@
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    &.bg-success { background: #10b981; }
-    &.bg-warning { background: #f59e0b; }
-    &.bg-danger  { background: #ef4444; }
+
+    &.bg-success {
+      background: #10b981;
+    }
+
+    &.bg-warning {
+      background: #f59e0b;
+    }
+
+    &.bg-danger {
+      background: #ef4444;
+    }
   }
 
   .dashboard-features li {
@@ -83,8 +116,16 @@
     gap: 0.75rem;
     margin-bottom: 1.25rem;
     transition: transform 0.2s ease;
-    &:hover { transform: translateX(-8px); } // RTL direction
-    i { flex-shrink: 0; margin-top: 0.2rem; }
+
+    &:hover {
+      transform: translateX(-8px);
+    }
+
+    // RTL direction
+    i {
+      flex-shrink: 0;
+      margin-top: 0.2rem;
+    }
   }
 }
 
@@ -98,11 +139,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  
-  &.bg-primary { background: var(--obour-primary); }
-  &.bg-success  { background: #059669; }
-  
-  i { color: white; font-size: 1.2rem; }
+
+  &.bg-primary {
+    background: var(--obour-primary);
+  }
+
+  &.bg-success {
+    background: #059669;
+  }
+
+  i {
+    color: white;
+    font-size: 1.2rem;
+  }
 }
 
 // Impact Narrative Cards
@@ -137,14 +186,22 @@
   border-radius: var(--radius-xl);
   position: relative;
   z-index: 1;
-  h2, p { color: white; }
+
+  h2,
+  p {
+    color: white;
+  }
 }
 
 // ==========================================================================
 // Responsive
 // ==========================================================================
 @media (max-width: 768px) {
-  .hero-section, .cta-section { padding: 3rem 0; }
+
+  .hero-section,
+  .cta-section {
+    padding: 3rem 0;
+  }
 }
 
 // ==========================================================================
@@ -189,15 +246,24 @@
       border-radius: 50%;
       margin-left: 6px;
       opacity: 0.75;
-      
-      &.bg-danger { background: #ef4444; }
-      &.bg-warning { background: #f59e0b; }
-      &.bg-success { background: #10b981; }
+
+      &.bg-danger {
+        background: #ef4444;
+      }
+
+      &.bg-warning {
+        background: #f59e0b;
+      }
+
+      &.bg-success {
+        background: #10b981;
+      }
     }
   }
 
   .mockup-tabs {
     background: rgba(255, 255, 255, 0.02);
+
     .mockup-tab {
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -220,7 +286,7 @@
     bottom: 0;
     right: 23px; // Align to node center in RTL
     width: 2px;
-    background: linear-gradient(to bottom, #10b981 0%, #3b82f6 50%, rgba(255,255,255,0.1) 100%);
+    background: linear-gradient(to bottom, #10b981 0%, #3b82f6 50%, rgba(255, 255, 255, 0.1) 100%);
   }
 
   .timeline-journey-step {
@@ -239,7 +305,7 @@
       justify-content: center;
       color: rgba(255, 255, 255, 0.6);
       font-size: 1.1rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       flex-shrink: 0;
       transition: all 0.3s ease;
     }
@@ -282,6 +348,7 @@
   0% {
     transform: rotateY(-12deg) rotateX(8deg) translateY(0);
   }
+
   100% {
     transform: rotateY(-8deg) rotateX(12deg) translateY(-8px);
   }
@@ -291,6 +358,7 @@
   0% {
     box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.5);
   }
+
   100% {
     box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
   }
@@ -313,9 +381,21 @@
 
   .audience-icon-circle {
     transition: transform 0.3s ease;
-    &.bg-primary-soft { background: var(--obour-primary-soft); color: var(--obour-primary); }
-    &.bg-success-soft { background: rgba(16, 185, 129, 0.1); color: #059669; }
-    &.bg-warning-soft { background: rgba(245, 158, 11, 0.1); color: #d97706; }
+
+    &.bg-primary-soft {
+      background: var(--obour-primary-soft);
+      color: var(--obour-primary);
+    }
+
+    &.bg-success-soft {
+      background: rgba(16, 185, 129, 0.1);
+      color: #059669;
+    }
+
+    &.bg-warning-soft {
+      background: rgba(245, 158, 11, 0.1);
+      color: #d97706;
+    }
   }
 
   &:hover .audience-icon-circle {
@@ -327,6 +407,7 @@
   li {
     padding: 0.25rem 0;
     transition: transform 0.2s ease;
+
     &:hover {
       transform: translateX(-4px); // RTL
     }
@@ -351,7 +432,7 @@
     font-size: 1.5rem;
     transition: transform 0.3s ease;
   }
-  
+
   &:hover .value-icon {
     transform: scale(1.15);
   }
@@ -362,18 +443,19 @@
 // ==========================================================================
 .tech-console-card {
   box-shadow: var(--shadow-md);
-  
+
   .status-indicator-dot {
     width: 10px;
     height: 10px;
     border-radius: 50%;
     display: inline-block;
   }
-  
+
   .metric-row {
     transition: background-color 0.2s ease;
+
     &:hover {
-      background-color: rgba(0,0,0,0.02) !important;
+      background-color: rgba(0, 0, 0, 0.02) !important;
     }
   }
 }
@@ -383,9 +465,10 @@
 // ==========================================================================
 .standards-graphic-card {
   box-shadow: var(--shadow-md);
-  
+
   .quality-shield {
     color: var(--obour-primary);
+
     i {
       font-size: 4rem;
       filter: drop-shadow(0 8px 16px rgba(15, 76, 129, 0.25));
@@ -395,8 +478,8 @@
 
 .align-standards-item {
   transition: transform 0.2s ease;
+
   &:hover {
     transform: translateX(-6px);
   }
 }
-

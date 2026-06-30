@@ -316,7 +316,7 @@ $radius-sm: 10px;
     position: relative;
 
     &::after {
-      content: '⚑';
+      content: '\2691';
       position: absolute;
       top: -4px;
       left: -4px;
@@ -487,26 +487,26 @@ $radius-sm: 10px;
 .choice-btn {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 1.15rem 1.5rem;
+  gap: 0.75rem;
+  padding: 0.8rem 1.15rem; /* unified tighter padding */
   background: $surface;
-  border: 2px solid $border;
-  border-radius: $radius;
+  border: 1.5px solid $border;
+  border-radius: var(--radius-md);
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   text-align: right;
 
   &:hover {
-    border-color: rgba($primary, 0.3);
+    border-color: var(--obour-primary-light);
     background: rgba($primary, 0.02);
-    transform: translateX(-4px);
-    box-shadow: 0 2px 12px rgba($primary, 0.08);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm), 0 0 10px var(--obour-primary-glow);
   }
 
   &.selected {
     border-color: $primary;
     background: rgba($primary, 0.04);
-    box-shadow: 0 3px 16px rgba($primary, 0.12);
+    box-shadow: var(--shadow-md), 0 0 12px var(--obour-primary-glow);
 
     .choice-letter {
       background: $primary;
@@ -517,16 +517,16 @@ $radius-sm: 10px;
 }
 
 .choice-letter {
-  width: 40px;
-  height: 40px;
-  border-radius: $radius-sm;
-  border: 2px solid $border;
+  width: 32px; /* compact size */
+  height: 32px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid $border;
   background: $surface-2;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 800;
-  font-size: 1rem;
+  font-weight: 700;
+  font-size: 0.9rem;
   color: $text-secondary;
   flex-shrink: 0;
   transition: all 0.25s ease;
@@ -720,5 +720,95 @@ $radius-sm: 10px;
 
   .nav-submit {
     padding: 0.55rem 1.25rem;
+  }
+}
+
+/* --- Dark Theme Overrides --- */
+[data-theme="dark"] {
+  .assessment-engine {
+    background: var(--obour-bg);
+  }
+  .engine-topbar {
+    background: var(--obour-surface);
+    border-color: var(--obour-border);
+  }
+  .assessment-title {
+    color: var(--obour-text-primary);
+    i { color: var(--obour-primary-light); }
+  }
+  .timer-display {
+    background: rgba(37, 99, 235, 0.1);
+    color: var(--obour-primary-light);
+    border-color: rgba(37, 99, 235, 0.2);
+  }
+  .btn-icon {
+    border-color: var(--obour-border);
+    background: var(--obour-surface);
+    color: var(--obour-text-secondary);
+    &:hover, &.active {
+      background: var(--obour-surface-2);
+      color: var(--obour-primary-light);
+      border-color: var(--obour-primary-soft);
+    }
+  }
+  .question-map-panel {
+    background: var(--obour-surface);
+    border-right-color: var(--obour-border);
+    .map-header h3 { color: var(--obour-text-primary); }
+    .btn-close-map { background: var(--obour-surface-2); color: var(--obour-text-secondary); }
+    .legend-dot.unanswered { background: var(--obour-border); }
+    .map-btn {
+      border-color: var(--obour-border);
+      background: var(--obour-surface);
+      color: var(--obour-text-secondary);
+      &.current {
+        background: var(--obour-primary-light);
+        border-color: var(--obour-primary-light);
+        color: white;
+      }
+      &.answered {
+        background: rgba(16, 185, 129, 0.1);
+        border-color: var(--obour-success);
+        color: var(--obour-success);
+      }
+    }
+  }
+  .q-difficulty {
+    color: var(--obour-text-secondary);
+    background: var(--obour-surface-2);
+    border-color: var(--obour-border);
+  }
+  .btn-flag {
+    border-color: var(--obour-border);
+    background: var(--obour-surface);
+    color: var(--obour-text-secondary);
+  }
+  .question-text {
+    background: var(--obour-surface);
+    border-color: var(--obour-border);
+    p { color: var(--obour-text-primary); }
+  }
+  .choice-btn {
+    background: var(--obour-surface);
+    border-color: var(--obour-border);
+    &:hover {
+      border-color: var(--obour-primary-light);
+      background: rgba(37, 99, 235, 0.02);
+    }
+    &.selected {
+      border-color: var(--obour-primary-light);
+      background: rgba(37, 99, 235, 0.04);
+    }
+  }
+  .choice-letter {
+    border-color: var(--obour-border);
+    background: var(--obour-surface-2);
+    color: var(--obour-text-secondary);
+  }
+  .choice-text {
+    color: var(--obour-text-primary);
+  }
+  .question-nav {
+    border-top-color: var(--obour-border);
   }
 }

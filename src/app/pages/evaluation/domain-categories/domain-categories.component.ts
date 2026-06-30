@@ -10,37 +10,37 @@ import { AssessmentDomain } from '../../../models/assessment-domain.model';
       <div class="container">
         <!-- Header -->
         <div class="d-flex align-items-center mb-5 gap-3">
-          <button class="btn btn-light rounded-circle shadow-sm" style="width: 45px; height: 45px;" (click)="goBack()">
+          <button class="btn btn-premium-outline rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;" (click)="goBack()">
             <i class="fa-solid fa-arrow-right"></i>
           </button>
           <div>
-            <h1 class="fs-3 fw-bold mb-1">{{ domain.nameAr || domain.name }}</h1>
-            <p class="text-muted mb-0">{{ domain.descriptionAr || domain.description }}</p>
+            <h1 class="fs-3 fw-bold mb-1" style="color: var(--obour-text-primary);">{{ domain.nameAr || domain.name }}</h1>
+            <p class="text-muted mb-0" style="color: var(--obour-text-secondary);">{{ domain.descriptionAr || domain.description }}</p>
           </div>
         </div>
 
         <!-- Categories & Topics -->
         <div class="row g-4">
           <div class="col-12 col-md-6 col-lg-4" *ngFor="let category of domain.categories">
-            <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden" style="background: var(--obour-surface);">
-              <div class="card-body p-4 d-flex flex-column">
+            <div class="card h-100 card-premium">
+              <div class="card-body p-1 d-flex flex-column h-100">
                 <div class="d-flex align-items-center gap-3 mb-3">
-                  <div class="icon-circle bg-primary-soft text-primary d-flex align-items-center justify-content-center rounded" style="width: 48px; height: 48px; font-size: 1.25rem;">
+                  <div class="icon-circle bg-primary-soft text-primary-light d-flex align-items-center justify-content-center rounded" style="width: 44px; height: 44px; font-size: 1.15rem; border: 1px solid var(--obour-primary-glow);">
                     <i [class]="category.icon || 'fa-solid fa-folder'"></i>
                   </div>
-                  <h3 class="fs-5 fw-bold mb-0">{{ category.nameAr || category.name }}</h3>
+                  <h3 class="fs-5 fw-bold mb-0" style="color: var(--obour-text-primary);">{{ category.nameAr || category.name }}</h3>
                 </div>
                 
-                <p class="text-muted small mb-4 flex-grow-1">{{ category.description }}</p>
+                <p class="text-muted small mb-4 flex-grow-1" style="color: var(--obour-text-secondary) !important; line-height: 1.6;">{{ category.description }}</p>
 
-                <h4 class="fs-6 fw-bold mb-3" *ngIf="category.topics && category.topics.length">المواضيع الفرعية</h4>
-                <div class="d-flex flex-wrap gap-2 mb-4" *ngIf="category.topics && category.topics.length">
-                  <span class="badge bg-light text-dark border px-3 py-2 rounded-pill fw-normal" *ngFor="let topic of category.topics">
+                <h4 class="fs-6 fw-bold mb-3" *ngIf="category.topics && category.topics.length" style="color: var(--obour-text-primary); font-size: 0.95rem;">المواضيع الفرعية</h4>
+                <div class="d-flex flex-wrap gap-1.5 mb-4" *ngIf="category.topics && category.topics.length">
+                  <span class="chip-item px-2.5 py-1 rounded-pill small border" *ngFor="let topic of category.topics" style="background: rgba(255,255,255,0.03); color: var(--obour-text-primary); border-color: var(--obour-border); font-size: 0.8rem;">
                     {{ topic.nameAr || topic.name }}
                   </span>
                 </div>
 
-                <button class="btn btn-primary w-100 rounded-pill py-2.5 mt-auto fw-bold" (click)="startAssessment(category.id)">
+                <button class="btn btn-premium w-100 py-2.5 mt-auto fw-bold" (click)="startAssessment(category.id)">
                   بدء تقييم {{ category.nameAr || category.name }}
                 </button>
               </div>

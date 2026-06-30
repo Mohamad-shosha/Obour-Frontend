@@ -6,7 +6,7 @@
 .gradient-purple { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
 
 .card-shadow {
-  background: white;
+  background: var(--obour-surface);
   border: 1px solid var(--obour-border);
   box-shadow: var(--shadow-sm);
 }

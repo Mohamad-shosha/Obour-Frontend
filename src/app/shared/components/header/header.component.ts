@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
@@ -13,10 +13,16 @@ import Swal from 'sweetalert2';
 export class HeaderComponent implements OnInit {
   currentPage: string = 'home';
   isMenuOpen = false;
+  isScrolled = false;
   user: any = null;
   menuItems: { id: string; label: string; icon: string }[] = [];
 
   isDark$ = this.themeService.isDark$;
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    this.isScrolled = window.pageYOffset > 20;
+  }
 
   constructor(
     private router: Router,

@@ -8,6 +8,16 @@
   z-index: 1000;
   background: transparent;
   animation: slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &.scrolled {
+    .floating-header-inner {
+      background-color: var(--obour-surface-glass);
+      border-color: var(--obour-primary-light);
+      box-shadow: var(--shadow-lg), 0 0 12px var(--obour-primary-glow);
+      padding: 0.25rem 1rem !important;
+    }
+  }
 }
 
 .floating-header-inner {

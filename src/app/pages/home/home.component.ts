@@ -11,6 +11,9 @@ import { CountUp } from 'countup.js';
 export class HomeComponent implements AfterViewInit, OnDestroy {
   private observer!: IntersectionObserver;
   private statsObserver!: IntersectionObserver;
+  private cardObserver!: IntersectionObserver;
+  private visibleCards: HTMLElement[] = [];
+  private isScrollScheduled = false;
   heroRotateX = 8;
   heroRotateY = -12;
   isIntroAnimating = true;
@@ -39,6 +42,9 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     }
     if (this.statsObserver) {
       this.statsObserver.disconnect();
+    }
+    if (this.cardObserver) {
+      this.cardObserver.disconnect();
     }
   }
 
@@ -88,8 +94,76 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
         rootMargin: '0px 0px -40px 0px',
       }
     );
-
     animatedElements.forEach((el) => this.observer.observe(el));
+
+    // Observe cards in viewport to apply smooth 3D scroll tilt
+    const cards = document.querySelectorAll('.card-premium, .card, .spotlight-card, .showcase-tab, .career-explorer-card, .ai-assistant-card, .showcase-display-window');
+    this.cardObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const target = entry.target as HTMLElement;
+          if (entry.isIntersecting) {
+            if (!this.visibleCards.includes(target)) {
+              this.visibleCards.push(target);
+            }
+          } else {
+            this.visibleCards = this.visibleCards.filter((c) => c !== target);
+            target.style.removeProperty('--scroll-rotate-x');
+            target.style.removeProperty('--scroll-translate-y');
+          }
+        });
+      },
+      {
+        threshold: 0.01,
+        rootMargin: '100px 0px 100px 0px',
+      }
+    );
+    cards.forEach((c) => this.cardObserver.observe(c));
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll() {
+    if (this.isScrollScheduled) return;
+    this.isScrollScheduled = true;
+
+    window.requestAnimationFrame(() => {
+      const windowHeight = window.innerHeight;
+      const viewportCenter = windowHeight / 2;
+      const scrollY = window.scrollY;
+
+      // 1. 3D Parallax floating effect for glowing orbs in Hero Background
+      const orbs = document.querySelectorAll('.hero-mesh .orb') as NodeListOf<HTMLElement>;
+      orbs.forEach((orb, index) => {
+        const speed = (index + 1) * 0.15;
+        const offset = scrollY * speed;
+        orb.style.transform = `translateY(${offset}px)`;
+      });
+
+      // 2. 3D Scroll Rotation & Depth translate for Hero Mockup Window
+      const heroMockup = document.querySelector('.mockup-glass') as HTMLElement;
+      if (heroMockup && scrollY < 800) {
+        const scrollRotateX = (scrollY / 800) * 15; // Max 15 degrees extra tilt
+        const scrollTranslateZ = (scrollY / 800) * -150; // Max 150px push back in Z depth
+        heroMockup.style.setProperty('--scroll-hero-rx', `${scrollRotateX}deg`);
+        heroMockup.style.setProperty('--scroll-hero-tz', `${scrollTranslateZ}px`);
+      }
+
+      // 3. 3D Parallax tilt calculations for all visible card elements
+      this.visibleCards.forEach((card) => {
+        const rect = card.getBoundingClientRect();
+        const cardCenter = rect.top + rect.height / 2;
+        const distanceFromCenter = (cardCenter - viewportCenter) / (windowHeight / 2);
+
+        // Calculate smooth 3D tilt based on card depth in view
+        const rotateX = distanceFromCenter * 6; // Max 6 degrees tilt
+        const translateY = distanceFromCenter * -12; // Max 12px vertical drift
+
+        card.style.setProperty('--scroll-rotate-x', `${rotateX}deg`);
+        card.style.setProperty('--scroll-translate-y', `${translateY}px`);
+      });
+
+      this.isScrollScheduled = false;
+    });
   }
 
   initStatsCountUp() {

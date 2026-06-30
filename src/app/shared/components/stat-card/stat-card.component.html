@@ -1,12 +1,12 @@
 <!-- src/app/shared/components/stat-card/stat-card.component.html -->
 <div
-  class="bg-white rounded-3 p-4 card-shadow card-hover animate-slide-up h-100"
+  class="rounded-3 p-3.5 card-shadow card-hover animate-slide-up h-100" style="background: var(--obour-surface);"
 >
   <div class="d-flex align-items-start justify-content-between mb-3">
     <div
       class="rounded-3 d-flex align-items-center justify-content-center shadow"
       [ngClass]="getGradientClass()"
-      style="width: 56px; height: 56px"
+      style="width: 44px; height: 44px; border-radius: var(--radius-md) !important;"
     >
       <svg
         viewBox="0 0 24 24"
@@ -15,15 +15,15 @@
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
-        width="28"
-        height="28"
+        width="22"
+        height="22"
         class="text-white"
       >
         <path [attr.d]="iconPath"></path>
       </svg>
     </div>
   </div>
-  <h3 class="text-muted small fw-medium mb-2">{{ title }}</h3>
-  <p class="fs-2 fw-bold text-dark mb-1">{{ value }}</p>
-  <p *ngIf="description" class="small text-muted mb-0">{{ description }}</p>
+  <h3 class="text-muted small fw-bold mb-1.5" style="color: var(--obour-text-secondary) !important;">{{ title }}</h3>
+  <p class="fs-3 fw-bold mb-1" style="color: var(--obour-text-primary);">{{ value }}</p>
+  <p *ngIf="description" class="small text-muted mb-0" style="color: var(--obour-text-secondary) !important;">{{ description }}</p>
 </div>

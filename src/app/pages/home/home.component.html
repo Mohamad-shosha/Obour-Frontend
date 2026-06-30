@@ -63,7 +63,7 @@
 
             <!-- Mockup Window Browser Frame -->
             <div class="mockup-glass"
-              [style.transform]="isIntroAnimating ? null : 'rotateY(' + heroRotateY + 'deg) rotateX(' + heroRotateX + 'deg) translateZ(0)'">
+              [style.transform]="isIntroAnimating ? null : 'rotateY(' + heroRotateY + 'deg) rotateX(calc(' + heroRotateX + 'deg + var(--scroll-hero-rx, 0deg))) translateZ(var(--scroll-hero-tz, 0px))'">
               <div class="mockup-header">
                 <div class="dot bg-danger"></div>
                 <div class="dot bg-warning"></div>
@@ -104,7 +104,7 @@
                     </div>
                     <div class="progress" style="height: 6px; background: var(--obour-border);">
                       <div class="progress-bar bg-primary" role="progressbar" style="width: 92%;" aria-valuenow="92"
-                         aria-valuemin="0" aria-valuemax="100"></div>
+                        aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
 
@@ -116,14 +116,15 @@
                     </div>
                     <div class="progress" style="height: 6px; background: var(--obour-border);">
                       <div class="progress-bar bg-accent" role="progressbar" style="width: 85%;" aria-valuenow="85"
-                         aria-valuemin="0" aria-valuemax="100"></div>
+                        aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                 </div>
 
                 <!-- Main compatibility bar chart mockup -->
                 <div class="glass-panel p-3 mt-2" style="background: var(--obour-surface-2); min-height: 140px;">
-                  <span class="small fw-bold d-block mb-3" style="color: var(--obour-text-primary);">التوافق المهني اللحظي</span>
+                  <span class="small fw-bold d-block mb-3" style="color: var(--obour-text-primary);">التوافق المهني
+                    اللحظي</span>
                   <div class="d-flex align-items-end justify-content-around h-100 pb-2">
                     <div class="bg-primary opacity-25 rounded-top" style="height: 50px; width: 24px;"></div>
                     <div class="bg-primary rounded-top"
@@ -131,7 +132,8 @@
                     <div class="bg-accent rounded-top"
                       style="height: 75px; width: 24px; filter: drop-shadow(0 0 6px var(--obour-accent-glow));"></div>
                     <div class="bg-secondary rounded-top"
-                      style="height: 105px; width: 24px; filter: drop-shadow(0 0 6px var(--obour-secondary-glow));"></div>
+                      style="height: 105px; width: 24px; filter: drop-shadow(0 0 6px var(--obour-secondary-glow));">
+                    </div>
                     <div class="bg-primary opacity-50 rounded-top" style="height: 60px; width: 24px;"></div>
                   </div>
                 </div>
@@ -169,8 +171,6 @@
   </div>
 </section>
 
-
-
 <!-- ==========================================================================
      4. INTERACTIVE FEATURE SHOWCASE
      ========================================================================== -->
@@ -180,7 +180,8 @@
 
   <div class="container position-relative" style="z-index: 2;">
     <div class="text-center mb-5 fade-up-view visible">
-      <div class="badge rounded-pill border border-primary text-primary px-3 py-2 mb-3 d-inline-flex align-items-center" style="background: rgba(59, 130, 246, 0.1);">
+      <div class="badge rounded-pill border border-primary text-primary px-3 py-2 mb-3 d-inline-flex align-items-center"
+        style="background: rgba(59, 130, 246, 0.1);">
         <i class="fa-solid fa-layer-group me-2"></i>
         <span class="fw-bold fs-6">الميزات الأساسية</span>
       </div>
@@ -323,31 +324,41 @@
      ========================================================================== -->
 <section class="dark-features-section position-relative py-hero">
   <div class="bg-grid"></div>
-  
+
   <!-- Subtle glowing orbs for dark section -->
-  <div class="dark-mesh-bg position-absolute w-100 h-100 top-0 start-0 overflow-hidden" style="z-index: 0; pointer-events: none;">
-    <div class="position-absolute rounded-circle" style="width: 300px; height: 300px; background: rgba(59, 130, 246, 0.15); filter: blur(80px); top: 10%; right: 10%;"></div>
-    <div class="position-absolute rounded-circle" style="width: 250px; height: 250px; background: rgba(16, 185, 129, 0.1); filter: blur(80px); bottom: 10%; left: 10%;"></div>
+  <div class="dark-mesh-bg position-absolute w-100 h-100 top-0 start-0 overflow-hidden"
+    style="z-index: 0; pointer-events: none;">
+    <div class="position-absolute rounded-circle"
+      style="width: 300px; height: 300px; background: rgba(59, 130, 246, 0.15); filter: blur(80px); top: 10%; right: 10%;">
+    </div>
+    <div class="position-absolute rounded-circle"
+      style="width: 250px; height: 250px; background: rgba(16, 185, 129, 0.1); filter: blur(80px); bottom: 10%; left: 10%;">
+    </div>
   </div>
 
   <div class="container position-relative z-index-10 perspective-container">
     <div class="row g-5 align-items-stretch">
       <!-- Right column (RTL) -->
       <div class="col-12 col-lg-6 fade-up-view visible">
-        <div class="badge rounded-pill border border-light text-light px-3 py-2 mb-4 d-inline-flex align-items-center" style="background: rgba(255, 255, 255, 0.05);">
+        <div class="badge rounded-pill border border-light text-light px-3 py-2 mb-4 d-inline-flex align-items-center"
+          style="background: rgba(255, 255, 255, 0.05);">
           <i class="fa-solid fa-flag me-2 text-warning"></i>
           <span class="fw-bold fs-6">رؤية السعودية 2030</span>
         </div>
-        <h2 class="display-5 fw-bold mb-4 text-white" style="letter-spacing: -1px;">نساهم في بناء <span class="text-gradient-primary">الكوادر المنافسة للمستقبل.</span></h2>
+        <h2 class="display-5 fw-bold mb-4 text-white" style="letter-spacing: -1px;">نساهم في بناء <span
+            class="text-gradient-primary">الكوادر المنافسة للمستقبل.</span></h2>
         <p class="fs-5 text-white-75 mb-5 lh-lg" style="line-height: 1.7;">
-          نلتزم بتمكين الكفاءات الوطنية عبر مطابقة مخرجات التعليم وتأهيل الكوادر الشابة تقنياً وسلوكياً لتلبي متطلبات قطاع العمل الحيوي.
+          نلتزم بتمكين الكفاءات الوطنية عبر مطابقة مخرجات التعليم وتأهيل الكوادر الشابة تقنياً وسلوكياً لتلبي متطلبات
+          قطاع العمل الحيوي.
         </p>
 
-        <div class="glass-panel-dark p-4 p-xl-5 border-glow-premium spotlight-card h-100 floating-card-vision-1">
+        <div class="glass-panel-dark p-4 border-glow-premium spotlight-card h-100 floating-card-vision-1">
           <div class="spotlight-border"></div>
           <ul class="list-unstyled mb-0 pr-0 vision-list">
             <li *ngFor="let item of vision2030; let i = index" [style.animation-delay]="(i * 0.1) + 's'">
-              <div class="icon-wrap bg-success-soft text-success rounded-circle d-flex align-items-center justify-content-center position-relative" style="width: 32px; height: 32px; flex-shrink: 0;">
+              <div
+                class="icon-wrap bg-success-soft text-success rounded-circle d-flex align-items-center justify-content-center position-relative"
+                style="width: 32px; height: 32px; flex-shrink: 0;">
                 <div class="pulse-ring-small position-absolute w-100 h-100 rounded-circle border border-success"></div>
                 <i class="fa-solid fa-check fs-6 mt-0"></i>
               </div>
@@ -359,23 +370,27 @@
 
       <!-- Left column (RTL) -->
       <div class="col-12 col-lg-6 scale-up-view visible">
-        <div class="glass-panel-dark p-4 p-xl-5 border-glow-premium spotlight-card h-100 d-flex flex-column justify-content-center floating-card-vision-2">
+        <div
+          class="glass-panel-dark p-4 border-glow-premium spotlight-card h-100 d-flex flex-column justify-content-center floating-card-vision-2">
           <!-- Floating decorative element -->
           <div class="position-absolute floating-deco" style="top: -20px; left: -20px; z-index: 10;">
-            <div class="badge rounded-pill bg-primary-soft text-primary-light border border-primary-glow px-3 py-2 shadow-lg d-flex align-items-center gap-2">
+            <div
+              class="badge rounded-pill bg-primary-soft text-primary-light border border-primary-glow px-3 py-2 shadow-lg d-flex align-items-center gap-2">
               <i class="fa-solid fa-ranking-star"></i>
               <span class="fw-bold">مستقبل مشرق</span>
             </div>
           </div>
-          
+
           <div class="spotlight-border"></div>
-          <div class="d-inline-flex align-items-center justify-content-center bg-primary rounded-circle mb-4 position-relative radar-container"
+          <div
+            class="d-inline-flex align-items-center justify-content-center bg-primary rounded-circle mb-4 position-relative radar-container"
             style="width: 70px; height: 70px; box-shadow: var(--shadow-glow-primary); z-index: 2;">
             <div class="radar-pulse"></div>
             <div class="radar-pulse" style="animation-delay: 1.5s;"></div>
             <i class="fa-solid fa-bullseye fs-3 text-white position-relative" style="z-index: 3;"></i>
           </div>
-          <h3 class="display-6 fw-bold mb-4 text-white position-relative" style="z-index: 2; letter-spacing: -1px;">رسالتنا</h3>
+          <h3 class="display-6 fw-bold mb-4 text-white position-relative" style="z-index: 2; letter-spacing: -1px;">
+            رسالتنا</h3>
           <p class="fs-5 text-white-75 lh-lg mb-0 position-relative" style="z-index: 2; line-height: 1.8 !important;">
             تأهيل الكوادر الوطنية الشابة وتيسير انتقالهم من البيئة الأكاديمية إلى المهنية. نقدم حلول قياس متكاملة
             ومؤشرات جاهزية مبنية على حقائق وبيانات دقيقة تفيد الطالب والمؤسسة الأكاديمية وجهة التدريب.
@@ -395,7 +410,8 @@
 
   <div class="container py-section position-relative z-index-10">
     <div class="text-center mb-5 fade-up-view visible">
-      <div class="badge rounded-pill border border-primary text-primary px-3 py-2 mb-3 d-inline-flex align-items-center" style="background: rgba(59, 130, 246, 0.1);">
+      <div class="badge rounded-pill border border-primary text-primary px-3 py-2 mb-3 d-inline-flex align-items-center"
+        style="background: rgba(59, 130, 246, 0.1);">
         <i class="fa-solid fa-compass me-2"></i>
         <span class="fw-bold fs-6">استكشاف المهن</span>
       </div>
@@ -417,7 +433,8 @@
     </div>
 
     <div class="career-grid fade-up-view visible">
-      <div class="career-explorer-card spotlight-card border-glow-premium hover-lift" *ngFor="let career of filteredCareers; let i = index" [style.animation-delay]="(i * 0.1) + 's'">
+      <div class="career-explorer-card spotlight-card border-glow-premium hover-lift"
+        *ngFor="let career of filteredCareers; let i = index" [style.animation-delay]="(i * 0.1) + 's'">
         <div class="spotlight-border"></div>
         <div class="card-top">
           <span class="badge-demand">{{ career.demand }}</span>
@@ -443,25 +460,33 @@
   <div class="hero-grid-pattern" style="opacity: 0.4;"></div>
 
   <!-- Dynamic Mesh Background for Light Section -->
-  <div class="dark-mesh-bg position-absolute w-100 h-100 top-0 start-0 overflow-hidden" style="z-index: 0; pointer-events: none;">
-    <div class="position-absolute rounded-circle" style="width: 400px; height: 400px; background: rgba(59, 130, 246, 0.08); filter: blur(90px); top: 0%; right: -10%;"></div>
-    <div class="position-absolute rounded-circle" style="width: 350px; height: 350px; background: rgba(139, 92, 246, 0.08); filter: blur(90px); bottom: 10%; left: -5%;"></div>
+  <div class="dark-mesh-bg position-absolute w-100 h-100 top-0 start-0 overflow-hidden"
+    style="z-index: 0; pointer-events: none;">
+    <div class="position-absolute rounded-circle"
+      style="width: 400px; height: 400px; background: rgba(59, 130, 246, 0.08); filter: blur(90px); top: 0%; right: -10%;">
+    </div>
+    <div class="position-absolute rounded-circle"
+      style="width: 350px; height: 350px; background: rgba(139, 92, 246, 0.08); filter: blur(90px); bottom: 10%; left: -5%;">
+    </div>
   </div>
 
   <div class="container py-section position-relative z-index-10">
     <div class="row g-5 align-items-center">
       <!-- Right side content (RTL) -->
       <div class="col-12 col-lg-5 slide-right-view visible perspective-container">
-        <div class="glass-panel p-4 p-xl-5 border-glow-premium spotlight-card floating-card-vision-1">
+        <div class="glass-panel p-4 border-glow-premium spotlight-card floating-card-vision-1">
           <div class="spotlight-border"></div>
-          <div class="badge rounded-pill border border-primary text-primary px-3 py-2 mb-4 d-inline-flex align-items-center"
+          <div
+            class="badge rounded-pill border border-primary text-primary px-3 py-2 mb-4 d-inline-flex align-items-center"
             style="background: var(--obour-primary-soft);">
             <i class="fa-solid fa-wand-magic-sparkles me-2 text-gradient-primary pulse-ring-small rounded-circle"></i>
             <span class="fw-bold fs-6">مستشارك المهني الافتراضي</span>
           </div>
-          <h2 class="display-5 fw-bold mb-4" style="color: var(--obour-text-primary); letter-spacing: -1px;">استشر <span class="text-gradient-primary">المساعد الذكي</span> في مسارك الوظيفي</h2>
+          <h2 class="display-5 fw-bold mb-4" style="color: var(--obour-text-primary); letter-spacing: -1px;">استشر <span
+              class="text-gradient-primary">المساعد الذكي</span> في مسارك الوظيفي</h2>
           <p class="fs-5 mb-5" style="color: var(--obour-text-secondary); line-height: 1.8;">
-            اطرح الأسئلة بخصوص تخصصك، كيفية تطوير مهاراتك، أو كيفية تحسين درجات جاهزيتك، وتلقَّ نصائح ذكية مفصلة وسريعة فوراً.
+            اطرح الأسئلة بخصوص تخصصك، كيفية تطوير مهاراتك، أو كيفية تحسين درجات جاهزيتك، وتلقَّ نصائح ذكية مفصلة وسريعة
+            فوراً.
           </p>
 
           <div class="d-flex align-items-center gap-3 bg-surface p-3 rounded border border-glow-premium">
@@ -485,7 +510,8 @@
           <!-- Header -->
           <div class="chat-header bg-surface-2 border-bottom">
             <div class="d-flex align-items-center gap-3">
-              <div class="avatar bg-primary text-white d-flex align-items-center justify-content-center rounded-circle radar-container position-relative"
+              <div
+                class="avatar bg-primary text-white d-flex align-items-center justify-content-center rounded-circle radar-container position-relative"
                 style="width: 44px; height: 44px; box-shadow: var(--shadow-glow-primary);">
                 <div class="radar-pulse"></div>
                 <i class="fa-solid fa-robot position-relative" style="z-index: 2;"></i>
@@ -503,8 +529,8 @@
           <!-- Messages Feed -->
           <div class="chat-feed bg-surface" id="chatFeed">
             <div *ngFor="let msg of chatMessages; let i = index" class="chat-bubble"
-              [ngClass]="msg.sender === 'user' ? 'bubble-user' : 'bubble-ai'"
-              [style.animation-delay]="(i * 0.15) + 's'" style="animation: fade-in-right 0.5s ease forwards; opacity: 0;">
+              [ngClass]="msg.sender === 'user' ? 'bubble-user' : 'bubble-ai'" [style.animation-delay]="(i * 0.15) + 's'"
+              style="animation: fade-in-right 0.5s ease forwards; opacity: 0;">
               <span *ngIf="!msg.typing">{{ msg.text }}</span>
               <div *ngIf="msg.typing" class="typing-dots">
                 <span></span>
@@ -518,20 +544,133 @@
           <!-- Chat Footer with chips and options -->
           <div class="chat-footer bg-surface-2 border-top">
             <div class="prompts-container pb-2">
-              <button *ngFor="let p of chatPrompts" class="prompt-chip hover-lift border-glow-premium bg-surface" [class.disabled]="isTyping"
-                [disabled]="isTyping" (click)="sendPrompt(p)">
+              <button *ngFor="let p of chatPrompts" class="prompt-chip hover-lift border-glow-premium bg-surface"
+                [class.disabled]="isTyping" [disabled]="isTyping" (click)="sendPrompt(p)">
                 {{ p }}
               </button>
             </div>
             <div class="chat-input-wrap position-relative">
-              <input type="text" class="form-control bg-surface border-glow-premium ps-4 pe-5 py-3" placeholder="طرح سؤالاً مهنياً أو استفساراً..." disabled
-                style="cursor: not-allowed; opacity: 0.8;" />
-              <button class="btn btn-primary position-absolute top-50 translate-middle-y end-0 me-2 rounded-circle d-flex align-items-center justify-content-center shadow-glow-primary" style="width: 40px; height: 40px;" disabled>
+              <input type="text" class="form-control bg-surface border-glow-premium ps-4 pe-5 py-3"
+                placeholder="طرح سؤالاً مهنياً أو استفساراً..." disabled style="cursor: not-allowed; opacity: 0.8;" />
+              <button
+                class="btn btn-primary position-absolute top-50 translate-middle-y end-0 me-2 rounded-circle d-flex align-items-center justify-content-center shadow-glow-primary"
+                style="width: 40px; height: 40px;" disabled>
                 <i class="fa-solid fa-paper-plane"></i>
               </button>
             </div>
           </div>
 
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ==========================================================================
+     7.5. LIVE ACTIVITY FEED & SYSTEM ANALYTICS (نشاط المنصة والتحليلات)
+     ========================================================================== -->
+<section class="py-hero position-relative live-activity-section scroll-animate">
+  <div class="hero-grid-pattern" style="opacity: 0.2;"></div>
+  
+  <div class="container position-relative z-index-10">
+    <div class="row g-5 align-items-center">
+      <!-- Right Column: Analytics Cards Grid (RTL) -->
+      <div class="col-12 col-lg-6 order-last order-lg-first">
+        <div class="row g-4">
+          <!-- Card 1: Active Tests Counter -->
+          <div class="col-6">
+            <div class="card card-premium p-4 text-center">
+              <div class="fs-1 text-primary-light mb-2 fw-bold">14,250+</div>
+              <h5 class="fw-bold mb-1" style="color: var(--obour-text-primary); font-size: 1.05rem;">تقييم مكتمل</h5>
+              <p class="small text-muted mb-0">في مختلف المسارات الأكاديمية</p>
+            </div>
+          </div>
+          <!-- Card 2: Company Matches -->
+          <div class="col-6">
+            <div class="card card-premium p-4 text-center">
+              <div class="fs-1 text-accent mb-2 fw-bold">1,820+</div>
+              <h5 class="fw-bold mb-1" style="color: var(--obour-text-primary); font-size: 1.05rem;">فرصة تدريب</h5>
+              <p class="small text-muted mb-0">تم مطابقتها وتأهيلها بنجاح</p>
+            </div>
+          </div>
+          <!-- Card 3: AI Advice Generates -->
+          <div class="col-6">
+            <div class="card card-premium p-4 text-center">
+              <div class="fs-1 text-success mb-2 fw-bold">45K+</div>
+              <h5 class="fw-bold mb-1" style="color: var(--obour-text-primary); font-size: 1.05rem;">توصية ذكية</h5>
+              <p class="small text-muted mb-0">قدمها محرك الذكاء الاصطناعي</p>
+            </div>
+          </div>
+          <!-- Card 4: Accuracy Match Rate -->
+          <div class="col-6">
+            <div class="card card-premium p-4 text-center">
+              <div class="fs-1 text-warning mb-2 fw-bold">94.8%</div>
+              <h5 class="fw-bold mb-1" style="color: var(--obour-text-primary); font-size: 1.05rem;">نسبة رضا الشركاء</h5>
+              <p class="small text-muted mb-0">عن جاهزية الطلبة للعمل</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Left Column: Live Activities Feed (RTL) -->
+      <div class="col-12 col-lg-6">
+        <div class="badge rounded-pill border border-primary text-primary px-3 py-2 mb-3 d-inline-flex align-items-center"
+          style="background: rgba(59, 130, 246, 0.1);">
+          <i class="fa-solid fa-pulse me-2"></i>
+          <span class="fw-bold fs-6">نشاط المنصة المباشر</span>
+        </div>
+        <h2 class="display-5 fw-bold mb-4" style="color: var(--obour-text-primary); letter-spacing: -1px;">
+          نشاطات طلابنا <span class="text-gradient-primary">اللحظية</span>
+        </h2>
+        <p class="fs-5 text-muted mb-4" style="line-height: 1.7; font-size: 1.05rem;">
+          تابع آخر التقييمات وعمليات المطابقة التي يقوم بها زملاؤك في الجامعات السعودية المختلفة الآن عبر محرك عبور.
+        </p>
+
+        <!-- Live Feed Stack -->
+        <div class="d-flex flex-column gap-3">
+          <!-- Feed Item 1 -->
+          <div class="card card-premium p-3 d-flex flex-row align-items-center gap-3">
+            <div class="rounded-circle bg-primary-soft text-primary-light d-flex align-items-center justify-content-center"
+              style="width: 48px; height: 48px; flex-shrink: 0;">
+              <i class="fa-solid fa-user-check"></i>
+            </div>
+            <div class="flex-grow-1">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="fw-bold" style="color: var(--obour-text-primary); font-size: 1rem;">طالب من جامعة الملك سعود</span>
+                <span class="small text-muted">منذ دقيقة</span>
+              </div>
+              <p class="small text-muted mb-0">أكمل بنجاح تقييم هندسة البرمجيات بنسبة توافق 94%</p>
+            </div>
+          </div>
+
+          <!-- Feed Item 2 -->
+          <div class="card card-premium p-3 d-flex flex-row align-items-center gap-3">
+            <div class="rounded-circle bg-accent-soft text-accent d-flex align-items-center justify-content-center"
+              style="width: 48px; height: 48px; flex-shrink: 0; color: var(--obour-accent);">
+              <i class="fa-solid fa-handshake"></i>
+            </div>
+            <div class="flex-grow-1">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="fw-bold" style="color: var(--obour-text-primary); font-size: 1rem;">طالبة من جامعة الملك عبد العزيز</span>
+                <span class="small text-muted">منذ 3 دقائق</span>
+              </div>
+              <p class="small text-muted mb-0">تمت مطابقتها لتدريب تعاوني في علم البيانات مع أرامكو السعودية</p>
+            </div>
+          </div>
+
+          <!-- Feed Item 3 -->
+          <div class="card card-premium p-3 d-flex flex-row align-items-center gap-3">
+            <div class="rounded-circle bg-success-soft text-success d-flex align-items-center justify-content-center"
+              style="width: 48px; height: 48px; flex-shrink: 0; color: var(--obour-success);">
+              <i class="fa-solid fa-brain"></i>
+            </div>
+            <div class="flex-grow-1">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="fw-bold" style="color: var(--obour-text-primary); font-size: 1rem;">طالب من جامعة الملك فهد للبترول والمعادن</span>
+                <span class="small text-muted">منذ 7 دقائق</span>
+              </div>
+              <p class="small text-muted mb-0">حصل على 5 توصيات ذكية لسد ثغرات الأمن السيبراني</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -544,26 +683,31 @@
 <section class="py-hero position-relative testimonials-section scroll-animate">
   <!-- Grid Pattern Background -->
   <div class="hero-grid-pattern" style="opacity: 0.3;"></div>
-  
+
   <div class="container position-relative z-index-10">
     <div class="text-center mb-5 fade-up-view visible">
-      <div class="badge rounded-pill border border-primary text-primary px-3 py-2 mb-3 d-inline-flex align-items-center" style="background: rgba(59, 130, 246, 0.1);">
+      <div class="badge rounded-pill border border-primary text-primary px-3 py-2 mb-3 d-inline-flex align-items-center"
+        style="background: rgba(59, 130, 246, 0.1);">
         <i class="fa-solid fa-users me-2"></i>
         <span class="fw-bold fs-6">قصص نجاح</span>
       </div>
       <h2 class="display-5 fw-bold mb-3" style="color: var(--obour-text-primary); letter-spacing: -1px;">أصوات <span
           class="text-gradient-primary">الشركاء والطلبة</span></h2>
-      <p class="fs-5 max-w-2xl mx-auto" style="color: var(--obour-text-secondary); line-height: 1.7;">آراء حقيقية وتجارب ملهمة لطلبة وأكاديميين استخدموا المنصة</p>
+      <p class="fs-5 max-w-2xl mx-auto" style="color: var(--obour-text-secondary); line-height: 1.7;">آراء حقيقية وتجارب
+        ملهمة لطلبة وأكاديميين استخدموا المنصة</p>
     </div>
 
     <div class="row g-4 fade-up-view visible">
-      <div class="col-12 col-md-4" *ngFor="let t of testimonials; let i = index" [style.animation-delay]="(i * 0.1) + 's'">
-        <div class="testimonial-card spotlight-card border-glow-premium p-4 p-xl-5 hover-lift h-100 position-relative bg-surface">
+      <div class="col-12 col-md-4" *ngFor="let t of testimonials; let i = index"
+        [style.animation-delay]="(i * 0.1) + 's'">
+        <div
+          class="testimonial-card spotlight-card border-glow-premium p-4 hover-lift h-100 position-relative bg-surface">
           <div class="spotlight-border"></div>
           <div class="quote-icon mb-4 position-absolute" style="top: 2rem; left: 2rem; opacity: 0.1;">
             <i class="fa-solid fa-quote-left display-3 text-primary"></i>
           </div>
-          <p class="fs-5 mb-5 lh-lg position-relative z-index-1" style="color: var(--obour-text-primary); font-size: 1.05rem !important;">"{{ t.content }}"</p>
+          <p class="fs-5 mb-5 lh-lg position-relative z-index-1"
+            style="color: var(--obour-text-primary); font-size: 1.05rem !important;">"{{ t.content }}"</p>
           <div class="d-flex align-items-center gap-3 mt-auto position-relative z-index-1">
             <div
               class="avatar bg-primary-soft text-primary d-flex align-items-center justify-content-center rounded-circle border border-primary-glow"
@@ -572,7 +716,8 @@
             </div>
             <div>
               <h5 class="fw-bold mb-1" style="color: var(--obour-text-primary); font-size: 1.05rem;">{{ t.author }}</h5>
-              <div class="small fw-semibold" style="color: var(--obour-text-secondary); font-size: 0.85rem;">{{ t.role }}</div>
+              <div class="small fw-semibold" style="color: var(--obour-text-secondary); font-size: 0.85rem;">{{ t.role
+                }}</div>
             </div>
           </div>
         </div>
@@ -585,17 +730,26 @@
      9. FINAL CTA BANNER
      ========================================================================== -->
 <section class="container py-5 mb-5 scroll-animate perspective-container">
-  <div class="cta-banner p-5 p-lg-6 text-center spotlight-card border-glow-premium floating-card-vision-1 shadow-2xl position-relative overflow-hidden" style="background: var(--obour-bg-dark); color: white;">
+  <div
+    class="cta-banner p-4 p-lg-5 text-center spotlight-card border-glow-premium floating-card-vision-1 shadow-2xl position-relative overflow-hidden"
+    style="background: var(--obour-bg-dark); color: white;">
     <div class="spotlight-border"></div>
-    <div class="dark-mesh-bg position-absolute w-100 h-100 top-0 start-0 overflow-hidden" style="z-index: 0; pointer-events: none; opacity: 0.5;">
-      <div class="position-absolute rounded-circle" style="width: 300px; height: 300px; background: rgba(59, 130, 246, 0.3); filter: blur(80px); top: 50%; right: 10%; transform: translateY(-50%);"></div>
-      <div class="position-absolute rounded-circle" style="width: 250px; height: 250px; background: rgba(16, 185, 129, 0.2); filter: blur(80px); top: 50%; left: 10%; transform: translateY(-50%);"></div>
+    <div class="dark-mesh-bg position-absolute w-100 h-100 top-0 start-0 overflow-hidden"
+      style="z-index: 0; pointer-events: none; opacity: 0.5;">
+      <div class="position-absolute rounded-circle"
+        style="width: 300px; height: 300px; background: rgba(59, 130, 246, 0.3); filter: blur(80px); top: 50%; right: 10%; transform: translateY(-50%);">
+      </div>
+      <div class="position-absolute rounded-circle"
+        style="width: 250px; height: 250px; background: rgba(16, 185, 129, 0.2); filter: blur(80px); top: 50%; left: 10%; transform: translateY(-50%);">
+      </div>
     </div>
     <div class="cta-content position-relative z-index-10">
       <div class="radar-container d-inline-block position-relative mb-4">
         <div class="radar-pulse" style="border-color: rgba(255, 255, 255, 0.5);"></div>
         <div class="radar-pulse" style="animation-delay: 1.5s; border-color: rgba(255, 255, 255, 0.5);"></div>
-        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center position-relative shadow-glow-primary" style="width: 80px; height: 80px; z-index: 2;">
+        <div
+          class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center position-relative shadow-glow-primary"
+          style="width: 80px; height: 80px; z-index: 2;">
           <i class="fa-solid fa-rocket fs-2"></i>
         </div>
       </div>
@@ -604,7 +758,8 @@
         انضم اليوم إلى آلاف الطلبة الذين استخدموا منصة عبور لتقييم مهاراتهم، سد ثغراتهم المعرفية، وبدء تدريبهم الميداني
         والتعاوني بكل ثقة.
       </p>
-      <button class="btn btn-light btn-lg rounded-pill px-5 py-4 fw-bold shadow-lg text-primary hover-lift d-inline-flex align-items-center gap-3 fs-5"
+      <button
+        class="btn btn-light btn-lg rounded-pill px-5 py-4 fw-bold shadow-lg text-primary hover-lift d-inline-flex align-items-center gap-3 fs-5"
         (click)="startEvaluation()">
         <span>ابدأ رحلة التقييم مجاناً</span>
         <i class="fa-solid fa-arrow-left"></i>
